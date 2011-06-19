@@ -13,17 +13,17 @@ Usage example
     economic.connect
     
     # Find a debtor:
-    debtor = economic.debtors.find(204)
+    debtor = economic.debtors.find(101)
     
     # Creating a debtor:
     debtor = economic.debtors.build
     
     debtor.number = economic.debtors.next_available_number
-    debtor.debtor_group_handle = { number => 1 }
+    debtor.debtor_group_handle = { :number => 1 }
     debtor.name = 'Bob'
     debtor.vat_zone = 'HomeCountry' # HomeCountry, EU, Abroad
-    debtor.currency = 'DKK'
-    debtor.price_group = 1
+    debtor.currency_handle = { :code => 'DKK' }
+    debtor.price_group_handle = { :number => 1 }
     debtor.is_accessible = true
     debtor.ci_number = '12345678'
     debtor.term_of_payment_handle = { :id => 1 }
