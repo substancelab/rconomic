@@ -70,11 +70,11 @@ describe Economic::Entity do
 
     describe "soap_action" do
       it "returns the name for the given soap action on this class" do
-        subject.soap_action(:get_data).should == 'SpecEntity_GetData'
+        subject.soap_action(:get_data).should == :spec_entity_get_data
 
         class Car < Economic::Entity; end
-        Car.soap_action(:start_engine).should == 'Car_StartEngine'
-        Car.soap_action('StartEngine').should == 'Car_StartEngine'
+        Car.soap_action(:start_engine).should == :car_start_engine
+        Car.soap_action('StartEngine').should == :car_start_engine
       end
     end
   end
@@ -83,12 +83,12 @@ describe Economic::Entity do
     subject { (e = SpecEntity.new).tap { |e| e.session = session } }
 
     before :each do
-      savon.stubs('SpecEntity_GetData').returns(:success)
+      savon.stubs(:spec_entity_get_data).returns(:success)
     end
 
     it "fetches data from API" do
       subject.instance_variable_set('@number', 42)
-      savon.expects('SpecEntity_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
+      savon.expects(:spec_entity_get_data).with('entityHandle' => {'Number' => 42}).returns(:success)
       subject.get_data
     end
 
@@ -138,7 +138,7 @@ describe Economic::Entity do
     subject { (e = SpecEntity.new).tap { |e| e.persisted = false; e.session = session } }
 
     it "sends data to the API" do
-      savon.expects('SpecEntity_CreateFromData').returns(:success)
+      savon.expects(:spec_entity_create_from_data).returns(:success)
       subject.save
     end
   end
@@ -147,7 +147,7 @@ describe Economic::Entity do
     subject { (e = SpecEntity.new).tap { |e| e.persisted = true; e.session = session } }
 
     it "sends data to the API" do
-      savon.expects('SpecEntity_UpdateFromData').returns(:success)
+      savon.expects(:spec_entity_update_from_data).returns(:success)
       subject.save
     end
   end

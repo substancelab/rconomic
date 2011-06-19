@@ -37,11 +37,8 @@ module Economic
       response = client.request :economic, action, &block
       response_hash = response.to_hash
 
-      # TODO: Is there not a Savon function to map from Foo_GetData to :foo_get_data?
-      action_key = action.to_s.gsub('_', '').snake_case
-      response_key = "#{action_key}_response".intern
-      result_key = "#{action_key}_result".intern
-
+      response_key = "#{action}_response".intern
+      result_key = "#{action}_result".intern
       if response_hash[response_key] && response_hash[response_key][result_key]
         response_hash[response_key][result_key]
       else
