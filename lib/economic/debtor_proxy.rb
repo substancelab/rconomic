@@ -7,8 +7,8 @@ module Economic
     end
 
     # Returns a new, unpersisted Economic::Debtor
-    def build
-      debtor = Economic::Debtor.new
+    def build(values = {})
+      debtor = Economic::Debtor.new(values)
       debtor.session = session
       debtor
     end
@@ -22,8 +22,7 @@ module Economic
           }
         }
       end
-      debtor = Debtor.new(debtor_hash)
-      debtor.session = self.session
+      debtor = build(debtor_hash)
       debtor.persisted = true
       debtor
     end
@@ -42,13 +41,10 @@ module Economic
 
       # Create partial Debtor entities
       handles.collect do |handle|
-        debtor = Debtor.new
-        debtor.session = session
+        debtor = build
         debtor.persisted = true
-
         debtor.handle = handle
         debtor.number = handle[:number]
-
         debtor
       end
     end

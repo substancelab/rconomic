@@ -7,8 +7,7 @@
 # debtor = economic.debtors.find(204)
 #
 # Creating a debtor:
-# debtor = Economic::Debtor.new
-# debtor.session = economic
+# debtor = economic.debtors.build
 #
 # debtor.number = economic.debtors.next_available_number
 # debtor.debtor_group_handle = { number => 1 }
