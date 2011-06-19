@@ -6,6 +6,13 @@ module Economic
       @session = session
     end
 
+    # Returns a new, unpersisted Economic::Debtor
+    def build
+      debtor = Economic::Debtor.new
+      debtor.session = session
+      debtor
+    end
+
     # Gets data for Debtor from the API
     def find(number)
       debtor_hash = session.request Debtor.soap_action(:get_data)  do

@@ -53,11 +53,22 @@ describe Economic::DebtorProxy do
     end
   end
 
-
   describe "next_available_number" do
     it "gets the next available debtor number from API" do
       savon.expects('Debtor_GetNextAvailableNumber').returns(:success)
       subject.next_available_number.should == '105'
+    end
+  end
+
+  describe "build" do
+    subject { session.debtors.build }
+
+    it "instantiates a new Debtor" do
+      subject.should be_instance_of(Economic::Debtor)
+    end
+
+    it "assigns the session to the Debtor" do
+      subject.session.should === session
     end
   end
 end
