@@ -1,6 +1,6 @@
 require 'savon'
 require 'savon_spec'
-require 'lib/rconomic'
+require './lib/rconomic'
 
 RSpec.configure do |config|
   config.mock_with :mocha

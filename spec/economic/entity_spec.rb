@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require './spec/spec_helper'
 
 class SpecEntity < Economic::Entity
   has_properties :foo, :baz

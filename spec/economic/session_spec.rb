@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require './spec/spec_helper'
 
 describe Economic::Session do
   subject { Economic::Session.new(123456, 'api', 'passw0rd') }

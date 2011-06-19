@@ -1,4 +1,4 @@
-require 'spec/spec_helper'
+require './spec/spec_helper'
 
 describe Economic::CurrentInvoiceLine do
   let(:session) { stub_session }
