@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Debtor_FindByCINumberResponse xmlns="http://e-conomic.com">
+      <Debtor_FindByCINumberResult>
+        <DebtorHandle>
+          <Number>string</Number>
+        </DebtorHandle>
+        <DebtorHandle>
+          <Number>string</Number>
+        </DebtorHandle>
+      </Debtor_FindByCINumberResult>
+    </Debtor_FindByCINumberResponse>
+  </soap:Body>
+</soap:Envelope>
