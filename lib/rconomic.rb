@@ -55,6 +55,8 @@ require 'active_support/ordered_hash'
 
 require 'economic/session'
 require 'economic/debtor'
+require 'economic/current_invoice'
+require 'economic/current_invoice_line'
 require 'economic/debtor_proxy'
 
 # http://www.e-conomic.com/apidocs/Documentation/index.html

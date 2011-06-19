@@ -1,7 +1,7 @@
 require 'spec/spec_helper'
 
 describe Economic::Debtor do
-  let(:session) { Economic::Session.new(123456, 'api', 'passw0rd') }
+  let(:session) { stub_session }
   subject { Economic::Debtor.new }
 
   it "inherits from Economic::Entity" do

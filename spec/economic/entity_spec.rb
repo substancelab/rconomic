@@ -7,7 +7,7 @@ class SpecEntity < Economic::Entity
 end
 
 describe Economic::Entity do
-  let(:session) { Economic::Session.new(123456, 'api', 'passw0rd') }
+  let(:session) { stub_session }
 
   describe "class methods" do
     subject { SpecEntity }

@@ -1,7 +1,7 @@
 require 'spec/spec_helper'
 
 describe Economic::DebtorProxy do
-  let(:session) { Economic::Session.new(123456, 'api', 'passw0rd') }
+  let(:session) { stub_session }
   subject { Economic::DebtorProxy.new(session) }
 
   describe "new" do

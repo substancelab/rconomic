@@ -31,3 +31,6 @@ module Savon
   end
 end
 
+def stub_session
+  Economic::Session.new(123456, 'api', 'passw0rd')
+end
