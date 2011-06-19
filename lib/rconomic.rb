@@ -3,6 +3,7 @@ require 'time'
 require 'savon'
 require 'active_support/ordered_hash'
 
+$LOAD_PATH << File.expand_path(File.join(*%w[ .. lib ]), File.dirname(__FILE__))
 require 'economic/session'
 require 'economic/debtor'
 require 'economic/current_invoice'
