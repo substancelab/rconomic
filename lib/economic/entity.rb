@@ -13,7 +13,7 @@ module Economic
       def has_properties(*properties)
         @properties = properties
         properties.each do |property|
-          unless properties_not_triggering_full_load.include?(property) || instance_methods.include?(property.to_s)
+          unless properties_not_triggering_full_load.include?(property) || instance_methods.collect(&:to_s).include?(property.to_s)
             # Create property accessors that loads the full Entity from the API if necessary
             define_method "#{property}" do
               value = instance_variable_get("@#{property}")
