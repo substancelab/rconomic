@@ -48,7 +48,7 @@ module Economic
       data['ExchangeRate'] = exchange_rate
       data['IsVatIncluded'] = is_vat_included
       data['LayoutHandle'] = { 'Id' => layout_handle[:id] } unless layout_handle.blank?
-      data['DeliveryDate'] = delivery_date.iso8601 unless delivery_date.blank?
+      data['DeliveryDate'] = delivery_date ? delivery_date.iso8601 : nil
       data['NetAmount'] = net_amount
       data['VatAmount'] = vat_amount
       data['GrossAmount'] = gross_amount
