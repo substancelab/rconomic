@@ -97,7 +97,7 @@ describe Economic::Entity do
     end
 
     it "updates the entity with the response" do
-      subject.expects(:set_properties_from_hash).with({:foo => 'bar', :baz => 'qux'})
+      subject.expects(:update_properties).with({:foo => 'bar', :baz => 'qux'})
       subject.get_data
     end
 
@@ -156,13 +156,13 @@ describe Economic::Entity do
     end
   end
 
-  describe "set_properties_from_hash" do
+  describe "update_properties" do
     subject { SpecEntity.new }
 
     it "sets the properties to the given values" do
       subject.expects(:foo=).with('bar')
       subject.expects(:baz=).with('qux')
-      subject.set_properties_from_hash(:foo => 'bar', 'baz' => 'qux')
+      subject.update_properties(:foo => 'bar', 'baz' => 'qux')
     end
   end
 end

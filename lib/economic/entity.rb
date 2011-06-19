@@ -9,7 +9,7 @@ module Economic
       # Returns a new Entity initialize with the values from hash
       def new_from_hash(hash)
         entity = new
-        entity.set_properties_from_hash(hash)
+        entity.update_properties(hash)
         entity
       end
 
@@ -68,7 +68,7 @@ module Economic
           }
         }
       end
-      self.set_properties_from_hash(response)
+      self.update_properties(response)
       self.partial = false
       self.persisted = true
     end
@@ -105,7 +105,7 @@ module Economic
     end
 
     # Updates properties of Entity with the values from hash
-    def set_properties_from_hash(hash)
+    def update_properties(hash)
       hash.each do |key, value|
         self.send("#{key}=", value)
       end
