@@ -6,13 +6,6 @@ module Economic
     attr_accessor :persisted, :session, :partial
 
     class << self
-      # Returns a new Entity initialize with the values from hash
-      def new_from_hash(hash)
-        entity = new
-        entity.update_properties(hash)
-        entity
-      end
-
       def properties_not_triggering_full_load
         [:id, :number]
       end
@@ -49,8 +42,9 @@ module Economic
       end
     end
 
-    def initialize
+    def initialize(values = {})
       initialize_defaults
+      update_properties(values)
       @persisted = false
       @partial = true
     end

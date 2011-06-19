@@ -12,16 +12,28 @@ describe Economic::Entity do
   describe "class methods" do
     subject { SpecEntity }
 
-    describe "new_from_hash" do
-      let(:values) { {:foo => 'bar', :baz => 'qux'} }
-      subject { SpecEntity.new_from_hash(values) }
+    describe "new" do
+      subject { Economic::Entity.new }
 
-      it "updates properties with the values from the hash" do
-        subject.foo.should == 'bar'
-        subject.baz.should == 'qux'
+      it "creates a new instance" do
+        subject.should be_instance_of(Economic::Entity)
+      end
+
+      it "sets persisted to false" do
+        subject.should_not be_persisted
+      end
+
+      it "sets partial to true" do
+        subject.should be_partial
+      end
+
+      it "initializes the entity with values from the given hash" do
+        entity = SpecEntity.new(:foo => 'bar', :baz => 'qux')
+        entity.foo.should == 'bar'
+        entity.baz.should == 'qux'
       end
     end
-    
+
     describe "properties_not_triggering_full_load" do
       it "returns names of special id'ish properties" do
         subject.properties_not_triggering_full_load.should == [:id, :number]
@@ -64,22 +76,6 @@ describe Economic::Entity do
         Car.soap_action(:start_engine).should == 'Car_StartEngine'
         Car.soap_action('StartEngine').should == 'Car_StartEngine'
       end
-    end
-  end
-
-  describe "new" do
-    subject { Economic::Entity.new }
-
-    it "creates a new instance" do
-      subject.should be_instance_of(Economic::Entity)
-    end
-
-    it "sets persisted to false" do
-      subject.should_not be_persisted
-    end
-
-    it "sets partial to true" do
-      subject.should be_partial
     end
   end
 

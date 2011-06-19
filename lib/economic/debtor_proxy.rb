@@ -15,7 +15,7 @@ module Economic
           }
         }
       end
-      debtor = Debtor.new_from_hash(debtor_hash)
+      debtor = Debtor.new(debtor_hash)
       debtor.session = self.session
       debtor.persisted = true
       debtor
