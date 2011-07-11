@@ -1,6 +1,10 @@
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require 'rconomic/version'
+
 Gem::Specification.new do |s|
   s.name        = 'rconomic'
-  s.summary     = "Wrapper for the e-conomic SOAP API."
+  s.summary     = "Wrapper for e-conomic.dk's SOAP API."
   s.description = <<-EOS
                   Ruby wrapper for the e-conomic SOAP API, that aims at making working with the API bearable.
 
@@ -10,12 +14,13 @@ Gem::Specification.new do |s|
   s.email       = 'jakob@mentalized.net'
   s.homepage    = 'https://github.com/lokalebasen/rconomic'
 
-  s.version     = '0.1'
-  s.date        = '2011-07-11'
+  s.version     = Rconomic::VERSION
+  s.platform    = Gem::Platform::RUBY
 
   s.add_runtime_dependency "savon", "0.9.2"
   s.add_runtime_dependency "activesupport", "~> 3.0"
 
-  s.files = `git ls-files`.split("\n").reject { |filename| ['.gitignore'].include?(filename) }
-  s.require_path = "lib"
+  s.files         = `git ls-files`.split("\n").reject { |filename| ['.gitignore'].include?(filename) }
+  s.test_files    = `git ls-files -- {spec}/*`.split("\n")
+  s.require_paths = ["lib"]
 end
