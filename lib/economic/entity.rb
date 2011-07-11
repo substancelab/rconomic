@@ -1,3 +1,5 @@
+
+
 module Economic
 
   class Entity
@@ -38,7 +40,7 @@ module Economic
       def soap_action(action)
         class_name = self.name
         class_name_without_modules = class_name.split('::').last
-        "#{class_name_without_modules.snake_case}_#{action.to_s.snake_case}".intern
+        "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
       end
     end
 
