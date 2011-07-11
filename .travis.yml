@@ -1,0 +1,10 @@
+# Specify which ruby versions you wish to run your tests on, each version will be used
+rvm:
+  - 1.8.7
+  - 1.9.2
+  - ree
+
+# Specify the recipients for email notification
+notifications:
+  recipients:
+    - jakob@mentalized.net
