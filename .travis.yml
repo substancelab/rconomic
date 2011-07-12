@@ -4,9 +4,6 @@ rvm:
   - 1.9.2
   - ree
   - rbx
-  - rbx-2.0
-  - ree
-  - jruby
 
 # Specify the recipients for email notification
 notifications:
