@@ -6,7 +6,7 @@ module Economic
   #
   # http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICurrentInvoice.html
   class CurrentInvoice < Entity
-    has_properties :id, :debtor_handle, :debtor_name, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent
+    has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent
 
     # Associations
     attr_accessor :lines
@@ -41,6 +41,10 @@ module Economic
       data['Id'] = id
       data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
       data['DebtorName'] = debtor_name
+      data['DebtorAddress'] = debtor_address unless debtor_address.blank?
+      data['DebtorPostalCode'] = debtor_postal_code unless debtor_postal_code.blank?
+      data['DebtorCity'] = debtor_city unless debtor_city.blank?
+      data['DebtorCountry'] = debtor_country unless debtor_country.blank?
       data['Date'] = date.iso8601 unless date.blank?
       data['TermOfPaymentHandle'] = { 'Id' => term_of_payment_handle[:id] } unless term_of_payment_handle.blank?
       data['DueDate'] = due_date.iso8601 unless due_date.blank?
