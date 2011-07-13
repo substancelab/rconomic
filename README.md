@@ -32,17 +32,10 @@ Usage example
     
     # Create invoice for debtor:
     invoice = economic.current_invoices.build
-    
-    invoice.debtor_handle = { :number => debtor.number }
-    invoice.debtor_name = 'Bob'
     invoice.date = Time.now
     invoice.due_date = Time.now + 15
-    invoice.term_of_payment_handle = { :id => 1 }
-    
-    invoice.currency_handle = { :code => 'DKK' }
     invoice.exchange_rate = 100
     invoice.is_vat_included = false
-    invoice.layout_handle = { :id => 16 }
     
     invoice_line = Economic::CurrentInvoiceLine.new
     invoice_line.description = 'Line on invoice'

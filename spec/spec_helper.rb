@@ -31,6 +31,31 @@ module Savon
   end
 end
 
-def stub_session
+def make_session
   Economic::Session.new(123456, 'api', 'passw0rd')
+end
+
+def make_debtor(properties = {})
+  debtor = Economic::Debtor.new
+
+  # Assign specified properties
+  properties.each { |key, value|
+    debtor.send("#{key}=", value)
+  }
+
+  # Use defaults for the rest of the properties
+  debtor.session ||= make_session
+  debtor.handle ||= { :number => 42 }
+  debtor.number ||= 42
+  debtor.debtor_group_handle || { :number => 1 }
+  debtor.name ||= 'Bob'
+  debtor.vat_zone ||= 'HomeCountry' # HomeCountry, EU, Abroad
+  debtor.currency_handle ||= { :code => 'DKK' }
+  debtor.price_group_handle ||= { :number => 1 }
+  debtor.is_accessible ||= true
+  debtor.ci_number ||= '12345678'
+  debtor.term_of_payment_handle ||= { :id => 1 }
+  debtor.layout_handle ||= { :id => 16 }
+
+  debtor
 end

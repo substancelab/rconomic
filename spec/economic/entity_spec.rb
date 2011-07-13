@@ -7,7 +7,7 @@ class SpecEntity < Economic::Entity
 end
 
 describe Economic::Entity do
-  let(:session) { stub_session }
+  let(:session) { make_session }
 
   describe "class methods" do
     subject { SpecEntity }

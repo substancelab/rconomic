@@ -1,7 +1,7 @@
 require './spec/spec_helper'
 
 describe Economic::DebtorProxy do
-  let(:session) { stub_session }
+  let(:session) { make_session }
   subject { Economic::DebtorProxy.new(session) }
 
   describe "new" do

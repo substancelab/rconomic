@@ -50,5 +50,10 @@ module Economic
         {}
       end
     end
+
+    # Returns self - used by proxies to access the session of their owner
+    def session
+      self
+    end
   end
 end

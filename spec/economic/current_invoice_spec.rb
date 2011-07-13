@@ -1,7 +1,7 @@
 require './spec/spec_helper'
 
 describe Economic::CurrentInvoice do
-  let(:session) { stub_session }
+  let(:session) { make_session }
   subject { (i = Economic::CurrentInvoice.new).tap { i.session = session } }
 
   it "inherits from Economic::Entity" do

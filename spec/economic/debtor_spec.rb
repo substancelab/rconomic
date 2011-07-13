@@ -1,8 +1,8 @@
 require './spec/spec_helper'
 
 describe Economic::Debtor do
-  let(:session) { stub_session }
-  subject { Economic::Debtor.new }
+  let(:session) { make_session }
+  subject { Economic::Debtor.new(:session => session) }
 
   it "inherits from Economic::Entity" do
     Economic::Debtor.ancestors.should include(Economic::Entity)
@@ -24,4 +24,20 @@ describe Economic::Debtor do
       end
     end
   end
+
+  describe ".current_invoices" do
+    it "returns an CurrentInvoiceProxy" do
+      subject.current_invoices.should be_instance_of(Economic::CurrentInvoiceProxy)
+    end
+
+    it "memoizes the proxy" do
+      subject.current_invoices.should === subject.current_invoices
+    end
+
+    it "should store the session" do
+      subject.session.should_not be_nil
+      subject.current_invoices.session.should == subject.session
+    end
+  end
+
 end

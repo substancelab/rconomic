@@ -32,6 +32,12 @@ describe Economic::Session do
     end
   end
 
+  describe ".session" do
+    it "returns self" do
+      subject.session.should === subject
+    end
+  end
+
   describe "current_invoices" do
     it "returns an CurrentInvoiceProxy" do
       subject.current_invoices.should be_instance_of(Economic::CurrentInvoiceProxy)
@@ -41,7 +47,6 @@ describe Economic::Session do
       subject.current_invoices.should === subject.current_invoices
     end
   end
-
 
   describe "debtors" do
     it "returns a DebtorProxy" do
