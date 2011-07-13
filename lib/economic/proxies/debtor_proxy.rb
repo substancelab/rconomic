@@ -1,3 +1,5 @@
+require 'economic/proxies/entity_proxy'
+
 module Economic
   class DebtorProxy < EntityProxy
     class << self

@@ -8,9 +8,8 @@ require 'economic/debtor'
 require 'economic/current_invoice'
 require 'economic/current_invoice_line'
 
-require 'economic/entity_proxy'
-require 'economic/current_invoice_proxy'
-require 'economic/debtor_proxy'
+require 'economic/proxies/current_invoice_proxy'
+require 'economic/proxies/debtor_proxy'
 
 # http://www.e-conomic.com/apidocs/Documentation/index.html
 # https://www.e-conomic.com/secure/api1/EconomicWebService.asmx
