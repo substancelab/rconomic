@@ -20,14 +20,33 @@ end
 
 Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
 
+# Stub the WSDL instead of fetching it over the wire
 module Savon
-  module WSDL
-    class Request
-      def response
-        # Return the fixture WSDL rather than the online one
-        HTTPI::Response.new(200, {}, Savon::Spec::Fixture['wsdl'])
+  module Wasabi
+    class Document < ::Wasabi::Document
+      def resolve_document
+        Savon::Spec::Fixture['wsdl']
       end
     end
+  end
+end
+
+
+class Savon::Spec::Mock
+  # Fix issue with savon_specs #with method, so that it allows other values than the expected.
+  # Without this, savon_spec 0.1.6 doesn't work with savon 0.9.3.
+  #
+  #   savon.expects('Connect').with(has_entries(:agreementNumber => 123456)).returns(:success)
+  #
+  # would trigger a irrelevant
+  #
+  #   Mocha::ExpectationError: unexpected invocation: #<AnyInstance:Savon::SOAP::XML>.body=(nil)
+  def with(soap_body)
+    if mock_method == :expects
+      Savon::SOAP::XML.any_instance.stubs(:body=)
+      Savon::SOAP::XML.any_instance.expects(:body=).with(soap_body)
+    end
+    self
   end
 end
 
