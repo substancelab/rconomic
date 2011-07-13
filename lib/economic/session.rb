@@ -11,7 +11,7 @@ module Economic
     # Returns the Savon::Client used to connect to e-conomic
     def client
       @client ||= Savon::Client.new do
-        wsdl.document = "https://www.e-conomic.com/secure/api1/EconomicWebService.asmx?wsdl"
+        wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
       end
     end
 
