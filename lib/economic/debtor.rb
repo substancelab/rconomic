@@ -12,7 +12,7 @@ module Economic
 
       data['Handle'] = { 'Number' => number }
       data['Number'] = number
-      data['DebtorGroupHandle'] = { 'Number' => debtor_group_handle[:number] }
+      data['DebtorGroupHandle'] = { 'Number' => debtor_group_handle[:number] } unless debtor_group_handle.blank?
       data['Name'] = name
       data['VatZone'] = vat_zone
       data['CurrencyHandle'] = { 'Code' => currency_handle[:code] } unless currency_handle.blank?
