@@ -21,6 +21,21 @@ module Economic
       invoice
     end
 
+    # Gets data for CurrentInvoice from the API
+    def find(number)
+      invoice_hash = session.request CurrentInvoice.soap_action(:get_data)  do
+        soap.body = {
+          'entityHandle' => {
+            'Number' => number
+          }
+        }
+      end
+      invoice = build(invoice_hash)
+      invoice.persisted = true
+      invoice
+    end
+
+
   private
 
     # Initialize properties in invoice with values from owner

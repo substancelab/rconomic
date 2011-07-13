@@ -57,7 +57,7 @@ Not even remotely... For now, limited to a small subset of all the [available op
                        | Create | Read | Update
     -------------------+--------+------+-------
     Debtor             | X      | X    | X
-    CurrentInvoice     | X      |      |
+    CurrentInvoice     | X      | X    | X
     CurrentInvoiceLine | X      |      |
 
 

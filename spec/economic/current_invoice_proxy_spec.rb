@@ -47,4 +47,18 @@ describe Economic::CurrentInvoiceProxy do
     end
   end
 
+  describe "find" do
+    before :each do
+      savon.stubs('CurrentInvoice_GetData').returns(:success)
+    end
+
+    it "gets invoice data from API" do
+      savon.expects('CurrentInvoice_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
+      subject.find(42)
+    end
+
+    it "returns CurrentInvoice object" do
+      subject.find(42).should be_instance_of(Economic::CurrentInvoice)
+    end
+  end
 end
