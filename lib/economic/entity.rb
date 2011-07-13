@@ -9,7 +9,7 @@ module Economic
 
     class << self
       def properties_not_triggering_full_load
-        [:id, :number]
+        [:id, :number, :handle]
       end
 
       def has_properties(*properties)
@@ -79,6 +79,13 @@ module Economic
       @id
     end
 
+    def handle
+      handle = {}
+      handle[:id] = id unless id.blank?
+      handle[:number] = number unless number.blank?
+      handle
+    end
+
     # Returns true if CurrentInvoiceLine has been persisted in e-conomic
     def persisted?
       !!@persisted
@@ -120,6 +127,11 @@ module Economic
     def create
       response = session.request soap_action('CreateFromData') do
         soap.body = {'data' => build_soap_data}
+      end
+
+      if response
+        @number = response[:number]
+        @id = response[:id]
       end
 
       @persisted = true

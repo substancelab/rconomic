@@ -36,7 +36,7 @@ describe Economic::Entity do
 
     describe "properties_not_triggering_full_load" do
       it "returns names of special id'ish properties" do
-        subject.properties_not_triggering_full_load.should == [:id, :number]
+        subject.properties_not_triggering_full_load.should == [:id, :number, :handle]
       end
     end
 
@@ -140,6 +140,12 @@ describe Economic::Entity do
     it "sends data to the API" do
       savon.expects(:spec_entity_create_from_data).returns(:success)
       subject.save
+    end
+
+    it "updates handle with the number returned from API" do
+      savon.expects(:spec_entity_create_from_data).returns(:success)
+      subject.save
+      subject.number.should == '42'
     end
   end
 
