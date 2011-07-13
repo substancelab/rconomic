@@ -44,9 +44,9 @@ module Economic
       end
     end
 
-    def initialize(values = {})
+    def initialize(properties = {})
       initialize_defaults
-      update_properties(values)
+      update_properties(properties)
       @persisted = false
       @partial = true
     end

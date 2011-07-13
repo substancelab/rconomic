@@ -11,7 +11,7 @@ module Economic
     # Associations
     attr_accessor :lines
 
-    def initialize
+    def initialize(properties = {})
       super
       @lines = []
     end

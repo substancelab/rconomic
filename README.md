@@ -31,8 +31,7 @@ Usage example
     debtor.save
     
     # Create invoice for debtor:
-    invoice = Economic::CurrentInvoice.new
-    invoice.session = economic
+    invoice = economic.current_invoices.build
     
     invoice.debtor_handle = { :number => debtor.number }
     invoice.debtor_name = 'Bob'
