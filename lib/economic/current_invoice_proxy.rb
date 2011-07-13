@@ -1,40 +1,18 @@
 module Economic
-  class CurrentInvoiceProxy
-    attr_reader :owner
-
-    def initialize(owner)
-      @owner = owner
-    end
-
-    def session
-      owner.session
+  class CurrentInvoiceProxy < EntityProxy
+    class << self
+      # Returns the class this proxy is a proxy for
+      def entity_class
+        CurrentInvoice
+      end
     end
 
     # Returns a new, unpersisted Economic::CurrentInvoice
     def build(properties = {})
-      invoice = Economic::CurrentInvoice.new(:session => session)
-
+      invoice = super
       initialize_properties_with_values_from_owner(invoice) if owner.is_a?(Debtor)
-      invoice.update_properties(properties)
-      invoice.partial = false
-
       invoice
     end
-
-    # Gets data for CurrentInvoice from the API
-    def find(number)
-      invoice_hash = session.request CurrentInvoice.soap_action(:get_data)  do
-        soap.body = {
-          'entityHandle' => {
-            'Number' => number
-          }
-        }
-      end
-      invoice = build(invoice_hash)
-      invoice.persisted = true
-      invoice
-    end
-
 
   private
 

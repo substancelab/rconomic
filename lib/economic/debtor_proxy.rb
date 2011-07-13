@@ -1,36 +1,16 @@
 module Economic
-  class DebtorProxy
-    attr_reader :session
-
-    def initialize(session)
-      @session = session
-    end
-
-    # Returns a new, unpersisted Economic::Debtor
-    def build(values = {})
-      debtor = Economic::Debtor.new(values)
-      debtor.session = session
-      debtor
-    end
-
-    # Gets data for Debtor from the API
-    def find(number)
-      debtor_hash = session.request Debtor.soap_action(:get_data)  do
-        soap.body = {
-          'entityHandle' => {
-            'Number' => number
-          }
-        }
+  class DebtorProxy < EntityProxy
+    class << self
+      # Returns the class this proxy is a proxy for
+      def entity_class
+        Debtor
       end
-      debtor = build(debtor_hash)
-      debtor.persisted = true
-      debtor
     end
 
     # Returns Debtors that have the given ci_number. The Debtor objects will only be partially loaded
     def find_by_ci_number(ci_number)
       # Get a list of DebtorHandles from e-conomic
-      response = session.request Debtor.soap_action('FindByCINumber') do
+      response = session.request self.class.entity_class.soap_action('FindByCINumber') do
         soap.body = {
           'ciNumber' => ci_number
         }
@@ -42,6 +22,7 @@ module Economic
       # Create partial Debtor entities
       handles.collect do |handle|
         debtor = build
+        debtor.partial = true
         debtor.persisted = true
         debtor.handle = handle
         debtor.number = handle[:number]

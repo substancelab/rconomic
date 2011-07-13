@@ -8,6 +8,7 @@ require 'economic/debtor'
 require 'economic/current_invoice'
 require 'economic/current_invoice_line'
 
+require 'economic/entity_proxy'
 require 'economic/current_invoice_proxy'
 require 'economic/debtor_proxy'
 
