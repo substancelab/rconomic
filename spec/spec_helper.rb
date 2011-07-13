@@ -35,6 +35,23 @@ def make_session
   Economic::Session.new(123456, 'api', 'passw0rd')
 end
 
+def make_current_invoice(properties = {})
+  invoice = make_debtor.current_invoices.build
+
+  # Assign specified properties
+  properties.each { |key, value|
+    invoice.send("#{key}=", value)
+  }
+
+  # Use defaults for the rest of the properties
+  invoice.date ||= Time.now
+  invoice.due_date ||= Time.now + 15
+  invoice.exchange_rate ||= 100
+  invoice.is_vat_included ||= false
+
+  invoice
+end
+
 def make_debtor(properties = {})
   debtor = Economic::Debtor.new
 

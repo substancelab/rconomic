@@ -7,10 +7,13 @@ module Economic
       end
     end
 
-    attr_reader :owner
+    include Enumerable
+
+    attr_reader :owner, :items
 
     def initialize(owner)
       @owner = owner
+      @items = []
     end
 
     def session
@@ -40,5 +43,19 @@ module Economic
       entity.persisted = true
       entity
     end
+
+    # Add item to proxy
+    def <<(item)
+      items << item
+    end
+
+    def each
+      items.each { |i| yield i }
+    end
+
+    def empty?
+      items.empty?
+    end
+
   end
 end

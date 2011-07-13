@@ -1,0 +1,28 @@
+require 'economic/proxies/entity_proxy'
+
+module Economic
+  class CurrentInvoiceLineProxy < EntityProxy
+    class << self
+      # Returns the class this proxy is a proxy for
+      def entity_class
+        CurrentInvoiceLine
+      end
+    end
+
+    # Returns a new, unpersisted Economic::CurrentInvoiceLine
+    def build(properties = {})
+      invoice_line = super
+      initialize_properties_with_values_from_owner(invoice_line) if owner.is_a?(CurrentInvoice)
+      invoice_line
+    end
+
+  private
+
+    # Initialize properties in invoice_line with values from owner
+    def initialize_properties_with_values_from_owner(invoice_line)
+      invoice_line.invoice_handle = owner.handle
+      invoice_line
+    end
+
+  end
+end

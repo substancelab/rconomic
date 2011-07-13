@@ -4,13 +4,13 @@ describe Economic::CurrentInvoiceProxy do
   let(:session) { make_session }
   subject { Economic::CurrentInvoiceProxy.new(session) }
 
-  describe "new" do
+  describe ".new" do
     it "stores session" do
       subject.session.should === session
     end
   end
 
-  describe "build" do
+  describe ".build" do
     it "instantiates a new CurrentInvoice" do
       subject.build.should be_instance_of(Economic::CurrentInvoice)
     end
@@ -47,7 +47,7 @@ describe Economic::CurrentInvoiceProxy do
     end
   end
 
-  describe "find" do
+  describe ".find" do
     before :each do
       savon.stubs('CurrentInvoice_GetData').returns(:success)
     end

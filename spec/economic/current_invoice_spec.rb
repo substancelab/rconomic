@@ -9,8 +9,9 @@ describe Economic::CurrentInvoice do
   end
 
   describe "new" do
-    it "initializes lines as an empty array" do
-      subject.lines.should == []
+    it "initializes lines as an empty proxy" do
+      subject.lines.should be_instance_of(Economic::CurrentInvoiceLineProxy)
+      subject.lines.should be_empty
     end
   end
 

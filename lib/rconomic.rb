@@ -9,6 +9,7 @@ require 'economic/current_invoice'
 require 'economic/current_invoice_line'
 
 require 'economic/proxies/current_invoice_proxy'
+require 'economic/proxies/current_invoice_line_proxy'
 require 'economic/proxies/debtor_proxy'
 
 # http://www.e-conomic.com/apidocs/Documentation/index.html

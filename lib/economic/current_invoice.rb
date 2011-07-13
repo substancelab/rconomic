@@ -8,12 +8,13 @@ module Economic
   class CurrentInvoice < Entity
     has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent
 
-    # Associations
-    attr_accessor :lines
-
     def initialize(properties = {})
       super
-      @lines = []
+    end
+
+    # Returns the current invoice lines of CurrentInvoice
+    def lines
+      @lines ||= CurrentInvoiceLineProxy.new(self)
     end
 
     def initialize_defaults
