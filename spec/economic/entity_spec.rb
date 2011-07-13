@@ -56,7 +56,8 @@ describe Economic::Entity do
       it "does not create setter or getter for id'ish properties" do
         subject.expects(:define_method).with('id').never
         subject.expects(:define_method).with('number').never
-        subject.has_properties :id, :number
+        subject.expects(:define_method).with('handle').never
+        subject.has_properties :id, :number, :handle
       end
 
       it "does not clobber existing methods" do
@@ -162,8 +163,15 @@ describe Economic::Entity do
     subject { SpecEntity.new }
 
     it "sets the properties to the given values" do
+      subject.class.has_properties :foo, :baz
       subject.expects(:foo=).with('bar')
       subject.expects(:baz=).with('qux')
+      subject.update_properties(:foo => 'bar', 'baz' => 'qux')
+    end
+
+    it "only sets known properties" do
+      subject.class.has_properties :foo, :bar
+      subject.expects(:foo=).with('bar')
       subject.update_properties(:foo => 'bar', 'baz' => 'qux')
     end
   end

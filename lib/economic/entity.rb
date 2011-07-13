@@ -110,7 +110,10 @@ module Economic
     # Updates properties of Entity with the values from hash
     def update_properties(hash)
       hash.each do |key, value|
-        self.send("#{key}=", value)
+        setter_method = "#{key}="
+        if self.respond_to?(setter_method)
+          self.send(setter_method, value)
+        end
       end
     end
 
