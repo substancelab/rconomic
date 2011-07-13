@@ -1,7 +1,6 @@
 source :rubygems
 
-gem 'savon', '0.9.5'
-gem 'activesupport', '~> 3.0'
+gemspec
 
 group :test do
   gem 'rake'

@@ -1,3 +1,10 @@
+PATH
+  remote: .
+  specs:
+    rconomic (0.1.0)
+      activesupport (~> 3.0)
+      savon (= 0.9.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -42,7 +49,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 3.0)
   rake
-  savon (= 0.9.5)
+  rconomic!
   savon_spec (= 0.1.6)
