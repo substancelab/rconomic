@@ -48,6 +48,13 @@ Usage example
     invoice.save
 
 
+How to enable e-conomic API access
+----------------------------------
+
+You need to enable API access in e-conomic before you can, well, use the API. Otherwise you'll be getting access denied errors when connecting.
+
+Just follow the instructions on [e-copedia](http://wiki.e-conomic.co.uk/add-on-modules/) to enable the API Add-on module.
+
 
 It doesn't do everything
 ------------------------
@@ -65,4 +72,3 @@ Credits
 -------
 
 Sponsored by [Lokalebasen.dk](http://lokalebasen.dk)
-
