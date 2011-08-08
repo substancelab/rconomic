@@ -38,6 +38,16 @@ describe Economic::Session do
     end
   end
 
+  describe "contacts" do
+    it "returns a DebtorContactProxy" do
+      subject.contacts.should be_instance_of(Economic::DebtorContactProxy)
+    end
+
+    it "memoizes the proxy" do
+      subject.contacts.should === subject.contacts
+    end
+  end
+
   describe "current_invoices" do
     it "returns an CurrentInvoiceProxy" do
       subject.current_invoices.should be_instance_of(Economic::CurrentInvoiceProxy)
