@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <DebtorContact_GetDataResponse xmlns="http://e-conomic.com">
+      <DebtorContact_GetDataResult>
+        <Handle>
+          <Id>int</Id>
+        </Handle>
+        <Id>int</Id>
+        <DebtorHandle>
+          <Number>string</Number>
+        </DebtorHandle>
+        <Name>string</Name>
+        <Number>int</Number>
+        <TelephoneNumber>string</TelephoneNumber>
+        <Email>string</Email>
+        <Comments>string</Comments>
+        <ExternalId>string</ExternalId>
+        <IsToReceiveEmailCopyOfOrder>boolean</IsToReceiveEmailCopyOfOrder>
+        <IsToReceiveEmailCopyOfInvoice>boolean</IsToReceiveEmailCopyOfInvoice>
+      </DebtorContact_GetDataResult>
+    </DebtorContact_GetDataResponse>
+  </soap:Body>
+</soap:Envelope>
