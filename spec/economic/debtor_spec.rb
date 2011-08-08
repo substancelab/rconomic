@@ -40,4 +40,20 @@ describe Economic::Debtor do
     end
   end
 
+  describe ".contacts" do
+    it "returns a DebtorContactProxy" do
+      subject.contcats.should be_instance_of(Economic::DebtorContactProxy)
+    end
+
+    it "memoizes the proxy" do
+      subject.contacts.should === subject.contacts
+    end
+
+    it "should store the session" do
+      subject.session.should_not be_nil
+      subject.debtor.session.should == subject.session
+    end
+  end
+
+
 end

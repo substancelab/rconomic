@@ -5,6 +5,7 @@ require 'active_support/ordered_hash'
 
 require 'economic/session'
 require 'economic/debtor'
+require 'economic/debtor_contact'
 require 'economic/current_invoice'
 require 'economic/current_invoice_line'
 
