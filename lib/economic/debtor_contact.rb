@@ -11,6 +11,16 @@ module Economic
       @debtor ||= session.debtors.find(debtor_handle[:number])
     end
 
+    def debtor=(debtor)
+      self.debtor_handle = debtor.handle
+      @debtor = debtor
+    end
+
+    def debtor_handle=(handle)
+      @debtor = nil unless handle == @debtor_handle
+      @debtor_handle = handle
+    end
+
     protected
 
     def build_soap_data

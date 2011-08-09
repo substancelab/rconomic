@@ -49,4 +49,46 @@ describe Economic::DebtorContact do
     end
   end
 
+  describe ".debtor=" do
+    let(:debtor) { make_debtor }
+    it "should set debtor_handle" do
+      subject.debtor = debtor
+      subject.debtor_handle.should == debtor.handle
+    end
+  end
+
+  describe ".debtor_handle=" do
+    let(:debtor) { make_debtor }
+    let(:handle) { debtor.handle }
+
+    it "should set debtor_handle" do
+      subject.debtor_handle = handle
+      subject.debtor_handle.should == handle
+    end
+
+    context "when debtor handle is for a different Debtor" do
+      before :each do
+        subject.debtor = debtor
+      end
+
+      it "should clear cached debtor and fetch the new debtor from API" do
+        savon.stubs('Debtor_GetData').returns(:success)
+        subject.debtor_handle = {:number => 1234}
+        subject.debtor.should be_instance_of(Economic::Debtor)
+      end
+    end
+
+    context "when debtor handle is for the current Debtor" do
+      before :each do
+        subject.debtor = debtor
+      end
+
+      it "should not clear cached debtor nor fetch the debtor from API" do
+        savon.stubs('Debtor_GetData').never
+        subject.debtor_handle = handle
+        subject.debtor.should be_instance_of(Economic::Debtor)
+      end
+    end
+  end
+
 end
