@@ -2,17 +2,10 @@ require 'economic/proxies/entity_proxy'
 
 module Economic
   class DebtorProxy < EntityProxy
-    class << self
-      # Returns the class this proxy is a proxy for
-      def entity_class
-        Debtor
-      end
-    end
-
     # Returns Debtors that have the given ci_number. The Debtor objects will only be partially loaded
     def find_by_ci_number(ci_number)
       # Get a list of DebtorHandles from e-conomic
-      response = session.request self.class.entity_class.soap_action('FindByCINumber') do
+      response = session.request entity_class.soap_action('FindByCINumber') do
         soap.body = {
           'ciNumber' => ci_number
         }

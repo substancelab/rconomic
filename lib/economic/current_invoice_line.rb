@@ -21,6 +21,11 @@ module Economic
       self.margin_as_percent = 0
     end
 
+    # Returns a Economic::CurrentInvoiceLineProxy owned by CurrentInvoiceLines session
+    def proxy
+      CurrentInvoiceLineProxy.new(session)
+    end
+
     # Returns OrderedHash with the properties of CurrentInvoice in the correct order, camelcased and ready
     # to be sent via SOAP
     def build_soap_data

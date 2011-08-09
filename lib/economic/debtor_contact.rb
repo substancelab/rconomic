@@ -21,6 +21,11 @@ module Economic
       @debtor_handle = handle
     end
 
+    # Returns a Economic::DebtorContactProxy owned by DebtorContacts session
+    def proxy
+      DebtorContactProxy.new(session)
+    end
+
     protected
 
     def build_soap_data

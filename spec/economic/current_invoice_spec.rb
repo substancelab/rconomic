@@ -15,6 +15,16 @@ describe Economic::CurrentInvoice do
     end
   end
 
+  describe ".proxy" do
+    it "should return a CurrentInvoiceProxy" do
+      subject.proxy.should be_instance_of(Economic::CurrentInvoiceProxy)
+    end
+
+    it "should return a proxy owned by session" do
+      subject.proxy.session.should == session
+    end
+  end
+
   describe "save" do
     context "when successful" do
       before :each do

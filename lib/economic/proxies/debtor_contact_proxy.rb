@@ -3,13 +3,6 @@ require 'economic/proxies/entity_proxy'
 module Economic
   class DebtorContactProxy < EntityProxy
 
-    class << self
-      # Returns the class this proxy is a proxy for
-      def entity_class
-        DebtorContact
-      end
-    end
-
     # Returns a new, unpersisted Economic::DebtorContact
     def build(properties = {})
       contact = super
@@ -21,7 +14,7 @@ module Economic
     def find(id)
       # This is basically EntityProxy::find duplicated so we can pass id to the API instead of
       # Number...
-      entity_hash = session.request self.class.entity_class.soap_action(:get_data)  do
+      entity_hash = session.request entity_class.soap_action(:get_data)  do
         soap.body = {
           'entityHandle' => {
             'Id' => id

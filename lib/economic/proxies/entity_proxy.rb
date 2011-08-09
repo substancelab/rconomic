@@ -3,7 +3,9 @@ module Economic
     class << self
       # Returns the class this Proxy is a proxy for
       def entity_class
-        Entity
+        proxy_class_name = name.split('::').last
+        entity_class_name = proxy_class_name.sub(/Proxy$/, '')
+        Economic.const_get(entity_class_name)
       end
     end
 
@@ -30,18 +32,29 @@ module Economic
       entity
     end
 
-    # Gets data for Entity from the API
+    # Returns the class this proxy manages
+    def entity_class
+      self.class.entity_class
+    end
+
+    # Fetches Entity data from API and returns an Entity initialized with that data
     def find(number)
-      entity_hash = session.request self.class.entity_class.soap_action(:get_data)  do
+      entity_hash = get_data(number)
+      entity = build(entity_hash)
+      entity.persisted = true
+      entity
+    end
+
+    # Gets data for Entity from the API. Returns Hash with the response data
+    def get_data(number)
+      entity_hash = session.request(entity_class.soap_action(:get_data)) do
         soap.body = {
           'entityHandle' => {
             'Number' => number
           }
         }
       end
-      entity = build(entity_hash)
-      entity.persisted = true
-      entity
+      entity_hash
     end
 
     # Add item to proxy

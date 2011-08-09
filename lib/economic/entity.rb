@@ -57,13 +57,7 @@ module Economic
 
     # Updates Entity with its data from the API
     def get_data
-      response = session.request soap_action(:get_data) do
-        soap.body = {
-          'entityHandle' => {
-            'Number' => number
-          }
-        }
-      end
+      response = proxy.get_data(number)
       self.update_properties(response)
       self.partial = false
       self.persisted = true
@@ -95,6 +89,13 @@ module Economic
     def partial?
       # TODO: Can this be introspected somehow?
       !!@partial
+    end
+
+    # Returns a proxy for entities of the current class. For example if called on an
+    # Economic::Debtor it returns an instance of Economic::DebtorProxy with the Debtors session as
+    # owner.
+    def proxy
+      EntityProxy.new(session)
     end
 
     def inspect

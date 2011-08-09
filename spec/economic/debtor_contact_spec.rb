@@ -91,4 +91,14 @@ describe Economic::DebtorContact do
     end
   end
 
+  describe ".proxy" do
+    it "should return a DebtorContactProxy" do
+      subject.proxy.should be_instance_of(Economic::DebtorContactProxy)
+    end
+
+    it "should return a proxy owned by session" do
+      subject.proxy.session.should == session
+    end
+  end
+
 end

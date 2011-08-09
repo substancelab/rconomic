@@ -4,7 +4,11 @@ class SpecEntity < Economic::Entity
   has_properties :foo, :baz
 
   def existing_method; end
+
+  def proxy; Economic::SpecEntityProxy.new(session); end
 end
+
+class Economic::SpecEntityProxy < Economic::EntityProxy; end
 
 describe Economic::Entity do
   let(:session) { make_session }
@@ -147,6 +151,14 @@ describe Economic::Entity do
       savon.expects(:spec_entity_create_from_data).returns(:success)
       subject.save
       subject.number.should == '42'
+    end
+  end
+
+  describe ".proxy" do
+    subject { (e = SpecEntity.new).tap { |e| e.session = session } }
+
+    it "should return SpecEntityProxy" do
+      subject.proxy.should be_instance_of(Economic::SpecEntityProxy)
     end
   end
 

@@ -71,4 +71,10 @@ describe Economic::DebtorProxy do
       subject.session.should === session
     end
   end
+
+  describe "#entity_class" do
+    it "should return Economic::Debtor" do
+      Economic::DebtorProxy.entity_class.should == Economic::Debtor
+    end
+  end
 end

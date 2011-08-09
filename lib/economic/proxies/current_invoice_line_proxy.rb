@@ -2,13 +2,6 @@ require 'economic/proxies/entity_proxy'
 
 module Economic
   class CurrentInvoiceLineProxy < EntityProxy
-    class << self
-      # Returns the class this proxy is a proxy for
-      def entity_class
-        CurrentInvoiceLine
-      end
-    end
-
     # Returns a new, unpersisted Economic::CurrentInvoiceLine
     def build(properties = {})
       invoice_line = super
