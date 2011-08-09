@@ -30,7 +30,7 @@ module Economic
 
     # Initialize properties in contact with values from owner. Returns contact.
     def initialize_properties_with_values_from_owner(contact)
-      contact.debtor_handle = owner.handle
+      contact.debtor = owner
       contact
     end
 
