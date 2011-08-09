@@ -8,6 +8,16 @@ describe Economic::Debtor do
     Economic::Debtor.ancestors.should include(Economic::Entity)
   end
 
+  describe "class methods" do
+    subject { Economic::Debtor }
+
+    describe ".proxy" do
+      it "should return DebtorProxy" do
+        subject.proxy.should == Economic::DebtorProxy
+      end
+    end
+  end
+
   context "when saving" do
     context "when debtor is new" do
       subject { Economic::Debtor.new(:session => session) }
@@ -56,7 +66,7 @@ describe Economic::Debtor do
   end
 
   describe ".proxy" do
-    it "should return DebtorProxy" do
+    it "should return a DebtorProxy" do
       subject.proxy.should be_instance_of(Economic::DebtorProxy)
     end
 

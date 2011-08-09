@@ -36,6 +36,13 @@ module Economic
         @properties || []
       end
 
+      # Returns the class used to instantiate a proxy for Entity
+      def proxy
+        class_name = name.split('::').last
+        proxy_class_name = "#{class_name}Proxy"
+        Economic.const_get(proxy_class_name)
+      end
+
       # Returns the E-conomic API action name to call
       def soap_action(action)
         class_name = self.name
@@ -95,7 +102,7 @@ module Economic
     # Economic::Debtor it returns an instance of Economic::DebtorProxy with the Debtors session as
     # owner.
     def proxy
-      EntityProxy.new(session)
+      self.class.proxy.new(session)
     end
 
     def inspect

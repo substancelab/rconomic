@@ -14,11 +14,6 @@ module Economic
       @current_invoices ||= CurrentInvoiceProxy.new(self)
     end
 
-    # Returns a Economic::DebtorProxy owned by Debtors session
-    def proxy
-      DebtorProxy.new(session)
-    end
-
     protected
 
     def build_soap_data

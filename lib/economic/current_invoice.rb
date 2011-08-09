@@ -17,11 +17,6 @@ module Economic
       @lines ||= CurrentInvoiceLineProxy.new(self)
     end
 
-    # Returns a Economic::CurrentInvoiceProxy owned by CurrentInvoices session
-    def proxy
-      CurrentInvoiceProxy.new(session)
-    end
-
     def initialize_defaults
       self.id = 0
       self.date = Time.now
