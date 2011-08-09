@@ -189,3 +189,24 @@ describe Economic::Entity do
   end
 end
 
+describe Economic::Entity::Handle do
+
+  describe "equality" do
+    let(:handle_a) { Economic::Entity::Handle.new(:id => 1, :number => 2) }
+    let(:handle_b) { Economic::Entity::Handle.new(:id => 1, :number => 2) }
+    let(:handle_c) { Economic::Entity::Handle.new(:id => 1) }
+    let(:handle_d) { Economic::Entity::Handle.new(:id => 1, :number => 3) }
+
+    it "should be equal when both id and number are equal" do
+      handle_a.should == handle_b
+    end
+
+    it "should not be equal when id or number is missing" do
+      handle_a.should_not == handle_c
+    end
+
+    it "should not be equal when id or number is equal and the other isn't" do
+      handle_a.should_not == handle_d
+    end
+  end
+end

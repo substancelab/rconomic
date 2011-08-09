@@ -22,7 +22,7 @@ module Economic
 
     def debtor
       return nil if debtor_handle.blank?
-      @debtor ||= session.debtors.find(debtor_handle[:number])
+      @debtor ||= session.debtors.find(debtor_handle)
     end
 
     def debtor=(debtor)
@@ -35,14 +35,18 @@ module Economic
       @debtor_handle = handle
     end
 
+    def handle
+      Handle.new({:id => @id})
+    end
+
     protected
 
     def build_soap_data
       data = ActiveSupport::OrderedHash.new
 
-      data['Handle'] = { 'Id' => id }
-      data['Id'] = id
-      data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
+      data['Handle'] = handle.to_hash
+      data['Id'] = handle.id
+      data['DebtorHandle'] = debtor.handle.to_hash unless debtor.blank?
       data['Name'] = name
       data['Number'] = number unless number.blank?
       data['TelephoneNumber'] = telephone_number unless telephone_number.blank?

@@ -11,6 +11,25 @@ module Economic
   class CurrentInvoiceLine < Entity
     has_properties :invoice_handle, :description, :delivery_date, :unit_handle, :product_handle, :quantity, :unit_net_price, :discount_as_percent, :unit_cost_price, :total_net_amount, :total_margin, :margin_as_percent
 
+    def handle
+      Handle.new(:number => number)
+    end
+
+    def invoice
+      return nil if invoice_handle.blank?
+      @invoice ||= session.current_invoices.find(invoice_handle)
+    end
+
+    def invoice=(invoice)
+      self.invoice_handle = invoice.handle
+      @invoice = invoice
+    end
+
+    def invoice_handle=(handle)
+      @invoice = nil unless handle == @invoice_handle
+      @invoice_handle = handle
+    end
+
     def initialize_defaults
       self.invoice_handle = nil
       self.description = nil
@@ -32,7 +51,7 @@ module Economic
       data = ActiveSupport::OrderedHash.new
 
       data['Number'] = 0 # Doesn't seem to be used
-      data['InvoiceHandle'] = { 'Id' => invoice_handle[:id] } unless invoice_handle.blank?
+      data['InvoiceHandle'] = invoice.handle.to_hash unless invoice.blank?
       data['Description'] = description unless description.blank?
       data['DeliveryDate'] = delivery_date
       data['UnitHandle'] = { 'Number' => unit_handle[:number] } unless unit_handle.blank?

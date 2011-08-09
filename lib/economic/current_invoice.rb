@@ -32,6 +32,25 @@ module Economic
       super
     end
 
+    def debtor
+      return nil if debtor_handle.blank?
+      @debtor ||= session.debtors.find(debtor_handle)
+    end
+
+    def debtor=(debtor)
+      self.debtor_handle = debtor.handle
+      @debtor = debtor
+    end
+
+    def debtor_handle=(handle)
+      @debtor = nil unless handle == @debtor_handle
+      @debtor_handle = handle
+    end
+
+    def handle
+      Handle.new(:id => @id)
+    end
+
     # Returns the current invoice lines of CurrentInvoice
     def lines
       @lines ||= CurrentInvoiceLineProxy.new(self)
@@ -60,7 +79,7 @@ module Economic
       data = ActiveSupport::OrderedHash.new
 
       data['Id'] = id
-      data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
+      data['DebtorHandle'] = debtor.handle.to_hash unless debtor.blank?
       data['DebtorName'] = debtor_name
       data['DebtorAddress'] = debtor_address unless debtor_address.blank?
       data['DebtorPostalCode'] = debtor_postal_code unless debtor_postal_code.blank?
@@ -89,7 +108,7 @@ module Economic
 
       self.lines.each do |invoice_line|
         invoice_line.session = session
-        invoice_line.invoice_handle = { :id => id }
+        invoice_line.invoice = self
         invoice_line.save
       end
     end

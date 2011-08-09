@@ -33,17 +33,19 @@ describe Economic::DebtorContact do
     end
 
     context "when debtor_handle is set" do
+      let(:handle) { Economic::DebtorContact::Handle.new({:number => 42}) }
+
       before :each do
-        subject.debtor_handle = {:number => 42}
+        subject.debtor_handle = handle
       end
 
       it "returns a Debtor" do
-        session.debtors.expects(:find).with(42).returns(Economic::Debtor.new)
+        session.debtors.expects(:find).with(handle).returns(Economic::Debtor.new)
         subject.debtor.should be_instance_of(Economic::Debtor)
       end
 
       it "only looks up the debtor the first time" do
-        session.debtors.expects(:find).with(42).returns(Economic::Debtor.new)
+        session.debtors.expects(:find).with(handle).returns(Economic::Debtor.new)
         subject.debtor.should === subject.debtor
       end
     end
@@ -73,7 +75,7 @@ describe Economic::DebtorContact do
 
       it "should clear cached debtor and fetch the new debtor from API" do
         savon.stubs('Debtor_GetData').returns(:success)
-        subject.debtor_handle = {:number => 1234}
+        subject.debtor_handle = Economic::Debtor::Handle.new({:number => 1234})
         subject.debtor.should be_instance_of(Economic::Debtor)
       end
     end

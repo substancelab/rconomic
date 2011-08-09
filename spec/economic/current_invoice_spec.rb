@@ -42,7 +42,7 @@ describe Economic::CurrentInvoice do
 
         it "adds the lines to the invoice" do
           subject.lines.each do |line|
-            line.expects(:invoice_handle=).with({:id => '42'})
+            line.expects(:invoice=).with(subject)
           end
 
           subject.save

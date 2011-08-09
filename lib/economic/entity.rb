@@ -1,8 +1,30 @@
-
-
 module Economic
-
   class Entity
+    class Handle
+      attr_accessor :id, :number
+
+      def initialize(hash)
+        @id = hash[:id]
+        @number = hash[:number]
+      end
+
+      def to_hash
+        hash = {}
+        hash['Id'] = id unless id.blank?
+        hash['Number'] = number unless number.blank?
+        hash
+      end
+
+      def [](key)
+        {:id => @id, :number => @number}[key]
+      end
+
+      def ==(other)
+        return false if other.nil?
+        return false unless other.respond_to?(:id) && other.respond_to?(:number)
+        self.id == other.id && self.number == other.number
+      end
+    end
 
     # Internal accessors
     attr_accessor :persisted, :session, :partial
@@ -49,6 +71,10 @@ module Economic
         class_name_without_modules = class_name.split('::').last
         "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
       end
+    end
+
+    def handle
+      Handle.new({:number => @number, :id => @id})
     end
 
     def initialize(properties = {})
@@ -136,7 +162,7 @@ module Economic
     end
 
     def create
-      response = session.request soap_action('CreateFromData') do
+      response = session.request soap_action(:create_from_data) do
         soap.body = {'data' => build_soap_data}
       end
 

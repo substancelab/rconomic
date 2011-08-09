@@ -13,7 +13,7 @@ module Economic
 
     # Initialize properties in invoice_line with values from owner
     def initialize_properties_with_values_from_owner(invoice_line)
-      invoice_line.invoice_handle = owner.handle
+      invoice_line.invoice = owner
       invoice_line
     end
 
