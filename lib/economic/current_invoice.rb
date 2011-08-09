@@ -2,9 +2,29 @@ require 'economic/entity'
 
 module Economic
 
-  # Current invoices are invoices that are not yet booked. They are therefore not read-only.
+  # CurrentInvoices are invoices that are not yet booked. They are therefore not read-only.
   #
-  # http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICurrentInvoice.html
+  # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICurrentInvoice.html
+  #
+  # Examples
+  #
+  #   # Create invoice for debtor:
+  #   invoice = debtor.current_invoices.build
+  #   invoice.date = Time.now
+  #   invoice.due_date = Time.now + 15
+  #   invoice.exchange_rate = 100
+  #   invoice.is_vat_included = false
+  #
+  #   # Add a line to the invoice
+  #   invoice_line = invoice.lines.build
+  #   invoice_line.description = 'Line on invoice'
+  #   invoice_line.unit_handle = { :number => 1 }
+  #   invoice_line.product_handle = { :number => 101 }
+  #   invoice_line.quantity = 12
+  #   invoice_line.unit_net_price = 19.95
+  #   invoice.lines << invoice_line
+  #
+  #   invoice.save
   class CurrentInvoice < Entity
     has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent
 

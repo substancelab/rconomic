@@ -3,6 +3,20 @@ require 'economic/entity'
 module Economic
 
   # Represents a debtor contact.
+  #
+  # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_IDebtorContact.html
+  #
+  # Examples
+  #
+  #   # Find contact
+  #   contact = economic.contacts.find(5)
+  #
+  #   # Creating a contact
+  #   contact = debtor.contacts.build
+  #   contact.id = 0
+  #   contact.number = 0
+  #   contact.name = 'John Appleseed'
+  #   contact.save
   class DebtorContact < Entity
     has_properties :handle, :id, :debtor_handle, :name, :number, :telephone_number, :email, :comments, :external_id, :is_to_receive_email_copy_of_order, :is_to_receive_email_copy_of_invoice
 

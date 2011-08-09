@@ -2,6 +2,28 @@ require 'economic/entity'
 
 module Economic
 
+  # Represents a debtor in E-conomic.
+  #
+  # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_IDebtor.html
+  #
+  # Examples
+  #
+  #   # Find a debtor:
+  #   debtor = economic.debtors.find(558)
+  #
+  #   # Creating a debtor:
+  #   debtor = economic.debtors.build
+  #   debtor.number = economic.debtors.next_available_number
+  #   debtor.debtor_group_handle = { :number => 1 }
+  #   debtor.name = 'Apple Inc'
+  #   debtor.vat_zone = 'HomeCountry' # HomeCountry, EU, Abroad
+  #   debtor.currency_handle = { :code => 'DKK' }
+  #   debtor.price_group_handle = { :number => 1 }
+  #   debtor.is_accessible = true
+  #   debtor.ci_number = '12345678'
+  #   debtor.term_of_payment_handle = { :id => 1 }
+  #   debtor.layout_handle = { :id => 16 }
+  #   debtor.save
   class Debtor < Entity
     has_properties :handle, :number, :debtor_group_handle, :name, :vat_zone, :currency_handle, :price_group_handle, :is_accessible, :ean, :public_entry_number, :email, :telephone_and_fax_number, :website, :address, :postal_code, :city, :country, :credit_maximum, :vat_number, :county, :ci_number, :term_of_payment_handle, :layout_handle, :attention_handle, :your_reference_handle, :our_reference_handle, :balance
 
