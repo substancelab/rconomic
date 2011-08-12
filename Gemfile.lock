@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rconomic (0.1.0)
+    rconomic (0.2.1)
       activesupport (~> 3.0)
       savon (= 0.9.5)
 
