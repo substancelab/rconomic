@@ -87,7 +87,7 @@ module Economic
       data['DebtorCountry'] = debtor_country unless debtor_country.blank?
       data['Date'] = date.iso8601 unless date.blank?
       data['TermOfPaymentHandle'] = { 'Id' => term_of_payment_handle[:id] } unless term_of_payment_handle.blank?
-      data['DueDate'] = due_date.iso8601 unless due_date.blank?
+      data['DueDate'] = (due_date.blank? ? nil : due_date.iso8601)
       data['CurrencyHandle'] = { 'Code' => currency_handle[:code] } unless currency_handle.blank?
       data['ExchangeRate'] = exchange_rate
       data['IsVatIncluded'] = is_vat_included
