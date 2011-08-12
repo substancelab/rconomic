@@ -28,6 +28,11 @@ describe Economic::CurrentInvoiceLineProxy do
       subject.build.should_not be_partial
     end
 
+    it "adds the built line to proxy items" do
+      line = subject.build
+      subject.items.should include(line)
+    end
+
     context "when owner is a CurrentInvoice" do
       subject { invoice.lines }
 

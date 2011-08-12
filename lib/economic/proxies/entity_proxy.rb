@@ -58,9 +58,10 @@ module Economic
     end
 
     # Add item to proxy
-    def <<(item)
+    def append(item)
       items << item
     end
+    alias :<< :append
 
     def each
       items.each { |i| yield i }

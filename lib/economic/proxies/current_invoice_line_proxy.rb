@@ -6,6 +6,7 @@ module Economic
     def build(properties = {})
       invoice_line = super
       initialize_properties_with_values_from_owner(invoice_line) if owner.is_a?(CurrentInvoice)
+      self.append(invoice_line)
       invoice_line
     end
 
