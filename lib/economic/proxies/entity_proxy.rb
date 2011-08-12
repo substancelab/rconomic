@@ -29,6 +29,8 @@ module Economic
       entity.update_properties(properties)
       entity.partial = false
 
+      self.append(entity)
+
       entity
     end
 
@@ -57,9 +59,9 @@ module Economic
       entity_hash
     end
 
-    # Add item to proxy
+    # Adds item to proxy unless item already exists in the proxy
     def append(item)
-      items << item
+      items << item unless items.include?(item)
     end
     alias :<< :append
 
@@ -69,6 +71,11 @@ module Economic
 
     def empty?
       items.empty?
+    end
+
+    # Returns the number of entities in proxy
+    def size
+      items.size
     end
 
   end

@@ -15,6 +15,15 @@ describe Economic::CurrentInvoiceLineProxy do
     end
   end
 
+  describe ".append" do
+    it "ignores duplicated lines" do
+      line = Economic::CurrentInvoiceLine.new
+      subject.append(line)
+      subject.append(line)
+      subject.items.should == [line]
+    end
+  end
+
   describe ".build" do
     it "instantiates a new CurrentInvoiceLine" do
       subject.build.should be_instance_of(Economic::CurrentInvoiceLine)
@@ -30,7 +39,7 @@ describe Economic::CurrentInvoiceLineProxy do
 
     it "adds the built line to proxy items" do
       line = subject.build
-      subject.items.should include(line)
+      subject.items.should == [line]
     end
 
     context "when owner is a CurrentInvoice" do
