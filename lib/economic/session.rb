@@ -47,6 +47,18 @@ module Economic
     def debtors
       @debtors ||= DebtorProxy.new(self)
     end
+    
+    def cash_books
+      @cash_books ||= CashBookProxy.new(self)
+    end
+    
+    def cash_book_entries
+      @cash_book_entries ||= CashBookEntryProxy.new(self)
+    end
+    
+    def accounts
+      @accounts ||= AccountProxy.new(self)
+    end
 
     def request(action, &block)
       response = client.request :economic, action, &block
