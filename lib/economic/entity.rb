@@ -4,6 +4,7 @@ module Economic
       attr_accessor :id, :number
 
       def initialize(hash)
+        raise ArgumentError.new("Expected Hash or Economic::Entity::Handle - got #{hash.inspect}") unless hash.respond_to?(:keys) && hash.respond_to?(:values)
         @id = hash[:id]
         @number = hash[:number]
       end
@@ -90,12 +91,12 @@ module Economic
 
     # Updates Entity with its data from the API
     def get_data
-      response = proxy.get_data(number)
+      response = proxy.get_data(handle)
       self.update_properties(response)
       self.partial = false
       self.persisted = true
     end
-
+    
     # Returns the number of Entity. This does not trigger a load from the API even if Entity is partial
     def number
       @number

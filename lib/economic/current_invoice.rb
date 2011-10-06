@@ -26,11 +26,27 @@ module Economic
   #
   #   invoice.save
   class CurrentInvoice < Entity
-    has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent
+    has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :attention_handle, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent
 
     def initialize(properties = {})
       super
     end
+
+    def attention
+      return nil if attention_handle.blank?
+      @attention ||= session.contacts.find(attention_handle)
+    end
+
+    def attention=(contact)
+      self.attention_handle = contact.handle
+      @attention = contact
+    end
+
+    def attention_handle=(handle)
+      @attention = nil unless handle == @attention_handle
+      @attention_handle = handle
+    end
+
 
     def debtor
       return nil if debtor_handle.blank?
@@ -85,6 +101,7 @@ module Economic
       data['DebtorPostalCode'] = debtor_postal_code unless debtor_postal_code.blank?
       data['DebtorCity'] = debtor_city unless debtor_city.blank?
       data['DebtorCountry'] = debtor_country unless debtor_country.blank?
+      data['AttentionHandle'] = { 'Id' => attention_handle[:id] } unless attention_handle.blank?
       data['Date'] = date.iso8601 unless date.blank?
       data['TermOfPaymentHandle'] = { 'Id' => term_of_payment_handle[:id] } unless term_of_payment_handle.blank?
       data['DueDate'] = (due_date.blank? ? nil : due_date.iso8601)

@@ -209,4 +209,28 @@ describe Economic::Entity::Handle do
       handle_a.should_not == handle_d
     end
   end
+
+  describe ".new" do
+    it "should raise error if argument isn't a hash" do
+      lambda do
+        Economic::Entity::Handle.new(12)
+      end.should raise_error(ArgumentError)
+    end
+
+    it "should set id" do
+      handle = Economic::Entity::Handle.new(:id => 12)
+      handle.id.should == 12
+    end
+
+    it "should set number" do
+      handle = Economic::Entity::Handle.new(:number => 12)
+      handle.number.should == 12
+    end
+
+    it "should set both id and number" do
+      handle = Economic::Entity::Handle.new(:id => 37, :number => 42)
+      handle.id.should == 37
+      handle.number.should == 42
+    end
+  end
 end

@@ -2,6 +2,13 @@ require 'economic/proxies/entity_proxy'
 
 module Economic
   class DebtorProxy < EntityProxy
+
+    # Fetches Debtor from API
+    def find(handle)
+      handle = Entity::Handle.new(:number => handle) unless handle.is_a?(Entity::Handle)
+      super(handle)
+    end
+
     # Returns Debtors that have the given ci_number. The Debtor objects will only be partially loaded
     def find_by_ci_number(ci_number)
       # Get a list of DebtorHandles from e-conomic

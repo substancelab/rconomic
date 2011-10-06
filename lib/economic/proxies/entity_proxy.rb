@@ -41,7 +41,7 @@ module Economic
 
     # Fetches Entity data from API and returns an Entity initialized with that data
     def find(handle)
-      handle = Entity::Handle.new(:number => handle) unless handle.is_a?(Entity::Handle)
+      handle = Entity::Handle.new(handle) unless handle.is_a?(Entity::Handle)
       entity_hash = get_data(handle)
       entity = build(entity_hash)
       entity.persisted = true
@@ -50,10 +50,14 @@ module Economic
 
     # Gets data for Entity from the API. Returns Hash with the response data
     def get_data(handle)
-      handle = Entity::Handle.new(:number => handle) unless handle.is_a?(Entity::Handle)
+      handle = Entity::Handle.new(handle) unless handle.is_a?(Entity::Handle)
+
+      entityHandle = {}
+      entityHandle['Id'] = handle.id unless handle.id.blank?
+      entityHandle['Number'] = handle.number unless handle.number.blank?
       entity_hash = session.request(entity_class.soap_action(:get_data)) do
         soap.body = {
-          'entityHandle' => handle.to_hash
+          'entityHandle' => entityHandle
         }
       end
       entity_hash

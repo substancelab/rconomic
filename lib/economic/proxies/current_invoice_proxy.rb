@@ -9,6 +9,12 @@ module Economic
       invoice
     end
 
+    # Gets data for CurrentInvoice from the API
+    def find(handle)
+      handle = Entity::Handle.new(:id => handle) unless handle.is_a?(Entity::Handle)
+      super(handle)
+    end
+
   private
 
     # Initialize properties in invoice with values from owner

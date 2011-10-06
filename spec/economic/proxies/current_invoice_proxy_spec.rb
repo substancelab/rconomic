@@ -53,7 +53,7 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "gets invoice data from API" do
-      savon.expects('CurrentInvoice_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
+      savon.expects('CurrentInvoice_GetData').with('entityHandle' => {'Id' => 42}).returns(:success)
       subject.find(42)
     end
 
