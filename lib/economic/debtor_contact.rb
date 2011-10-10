@@ -22,7 +22,7 @@ module Economic
 
     def debtor
       return nil if debtor_handle.blank?
-      @debtor ||= session.debtors.find(debtor_handle)
+      @debtor ||= session.debtors.find(debtor_handle[:number])
     end
 
     def debtor=(debtor)

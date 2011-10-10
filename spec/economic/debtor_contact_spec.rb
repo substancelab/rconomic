@@ -40,12 +40,12 @@ describe Economic::DebtorContact do
       end
 
       it "returns a Debtor" do
-        session.debtors.expects(:find).with(handle).returns(Economic::Debtor.new)
+        session.debtors.expects(:find).with(42).returns(Economic::Debtor.new)
         subject.debtor.should be_instance_of(Economic::Debtor)
       end
 
       it "only looks up the debtor the first time" do
-        session.debtors.expects(:find).with(handle).returns(Economic::Debtor.new)
+        session.debtors.expects(:find).with(42).returns(Economic::Debtor.new)
         subject.debtor.should === subject.debtor
       end
     end

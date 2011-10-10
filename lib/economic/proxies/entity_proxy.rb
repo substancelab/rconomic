@@ -55,6 +55,7 @@ module Economic
       entityHandle = {}
       entityHandle['Id'] = handle.id unless handle.id.blank?
       entityHandle['Number'] = handle.number unless handle.number.blank?
+
       entity_hash = session.request(entity_class.soap_action(:get_data)) do
         soap.body = {
           'entityHandle' => entityHandle

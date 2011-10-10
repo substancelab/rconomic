@@ -1,32 +1,7 @@
+require 'economic/entity/handle'
+
 module Economic
   class Entity
-    class Handle
-      attr_accessor :id, :number
-
-      def initialize(hash)
-        raise ArgumentError.new("Expected Hash or Economic::Entity::Handle - got #{hash.inspect}") unless hash.respond_to?(:keys) && hash.respond_to?(:values)
-        @id = hash[:id]
-        @number = hash[:number]
-      end
-
-      def to_hash
-        hash = {}
-        hash['Id'] = id unless id.blank?
-        hash['Number'] = number unless number.blank?
-        hash
-      end
-
-      def [](key)
-        {:id => @id, :number => @number}[key]
-      end
-
-      def ==(other)
-        return false if other.nil?
-        return false unless other.respond_to?(:id) && other.respond_to?(:number)
-        self.id == other.id && self.number == other.number
-      end
-    end
-
     # Internal accessors
     attr_accessor :persisted, :session, :partial
 
