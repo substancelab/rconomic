@@ -31,7 +31,7 @@ module Economic
                    :project_handle, 
                    :start_date, 
                    :text, 
-                   :type, 
+                   :cash_book_entry_type, 
                    :vat_account_handle, 
                    :voucher_number
     
@@ -65,7 +65,7 @@ module Economic
       self.project_handle = nil
       self.start_date = Time.now
       self.text = ""
-      self.type = ""
+      self.cash_book_entry_type = ""
       self.vat_account_handle = nil
       self.voucher_number = 0
     end
@@ -77,7 +77,7 @@ module Economic
     def build_soap_data
       data = ActiveSupport::OrderedHash.new
 
-      data['Type'] = type
+      data['Type'] = cash_book_entry_type
       data['CashBookHandle'] = { 'Number' => cash_book_handle[:number] } unless cash_book_handle.blank?
       data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
       data['CreditorHandle'] = { 'Number' => creditor_handle[:number] } unless creditor_handle.blank?
