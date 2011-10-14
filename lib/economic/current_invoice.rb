@@ -26,7 +26,7 @@ module Economic
   #
   #   invoice.save
   class CurrentInvoice < Entity
-    has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :attention_handle, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent
+    has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :attention_handle, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent, :heading
 
     def initialize(properties = {})
       super
@@ -82,6 +82,7 @@ module Economic
       self.is_vat_included = nil
       self.layout_handle = nil
       self.delivery_date = nil
+      self.heading = nil
       self.net_amount = 0
       self.vat_amount = 0
       self.gross_amount = 0
@@ -110,6 +111,7 @@ module Economic
       data['IsVatIncluded'] = is_vat_included
       data['LayoutHandle'] = { 'Id' => layout_handle[:id] } unless layout_handle.blank?
       data['DeliveryDate'] = delivery_date ? delivery_date.iso8601 : nil
+      data['Heading'] = heading unless heading.blank?
       data['NetAmount'] = net_amount
       data['VatAmount'] = vat_amount
       data['GrossAmount'] = gross_amount

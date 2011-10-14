@@ -171,6 +171,31 @@ describe Economic::Entity do
     end
   end
 
+  describe "destroy" do
+    subject { (e = SpecEntity.new).tap { |e| e.persisted = true; e.partial = false; e.session = session } }
+
+    it "sends data to the API" do
+      savon.expects(:spec_entity_delete).returns(:success)
+      subject.destroy
+    end
+
+    # Would ideally like to test the soap body, but can't find out how.
+    #it "should request with the correct model and id" do
+    #end
+
+    it "should mark the entity as not persisted and partial" do
+      savon.expects(:spec_entity_delete).returns(:success)
+      subject.destroy
+      subject.should_not be_persisted
+      subject.should be_partial
+    end
+
+    it "should return the response" do
+      session.expects(:request).returns({ :response => true })
+      subject.destroy.should == { :response => true }
+    end
+  end
+
   describe "update_properties" do
     subject { SpecEntity.new }
 
