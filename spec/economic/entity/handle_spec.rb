@@ -55,4 +55,12 @@ describe Economic::Entity::Handle do
       handle.number.should == 42
     end
   end
+
+  describe ".to_hash" do
+    subject { Economic::Entity::Handle.new({:id => 42, :number => 37}) }
+
+    it "should return a handle for putting into the body of a SOAP request" do
+      subject.to_hash.should == {'Id' => 42, 'Number' => 37}
+    end
+  end
 end

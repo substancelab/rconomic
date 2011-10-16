@@ -82,20 +82,6 @@ module Economic
       @id
     end
 
-    def handle
-      handle = {}
-      handle[:id] = id unless id.blank?
-      handle[:number] = number unless number.blank?
-      handle
-    end
-
-    def soap_handle
-      handle = {}
-      handle["Id"] = id unless id.blank?
-      handle["Number"] = number unless number.blank?
-      handle
-    end
-
     # Returns true if CurrentInvoiceLine has been persisted in e-conomic
     def persisted?
       !!@persisted
@@ -127,7 +113,7 @@ module Economic
     def destroy
       handleKey = "#{camel_back(class_name)}Handle"
       response = session.request soap_action(:delete) do
-        soap.body = { handleKey => soap_handle }
+        soap.body = { handleKey => handle.to_hash }
       end
 
       @persisted = false
