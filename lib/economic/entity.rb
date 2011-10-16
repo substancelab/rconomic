@@ -89,6 +89,13 @@ module Economic
       handle
     end
 
+    def soap_handle
+      handle = {}
+      handle["Id"] = id unless id.blank?
+      handle["Number"] = number unless number.blank?
+      handle
+    end
+
     # Returns true if CurrentInvoiceLine has been persisted in e-conomic
     def persisted?
       !!@persisted
@@ -115,6 +122,18 @@ module Economic
     # Persist the Entity to the API
     def save
       create_or_update
+    end
+
+    def destroy
+      handleKey = "#{camel_back(class_name)}Handle"
+      response = session.request soap_action(:delete) do
+        soap.body = { handleKey => soap_handle }
+      end
+
+      @persisted = false
+      @partial = true
+
+      response 
     end
 
     # Updates properties of Entity with the values from hash
@@ -170,6 +189,14 @@ module Economic
 
     def soap_action(action)
       self.class.soap_action(action)
+    end
+
+    def class_name
+      self.class.to_s.split("::").last
+    end
+
+    def camel_back(name)
+      name[0,1].downcase + name[1..-1]
     end
 
   end
