@@ -46,6 +46,9 @@ Usage example
     invoice.lines << invoice_line
     
     invoice.save
+    
+    # Delete it again
+    invoice.destroy
 
 
 How to enable e-conomic API access
@@ -61,12 +64,12 @@ It doesn't do everything
 
 Not even remotely... For now, limited to a small subset of all the [available operations](https://www.e-conomic.com/secure/api1/EconomicWebService.asmx):
 
-                       | Create | Read | Update
-    -------------------+--------+------+-------
-    CurrentInvoice     | X      | X    | X
-    CurrentInvoiceLine | X      | X    | X
-    Debtor             | X      | X    | X
-    DebtorContact      | X      | X    | X
+                       | Create | Read | Update | Delete
+    -------------------+--------+------+--------+-------
+    CurrentInvoice     | X      | X    | X      | X
+    CurrentInvoiceLine | X      | X    | X      | X
+    Debtor             | X      | X    | X      | X
+    DebtorContact      | X      | X    | X      | X
 
 
 Credits

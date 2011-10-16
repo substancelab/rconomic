@@ -110,6 +110,7 @@ module Economic
       create_or_update
     end
 
+    # Deletes entity permanently from E-conomic.
     def destroy
       handleKey = "#{camel_back(class_name)}Handle"
       response = session.request soap_action(:delete) do
