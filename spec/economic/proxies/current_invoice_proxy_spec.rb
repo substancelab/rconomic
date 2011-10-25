@@ -62,6 +62,36 @@ describe Economic::CurrentInvoiceProxy do
       subject.find(42).should be_instance_of(Economic::CurrentInvoice)
     end
   end
+
+  describe ".find_by_date_interval" do
+
+    it "should be able to return a single current invoice" do
+      from = Time.now - 60
+      unto = Time.now
+      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:single)
+      results = subject.find_by_date_interval(from, unto)
+      results.size.should == 1
+      results.first.should be_instance_of(Economic::CurrentInvoice)
+    end
+
+    it "should be able to return multiple invoices" do
+      from = Time.now - 60
+      unto = Time.now
+      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:many)
+      results = subject.find_by_date_interval(from, unto)
+      results.size.should == 2
+      results.first.should be_instance_of(Economic::CurrentInvoice)
+    end
+
+    it "should be able to return nothing" do
+      from = Time.now - 60
+      unto = Time.now
+      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:none)
+      results = subject.find_by_date_interval(from, unto)
+      results.size.should == 0
+    end
+
+  end
   
   describe ".all" do
 

@@ -16,6 +16,25 @@ module Economic
       super(handle)
     end
 
+    def find_by_date_interval(from, unto)
+      response = session.request entity_class.soap_action("FindByDateInterval") do
+        soap.body = {
+          'first' => from.iso8601,
+          'last' => unto.iso8601
+        }
+      end
+
+      handles = [ response[:current_invoice_handle] ].flatten.reject(&:blank?)
+
+      handles.collect do |handle|
+        current_invoice = build
+        current_invoice.partial = true
+        current_invoice.persisted = true
+        current_invoice.id = handle[:id]
+        current_invoice
+      end
+    end
+
   private
 
     # Initialize properties in invoice with values from owner
