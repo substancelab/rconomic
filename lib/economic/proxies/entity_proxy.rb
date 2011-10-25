@@ -21,6 +21,16 @@ module Economic
     def session
       owner.session
     end
+    
+    def all
+      entity_hash = session.request(entity_class.soap_action(:get_all))
+      if entity_hash != {}
+        Array(entity_hash.values.first).each do |_, id|
+          find(id.to_i)
+        end
+      end
+      self
+    end
 
     # Returns a new, unpersisted Economic::Entity
     def build(properties = {})

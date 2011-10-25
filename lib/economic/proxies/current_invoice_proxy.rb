@@ -2,16 +2,6 @@ require 'economic/proxies/entity_proxy'
 
 module Economic
   class CurrentInvoiceProxy < EntityProxy
-    def all
-      entity_hash = session.request(entity_class.soap_action(:get_all))
-      if entity_hash != {}
-        [ entity_hash[:current_invoice_handle] ].flatten.each do |hash|
-          id = hash.values.first
-          find(id.to_i)
-        end
-      end
-      self
-    end
 
     # Returns a new, unpersisted Economic::CurrentInvoice
     def build(properties = {})

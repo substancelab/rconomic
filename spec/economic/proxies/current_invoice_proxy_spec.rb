@@ -66,12 +66,12 @@ describe Economic::CurrentInvoiceProxy do
   describe ".all" do
 
     it "returns an empty array when there are no current invoices" do
-      savon.expects('CurrentInvoice_GetAll').returns(:empty_result)
+      savon.expects('CurrentInvoice_GetAll').returns(:none)
       subject.all.size.should == 0
     end
 
     it "returns a single current invoice" do
-      savon.expects('CurrentInvoice_GetAll').returns(:single_result)
+      savon.expects('CurrentInvoice_GetAll').returns(:single)
       savon.expects('CurrentInvoice_GetData').with('entityHandle' => {'Id' => 1}).returns(:success)
       all = subject.all
       all.size.should == 1
@@ -79,7 +79,7 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "returns multiple current invoices" do
-      savon.expects('CurrentInvoice_GetAll').returns(:multiple_results)
+      savon.expects('CurrentInvoice_GetAll').returns(:multiple)
       savon.expects('CurrentInvoice_GetData').returns(:success)
       savon.expects('CurrentInvoice_GetData').returns(:success)
       all = subject.all
