@@ -25,7 +25,8 @@ module Economic
     def all
       entity_hash = session.request(entity_class.soap_action(:get_all))
       if entity_hash != {}
-        Array(entity_hash.values.first).each do |_, id|
+        [ entity_hash.values.first ].flatten.each do |id_hash|
+          id = id_hash.values.first
           find(id.to_i)
         end
       end

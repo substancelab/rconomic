@@ -80,6 +80,7 @@ describe Economic::CurrentInvoiceProxy do
 
     it "returns multiple current invoices" do
       savon.expects('CurrentInvoice_GetAll').returns(:multiple)
+      # Why can't I expect id for two finds?
       savon.expects('CurrentInvoice_GetData').returns(:success)
       savon.expects('CurrentInvoice_GetData').returns(:success)
       all = subject.all
