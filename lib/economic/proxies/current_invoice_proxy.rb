@@ -27,11 +27,7 @@ module Economic
       handles = [ response[:current_invoice_handle] ].flatten.reject(&:blank?)
 
       handles.collect do |handle|
-        current_invoice = build
-        current_invoice.partial = true
-        current_invoice.persisted = true
-        current_invoice.id = handle[:id]
-        current_invoice
+        find(handle[:id])
       end
     end
 

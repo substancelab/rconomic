@@ -69,6 +69,7 @@ describe Economic::CurrentInvoiceProxy do
       from = Time.now - 60
       unto = Time.now
       savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:single)
+      savon.expects('CurrentInvoice_GetData').returns(:success)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 1
       results.first.should be_instance_of(Economic::CurrentInvoice)
@@ -78,6 +79,8 @@ describe Economic::CurrentInvoiceProxy do
       from = Time.now - 60
       unto = Time.now
       savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:many)
+      savon.expects('CurrentInvoice_GetData').returns(:success)
+      savon.expects('CurrentInvoice_GetData').returns(:success)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 2
       results.first.should be_instance_of(Economic::CurrentInvoice)
