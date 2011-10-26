@@ -53,6 +53,24 @@ describe Economic::DebtorProxy do
     end
   end
 
+  describe "find_by_number" do
+    it "can find a debtor" do
+      savon.expects('Debtor_FindByNumber').with('number' => '1').returns(:found)
+      result = subject.find_by_number('1')
+      result.should be_instance_of(Economic::Debtor)
+      result.number.should == 1
+      result.partial.should be_true
+      result.persisted.should be_true
+      result.handle.should == Economic::Entity::Handle.new({ :number => 1 })
+    end
+
+    it "returns nil when there is no debtor" do
+      savon.expects('Debtor_FindByNumber').with('number' => '1').returns(:not_found)
+      result = subject.find_by_number('1')
+      result.should be_nil
+    end
+  end
+
   describe "next_available_number" do
     it "gets the next available debtor number from API" do
       savon.expects('Debtor_GetNextAvailableNumber').returns(:success)
