@@ -32,6 +32,25 @@ module Economic
       end
     end
 
+    def find_by_number(number)
+      response = session.request entity_class.soap_action('FindByNumber') do
+        soap.body = {
+          'number' => number
+        }
+      end
+
+      if response == {}
+        nil
+      else
+        debtor = build
+        debtor.partial = true
+        debtor.persisted = true
+        debtor.handle = response
+        debtor.number = response[:number].to_i
+        debtor
+      end
+    end
+
     # Returns the next available debtor number
     def next_available_number
       session.request Debtor.soap_action(:get_next_available_number)

@@ -2,6 +2,7 @@ require 'economic/proxies/entity_proxy'
 
 module Economic
   class CurrentInvoiceProxy < EntityProxy
+
     # Returns a new, unpersisted Economic::CurrentInvoice
     def build(properties = {})
       invoice = super
@@ -13,6 +14,21 @@ module Economic
     def find(handle)
       handle = Entity::Handle.new(:id => handle) unless handle.is_a?(Entity::Handle)
       super(handle)
+    end
+
+    def find_by_date_interval(from, unto)
+      response = session.request entity_class.soap_action("FindByDateInterval") do
+        soap.body = {
+          'first' => from.iso8601,
+          'last' => unto.iso8601
+        }
+      end
+
+      handles = [ response[:current_invoice_handle] ].flatten.reject(&:blank?)
+
+      handles.collect do |handle|
+        find(handle[:id])
+      end
     end
 
   private
