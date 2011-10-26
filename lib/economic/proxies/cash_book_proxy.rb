@@ -29,7 +29,7 @@ module Economic
       cash_books
     end
     
-    def find_name(id)
+    def get_name(id)
       response = session.request entity_class.soap_action("GetName") do
         soap.body = {
           'cashBookHandle' => {
