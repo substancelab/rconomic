@@ -67,6 +67,16 @@ describe Economic::CurrentInvoice do
     end
   end
 
+  describe "#book" do
+    before :each do
+      savon.stubs('CurrentInvoice_Book').returns(:success)
+    end
+
+    it 'should book the current invoice and return an invoice number' do
+      subject.book.should == 328
+    end
+  end
+
   describe "#attention" do
     let(:contact) { (c = Economic::DebtorContact.new).tap { c.session = session }}
 

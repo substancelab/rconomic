@@ -48,6 +48,14 @@ module Economic
     end
 
 
+    def book
+      response = session.request soap_action(:book) do
+        soap.body = { "CurrentInvoice_Book" => handle.to_hash }
+      end
+      response[:number].to_i
+    end
+
+
     def debtor
       return nil if debtor_handle.blank?
       @debtor ||= session.debtors.find(debtor_handle)
