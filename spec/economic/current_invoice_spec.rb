@@ -2,7 +2,7 @@ require './spec/spec_helper'
 
 describe Economic::CurrentInvoice do
   let(:session) { make_session }
-  subject { (i = Economic::CurrentInvoice.new).tap { i.session = session } }
+  subject { (i = Economic::CurrentInvoice.new( :id => 512 )).tap { i.session = session } }
 
   it "inherits from Economic::Entity" do
     Economic::CurrentInvoice.ancestors.should include(Economic::Entity)
@@ -74,6 +74,11 @@ describe Economic::CurrentInvoice do
 
     it 'should book the current invoice and return an invoice number' do
       subject.book.should == 328
+    end
+
+    it 'should request with the right key for handle' do
+      savon.expects("CurrentInvoice_Book").with('currentInvoiceHandle' => { 'Id' => 512 }).returns(:success)
+      subject.book
     end
   end
 

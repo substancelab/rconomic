@@ -50,7 +50,7 @@ module Economic
 
     def book
       response = session.request soap_action(:book) do
-        soap.body = { "CurrentInvoice_Book" => handle.to_hash }
+        soap.body = { "currentInvoiceHandle" => handle.to_hash }
       end
       response[:number].to_i
     end
