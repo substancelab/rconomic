@@ -23,30 +23,6 @@ describe Economic::InvoiceProxy do
     it "should not build a partial Invoice" do
       subject.build.should_not be_partial
     end
-
-    # From CurrentInvoice, haven't needed this yet to implement invoice. nov 2011.
-    #context "when owner is a Debtor" do
-    #  let(:debtor) { make_debtor(:session => session) }
-    #  subject { debtor.current_invoices }
-
-    #  it "should use the Debtors session" do
-    #    subject.build.session.should == debtor.session
-    #  end
-
-    #  it "should initialize with values from Debtor" do
-    #    invoice = subject.build
-
-    #    invoice.debtor_name.should == debtor.name
-    #    invoice.debtor_address.should == debtor.address
-    #    invoice.debtor_postal_code.should == debtor.postal_code
-    #    invoice.debtor_city.should == debtor.city
-
-    #    invoice.debtor_handle.should == debtor.handle
-    #    invoice.term_of_payment_handle.should == debtor.term_of_payment_handle
-    #    invoice.layout_handle.should == debtor.layout_handle
-    #    invoice.currency_handle.should == debtor.currency_handle
-    #  end
-    #end
   end
 
   describe ".find" do
@@ -55,7 +31,7 @@ describe Economic::InvoiceProxy do
     end
 
     it "gets invoice data from API" do
-      savon.expects('Invoice_GetData').with('entityHandle' => {'Id' => 42}).returns(:success)
+      savon.expects('Invoice_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
       subject.find(42)
     end
 

@@ -4,7 +4,7 @@ module Economic
   class InvoiceProxy < EntityProxy
     # Gets data for Invoice from the API
     def find(handle)
-      handle = Entity::Handle.new(:id => handle) unless handle.is_a?(Entity::Handle)
+      handle = Entity::Handle.new(:number => handle) unless handle.is_a?(Entity::Handle)
       super(handle)
     end
 
@@ -19,7 +19,7 @@ module Economic
       handles = [ response[:invoice_handle] ].flatten.reject(&:blank?)
 
       handles.collect do |handle|
-        find(handle[:id])
+        find(handle[:number])
       end
     end
   end
