@@ -21,7 +21,8 @@ module Economic
     def session
       owner.session
     end
-    
+
+    # Fetches all entities from the API.
     def all
       entity_hash = session.request(entity_class.soap_action(:get_all))
       if entity_hash != {}

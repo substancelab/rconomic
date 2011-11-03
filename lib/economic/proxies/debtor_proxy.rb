@@ -32,6 +32,7 @@ module Economic
       end
     end
 
+    # Returns handle with a given number.
     def find_by_number(number)
       response = session.request entity_class.soap_action('FindByNumber') do
         soap.body = {

@@ -8,6 +8,7 @@ module Economic
       super(handle)
     end
 
+    # Returns Economic::Invoice objects for invoices in a given interval of days.
     def find_by_date_interval(from, unto)
       response = session.request entity_class.soap_action("FindByDateInterval") do
         soap.body = {
