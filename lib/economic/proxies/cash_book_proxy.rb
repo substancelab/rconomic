@@ -23,7 +23,7 @@ module Economic
       handles = [response[:cash_book_handle]].flatten.reject(&:blank?)
       cash_books = []
       handles.each do |handle|
-        cash_books << find_name(handle[:number])
+        cash_books << get_name(handle[:number])
       end
       
       cash_books
