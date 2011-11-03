@@ -37,6 +37,11 @@ module Economic
     def current_invoices
       @current_invoices ||= CurrentInvoiceProxy.new(self)
     end
+    
+    # Provides access to the invoices
+    def invoices
+      @invoices ||= InvoiceProxy.new(self)
+    end
 
     # Provides access to the debtors
     def debtors
