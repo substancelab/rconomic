@@ -4,7 +4,7 @@ describe Economic::CashBook do
   let(:session) { make_session }
 
   it "inherits from Economic::Entity" do
-    Economic::Debtor.superclass.should == Economic::Entity
+    Economic::CashBook.superclass.should == Economic::Entity
   end
 
   describe "class methods" do

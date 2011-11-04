@@ -34,11 +34,7 @@ module Economic
                    :cash_book_entry_type, 
                    :vat_account_handle, 
                    :voucher_number
-    
-    def initialize(properties = {})
-      super
-    end
-    
+
     def initialize_defaults
       self.account_handle = nil
       self.amount = 0
