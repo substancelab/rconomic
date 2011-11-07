@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CashBook_GetEntriesResponse xmlns="http://e-conomic.com">
+      <CashBook_GetEntriesResult>
+        <CashBookEntryHandle>
+          <Id1>int</Id1>
+          <Id2>int</Id2>
+        </CashBookEntryHandle>
+        <CashBookEntryHandle>
+          <Id1>int</Id1>
+          <Id2>int</Id2>
+        </CashBookEntryHandle>
+      </CashBook_GetEntriesResult>
+    </CashBook_GetEntriesResponse>
+  </soap:Body>
+</soap:Envelope>

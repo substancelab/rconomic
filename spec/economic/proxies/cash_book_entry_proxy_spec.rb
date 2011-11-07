@@ -37,4 +37,12 @@ describe Economic::CashBookEntryProxy do
     pending "should either be removed or fixed because of hard-coded values"
   end
 
+  describe "#all" do
+    it 'should get the cash book entries' do
+      savon.stubs('CashBook_GetEntries').returns(:success)
+      savon.stubs('CashBookEntry_GetData').returns(:success)
+      subject.all.size.should == 2
+    end
+  end
+
 end

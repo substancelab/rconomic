@@ -9,7 +9,11 @@ module Economic
     has_properties :name, :number
 
     def handle
-      Handle.new({:name => @name})
+      Handle.new({:number => @number})
+    end
+
+    def entries
+      CashBookEntryProxy.new(self)
     end
 
     protected
@@ -18,7 +22,7 @@ module Economic
       data = ActiveSupport::OrderedHash.new
 
       data['Handle'] = handle.to_hash
-      data['Name'] = handle.number
+      data['Name'] = name
       data['Number'] = number
 
       return data

@@ -16,4 +16,13 @@ describe Economic::CashBook do
       end
     end
   end
+
+  describe "#entries" do
+    subject { (i = Economic::CashBook.new( :id => 512 )).tap { i.session = session } }
+
+    it 'should return a cash book entry proxy' do
+      subject.entries.should be_a(Economic::CashBookEntryProxy)
+      subject.entries.owner.should == subject
+    end
+  end
 end
