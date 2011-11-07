@@ -1,46 +1,46 @@
 require 'economic/entity'
 
 module Economic
-  
+
   # Represents a cash book in E-conomic.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICashBook.html
   class CashBookEntry < Entity
-    has_properties :account_handle, 
-                   :amount, 
-                   :amount_default_currency, 
-                   :bank_payment_creditor_id, 
-                   :bank_payment_creditor_invoice_id, 
-                   :bank_payment_type_handle, 
-                   :capitalise_handle, 
-                   :cash_book_handle, 
-                   :contra_account_handle, 
-                   :contra_vat_account_handle, 
-                   :cost_type_handle, 
-                   :creditor_handle, 
-                   :creditor_invoice_number, 
-                   :currency_handle, 
-                   :date, 
-                   :debtor_handle, 
-                   :debtor_invoice_number, 
-                   :department_handle, 
-                   :distribution_key_handle, 
-                   :due_date, 
-                   :employee_handle, 
-                   :end_date, 
-                   :project_handle, 
-                   :start_date, 
-                   :text, 
-                   :cash_book_entry_type, 
-                   :vat_account_handle, 
+    has_properties :account_handle,
+                   :amount,
+                   :amount_default_currency,
+                   :bank_payment_creditor_id,
+                   :bank_payment_creditor_invoice_id,
+                   :bank_payment_type_handle,
+                   :capitalise_handle,
+                   :cash_book_handle,
+                   :contra_account_handle,
+                   :contra_vat_account_handle,
+                   :cost_type_handle,
+                   :creditor_handle,
+                   :creditor_invoice_number,
+                   :currency_handle,
+                   :date,
+                   :debtor_handle,
+                   :debtor_invoice_number,
+                   :department_handle,
+                   :distribution_key_handle,
+                   :due_date,
+                   :employee_handle,
+                   :end_date,
+                   :project_handle,
+                   :start_date,
+                   :text,
+                   :cash_book_entry_type,
+                   :vat_account_handle,
                    :voucher_number
 
     def initialize_defaults
       self.account_handle = nil
       self.amount = 0
-      self.amount_default_currency = 0 
+      self.amount_default_currency = 0
       self.bank_payment_creditor_id = 0
-      self.bank_payment_creditor_invoice_id = 0 
+      self.bank_payment_creditor_invoice_id = 0
       self.bank_payment_type_handle = nil
       self.capitalise_handle = nil
       self.cash_book_handle = nil
@@ -65,11 +65,11 @@ module Economic
       self.vat_account_handle = nil
       self.voucher_number = 0
     end
-    
+
     def handle
       Handle.new(:id => @id)
     end
-    
+
     def build_soap_data
       data = ActiveSupport::OrderedHash.new
 
@@ -90,7 +90,7 @@ module Economic
       #data['DebtorInvoiceNumber'] = debtor_invoice_number
       #data['CreditorInvoiceNumber'] = creditor_invoice_number
       data['DueDate'] = due_date
-      data['DepartmentHandle'] = { 'Number' => department_handle[:number] } unless department_handle.blank? 
+      data['DepartmentHandle'] = { 'Number' => department_handle[:number] } unless department_handle.blank?
       data['DistributionKeyHandle'] = { 'Number' => distribution_key_handle[:number] } unless distribution_key_handle.blank?
       data['ProjectHandle'] = { 'Number' => project_handle[:number] } unless project_handle.blank?
       data['CostTypeHandle'] = { 'Number' => cost_type_handle[:number] } unless cost_type_handle.blank?
@@ -104,7 +104,7 @@ module Economic
 
       return data
     end
-    
+
     def save
       result = super
       id = result[:id]
