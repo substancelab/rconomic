@@ -5,8 +5,8 @@ class Economic::Entity
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
 
-      @id = hash[:id]
-      @number = hash[:number]
+      @id = hash[:id].to_i if hash[:id]
+      @number = hash[:number].to_i if hash[:number]
     end
 
     def to_hash

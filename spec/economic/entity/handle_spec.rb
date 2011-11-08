@@ -54,6 +54,18 @@ describe Economic::Entity::Handle do
       handle.id.should == 37
       handle.number.should == 42
     end
+
+    it "should to_i values" do
+      handle = Economic::Entity::Handle.new(:id => "37", :number => "42")
+      handle.id.should == 37
+      handle.number.should == 42
+    end
+
+    it "should not to_i nil values" do
+      handle = Economic::Entity::Handle.new(:id => "37")
+      handle.id.should == 37
+      handle.number.should be_nil
+    end
   end
 
   describe ".to_hash" do
@@ -64,3 +76,4 @@ describe Economic::Entity::Handle do
     end
   end
 end
+
