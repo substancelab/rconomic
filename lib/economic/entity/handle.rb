@@ -5,10 +5,10 @@ class Economic::Entity
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
 
-      @id = hash[:id]
-      @id1 = hash[:id1]
-      @id2 = hash[:id2]
-      @number = hash[:number]
+      @id = hash[:id].to_i if hash[:id]
+      @id1 = hash[:id1].to_i if hash[:id1]
+      @id2 = hash[:id2].to_i if hash[:id2]
+      @number = hash[:number].to_i if hash[:number]
     end
 
     def to_hash
@@ -43,5 +43,4 @@ class Economic::Entity
       raise ArgumentError.new("All values must respond to to_i. #{not_to_iable.inspect} didn't") unless not_to_iable.empty?
     end
 
-  end
-end
+  end end

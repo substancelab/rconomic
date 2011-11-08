@@ -9,5 +9,20 @@ module Economic
         soap.body = { "invoiceHandle" => handle.to_hash }
       end
     end
+
+    # Returns the PDF version of Invoice as a String.
+    #
+    # To get it as a file you can do:
+    #
+    #   File.open("invoice.pdf", 'wb') do |file|
+    #     file << invoice.pdf
+    #   end
+    def pdf
+      response = session.request soap_action(:get_pdf) do
+        soap.body = { "invoiceHandle" => handle.to_hash }
+      end
+
+      Base64.decode64(response)
+    end
   end
 end

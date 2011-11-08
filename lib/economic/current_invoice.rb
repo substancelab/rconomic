@@ -47,12 +47,17 @@ module Economic
       @attention_handle = handle
     end
 
-    # Books a current invoice. An invoice number greater than all other invoice numbers will be assigned to the resulting invoice.
+    # Books a current invoice. An invoice number greater than all other invoice numbers will be
+    # assigned to the resulting Economic::Invoice.
+    #
+    # Returns the resulting Economic::Invoice object
     def book
       response = session.request soap_action(:book) do
         soap.body = { "currentInvoiceHandle" => handle.to_hash }
       end
-      response[:number].to_i
+
+      # Find the created Invoice
+      session.invoices.find(response[:number])
     end
 
     def debtor
