@@ -70,10 +70,12 @@ describe Economic::CurrentInvoice do
   describe "#book" do
     before :each do
       savon.stubs('CurrentInvoice_Book').returns(:success)
+      savon.stubs('Invoice_GetData').returns(:success)
     end
 
-    it 'should book the current invoice and return an invoice number' do
-      subject.book.should == 328
+    it 'should book the current invoice and return the created invoice object' do
+      savon.expects("Invoice_GetData").with('entityHandle' => { 'Number' => 328 }).returns(:success)
+      subject.book.should be_instance_of(Economic::Invoice)
     end
 
     it 'should request with the right key for handle' do
