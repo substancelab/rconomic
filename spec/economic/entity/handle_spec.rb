@@ -83,6 +83,12 @@ describe Economic::Entity::Handle do
       handle.id.should == 37
       handle.number.should be_nil
     end
+
+    it "should accept a Hash with capitalized keys" do
+      handle = Economic::Entity::Handle.new({"Id" => 37, "Number" => 42})
+      handle.id.should == 37
+      handle.number.should == 42
+    end
   end
 
   describe ".to_hash" do

@@ -4,8 +4,7 @@ class Economic::Entity
 
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
-
-      hash = {:id => hash.to_i} if hash.respond_to?(:to_i) unless hash.blank?
+      hash = prepare_hash_argument(hash)
 
       @id = hash[:id].to_i if hash[:id]
       @number = hash[:number].to_i if hash[:number]
@@ -37,7 +36,7 @@ class Economic::Entity
       end
 
       if hash.respond_to?(:keys)
-        unknown_keys = hash.keys - [:id, :number]
+        unknown_keys = hash.keys - [:id, :number, "Number", "Id"]
         raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
 
         not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }
@@ -45,5 +44,17 @@ class Economic::Entity
       end
     end
 
+    # Examples
+    #
+    #   prepare_hash_argument(12) #=> {:id => 12}
+    #   prepare_hash_argument(:id => 12) #=> {:id => 12}
+    #   prepare_hash_argument('Id' => 12) #=> {:id => 12}
+    #   prepare_hash_argument('Id' => 12, 'Number' => 13) #=> {:id => 12, :number => 13}
+    def prepare_hash_argument(hash)
+      hash = {:id => hash.to_i} if hash.respond_to?(:to_i) unless hash.blank?
+      hash[:id] ||= hash['Id']
+      hash[:number] ||= hash['Number']
+      hash
+    end
   end
 end
