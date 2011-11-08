@@ -10,12 +10,6 @@ module Economic
       invoice
     end
 
-    # Gets data for CurrentInvoice from the API
-    def find(handle)
-      handle = Entity::Handle.new(:id => handle) unless handle.is_a?(Entity::Handle)
-      super(handle)
-    end
-
     # Returns Economic::CurrentInvoice object for a given interval of days.
     def find_by_date_interval(from, unto)
       response = session.request entity_class.soap_action("FindByDateInterval") do
