@@ -1,10 +1,11 @@
 # Dependencies
 require 'time'
 require 'savon'
-require 'active_support/inflector'
 require 'active_support/ordered_hash'
 
+require 'economic/support/string'
 require 'economic/session'
+
 require 'economic/debtor'
 require 'economic/debtor_contact'
 require 'economic/current_invoice'
@@ -22,9 +23,7 @@ require 'economic/proxies/invoice_proxy'
 #
 # TODO
 #
-# * Memoization via ActiveSupport?
 # * Basic validations; ie check for nil values before submitting to API
-# * Better Handle handling
 
 module Economic
 end

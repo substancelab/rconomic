@@ -53,7 +53,10 @@ module Economic
       #   Entity.key #=> :entity
       #   CurrentInvoice.key #=> :current_invoice
       def key
-        self.name.demodulize.underscore.intern
+        key = self.name
+        key = Economic::Support::String.demodulize(key)
+        key = Economic::Support::String.underscore(key)
+        key.intern
       end
     end
 
