@@ -28,12 +28,6 @@ module Economic
   class CurrentInvoice < Entity
     has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :attention_handle, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent, :heading
 
-    class << self
-      def key
-        :current_invoice
-      end
-    end
-
     def initialize(properties = {})
       super
     end

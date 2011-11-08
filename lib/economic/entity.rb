@@ -48,9 +48,12 @@ module Economic
         "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
       end
 
-      # Returns a symbol based on the name of the entity. Used to request and read data responses
+      # Returns a symbol based on the name of the entity. Used to request and read data responses.
+      #
+      #   Entity.key #=> :entity
+      #   CurrentInvoice.key #=> :current_invoice
       def key
-        :entity
+        self.name.demodulize.underscore.intern
       end
     end
 

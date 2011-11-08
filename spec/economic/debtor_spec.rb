@@ -16,6 +16,12 @@ describe Economic::Debtor do
         subject.proxy.should == Economic::DebtorProxy
       end
     end
+
+    describe ".key" do
+      it "should == :debtor" do
+        Economic::Debtor.key.should == :debtor
+      end
+    end
   end
 
   context "when saving" do

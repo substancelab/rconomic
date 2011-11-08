@@ -18,6 +18,12 @@ describe Economic::CurrentInvoice do
     end
   end
 
+  describe ".key" do
+    it "should == :invoice" do
+      Economic::Invoice.key.should == :invoice
+    end
+  end
+
   describe "#pdf" do
     before :each do
       savon.stubs('Invoice_GetPdf').returns(:success)

@@ -1,6 +1,7 @@
 # Dependencies
 require 'time'
 require 'savon'
+require 'active_support/inflector'
 require 'active_support/ordered_hash'
 
 require 'economic/session'

@@ -15,6 +15,12 @@ describe Economic::CurrentInvoice do
     end
   end
 
+  describe ".key" do
+    it "should == :current_invoice" do
+      Economic::CurrentInvoice.key.should == :current_invoice
+    end
+  end
+
   describe ".proxy" do
     it "should return a CurrentInvoiceProxy" do
       subject.proxy.should be_instance_of(Economic::CurrentInvoiceProxy)
