@@ -6,7 +6,9 @@ module Economic
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICashBook.html
   class CashBookEntry < Entity
-    has_properties :account_handle,
+    has_properties :id1,
+                   :id2,
+                   :account_handle,
                    :amount,
                    :amount_default_currency,
                    :bank_payment_creditor_id,
@@ -67,13 +69,14 @@ module Economic
     end
 
     def handle
-      Handle.new(:id => @id)
+      Handle.new(:id1 => @id1, :id2 => @id2)
     end
 
     def build_soap_data
       data = ActiveSupport::OrderedHash.new
 
-      data['Type'] = cash_book_entry_type
+      data['Handle'] = handle.to_hash
+      data['Type'] = cash_book_entry_type unless cash_book_entry_type.blank?
       data['CashBookHandle'] = { 'Number' => cash_book_handle[:number] } unless cash_book_handle.blank?
       data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
       data['CreditorHandle'] = { 'Number' => creditor_handle[:number] } unless creditor_handle.blank?
@@ -87,8 +90,8 @@ module Economic
       data['Amount'] = amount
       data['VatAccountHandle'] = { 'Number' => vat_account_handle[:number] } unless vat_account_handle.blank?
       data['ContraVatAccountHandle'] = { 'Number' => contra_vat_account_handle[:number] } unless contra_vat_account_handle.blank?
-      #data['DebtorInvoiceNumber'] = debtor_invoice_number
-      #data['CreditorInvoiceNumber'] = creditor_invoice_number
+      data['DebtorInvoiceNumber'] = debtor_invoice_number unless debtor_invoice_number.blank?
+      data['CreditorInvoiceNumber'] = creditor_invoice_number unless creditor_invoice_number.blank?
       data['DueDate'] = due_date
       data['DepartmentHandle'] = { 'Number' => department_handle[:number] } unless department_handle.blank?
       data['DistributionKeyHandle'] = { 'Number' => distribution_key_handle[:number] } unless distribution_key_handle.blank?
@@ -103,11 +106,6 @@ module Economic
       data['EmployeeHandle'] = { 'Number' => employee_handle[:number] } unless employee_handle.blank?
 
       return data
-    end
-
-    def save
-      result = super
-      id = result[:id]
     end
   end
 end

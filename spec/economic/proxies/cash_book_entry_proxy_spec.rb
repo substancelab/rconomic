@@ -33,8 +33,22 @@ describe Economic::CashBookEntryProxy do
     end
   end
 
-  describe ".create_finance_voucher" do
-    pending "should either be removed or fixed because of hard-coded values"
+  describe "#create_finance_voucher" do
+    it 'should create a finance voucher and return the created cash book entry' do
+      savon.stubs('CashBookEntry_CreateFinanceVoucher').returns(:success)
+      savon.stubs('CashBookEntry_GetData').with(:id1 => 15, :id2 => 16).returns(:success)
+      cash_book_entry = subject.create_finance_voucher(:account_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
+      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+    end
+  end
+
+  describe "#create_debtor_payment" do
+    it 'should create a debtor payment and then return the created cash book entry' do
+      savon.stubs('CashBookEntry_CreateDebtorPayment').returns(:success)
+      savon.stubs('CashBookEntry_GetData').with(:id1 => 13, :id2 => 14).returns(:success)
+      cash_book_entry = subject.create_debtor_payment(:debtor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
+      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+    end
   end
 
   describe "#all" do
