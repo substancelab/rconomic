@@ -106,5 +106,13 @@ describe Economic::DebtorProxy do
       all.size.should == 1
       all.first.should be_instance_of(Economic::Debtor)
     end
+
+    it "returns multiple debtors" do
+      savon.expects('Debtor_GetAll').returns(:multiple)
+      savon.expects('Debtor_GetDataArray').returns(:multiple)
+      all = subject.all
+      all.size.should == 2
+      all.first.should be_instance_of(Economic::Debtor)
+    end
   end
 end

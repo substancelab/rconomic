@@ -47,6 +47,11 @@ module Economic
         class_name_without_modules = class_name.split('::').last
         "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
       end
+
+      # Returns a symbol based on the name of the entity. Used to request and read data responses
+      def key
+        :entity
+      end
     end
 
     def handle
