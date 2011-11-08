@@ -99,7 +99,6 @@ describe Economic::DebtorProxy do
   # Complete specs in current_invoice, no point in duplicating them here, just ensuring that
   # it handles debtors "Number" id.
   describe ".all" do
-
     it "returns a single debtor" do
       savon.expects('Debtor_GetAll').returns(:single)
       savon.expects('Debtor_GetData').with('entityHandle' => {'Number' => 1}).returns(:success)
@@ -107,6 +106,5 @@ describe Economic::DebtorProxy do
       all.size.should == 1
       all.first.should be_instance_of(Economic::Debtor)
     end
-
   end
 end

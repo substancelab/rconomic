@@ -96,7 +96,6 @@ describe Economic::Entity::Handle do
       handle.id.should == 37
       handle.number.should be_nil
       handle.should == original_handle
-      handle.should === original_handle
     end
   end
 
