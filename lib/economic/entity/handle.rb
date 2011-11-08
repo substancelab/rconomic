@@ -4,6 +4,7 @@ class Economic::Entity
 
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
+      hash = prepare_hash_argument(hash) unless hash.is_a?(self.class)
 
       @id = hash[:id].to_i if hash[:id]
       @id1 = hash[:id1].to_i if hash[:id1]
@@ -34,13 +35,32 @@ class Economic::Entity
 
     # Raises exceptions if hash doesn't contain values we can use to construct a new handle
     def verify_sanity_of_arguments!(hash)
-      raise ArgumentError.new("Expected Hash or Economic::Entity::Handle - got #{hash.inspect}") unless hash.respond_to?(:keys) && hash.respond_to?(:values)
+      return if hash.is_a?(self.class)
 
-      unknown_keys = hash.keys - [:id, :id1, :id2, :number]
-      raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
+      if hash.nil? || (!hash.respond_to?(:to_i) && (!hash.respond_to?(:keys) && !hash.respond_to?(:values)))
+        raise ArgumentError.new("Expected Number, Hash or Economic::Entity::Handle - got #{hash.inspect}")
+      end
 
-      not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }
-      raise ArgumentError.new("All values must respond to to_i. #{not_to_iable.inspect} didn't") unless not_to_iable.empty?
+      if hash.respond_to?(:keys)
+        unknown_keys = hash.keys - [:id, :id1, :id2, :number, "Number", "Id", "Id1", "Id2"]
+        raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
+
+        not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }
+        raise ArgumentError.new("All values must respond to to_i. #{not_to_iable.inspect} didn't") unless not_to_iable.empty?
+      end
     end
 
-  end end
+    # Examples
+    #
+    #   prepare_hash_argument(12) #=> {:id => 12}
+    #   prepare_hash_argument(:id => 12) #=> {:id => 12}
+    #   prepare_hash_argument('Id' => 12) #=> {:id => 12}
+    #   prepare_hash_argument('Id' => 12, 'Number' => 13) #=> {:id => 12, :number => 13}
+    def prepare_hash_argument(hash)
+      hash = {:id => hash.to_i} if hash.respond_to?(:to_i) unless hash.blank?
+      hash[:id] ||= hash['Id']
+      hash[:number] ||= hash['Number']
+      hash
+    end
+  end
+end

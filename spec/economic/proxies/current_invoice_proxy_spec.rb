@@ -103,23 +103,25 @@ describe Economic::CurrentInvoiceProxy do
       subject.all.size.should == 0
     end
 
-    it "returns a single current invoice" do
+    it "finds and adds a single current invoice" do
       savon.expects('CurrentInvoice_GetAll').returns(:single)
       savon.expects('CurrentInvoice_GetData').with('entityHandle' => {'Id' => 1}).returns(:success)
-      all = subject.all
-      all.size.should == 1
-      all.first.should be_instance_of(Economic::CurrentInvoice)
+
+      current_invoices = subject.all
+      current_invoices.should be_instance_of(Economic::CurrentInvoiceProxy)
+
+      current_invoices.size.should == 1
+      current_invoices.first.should be_instance_of(Economic::CurrentInvoice)
     end
 
-    it "returns multiple current invoices" do
+    it "adds multiple current invoices" do
       savon.expects('CurrentInvoice_GetAll').returns(:multiple)
-      # Why can't I expect id for two finds?
-      savon.expects('CurrentInvoice_GetData').returns(:success)
-      savon.expects('CurrentInvoice_GetData').returns(:success)
-      all = subject.all
-      all.size.should == 2
-      all.items.first.should be_instance_of(Economic::CurrentInvoice)
-      all.items.last.should be_instance_of(Economic::CurrentInvoice)
+      savon.expects('CurrentInvoice_GetDataArray').returns(:multiple)
+
+      current_invoices = subject.all
+      current_invoices.size.should == 2
+      current_invoices.items.first.should be_instance_of(Economic::CurrentInvoice)
+      current_invoices.items.last.should be_instance_of(Economic::CurrentInvoice)
     end
 
   end

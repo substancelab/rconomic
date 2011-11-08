@@ -47,6 +47,17 @@ module Economic
         class_name_without_modules = class_name.split('::').last
         "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
       end
+
+      # Returns a symbol based on the name of the entity. Used to request and read data responses.
+      #
+      #   Entity.key #=> :entity
+      #   CurrentInvoice.key #=> :current_invoice
+      def key
+        key = self.name
+        key = Economic::Support::String.demodulize(key)
+        key = Economic::Support::String.underscore(key)
+        key.intern
+      end
     end
 
     def handle
