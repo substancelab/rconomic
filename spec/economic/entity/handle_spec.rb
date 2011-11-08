@@ -89,6 +89,15 @@ describe Economic::Entity::Handle do
       handle.id.should == 37
       handle.number.should == 42
     end
+
+    it "should accept another Handle" do
+      original_handle = Economic::Entity::Handle.new(:id => 37)
+      handle = Economic::Entity::Handle.new(original_handle)
+      handle.id.should == 37
+      handle.number.should be_nil
+      handle.should == original_handle
+      handle.should === original_handle
+    end
   end
 
   describe ".to_hash" do

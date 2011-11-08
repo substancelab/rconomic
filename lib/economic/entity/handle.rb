@@ -4,7 +4,7 @@ class Economic::Entity
 
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
-      hash = prepare_hash_argument(hash)
+      hash = prepare_hash_argument(hash) unless hash.is_a?(self.class)
 
       @id = hash[:id].to_i if hash[:id]
       @number = hash[:number].to_i if hash[:number]
@@ -31,6 +31,8 @@ class Economic::Entity
 
     # Raises exceptions if hash doesn't contain values we can use to construct a new handle
     def verify_sanity_of_arguments!(hash)
+      return if hash.is_a?(self.class)
+
       if hash.nil? || (!hash.respond_to?(:to_i) && (!hash.respond_to?(:keys) && !hash.respond_to?(:values)))
         raise ArgumentError.new("Expected Number, Hash or Economic::Entity::Handle - got #{hash.inspect}")
       end
