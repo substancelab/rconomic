@@ -31,11 +31,11 @@ Usage example
     debtor.save
     
     # Create invoice for debtor:
-    invoice = economic.current_invoices.build
-    invoice.date = Time.now
-    invoice.due_date = Time.now + 15
-    invoice.exchange_rate = 100
-    invoice.is_vat_included = false
+    current_invoice = economic.current_invoices.build
+    current_invoice.date = Time.now
+    current_invoice.due_date = Time.now + 15
+    current_invoice.exchange_rate = 100
+    current_invoice.is_vat_included = false
     
     invoice_line = Economic::CurrentInvoiceLine.new
     invoice_line.description = 'Line on invoice'
@@ -43,12 +43,31 @@ Usage example
     invoice_line.product_handle = { :number => 101 }
     invoice_line.quantity = 12
     invoice_line.unit_net_price = 19.95
-    invoice.lines << invoice_line
-    
-    invoice.save
-    
-    # Delete it again
-    invoice.destroy
+    current_invoice.lines << invoice_line
+
+    current_invoice.save
+
+    # You can delete it by doing:
+    # current_invoice.destroy
+
+		invoice = current_invoice.book
+
+		# Create a debtor payment
+
+		cash_book = economic.cash_books.all.last # Or find it by its number
+
+		# The reason debtor payments are done this way is because we don't want to specify the voucher number. If we build the cash book entry ourselves,
+		# without specifying the voucher number, the API will complain. This way, E-Conomics will assign a voucher number for us.
+
+		cash_book_entry = cash_book.entries.create_debtor_payment(:debtor_handle => debtor.handle, :contra_account_handle => { :number => '1920' })
+		cash_book_entry.cash_book_entry_type = "DebtorPayment" # For some reason, we need to specify this.
+		cash_book_entry.amount = -123.45
+		cash_book_entry.currency_handle = { "Code" => "DKK" }
+		cash_book_entry.debtor_invoice_number = invoice.number
+		cash_book_entry.text = "Payment, invoice #{ invoice.number }"
+		cash_book_entry.save
+
+		cash_book.book
 
 
 How to enable e-conomic API access
