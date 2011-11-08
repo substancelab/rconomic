@@ -21,9 +21,26 @@ describe Economic::Entity::Handle do
   end
 
   describe ".new" do
-    it "should raise error if argument isn't a hash" do
+    it "should raise error if argument isn't supported" do
       lambda do
-        Economic::Entity::Handle.new(12)
+        Economic::Entity::Handle.new(true)
+      end.should raise_error(ArgumentError)
+    end
+
+    it "should assume :id if argument is numeric" do
+      handle = Economic::Entity::Handle.new(12)
+      handle.id.should == 12
+      handle.number.should be_nil
+    end
+
+    it "should use to_i on numeric argument" do
+      handle = Economic::Entity::Handle.new("42")
+      handle.id.should == 42
+    end
+
+    it "should raise error if argument is nil" do
+      lambda do
+        Economic::Entity::Handle.new(nil)
       end.should raise_error(ArgumentError)
     end
 

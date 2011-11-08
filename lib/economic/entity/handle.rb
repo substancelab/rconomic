@@ -5,6 +5,8 @@ class Economic::Entity
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
 
+      hash = {:id => hash.to_i} if hash.respond_to?(:to_i) unless hash.blank?
+
       @id = hash[:id].to_i if hash[:id]
       @number = hash[:number].to_i if hash[:number]
     end
@@ -30,13 +32,17 @@ class Economic::Entity
 
     # Raises exceptions if hash doesn't contain values we can use to construct a new handle
     def verify_sanity_of_arguments!(hash)
-      raise ArgumentError.new("Expected Hash or Economic::Entity::Handle - got #{hash.inspect}") unless hash.respond_to?(:keys) && hash.respond_to?(:values)
+      if hash.nil? || (!hash.respond_to?(:to_i) && (!hash.respond_to?(:keys) && !hash.respond_to?(:values)))
+        raise ArgumentError.new("Expected Number, Hash or Economic::Entity::Handle - got #{hash.inspect}")
+      end
 
-      unknown_keys = hash.keys - [:id, :number]
-      raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
+      if hash.respond_to?(:keys)
+        unknown_keys = hash.keys - [:id, :number]
+        raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
 
-      not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }
-      raise ArgumentError.new("All values must respond to to_i. #{not_to_iable.inspect} didn't") unless not_to_iable.empty?
+        not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }
+        raise ArgumentError.new("All values must respond to to_i. #{not_to_iable.inspect} didn't") unless not_to_iable.empty?
+      end
     end
 
   end
