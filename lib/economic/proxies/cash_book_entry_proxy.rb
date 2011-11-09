@@ -23,9 +23,9 @@ module Economic
     def create_finance_voucher(handles)
       response = session.request(entity_class.soap_action('CreateFinanceVoucher')) do
         soap.body = {
-          'cashBookHandle' => owner.handle[:number],
-          'accountHandle' => {'Number' => handles[:account_handle][:number] },
-          'contraAccountHandle' => {'Number' => handles[:contra_account_handle][:number] }
+          'cashBookHandle'      => { 'Number' => owner.handle[:number] },
+          'accountHandle'       => { 'Number'  => handles[:account_handle][:number] },
+          'contraAccountHandle' => { 'Number'  => handles[:contra_account_handle][:number] }
         }
       end
 
@@ -41,8 +41,8 @@ module Economic
     def create_debtor_payment(handles)
       response = session.request(entity_class.soap_action('CreateDebtorPayment')) do
         soap.body = {
-          "cashBookHandle" => { 'Number' => owner.handle[:number] },
-          "debtorHandle" => { 'Number' => handles[:debtor_handle][:number] },
+          "cashBookHandle"      => { 'Number' => owner.handle[:number] },
+          "debtorHandle"        => { 'Number' => handles[:debtor_handle][:number] },
           "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] }
         }
       end
