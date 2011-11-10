@@ -72,6 +72,12 @@ describe Economic::Entity::Handle do
       handle.number.should == 42
     end
 
+    it 'should set id1 and id2' do
+      handle = Economic::Entity::Handle.new(:id1 => 37, :id2 => 42)
+      handle.id1.should == 37
+      handle.id2.should == 42
+    end
+
     it "should to_i values" do
       handle = Economic::Entity::Handle.new(:id => "37", :number => "42")
       handle.id.should == 37
