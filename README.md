@@ -85,11 +85,13 @@ Not even remotely... For now, limited to a small subset of all the [available op
 
                        | Create | Read | Update | Delete
     -------------------+--------+------+--------+-------
+    CashBook           | X      | X    | X      | X
+    CashBookEntry      | X      | X    | X      | X
     CurrentInvoice     | X      | X    | X      | X
     CurrentInvoiceLine | X      | X    | X      | X
     Debtor             | X      | X    | X      | X
     DebtorContact      | X      | X    | X      | X
-    Invoice            | X      | X    | X      | X
+    Invoice            | X      | X    |        |
 
 
 Credits
