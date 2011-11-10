@@ -162,6 +162,8 @@ module Economic
       if response
         @number = response[:number]
         @id = response[:id]
+        @id1 = response[:id1]
+        @id2 = response[:id2]
       end
 
       @persisted = true

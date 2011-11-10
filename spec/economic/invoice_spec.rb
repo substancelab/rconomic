@@ -1,11 +1,18 @@
 require './spec/spec_helper'
 
-describe Economic::CurrentInvoice do
+describe Economic::Invoice do
   let(:session) { make_session }
-  subject { (i = Economic::Invoice.new( :number => 512 )).tap { i.session = session } }
+  subject { Economic::Invoice.new(:session => session, :number => 512) }
 
   it "inherits from Economic::Entity" do
     Economic::Invoice.ancestors.should include(Economic::Entity)
+  end
+
+  describe '#remainder' do
+    it 'should get the remainder' do
+      savon.expects('Invoice_GetRemainder').with("invoiceHandle" => { "Number" => 512 }).returns(:success)
+      subject.remainder.should == "512.32"
+    end
   end
 
   describe ".proxy" do

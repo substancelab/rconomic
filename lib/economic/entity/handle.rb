@@ -1,24 +1,28 @@
 class Economic::Entity
   class Handle
-    attr_accessor :id, :number
+    attr_accessor :id, :id1, :id2, :number
 
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
       hash = prepare_hash_argument(hash) unless hash.is_a?(self.class)
 
       @id = hash[:id].to_i if hash[:id]
+      @id1 = hash[:id1].to_i if hash[:id1]
+      @id2 = hash[:id2].to_i if hash[:id2]
       @number = hash[:number].to_i if hash[:number]
     end
 
     def to_hash
       hash = {}
       hash['Id'] = id unless id.blank?
+      hash['Id1'] = id1 unless id1.blank?
+      hash['Id2'] = id2 unless id2.blank?
       hash['Number'] = number unless number.blank?
       hash
     end
 
     def [](key)
-      {:id => @id, :number => @number}[key]
+      {:id => @id, :id1 => @id1, :id2 => @id2, :number => @number}[key]
     end
 
     def ==(other)
@@ -38,7 +42,7 @@ class Economic::Entity
       end
 
       if hash.respond_to?(:keys)
-        unknown_keys = hash.keys - [:id, :number, "Number", "Id"]
+        unknown_keys = hash.keys - [:id, :id1, :id2, :number, "Number", "Id", "Id1", "Id2"]
         raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
 
         not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }

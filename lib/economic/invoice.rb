@@ -34,6 +34,12 @@ module Economic
       @debtor_handle = handle
     end
 
+    def remainder
+      session.request(soap_action(:get_remainder)) do
+        soap.body = { "invoiceHandle" => handle.to_hash }
+      end
+    end
+
     # Returns the PDF version of Invoice as a String.
     #
     # To get it as a file you can do:

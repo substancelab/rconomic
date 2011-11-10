@@ -78,13 +78,9 @@ module Economic
     def get_data(handle)
       handle = Entity::Handle.new(handle) unless handle.is_a?(Entity::Handle)
 
-      entityHandle = {}
-      entityHandle['Id'] = handle.id unless handle.id.blank?
-      entityHandle['Number'] = handle.number unless handle.number.blank?
-
       entity_hash = session.request(entity_class.soap_action(:get_data)) do
         soap.body = {
-          'entityHandle' => entityHandle
+          'entityHandle' => handle.to_hash
         }
       end
       entity_hash
