@@ -17,7 +17,8 @@ module Economic
       response = session.request entity_class.soap_action("FindByDateInterval") do
         soap.body = {
           'first' => from.iso8601,
-          'last' => unto.iso8601
+          'last' => unto.iso8601,
+          :order! => ['first', 'last']
         }
       end
 
