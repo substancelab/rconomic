@@ -99,4 +99,14 @@ describe Economic::CurrentInvoice do
       subject.attention.should == contact
     end
   end
+
+  describe "#debtor" do
+    let(:debtor) { (c = Economic::Debtor.new).tap { c.session = session }}
+
+    it "should be set- and gettable" do
+      subject.debtor = debtor
+      subject.debtor_handle.should == debtor.handle
+      subject.debtor.should == debtor
+    end
+  end
 end

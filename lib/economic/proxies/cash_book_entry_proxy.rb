@@ -25,7 +25,8 @@ module Economic
         soap.body = {
           'cashBookHandle'      => { 'Number' => owner.handle[:number] },
           'accountHandle'       => { 'Number'  => handles[:account_handle][:number] },
-          'contraAccountHandle' => { 'Number'  => handles[:contra_account_handle][:number] }
+          'contraAccountHandle' => { 'Number'  => handles[:contra_account_handle][:number] },
+          :order! => ['cashBookHandle', 'accountHandle', 'contraAccountHandle']
         }
       end
 
@@ -43,7 +44,8 @@ module Economic
         soap.body = {
           "cashBookHandle"      => { 'Number' => owner.handle[:number] },
           "debtorHandle"        => { 'Number' => handles[:debtor_handle][:number] },
-          "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] }
+          "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] },
+          :order! => ['cashBookHandle', 'debtorHandle', 'contraAccountHandle']
         }
       end
 

@@ -4,7 +4,11 @@ module Economic
   class InvoiceProxy < EntityProxy
     # Gets data for Invoice from the API
     def find(handle)
-      handle = Entity::Handle.new(:number => handle) unless handle.is_a?(Entity::Handle)
+      handle = if handle.respond_to?(:to_i)
+        Entity::Handle.new(:number => handle.to_i)
+      else
+        Entity::Handle.new(handle)
+      end
       super(handle)
     end
 
@@ -13,7 +17,8 @@ module Economic
       response = session.request entity_class.soap_action("FindByDateInterval") do
         soap.body = {
           'first' => from.iso8601,
-          'last' => unto.iso8601
+          'last' => unto.iso8601,
+          :order! => ['first', 'last']
         }
       end
 
