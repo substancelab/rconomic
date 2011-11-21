@@ -51,5 +51,44 @@ module Economic
 
       find(response)
     end
+
+    # Creates a creditor payment and returns the cash book entry.
+    # Example:
+    #   cash_book.entries.create_creditor_payment(
+    #     :creditor_handle       => { :number => 1 },
+    #     :contra_account_handle => { :number => 1510 }
+    #   )
+    def create_creditor_payment(handles)
+      response = session.request(entity_class.soap_action('CreateCreditorPayment')) do
+        soap.body = {
+          "cashBookHandle"      => { 'Number' => owner.handle[:number] },
+          "creditorHandle"      => { 'Number' => handles[:creditor_handle][:number] },
+          "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] },
+          :order! => ['cashBookHandle', 'creditorHandle', 'contraAccountHandle']
+        }
+      end
+
+      find(response)
+    end
+
+    # Creates a creditor invoice and returns the cash book entry.
+    # Example:
+    #   cash_book.entries.create_creditor_invoice(
+    #     :creditor_handle       => { :number => 1 },
+    #     :contra_account_handle => { :number => 1510 }
+    #   )
+    def create_creditor_invoice(handles)
+      response = session.request(entity_class.soap_action('CreateCreditorInvoice')) do
+        soap.body = {
+          "cashBookHandle"      => { 'Number' => owner.handle[:number] },
+          "creditorHandle"      => { 'Number' => handles[:creditor_handle][:number] },
+          "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] },
+          :order! => ['cashBookHandle', 'creditorHandle', 'contraAccountHandle']
+        }
+      end
+
+      find(response)
+    end
+
   end
 end

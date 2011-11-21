@@ -51,6 +51,24 @@ describe Economic::CashBookEntryProxy do
     end
   end
 
+  describe "#create_creditor_invoice" do
+    it 'should create a creditor invoice and then return the created cash book entry' do
+      savon.stubs('CashBookEntry_CreateCreditorInvoice').returns(:success)
+      savon.stubs('CashBookEntry_GetData').with(:id1 => 13, :id2 => 14).returns(:success)
+      cash_book_entry = subject.create_creditor_invoice(:creditor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
+      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+    end
+  end
+
+  describe "#create_creditor_payment" do
+    it 'should create a creditor payment and then return the created cash book entry' do
+      savon.stubs('CashBookEntry_CreateCreditorPayment').returns(:success)
+      savon.stubs('CashBookEntry_GetData').with(:id1 => 13, :id2 => 14).returns(:success)
+      cash_book_entry = subject.create_creditor_payment(:creditor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
+      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+    end
+  end
+
   describe "#all" do
     it 'should get the cash book entries' do
       savon.stubs('CashBook_GetEntries').returns(:success)
