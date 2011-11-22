@@ -95,3 +95,23 @@ def make_debtor(properties = {})
 
   debtor
 end
+
+def make_creditor(properties = {})
+  creditor = Economic::Creditor.new
+
+  # Assign specified properties
+  properties.each { |key, value|
+    creditor.send("#{key}=", value)
+  }
+
+  # Use defaults for the rest of the properties
+  creditor.session ||= make_session
+  creditor.handle ||= { :number => 42 }
+  creditor.number ||= 42
+  creditor.name ||= 'Bob'
+  creditor.vat_zone ||= 'HomeCountry' # HomeCountry, EU, Abroad
+  creditor.is_accessible ||= true
+  creditor.ci_number ||= '12345678'
+
+  creditor
+end
