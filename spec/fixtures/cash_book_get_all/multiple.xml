@@ -4,10 +4,10 @@
     <CashBook_GetAllResponse xmlns="http://e-conomic.com">
       <CashBook_GetAllResult>
         <CashBookHandle>
-          <Number>int</Number>
+          <Number>1</Number>
         </CashBookHandle>
         <CashBookHandle>
-          <Number>int</Number>
+          <Number>2</Number>
         </CashBookHandle>
       </CashBook_GetAllResult>
     </CashBook_GetAllResponse>

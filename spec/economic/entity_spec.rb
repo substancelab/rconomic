@@ -213,4 +213,35 @@ describe Economic::Entity do
       subject.update_properties(:foo => 'bar', 'baz' => 'qux')
     end
   end
+
+  describe "equality" do
+    context "when other is nil do" do
+      let(:other) { nil }
+
+      it "should return true" do
+        subject.should_not == other
+      end
+    end
+
+    context "when other handle is equal" do
+      context "when other is same class" do
+        let(:other) { Economic::Entity.new(:session => session, :handle => subject.handle) }
+
+        it "should return true" do
+          subject.should == other
+        end
+      end
+
+      context "when other is child class" do
+        let(:other) { Economic::Debtor.new(:session => session, :handle => subject.handle) }
+
+        it "should return true" do
+          subject.should == other
+        end
+      end
+    end
+
+
+
+  end
 end

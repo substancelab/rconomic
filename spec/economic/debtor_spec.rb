@@ -81,4 +81,16 @@ describe Economic::Debtor do
     end
   end
 
+  describe "equality" do
+    context "when other handle is equal" do
+      context "when other is a different class" do
+        let(:other) { Economic::Invoice.new(:session => session, :handle => subject.handle) }
+
+        it "should return false" do
+          subject.should_not == other
+        end
+      end
+    end
+  end
+
 end

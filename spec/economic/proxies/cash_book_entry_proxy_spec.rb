@@ -54,8 +54,9 @@ describe Economic::CashBookEntryProxy do
   describe "#all" do
     it 'should get the cash book entries' do
       savon.stubs('CashBook_GetEntries').returns(:success)
-      savon.stubs('CashBookEntry_GetData').returns(:success)
-      subject.all.size.should == 2
+      subject.expects(:find).in_sequence.with({:id1 => '1', :id2 => '2'})
+      subject.expects(:find).in_sequence.with({:id1 => '11', :id2 => '12'})
+      subject.all
     end
   end
 

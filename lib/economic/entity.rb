@@ -144,6 +144,11 @@ module Economic
       end
     end
 
+    def ==(other)
+      return false if other.nil?
+      self.handle == other.handle && other.is_a?(self.class)
+    end
+
   protected
 
     def create_or_update

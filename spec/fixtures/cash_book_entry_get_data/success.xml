@@ -4,11 +4,11 @@
     <CashBookEntry_GetDataResponse xmlns="http://e-conomic.com">
       <CashBookEntry_GetDataResult>
         <Handle>
-          <Id1>int</Id1>
-          <Id2>int</Id2>
+          <Id1>1</Id1>
+          <Id2>2</Id2>
         </Handle>
-        <Id1>int</Id1>
-        <Id2>int</Id2>
+        <Id1>1</Id1>
+        <Id2>2</Id2>
         <Type>DebtorPayment or CreditorInvoice or CreditorPayment or FinanceVoucher or ManualDebtorInvoice</Type>
         <CashBookHandle>
           <Number>int</Number>

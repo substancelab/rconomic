@@ -5,9 +5,9 @@
       <CurrentInvoice_GetDataArrayResult>
         <CurrentInvoiceData>
           <Handle>
-            <Id>int</Id>
+            <Id>1</Id>
           </Handle>
-          <Id>int</Id>
+          <Id>1</Id>
           <DebtorHandle>
             <Number>string</Number>
           </DebtorHandle>
@@ -71,9 +71,9 @@
         </CurrentInvoiceData>
         <CurrentInvoiceData>
           <Handle>
-            <Id>int</Id>
+            <Id>2</Id>
           </Handle>
-          <Id>int</Id>
+          <Id>2</Id>
           <DebtorHandle>
             <Number>string</Number>
           </DebtorHandle>

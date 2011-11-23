@@ -48,7 +48,7 @@ module Economic
       self
     end
 
-    # Returns a new, unpersisted Economic::Entity
+    # Returns a new, unpersisted Economic::Entity that has been added to Proxy
     def build(properties = {})
       entity = self.class.entity_class.new(:session => session)
 
@@ -65,7 +65,7 @@ module Economic
       self.class.entity_class
     end
 
-    # Fetches Entity data from API and returns an Entity initialized with that data
+    # Fetches Entity data from API and returns an Entity initialized with that data added to Proxy
     def find(handle)
       handle = Entity::Handle.new(handle) unless handle.is_a?(Entity::Handle)
       entity_hash = get_data(handle)

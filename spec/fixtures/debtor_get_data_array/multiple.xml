@@ -5,9 +5,9 @@
       <Debtor_GetDataArrayResult>
         <DebtorData>
           <Handle>
-            <Number>string</Number>
+            <Number>1</Number>
           </Handle>
-          <Number>string</Number>
+          <Number>1</Number>
           <DebtorGroupHandle>
             <Number>int</Number>
           </DebtorGroupHandle>
@@ -52,9 +52,9 @@
         </DebtorData>
         <DebtorData>
           <Handle>
-            <Number>string</Number>
+            <Number>2</Number>
           </Handle>
-          <Number>string</Number>
+          <Number>2</Number>
           <DebtorGroupHandle>
             <Number>int</Number>
           </DebtorGroupHandle>

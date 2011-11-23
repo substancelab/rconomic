@@ -4,12 +4,12 @@
     <CashBook_GetEntriesResponse xmlns="http://e-conomic.com">
       <CashBook_GetEntriesResult>
         <CashBookEntryHandle>
-          <Id1>int</Id1>
-          <Id2>int</Id2>
+          <Id1>1</Id1>
+          <Id2>2</Id2>
         </CashBookEntryHandle>
         <CashBookEntryHandle>
-          <Id1>int</Id1>
-          <Id2>int</Id2>
+          <Id1>11</Id1>
+          <Id2>12</Id2>
         </CashBookEntryHandle>
       </CashBook_GetEntriesResult>
     </CashBook_GetEntriesResponse>

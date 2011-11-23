@@ -85,7 +85,7 @@ describe Economic::CurrentInvoiceLineProxy do
     it "can be iterated over" do
       line = Economic::CurrentInvoiceLine.new
       subject << line
-      subject.all? { |l| l == [line] }
+      subject.all? { |l| l.is_a?(Economic::CurrentInvoiceLine) }.should be_true
     end
   end
 end

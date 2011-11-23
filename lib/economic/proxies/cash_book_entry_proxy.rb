@@ -6,6 +6,7 @@ module Economic
       entity_hash = session.request(CashBookProxy.entity_class.soap_action(:get_entries)) do
         soap.body = { "cashBookHandle" => owner.handle.to_hash }
       end
+
       if entity_hash != {}
         [ entity_hash.values.first ].flatten.each do |id_hash|
           find(id_hash)

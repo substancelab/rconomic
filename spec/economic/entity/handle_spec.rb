@@ -18,6 +18,27 @@ describe Economic::Entity::Handle do
     it "should not be equal when id or number is equal and the other isn't" do
       handle_a.should_not == handle_d
     end
+
+    describe "CashBookEntry handles" do
+      let(:handle_a) { Economic::Entity::Handle.new(:id1 => 1, :id2 => 2) }
+
+      context "when id1 and id2 values are equal" do
+        let(:handle_b) { Economic::Entity::Handle.new(:id1 => 1, :id2 => 2) }
+
+        it "should be equal" do
+          handle_a.should == handle_b
+        end
+      end
+
+      context "when id1 and id2 values are different" do
+        let(:handle_b) { Economic::Entity::Handle.new(:id1 => 11, :id2 => 12) }
+
+        it "should_not be equal" do
+          handle_a.should_not == handle_b
+        end
+      end
+    end
+
   end
 
   describe ".new" do
