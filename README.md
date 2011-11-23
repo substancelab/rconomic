@@ -60,7 +60,7 @@ Usage example
     # without specifying the voucher number, the API will complain. This way, E-Conomics will assign a voucher number for us.
 
     cash_book_entry = cash_book.entries.create_debtor_payment(:debtor_handle => debtor.handle, :contra_account_handle => { :number => '1920' })
-    cash_book_entry.cash_book_entry_type = "DebtorPayment" # For some reason, we need to specify this.
+    cash_book_entry.type = "DebtorPayment" # For some reason, we need to specify this.
     cash_book_entry.amount = -123.45
     cash_book_entry.currency_handle = { "Code" => "DKK" }
     cash_book_entry.debtor_invoice_number = invoice.number

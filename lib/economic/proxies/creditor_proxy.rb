@@ -56,9 +56,18 @@ module Economic
       end
     end
 
-    # Returns the next available creditor number
-    def next_available_number
-      session.request Creditor.soap_action(:get_next_available_number)
+    def create_simple(opts)
+      response = session.request(entity_class.soap_action('Create')) do
+        soap.body = {
+          'number' => opts[:number],
+          'creditorGroupHandle' => { 'Number' => opts[:creditor_group_handle][:number] },
+          :name => opts[:name],
+          :vatZone => opts[:vat_zone]
+        }
+      end
+
+      find(response)
     end
+
   end
 end

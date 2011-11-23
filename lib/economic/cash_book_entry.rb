@@ -33,7 +33,7 @@ module Economic
                    :project_handle,
                    :start_date,
                    :text,
-                   :cash_book_entry_type,
+                   :type,
                    :vat_account_handle,
                    :voucher_number
 
@@ -63,7 +63,7 @@ module Economic
       self.project_handle = nil
       self.start_date = Time.now
       self.text = ""
-      self.cash_book_entry_type = ""
+      self.type = ""
       self.vat_account_handle = nil
       self.voucher_number = 0
     end
@@ -76,7 +76,9 @@ module Economic
       data = ActiveSupport::OrderedHash.new
 
       data['Handle'] = handle.to_hash
-      data['Type'] = cash_book_entry_type unless cash_book_entry_type.blank?
+      data['Id1'] = id1 unless id1.blank?
+      data['Id2'] = id2 unless id2.blank?
+      data['Type'] = type unless type.blank?
       data['CashBookHandle'] = { 'Number' => cash_book_handle[:number] } unless cash_book_handle.blank?
       data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
       data['CreditorHandle'] = { 'Number' => creditor_handle[:number] } unless creditor_handle.blank?
