@@ -58,6 +58,13 @@ describe Economic::CashBookEntryProxy do
       cash_book_entry = subject.create_creditor_invoice(:creditor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
       cash_book_entry.should be_instance_of(Economic::CashBookEntry)
     end
+
+    it 'should not send handles that were not given' do
+      savon.stubs('CashBookEntry_CreateCreditorInvoice').with(:cashBookHandle => { 'Number' => 13 }).returns(:success)
+      savon.stubs('CashBookEntry_GetData').with(:id1 => 13, :id2 => 14).returns(:success)
+      cash_book_entry = subject.create_creditor_invoice({})
+      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+    end
   end
 
   describe "#create_creditor_payment" do

@@ -79,12 +79,11 @@ module Economic
     #   )
     def create_creditor_invoice(handles)
       response = session.request(entity_class.soap_action('CreateCreditorInvoice')) do
-        soap.body = {
-          "cashBookHandle"      => { 'Number' => owner.handle[:number] },
-          "creditorHandle"      => { 'Number' => handles[:creditor_handle][:number] },
-          "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] },
-          :order! => ['cashBookHandle', 'creditorHandle', 'contraAccountHandle']
-        }
+        data = ActiveSupport::OrderedHash.new
+        data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
+        data["creditorHandle"] = { 'Number' => handles[:creditor_handle][:number] } if handles[:creditor_handle]
+        data["contraAccountHandle"] = { 'Number' => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]
+        soap.body = data
       end
 
       find(response)

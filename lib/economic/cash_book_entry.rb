@@ -41,8 +41,8 @@ module Economic
       self.account_handle = nil
       self.amount = 0
       self.amount_default_currency = 0
-      self.bank_payment_creditor_id = 0
-      self.bank_payment_creditor_invoice_id = 0
+      self.bank_payment_creditor_id = nil
+      self.bank_payment_creditor_invoice_id = nil
       self.bank_payment_type_handle = nil
       self.capitalise_handle = nil
       self.cash_book_handle = nil
@@ -100,8 +100,8 @@ module Economic
       data['ProjectHandle'] = { 'Number' => project_handle[:number] } unless project_handle.blank?
       data['CostTypeHandle'] = { 'Number' => cost_type_handle[:number] } unless cost_type_handle.blank?
       data['BankPaymentTypeHandle'] = { 'Number' => bank_payment_type_handle[:number] } unless bank_payment_type_handle.blank?
-      data['BankPaymentCreditorId'] = bank_payment_creditor_id
-      data['BankPaymentCreditorInvoiceId'] = bank_payment_creditor_invoice_id
+      data['BankPaymentCreditorId'] = bank_payment_creditor_id unless bank_payment_creditor_id.blank?
+      data['BankPaymentCreditorInvoiceId'] = bank_payment_creditor_invoice_id unless bank_payment_creditor_invoice_id.blank?
       data['CapitaliseHandle'] = { 'Number' => capitalise_handle[:number] } unless capitalise_handle.blank?
       data['StartDate'] = start_date
       data['EndDate'] = end_date
