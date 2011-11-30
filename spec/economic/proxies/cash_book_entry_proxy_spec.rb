@@ -76,6 +76,13 @@ describe Economic::CashBookEntryProxy do
     end
   end
 
+  describe "#set_due_date" do
+    it 'should set due date' do
+      savon.expects('CashBookEntry_SetDueDate').with("cashBookEntryHandle" => { "Id1" => subject.owner.id, "Id2" => 234 }, :value => Date.new(2012, 12, 21)).returns(:success)
+      subject.set_due_date(234, Date.new(2012, 12, 21))
+    end
+  end
+
   describe "#all" do
     it 'should get the cash book entries' do
       savon.stubs('CashBook_GetEntries').returns(:success)

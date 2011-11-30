@@ -89,5 +89,11 @@ module Economic
       find(response)
     end
 
+    def set_due_date(id, date)
+      session.request(entity_class.soap_action("SetDueDate")) do
+        soap.body = { 'cashBookEntryHandle' => { 'Id1' => owner.handle[:number], 'Id2' => id }, :value => date }
+      end
+    end
+
   end
 end
