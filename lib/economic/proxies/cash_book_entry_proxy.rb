@@ -22,12 +22,11 @@ module Economic
     #   )
     def create_finance_voucher(handles)
       response = session.request(entity_class.soap_action('CreateFinanceVoucher')) do
-        soap.body = {
-          'cashBookHandle'      => { 'Number' => owner.handle[:number] },
-          'accountHandle'       => { 'Number'  => handles[:account_handle][:number] },
-          'contraAccountHandle' => { 'Number'  => handles[:contra_account_handle][:number] },
-          :order! => ['cashBookHandle', 'accountHandle', 'contraAccountHandle']
-        }
+        data = ActiveSupport::OrderedHash.new
+        data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
+        data["accountHandle"] = { 'Number'  => handles[:account_handle][:number] } if handles[:account_handle]
+        data["contraAccountHandle"] = { 'Number'  => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]
+        soap.body = data
       end
 
       find(response)
@@ -41,12 +40,11 @@ module Economic
     #   )
     def create_debtor_payment(handles)
       response = session.request(entity_class.soap_action('CreateDebtorPayment')) do
-        soap.body = {
-          "cashBookHandle"      => { 'Number' => owner.handle[:number] },
-          "debtorHandle"        => { 'Number' => handles[:debtor_handle][:number] },
-          "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] },
-          :order! => ['cashBookHandle', 'debtorHandle', 'contraAccountHandle']
-        }
+        data = ActiveSupport::OrderedHash.new
+        data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
+        data["debtorHandle"] = { 'Number' => handles[:debtor_handle][:number] } if handles[:debtor_handle]
+        data["contraAccountHandle"] = { 'Number' => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]
+        soap.body = data
       end
 
       find(response)
