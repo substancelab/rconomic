@@ -60,6 +60,22 @@ module Economic
       session.invoices.find(response[:number])
     end
 
+    # Books a current invoice. The given number will be assigned to the
+    # resulting Economic::Invoice.
+    #
+    # Returns the resulting Economic::Invoice object
+    def book_with_number(number)
+      response = session.request soap_action(:book_with_number) do
+        soap.body = {
+          "currentInvoiceHandle" => handle.to_hash,
+          "number" => number
+        }
+      end
+
+      # Find the created Invoice
+      session.invoices.find(response[:number])
+    end
+
     def debtor
       return nil if debtor_handle.blank?
       @debtor ||= session.debtors.find(debtor_handle)
