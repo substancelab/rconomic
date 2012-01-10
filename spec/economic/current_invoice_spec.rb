@@ -90,6 +90,20 @@ describe Economic::CurrentInvoice do
     end
   end
 
+  describe "#book_with_number" do
+    it 'should book the current invoice with the given number and return the created invoice object' do
+      savon.stubs('CurrentInvoice_BookWithNumber').returns(:success)
+      savon.expects("Invoice_GetData").with('entityHandle' => { 'Number' => 123 }).returns(:success)
+      subject.book_with_number(123).should be_instance_of(Economic::Invoice)
+    end
+
+    it 'should request with the right key for handle' do
+      savon.stubs('Invoice_GetData').returns(:success)
+      savon.expects("CurrentInvoice_BookWithNumber").with('currentInvoiceHandle' => { 'Id' => 512 }, 'number' => 123).returns(:success)
+      subject.book_with_number(123)
+    end
+  end
+
   describe "#attention" do
     let(:contact) { (c = Economic::DebtorContact.new).tap { c.session = session }}
 
