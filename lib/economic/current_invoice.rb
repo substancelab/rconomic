@@ -68,7 +68,8 @@ module Economic
       response = session.request soap_action(:book_with_number) do
         soap.body = {
           "currentInvoiceHandle" => handle.to_hash,
-          "number" => number
+          "number" => number,
+          :order! => ["currentInvoiceHandle", "number"]
         }
       end
 

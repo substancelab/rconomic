@@ -99,7 +99,7 @@ describe Economic::CurrentInvoice do
 
     it 'should request with the right key for handle' do
       savon.stubs('Invoice_GetData').returns(:success)
-      savon.expects("CurrentInvoice_BookWithNumber").with('currentInvoiceHandle' => { 'Id' => 512 }, 'number' => 123).returns(:success)
+      savon.expects("CurrentInvoice_BookWithNumber").with('currentInvoiceHandle' => { 'Id' => 512 }, 'number' => 123, :order! => ['currentInvoiceHandle', 'number']).returns(:success)
       subject.book_with_number(123)
     end
   end
