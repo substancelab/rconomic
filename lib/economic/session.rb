@@ -65,6 +65,10 @@ module Economic
       @accounts ||= AccountProxy.new(self)
     end
 
+    def debtor_entries
+      @debtor_entries ||= DebtorEntryProxy.new(self)
+    end
+
     def request(action, &block)
       response = client.request :economic, action, &block
       response_hash = response.to_hash
