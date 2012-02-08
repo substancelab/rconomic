@@ -25,7 +25,7 @@ module Savon
   module Wasabi
     class Document < ::Wasabi::Document
       def resolve_document
-        Savon::Spec::Fixture['wsdl']
+        File.read(File.expand_path('../../lib/economic/economic.wsdl', __FILE__))
       end
     end
   end
