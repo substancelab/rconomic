@@ -10,7 +10,7 @@ describe Economic::DebtorEntryProxy do
     end
   end
 
-  describe ".find_by_invoice_number" do
+  describe "#find_by_invoice_number" do
     it 'should be able to find multiple debtor entries' do
       savon.expects("DebtorEntry_FindByInvoiceNumber").with('from' => '123', 'to' => '456', :order! => ['from', 'to']).returns(:many)
       subject.find_by_invoice_number('123', '456').should == [1, 2]
@@ -27,7 +27,7 @@ describe Economic::DebtorEntryProxy do
     end
   end
 
-  describe ".match" do
+  describe "#match" do
     it 'should match two debtor entries by serial numbers' do
       savon.stubs("DebtorEntry_MatchEntries").with(
         :entries => [

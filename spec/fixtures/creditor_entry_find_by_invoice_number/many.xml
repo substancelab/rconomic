@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CreditorEntry_FindByInvoiceNumberResponse xmlns="http://e-conomic.com">
+      <CreditorEntry_FindByInvoiceNumberResult>
+        <CreditorEntryHandle>
+          <SerialNumber>1</SerialNumber>
+        </CreditorEntryHandle>
+        <CreditorEntryHandle>
+          <SerialNumber>2</SerialNumber>
+        </CreditorEntryHandle>
+      </CreditorEntry_FindByInvoiceNumberResult>
+    </CreditorEntry_FindByInvoiceNumberResponse>
+  </soap:Body>
+</soap:Envelope>
