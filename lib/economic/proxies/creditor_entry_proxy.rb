@@ -26,5 +26,17 @@ module Economic
 
       build(response)
     end
+
+    def match(*serial_numbers)
+      response = session.request(entity_class.soap_action('MatchEntries')) do
+        soap.body = {
+          :entries => {
+            "CreditorEntryHandle" => serial_numbers.map { |serial_number|
+              { "SerialNumber" => serial_number }
+            }
+          }
+        }
+      end
+    end
   end
 end

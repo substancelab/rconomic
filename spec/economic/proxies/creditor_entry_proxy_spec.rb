@@ -29,6 +29,18 @@ describe Economic::CreditorEntryProxy do
     end
   end
 
+  describe "#match" do
+    it 'should match two creditor entries by serial numbers' do
+      savon.stubs("CreditorEntry_MatchEntries").with(
+        :entries => [
+          { :creditor_entry_handle => { :serial_number => 1 } },
+          { :credior_entry_handle => { :serial_number => 2 } }
+        ]
+      ).returns(:success)
+      subject.match(1, 2)
+    end
+  end
+
   describe "#entity_class" do
     it "should return Economic::CreditorEntry" do
       Economic::CreditorEntryProxy.entity_class.should == Economic::CreditorEntry
