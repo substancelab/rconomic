@@ -73,6 +73,10 @@ module Economic
       @creditor_entries ||= CreditorEntryProxy.new(self)
     end
 
+    def entries
+      @entries ||= EntryProxy.new(self)
+    end
+
     def request(action, &block)
       response = client.request :economic, action, &block
       response_hash = response.to_hash
