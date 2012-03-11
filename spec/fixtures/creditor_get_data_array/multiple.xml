@@ -5,9 +5,9 @@
       <Creditor_GetDataArrayResult>
         <CreditorData>
           <Handle>
-            <Number>string</Number>
+            <Number>1</Number>
           </Handle>
-          <Number>string</Number>
+          <Number>1</Number>
           <CreditorGroupHandle>
             <Number>int</Number>
           </CreditorGroupHandle>
@@ -47,9 +47,9 @@
         </CreditorData>
         <CreditorData>
           <Handle>
-            <Number>string</Number>
+            <Number>2</Number>
           </Handle>
-          <Number>string</Number>
+          <Number>2</Number>
           <CreditorGroupHandle>
             <Number>int</Number>
           </CreditorGroupHandle>
