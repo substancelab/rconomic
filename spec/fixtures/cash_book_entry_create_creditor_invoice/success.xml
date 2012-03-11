@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CashBookEntry_CreateCreditorInvoiceResponse xmlns="http://e-conomic.com">
+      <CashBookEntry_CreateCreditorInvoiceResult>
+        <Id1>int</Id1>
+        <Id2>int</Id2>
+      </CashBookEntry_CreateCreditorInvoiceResult>
+    </CashBookEntry_CreateCreditorInvoiceResponse>
+  </soap:Body>
+</soap:Envelope>

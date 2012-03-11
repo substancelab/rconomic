@@ -33,7 +33,7 @@ module Economic
                    :project_handle,
                    :start_date,
                    :text,
-                   :cash_book_entry_type,
+                   :type,
                    :vat_account_handle,
                    :voucher_number
 
@@ -41,8 +41,8 @@ module Economic
       self.account_handle = nil
       self.amount = 0
       self.amount_default_currency = 0
-      self.bank_payment_creditor_id = 0
-      self.bank_payment_creditor_invoice_id = 0
+      self.bank_payment_creditor_id = nil
+      self.bank_payment_creditor_invoice_id = nil
       self.bank_payment_type_handle = nil
       self.capitalise_handle = nil
       self.cash_book_handle = nil
@@ -63,7 +63,7 @@ module Economic
       self.project_handle = nil
       self.start_date = Time.now
       self.text = ""
-      self.cash_book_entry_type = ""
+      self.type = ""
       self.vat_account_handle = nil
       self.voucher_number = 0
     end
@@ -76,7 +76,9 @@ module Economic
       data = ActiveSupport::OrderedHash.new
 
       data['Handle'] = handle.to_hash
-      data['Type'] = cash_book_entry_type unless cash_book_entry_type.blank?
+      data['Id1'] = id1 unless id1.blank?
+      data['Id2'] = id2 unless id2.blank?
+      data['Type'] = type unless type.blank?
       data['CashBookHandle'] = { 'Number' => cash_book_handle[:number] } unless cash_book_handle.blank?
       data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
       data['CreditorHandle'] = { 'Number' => creditor_handle[:number] } unless creditor_handle.blank?
@@ -98,8 +100,8 @@ module Economic
       data['ProjectHandle'] = { 'Number' => project_handle[:number] } unless project_handle.blank?
       data['CostTypeHandle'] = { 'Number' => cost_type_handle[:number] } unless cost_type_handle.blank?
       data['BankPaymentTypeHandle'] = { 'Number' => bank_payment_type_handle[:number] } unless bank_payment_type_handle.blank?
-      data['BankPaymentCreditorId'] = bank_payment_creditor_id
-      data['BankPaymentCreditorInvoiceId'] = bank_payment_creditor_invoice_id
+      data['BankPaymentCreditorId'] = bank_payment_creditor_id unless bank_payment_creditor_id.blank?
+      data['BankPaymentCreditorInvoiceId'] = bank_payment_creditor_invoice_id unless bank_payment_creditor_invoice_id.blank?
       data['CapitaliseHandle'] = { 'Number' => capitalise_handle[:number] } unless capitalise_handle.blank?
       data['StartDate'] = start_date
       data['EndDate'] = end_date

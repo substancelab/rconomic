@@ -25,7 +25,7 @@ module Savon
   module Wasabi
     class Document < ::Wasabi::Document
       def resolve_document
-        Savon::Spec::Fixture['wsdl']
+        File.read(File.expand_path('../../lib/economic/economic.wsdl', __FILE__))
       end
     end
   end
@@ -94,4 +94,24 @@ def make_debtor(properties = {})
   debtor.layout_handle ||= { :id => 16 }
 
   debtor
+end
+
+def make_creditor(properties = {})
+  creditor = Economic::Creditor.new
+
+  # Assign specified properties
+  properties.each { |key, value|
+    creditor.send("#{key}=", value)
+  }
+
+  # Use defaults for the rest of the properties
+  creditor.session ||= make_session
+  creditor.handle ||= { :number => 42 }
+  creditor.number ||= 42
+  creditor.name ||= 'Bob'
+  creditor.vat_zone ||= 'HomeCountry' # HomeCountry, EU, Abroad
+  creditor.is_accessible ||= true
+  creditor.ci_number ||= '12345678'
+
+  creditor
 end

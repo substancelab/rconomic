@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Creditor_GetDataResponse xmlns="http://e-conomic.com">
+      <Creditor_GetDataResult>
+        <Handle>
+          <Number>string</Number>
+        </Handle>
+        <Number>string</Number>
+        <CreditorGroupHandle>
+          <Number>int</Number>
+        </CreditorGroupHandle>
+        <Name>string</Name>
+        <VatZone>HomeCountry or EU or Abroad</VatZone>
+        <CurrencyHandle>
+          <Code>string</Code>
+        </CurrencyHandle>
+        <TermOfPaymentHandle>
+          <Id>int</Id>
+        </TermOfPaymentHandle>
+        <IsAccessible>boolean</IsAccessible>
+        <CINumber>string</CINumber>
+        <Email>string</Email>
+        <Address>string</Address>
+        <PostalCode>string</PostalCode>
+        <City>string</City>
+        <Country>string</Country>
+        <BankAccount>string</BankAccount>
+        <AttentionHandle>
+          <Id>int</Id>
+        </AttentionHandle>
+        <YourReferenceHandle>
+          <Id>int</Id>
+        </YourReferenceHandle>
+        <OurReferenceHandle>
+          <Number>int</Number>
+        </OurReferenceHandle>
+        <DefaultPaymentTypeHandle>
+          <Number>string</Number>
+        </DefaultPaymentTypeHandle>
+        <DefaultPaymentCreditorId>string</DefaultPaymentCreditorId>
+        <County>string</County>
+        <AutoContraAccountHandle>
+          <Number>int</Number>
+        </AutoContraAccountHandle>
+      </Creditor_GetDataResult>
+    </Creditor_GetDataResponse>
+  </soap:Body>
+</soap:Envelope>

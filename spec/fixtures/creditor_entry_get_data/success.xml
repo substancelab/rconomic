@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CreditorEntry_GetDataResponse xmlns="http://e-conomic.com">
+      <CreditorEntry_GetDataResult>
+        <Handle>
+          <SerialNumber>int</SerialNumber>
+        </Handle>
+        <SerialNumber>int</SerialNumber>
+        <Type>DebtorInvoice or DebtorPayment or CreditorInvoice or CreditorPayment or JournalEntry or Reminder or OpeningEntry or TransferredOpeningEntry or SystemEntry or ManualDebtorInvoice</Type>
+        <Date>dateTime</Date>
+        <CreditorHandle>
+          <Number>string</Number>
+        </CreditorHandle>
+        <AccountHandle>
+          <Number>int</Number>
+        </AccountHandle>
+        <VoucherNumber>int</VoucherNumber>
+        <Text>string</Text>
+        <AmountDefaultCurrency>decimal</AmountDefaultCurrency>
+        <CurrencyHandle>
+          <Code>string</Code>
+        </CurrencyHandle>
+        <Amount>decimal</Amount>
+        <InvoiceNumber>string</InvoiceNumber>
+        <DueDate>dateTime</DueDate>
+        <Remainder>decimal</Remainder>
+        <RemainderDefaultCurrency>decimal</RemainderDefaultCurrency>
+      </CreditorEntry_GetDataResult>
+    </CreditorEntry_GetDataResponse>
+  </soap:Body>
+</soap:Envelope>

@@ -37,7 +37,7 @@ module Economic
     def current_invoices
       @current_invoices ||= CurrentInvoiceProxy.new(self)
     end
-    
+
     # Provides access to the invoices
     def invoices
       @invoices ||= InvoiceProxy.new(self)
@@ -47,17 +47,34 @@ module Economic
     def debtors
       @debtors ||= DebtorProxy.new(self)
     end
-    
+
+    # Provides access to creditors
+    def creditors
+      @creditors ||= CreditorProxy.new(self)
+    end
+
     def cash_books
       @cash_books ||= CashBookProxy.new(self)
     end
-    
+
     def cash_book_entries
       @cash_book_entries ||= CashBookEntryProxy.new(self)
     end
-    
+
     def accounts
       @accounts ||= AccountProxy.new(self)
+    end
+
+    def debtor_entries
+      @debtor_entries ||= DebtorEntryProxy.new(self)
+    end
+
+    def creditor_entries
+      @creditor_entries ||= CreditorEntryProxy.new(self)
+    end
+
+    def entries
+      @entries ||= EntryProxy.new(self)
     end
 
     def request(action, &block)

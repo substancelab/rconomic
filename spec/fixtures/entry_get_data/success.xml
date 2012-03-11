@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Entry_GetDataResponse xmlns="http://e-conomic.com">
+      <Entry_GetDataResult>
+        <Handle>
+          <SerialNumber>int</SerialNumber>
+        </Handle>
+        <SerialNumber>int</SerialNumber>
+        <AccountHandle>
+          <Number>int</Number>
+        </AccountHandle>
+        <Amount>decimal</Amount>
+        <AmountDefaultCurrency>decimal</AmountDefaultCurrency>
+        <CurrencyHandle>
+          <Code>string</Code>
+        </CurrencyHandle>
+        <Date>dateTime</Date>
+        <Text>string</Text>
+        <Type>DebtorInvoice or DebtorPayment or CreditorInvoice or CreditorPayment or JournalEntry or Reminder or OpeningEntry or TransferredOpeningEntry or SystemEntry or ManualDebtorInvoice</Type>
+        <DepartmentHandle>
+          <Number>int</Number>
+        </DepartmentHandle>
+        <DistributionKeyHandle>
+          <Number>int</Number>
+        </DistributionKeyHandle>
+        <VatAccountHandle>
+          <VatCode>string</VatCode>
+        </VatAccountHandle>
+        <VoucherNumber>int</VoucherNumber>
+        <ProjectHandle>
+          <Number>int</Number>
+        </ProjectHandle>
+        <DocumentHandle>
+          <Number>int</Number>
+        </DocumentHandle>
+      </Entry_GetDataResult>
+    </Entry_GetDataResponse>
+  </soap:Body>
+</soap:Envelope>
