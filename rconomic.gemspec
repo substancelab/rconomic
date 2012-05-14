@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.version     = Rconomic::VERSION
   s.platform    = Gem::Platform::RUBY
 
-  s.add_runtime_dependency "savon", "~> 0.9.5"
+  s.add_runtime_dependency "savon", "0.9.5"
   s.add_runtime_dependency "activesupport", "~> 3.0"
 
   s.files         = `git ls-files`.split("\n").reject { |filename| ['.gitignore'].include?(filename) }
