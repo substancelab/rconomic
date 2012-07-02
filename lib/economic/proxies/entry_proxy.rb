@@ -13,6 +13,11 @@ module Economic
       build_array(response)
     end
 
+    # Undocumented tip: if you only care about the min_number, pass in the maximum
+    # possible value as max_number so you don't have to call `get_last_used_serial_number`:
+    #
+    #   max_number = 2**31 - 1  # Maximum int32.
+    #
     def find_by_serial_number_interval(min_number, max_number)
       response = session.request(entity_class.soap_action('FindBySerialNumberInterval')) do
         soap.body = {
