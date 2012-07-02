@@ -50,6 +50,13 @@ describe Economic::EntryProxy do
     end
   end
 
+  describe "#get_last_used_serial_number" do
+    it 'returns the number' do
+      savon.expects("Entry_GetLastUsedSerialNumber").returns(:success)
+      subject.get_last_used_serial_number.should == 123
+    end
+  end
+
   describe "#find" do
     it 'should get a entry by serial number' do
       savon.expects("Entry_GetData").with('entityHandle' => { 'SerialNumber' => '123' }).returns(:success)

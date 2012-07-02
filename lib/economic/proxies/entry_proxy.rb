@@ -24,6 +24,11 @@ module Economic
       build_array(response)
     end
 
+    def get_last_used_serial_number
+      response = session.request(entity_class.soap_action('GetLastUsedSerialNumber'))
+      response.to_i
+    end
+
     def find(serial_number)
       response = session.request(entity_class.soap_action('GetData')) do
         soap.body = {
