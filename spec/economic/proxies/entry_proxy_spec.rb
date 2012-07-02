@@ -10,7 +10,7 @@ describe Economic::EntryProxy do
     end
   end
 
-  describe "#find_by_invoice_number" do
+  describe "#find_by_date_interval" do
     it 'should be able to find multiple entries' do
       from_date = Date.new
       to_date = Date.new
@@ -23,7 +23,7 @@ describe Economic::EntryProxy do
       subject.find_by_date_interval(Date.new, Date.new).should == [1]
     end
 
-    it 'should handle a single serial number in the response' do
+    it 'should handle an empty response' do
       savon.stubs("Entry_FindByDateInterval").returns(:none)
       subject.find_by_date_interval(Date.new, Date.new).should == []
     end
