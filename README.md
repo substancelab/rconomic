@@ -91,6 +91,7 @@ Not even remotely... For now, limited to a small subset of all the [available op
     CurrentInvoiceLine | X      | X    | X      | X
     Debtor             | X      | X    | X      | X
     DebtorContact      | X      | X    | X      | X
+    Entry              | X      | X    | X      | X
     Invoice            | X      | X    |        |
 
 
