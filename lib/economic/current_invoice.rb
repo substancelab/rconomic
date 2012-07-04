@@ -101,6 +101,19 @@ module Economic
       @lines ||= CurrentInvoiceLineProxy.new(self)
     end
 
+    def save
+      result = super
+      id = result[:id]
+
+      self.lines.each do |invoice_line|
+        invoice_line.session = session
+        invoice_line.invoice = self
+        invoice_line.save
+      end
+    end
+
+    protected
+
     def initialize_defaults
       self.id = 0
       self.date = Time.now
@@ -150,16 +163,6 @@ module Economic
       return data
     end
 
-    def save
-      result = super
-      id = result[:id]
-
-      self.lines.each do |invoice_line|
-        invoice_line.session = session
-        invoice_line.invoice = self
-        invoice_line.save
-      end
-    end
   end
 
 end

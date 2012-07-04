@@ -71,10 +71,6 @@ module Economic
       @partial = true
     end
 
-    def initialize_defaults
-      nil
-    end
-
     # Updates Entity with its data from the API
     def get_data
       response = proxy.get_data(handle)
@@ -204,6 +200,9 @@ module Economic
       name[0,1].downcase + name[1..-1]
     end
 
+    def initialize_defaults
+      nil
+    end
   end
 
 end

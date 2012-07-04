@@ -30,6 +30,8 @@ module Economic
       @invoice_handle = handle
     end
 
+    protected
+
     def initialize_defaults
       self.invoice_handle = nil
       self.description = nil

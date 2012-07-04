@@ -37,40 +37,11 @@ module Economic
                    :vat_account_handle,
                    :voucher_number
 
-    def initialize_defaults
-      self.account_handle = nil
-      self.amount = 0
-      self.amount_default_currency = 0
-      self.bank_payment_creditor_id = nil
-      self.bank_payment_creditor_invoice_id = nil
-      self.bank_payment_type_handle = nil
-      self.capitalise_handle = nil
-      self.cash_book_handle = nil
-      self.contra_account_handle = nil
-      self.contra_vat_account_handle = nil
-      self.cost_type_handle = nil
-      self.creditor_handle = nil
-      self.creditor_invoice_number = nil
-      self.currency_handle = nil
-      self.date = Time.now
-      self.debtor_handle = nil
-      self.debtor_invoice_number = nil
-      self.department_handle = nil
-      self.distribution_key_handle = nil
-      self.due_date = nil
-      self.employee_handle = nil
-      self.end_date = nil
-      self.project_handle = nil
-      self.start_date = Time.now
-      self.text = ""
-      self.type = ""
-      self.vat_account_handle = nil
-      self.voucher_number = 0
-    end
-
     def handle
       Handle.new(:id1 => @id1, :id2 => @id2)
     end
+
+    protected
 
     def build_soap_data
       data = ActiveSupport::OrderedHash.new
@@ -109,5 +80,38 @@ module Economic
 
       return data
     end
+
+    def initialize_defaults
+      self.account_handle = nil
+      self.amount = 0
+      self.amount_default_currency = 0
+      self.bank_payment_creditor_id = nil
+      self.bank_payment_creditor_invoice_id = nil
+      self.bank_payment_type_handle = nil
+      self.capitalise_handle = nil
+      self.cash_book_handle = nil
+      self.contra_account_handle = nil
+      self.contra_vat_account_handle = nil
+      self.cost_type_handle = nil
+      self.creditor_handle = nil
+      self.creditor_invoice_number = nil
+      self.currency_handle = nil
+      self.date = Time.now
+      self.debtor_handle = nil
+      self.debtor_invoice_number = nil
+      self.department_handle = nil
+      self.distribution_key_handle = nil
+      self.due_date = nil
+      self.employee_handle = nil
+      self.end_date = nil
+      self.project_handle = nil
+      self.start_date = Time.now
+      self.text = ""
+      self.type = ""
+      self.vat_account_handle = nil
+      self.voucher_number = 0
+    end
+
+
   end
 end
