@@ -14,6 +14,11 @@ module Economic
         word.downcase!
         word
       end
+
+      def self.snakecase(word)
+        # Use the method from Savon::CoreExt::String.snakecase
+        word.snakecase
+      end
     end
   end
 end

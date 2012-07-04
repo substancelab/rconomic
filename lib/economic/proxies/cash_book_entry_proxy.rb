@@ -22,15 +22,7 @@ module Economic
     #     :contra_account_handle => { :number => 1011 }
     #   )
     def create_finance_voucher(handles)
-      response = session.request(entity_class.soap_action('CreateFinanceVoucher')) do
-        data = ActiveSupport::OrderedHash.new
-        data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
-        data["accountHandle"] = { 'Number'  => handles[:account_handle][:number] } if handles[:account_handle]
-        data["contraAccountHandle"] = { 'Number'  => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]
-        soap.body = data
-      end
-
-      find(response)
+      create_cash_book_entry_for_handles(handles, 'CreateFinanceVoucher')
     end
 
     # Creates a debtor payment and returns the cash book entry.
@@ -40,15 +32,7 @@ module Economic
     #     :contra_account_handle => { :number => 1510 }
     #   )
     def create_debtor_payment(handles)
-      response = session.request(entity_class.soap_action('CreateDebtorPayment')) do
-        data = ActiveSupport::OrderedHash.new
-        data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
-        data["debtorHandle"] = { 'Number' => handles[:debtor_handle][:number] } if handles[:debtor_handle]
-        data["contraAccountHandle"] = { 'Number' => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]
-        soap.body = data
-      end
-
-      find(response)
+      create_cash_book_entry_for_handles(handles, 'CreateDebtorPayment')
     end
 
     # Creates a creditor payment and returns the cash book entry.
@@ -58,16 +42,7 @@ module Economic
     #     :contra_account_handle => { :number => 1510 }
     #   )
     def create_creditor_payment(handles)
-      response = session.request(entity_class.soap_action('CreateCreditorPayment')) do
-        soap.body = {
-          "cashBookHandle"      => { 'Number' => owner.handle[:number] },
-          "creditorHandle"      => { 'Number' => handles[:creditor_handle][:number] },
-          "contraAccountHandle" => { 'Number' => handles[:contra_account_handle][:number] },
-          :order! => ['cashBookHandle', 'creditorHandle', 'contraAccountHandle']
-        }
-      end
-
-      find(response)
+      create_cash_book_entry_for_handles(handles, 'CreateCreditorPayment')
     end
 
     # Creates a creditor invoice and returns the cash book entry.
@@ -77,21 +52,39 @@ module Economic
     #     :contra_account_handle => { :number => 1510 }
     #   )
     def create_creditor_invoice(handles)
-      response = session.request(entity_class.soap_action('CreateCreditorInvoice')) do
-        data = ActiveSupport::OrderedHash.new
-        data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
-        data["creditorHandle"] = { 'Number' => handles[:creditor_handle][:number] } if handles[:creditor_handle]
-        data["contraAccountHandle"] = { 'Number' => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]
-        soap.body = data
-      end
-
-      find(response)
+      create_cash_book_entry_for_handles(handles, 'CreateCreditorInvoice')
     end
 
     def set_due_date(id, date)
       session.request(entity_class.soap_action("SetDueDate")) do
         soap.body = { 'cashBookEntryHandle' => { 'Id1' => owner.handle[:number], 'Id2' => id }, :value => date }
       end
+    end
+
+    protected
+
+    def create_cash_book_entry_for_handles(handles, action, foobar = nil)
+      handle_name = handle_name_for_action(action)
+      handle_key = Economic::Support::String.underscore(handle_name).intern
+
+      response = session.request(entity_class.soap_action(action)) do
+        data = ActiveSupport::OrderedHash.new
+        data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
+        data[handle_name] = { 'Number'  => handles[handle_key][:number] } if handles[handle_key]
+        data["contraAccountHandle"] = { 'Number'  => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]
+        soap.body = data
+      end
+
+      find(response)
+    end
+
+    def handle_name_for_action(action_name)
+      {
+        'CreateFinanceVoucher' => 'accountHandle',
+        'CreateDebtorPayment' => 'debtorHandle',
+        'CreateCreditorInvoice' => 'creditorHandle',
+        'CreateCreditorPayment' => 'creditorHandle'
+      }[action_name]
     end
 
   end
