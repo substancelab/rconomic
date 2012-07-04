@@ -3,6 +3,7 @@ PATH
   specs:
     rconomic (0.3)
       activesupport (~> 3.0)
+      gyoku (= 0.4.4)
       savon (= 0.9.5)
 
 GEM
