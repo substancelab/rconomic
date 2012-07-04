@@ -6,14 +6,32 @@ module Economic
       response = session.request(entity_class.soap_action('FindByDateInterval')) do
         soap.body = {
           'fromDate' => from_date,
-          'toDate' => to_date
+          'toDate'   => to_date
         }
       end
 
-      (response[:entry_handle] || []).map do |entry_handle|
-        # Kinda ugly, but we get an array instead of a hash when there's only one result. :)
-        Hash[*entry_handle.to_a.flatten][:serial_number].to_i
+      build_array(response)
+    end
+
+    # Undocumented tip: if you only care about the min_number, pass in the maximum
+    # possible value as max_number so you don't have to call `get_last_used_serial_number`:
+    #
+    #   max_number = 2**31 - 1  # Maximum int32.
+    #
+    def find_by_serial_number_interval(min_number, max_number)
+      response = session.request(entity_class.soap_action('FindBySerialNumberInterval')) do
+        soap.body = {
+          'minNumber' => min_number,
+          'maxNumber' => max_number
+        }
       end
+
+      build_array(response)
+    end
+
+    def get_last_used_serial_number
+      response = session.request(entity_class.soap_action('GetLastUsedSerialNumber'))
+      response.to_i
     end
 
     def find(serial_number)
@@ -26,6 +44,20 @@ module Economic
       end
 
       build(response)
+    end
+
+    private
+
+    def build_array(response)
+      # The response[:entry_handle] format may be any of
+      #   [{:serial_number=>"1"}, {:serial_number=>"2"}]  # Many results.
+      #   {:serial_number=>"1"}                           # One result.
+      #   nil                                             # No results.
+      entry_handles = [ response[:entry_handle] ].flatten.compact
+
+      entry_handles.map do |entry_handle|
+        entry_handle[:serial_number].to_i
+      end
     end
   end
 end

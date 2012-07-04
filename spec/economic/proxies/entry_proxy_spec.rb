@@ -10,11 +10,13 @@ describe Economic::EntryProxy do
     end
   end
 
-  describe "#find_by_invoice_number" do
+  describe "#find_by_date_interval" do
     it 'should be able to find multiple entries' do
       from_date = Date.new
       to_date = Date.new
-      savon.expects("Entry_FindByDateInterval").with('fromDate' => from_date, 'toDate' => to_date).returns(:many)
+      savon.expects("Entry_FindByDateInterval").
+        with('fromDate' => from_date, 'toDate' => to_date).
+        returns(:many)
       subject.find_by_date_interval(from_date, to_date).should == [1, 2]
     end
 
@@ -23,9 +25,35 @@ describe Economic::EntryProxy do
       subject.find_by_date_interval(Date.new, Date.new).should == [1]
     end
 
-    it 'should handle a single serial number in the response' do
+    it 'should handle an empty response' do
       savon.stubs("Entry_FindByDateInterval").returns(:none)
       subject.find_by_date_interval(Date.new, Date.new).should == []
+    end
+  end
+
+  describe "#find_by_serial_number_interval" do
+    it 'should be able to find multiple entries' do
+      savon.expects("Entry_FindBySerialNumberInterval").
+        with('minNumber' => 123, 'maxNumber' => 456).
+        returns(:many)
+      subject.find_by_serial_number_interval(123, 456).should == [1, 2]
+    end
+
+    it 'should handle a single serial number in the response' do
+      savon.stubs("Entry_FindBySerialNumberInterval").returns(:single)
+      subject.find_by_serial_number_interval(123, 456).should == [1]
+    end
+
+    it 'should handle an empty response' do
+      savon.stubs("Entry_FindBySerialNumberInterval").returns(:none)
+      subject.find_by_serial_number_interval(123, 456).should == []
+    end
+  end
+
+  describe "#get_last_used_serial_number" do
+    it 'returns the number' do
+      savon.expects("Entry_GetLastUsedSerialNumber").returns(:success)
+      subject.get_last_used_serial_number.should == 123
     end
   end
 
