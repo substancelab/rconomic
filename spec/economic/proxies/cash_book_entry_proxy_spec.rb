@@ -26,13 +26,6 @@ describe Economic::CashBookEntryProxy do
     end
   end
 
-  describe "#save" do
-    it 'should save it' do
-      savon.stubs('CashBookEntry_CreateFromData').returns(:success)
-      subject.build.save
-    end
-  end
-
   describe "#create_finance_voucher" do
     it 'should create a finance voucher and return the created cash book entry' do
       savon.stubs('CashBookEntry_CreateFinanceVoucher').returns(:success)

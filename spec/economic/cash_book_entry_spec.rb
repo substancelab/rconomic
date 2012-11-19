@@ -17,4 +17,12 @@ describe Economic::CashBookEntry do
       subject.proxy.session.should == session
     end
   end
+
+  describe "#save" do
+    it 'should save it' do
+      savon.stubs('CashBookEntry_CreateFromData').returns(:success)
+      subject.save
+    end
+  end
+
 end
