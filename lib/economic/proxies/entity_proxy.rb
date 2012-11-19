@@ -3,9 +3,12 @@ module Economic
     class << self
       # Returns the class this Proxy is a proxy for
       def entity_class
+        Economic.const_get(self.entity_class_name)
+      end
+
+      def entity_class_name
         proxy_class_name = name.split('::').last
-        entity_class_name = proxy_class_name.sub(/Proxy$/, '')
-        Economic.const_get(entity_class_name)
+        proxy_class_name.sub(/Proxy$/, '')
       end
     end
 
@@ -63,6 +66,11 @@ module Economic
     # Returns the class this proxy manages
     def entity_class
       self.class.entity_class
+    end
+
+    # Returns the name of the class this proxy manages
+    def entity_class_name
+      self.class.entity_class_name
     end
 
     # Fetches Entity data from API and returns an Entity initialized with that data added to Proxy
