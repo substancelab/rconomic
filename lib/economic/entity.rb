@@ -6,6 +6,16 @@ module Economic
     attr_accessor :persisted, :session, :partial
 
     class << self
+      # Sets default property values that an entity should be initialized with
+      def defaults(default_values)
+        @default_values = default_values
+      end
+
+      # Returns the default values for properties
+      def default_values
+        @default_values || {}
+      end
+
       def properties_not_triggering_full_load
         [:id, :number, :handle]
       end
@@ -173,6 +183,10 @@ module Economic
       return response
     end
 
+    def defaults
+      self.class.default_values
+    end
+
     def update
       response = session.request soap_action(:update_from_data) do
         soap.body = {'data' => build_soap_data}
@@ -201,7 +215,9 @@ module Economic
     end
 
     def initialize_defaults
-      nil
+      defaults.each do |property_name, default_value|
+        self.send("#{property_name}=", default_value)
+      end
     end
   end
 

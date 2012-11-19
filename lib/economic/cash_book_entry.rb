@@ -1,7 +1,6 @@
 require 'economic/entity'
 
 module Economic
-
   # Represents a cash book in E-conomic.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICashBook.html
@@ -36,6 +35,37 @@ module Economic
                    :type,
                    :vat_account_handle,
                    :voucher_number
+
+    defaults(
+     :account_handle => nil,
+     :amount => 0,
+     :amount_default_currency => 0,
+     :bank_payment_creditor_id => nil,
+     :bank_payment_creditor_invoice_id => nil,
+     :bank_payment_type_handle => nil,
+     :capitalise_handle => nil,
+     :cash_book_handle => nil,
+     :contra_account_handle => nil,
+     :contra_vat_account_handle => nil,
+     :cost_type_handle => nil,
+     :creditor_handle => nil,
+     :creditor_invoice_number => nil,
+     :currency_handle => nil,
+     :date => Time.now,
+     :debtor_handle => nil,
+     :debtor_invoice_number => nil,
+     :department_handle => nil,
+     :distribution_key_handle => nil,
+     :due_date => nil,
+     :employee_handle => nil,
+     :end_date => nil,
+     :project_handle => nil,
+     :start_date => Time.now,
+     :text => "",
+     :type => "",
+     :vat_account_handle => nil,
+     :voucher_number => 0
+    )
 
     def handle
       Handle.new(:id1 => @id1, :id2 => @id2)
@@ -80,38 +110,5 @@ module Economic
 
       return data
     end
-
-    def initialize_defaults
-      self.account_handle = nil
-      self.amount = 0
-      self.amount_default_currency = 0
-      self.bank_payment_creditor_id = nil
-      self.bank_payment_creditor_invoice_id = nil
-      self.bank_payment_type_handle = nil
-      self.capitalise_handle = nil
-      self.cash_book_handle = nil
-      self.contra_account_handle = nil
-      self.contra_vat_account_handle = nil
-      self.cost_type_handle = nil
-      self.creditor_handle = nil
-      self.creditor_invoice_number = nil
-      self.currency_handle = nil
-      self.date = Time.now
-      self.debtor_handle = nil
-      self.debtor_invoice_number = nil
-      self.department_handle = nil
-      self.distribution_key_handle = nil
-      self.due_date = nil
-      self.employee_handle = nil
-      self.end_date = nil
-      self.project_handle = nil
-      self.start_date = Time.now
-      self.text = ""
-      self.type = ""
-      self.vat_account_handle = nil
-      self.voucher_number = 0
-    end
-
-
   end
 end

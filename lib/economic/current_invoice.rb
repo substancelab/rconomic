@@ -28,6 +28,24 @@ module Economic
   class CurrentInvoice < Entity
     has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :attention_handle, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent, :heading
 
+    defaults(
+      :id => 0,
+      :date => Time.now,
+      :term_of_payment_handle => nil,
+      :due_date => nil,
+      :currency_handle => nil,
+      :exchange_rate => 100, # Why am _I_ inputting this?
+      :is_vat_included => nil,
+      :layout_handle => nil,
+      :delivery_date => nil,
+      :heading => nil,
+      :net_amount => 0,
+      :vat_amount => 0,
+      :gross_amount => 0,
+      :margin => 0,
+      :margin_as_percent => 0 # Why do I have to input both Margin and MarginAsPercent? Shouldn't powerful Windows machines running ASP.NET be able to compute this?
+    )
+
     def initialize(properties = {})
       super
     end
@@ -113,24 +131,6 @@ module Economic
     end
 
     protected
-
-    def initialize_defaults
-      self.id = 0
-      self.date = Time.now
-      self.term_of_payment_handle = nil
-      self.due_date = nil
-      self.currency_handle = nil
-      self.exchange_rate = 100 # Why am _I_ inputting this?
-      self.is_vat_included = nil
-      self.layout_handle = nil
-      self.delivery_date = nil
-      self.heading = nil
-      self.net_amount = 0
-      self.vat_amount = 0
-      self.gross_amount = 0
-      self.margin = 0
-      self.margin_as_percent = 0 # Why do I have to input both Margin and MarginAsPercent? Shouldn't powerful Windows machines running ASP.NET be able to compute this?
-    end
 
     # Returns OrderedHash with the properties of CurrentInvoice in the correct order, camelcased and ready
     # to be sent via SOAP
