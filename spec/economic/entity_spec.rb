@@ -64,8 +64,8 @@ describe Economic::Entity do
         subject.has_properties :id, :number, :handle
       end
 
-      it "does not clobber existing methods" do
-        subject.expects(:define_method).with('existing_method').never
+      it "does clobber existing methods" do
+        subject.expects(:define_method).with('existing_method')
         subject.has_properties :existing_method
       end
 
