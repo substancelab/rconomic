@@ -1,16 +1,9 @@
 require 'economic/proxies/entity_proxy'
+require 'economic/proxies/actions/find_by_handle_with_number'
 
 module Economic
   class InvoiceProxy < EntityProxy
-    # Gets data for Invoice from the API
-    def find(handle)
-      handle = if handle.respond_to?(:to_i)
-        Entity::Handle.new(:number => handle.to_i)
-      else
-        Entity::Handle.new(handle)
-      end
-      super(handle)
-    end
+    include FindByHandleWithNumber
 
     # Returns Economic::Invoice objects for invoices in a given interval of days.
     def find_by_date_interval(from, unto)
