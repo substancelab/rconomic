@@ -1,30 +1,15 @@
 require 'economic/proxies/entity_proxy'
+require 'economic/proxies/actions/find_by_date_interval'
 
 module Economic
   class CurrentInvoiceProxy < EntityProxy
+    include FindByDateInterval
 
     # Returns a new, unpersisted Economic::CurrentInvoice
     def build(properties = {})
       invoice = super
       initialize_properties_with_values_from_owner(invoice) if owner.is_a?(Debtor)
       invoice
-    end
-
-    # Returns Economic::CurrentInvoice object for a given interval of days.
-    def find_by_date_interval(from, unto)
-      response = session.request entity_class.soap_action("FindByDateInterval") do
-        soap.body = {
-          'first' => from.iso8601,
-          'last' => unto.iso8601,
-          :order! => ['first', 'last']
-        }
-      end
-
-      handles = [ response[:current_invoice_handle] ].flatten.reject(&:blank?)
-
-      handles.collect do |handle|
-        find(handle[:id])
-      end
     end
 
   private
