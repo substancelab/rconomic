@@ -91,7 +91,7 @@ module Economic
       data['AmountDefaultCurrency'] = amount_default_currency
       data['CurrencyHandle'] = { 'Code' => currency_handle[:code] } unless currency_handle.blank?
       data['Amount'] = amount
-      data['VatAccountHandle'] = { 'Number' => vat_account_handle[:number] } unless vat_account_handle.blank?
+      data['VatAccountHandle'] = { 'VatCode' => vat_account_handle[:vat_code] } unless vat_account_handle.blank?
       data['ContraVatAccountHandle'] = { 'Number' => contra_vat_account_handle[:number] } unless contra_vat_account_handle.blank?
       data['DebtorInvoiceNumber'] = debtor_invoice_number unless debtor_invoice_number.blank?
       data['CreditorInvoiceNumber'] = creditor_invoice_number unless creditor_invoice_number.blank?
