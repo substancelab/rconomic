@@ -3,7 +3,7 @@ r-conomic
 
 Ruby wrapper for the [e-conomic](http://www.e-conomic.co.uk) SOAP API, that aims at making working with the API bearable.
 
-E-conomic is a web-based accounting system. For their marketing speak, see [http://www.e-conomic.co.uk/about/](). More details about their API at [http://www.e-conomic.co.uk/integration/integration-partner/]().
+E-conomic is a web-based accounting system. For their marketing speak, see [http://www.e-conomic.co.uk/about/](). More details about their API at [http://www.e-conomic.com/developer]().
 
 [![Build Status](https://secure.travis-ci.org/lokalebasen/rconomic.png?branch=master)](http://travis-ci.org/lokalebasen/rconomic)
 
