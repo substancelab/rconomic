@@ -14,7 +14,7 @@ module FindByDateInterval
     handles = [ response[handle_key] ].flatten.reject(&:blank?)
 
     handles.collect do |handle|
-      find(handle[:id])
+      find(handle)
     end
   end
 
