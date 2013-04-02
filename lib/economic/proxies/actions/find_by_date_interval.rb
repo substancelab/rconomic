@@ -11,10 +11,14 @@ module FindByDateInterval
     end
 
     handle_key = "#{Economic::Support::String.underscore(entity_class_name)}_handle".intern
-    handles = [ response[handle_key] ].flatten.reject(&:blank?)
+    handles = [ response[handle_key] ].flatten.reject(&:blank?).collect do |handle|
+      Economic::Entity::Handle.new(handle)
+    end
 
-    handles.collect do |handle|
-      find(handle)
+    get_data_array(handles).collect do |entity_hash|
+      entity = build(entity_hash)
+      entity.persisted = true
+      entity
     end
   end
 
