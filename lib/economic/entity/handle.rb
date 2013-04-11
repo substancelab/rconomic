@@ -1,6 +1,6 @@
 class Economic::Entity
   class Handle
-    attr_accessor :id, :id1, :id2, :number
+    attr_accessor :id, :id1, :id2, :number, :serial_number
 
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
@@ -10,20 +10,22 @@ class Economic::Entity
       @id1 = hash[:id1].to_i if hash[:id1]
       @id2 = hash[:id2].to_i if hash[:id2]
       @number = hash[:number].to_i if hash[:number]
+      @serial_number = hash[:serial_number].to_i if hash[:serial_number]
     end
 
-    def to_hash(only_keys = [:id, :id1, :id2, :number])
+    def to_hash(only_keys = id_properties.keys)
       only_keys = [only_keys].flatten
       hash = {}
       hash['Id'] = id if only_keys.include?(:id) && !id.blank?
       hash['Id1'] = id1 unless id1.blank? if only_keys.include?(:id1)
       hash['Id2'] = id2 unless id2.blank? if only_keys.include?(:id2)
       hash['Number'] = number unless number.blank? if only_keys.include?(:number)
+      hash['SerialNumber'] = serial_number unless serial_number.blank? if only_keys.include?(:serial_number)
       hash
     end
 
     def [](key)
-      {:id => @id, :id1 => @id1, :id2 => @id2, :number => @number}[key]
+      {:id => @id, :id1 => @id1, :id2 => @id2, :number => @number, :serial_number => @serial_number}[key]
     end
 
     def ==(other)
@@ -34,6 +36,10 @@ class Economic::Entity
 
   private
 
+    def id_properties
+      {:id => 'Id', :id1 => 'Id1', :id2 => 'Id2', :number => 'Number', :serial_number => 'SerialNumber'}
+    end
+
     # Raises exceptions if hash doesn't contain values we can use to construct a new handle
     def verify_sanity_of_arguments!(hash)
       return if hash.is_a?(self.class)
@@ -43,7 +49,7 @@ class Economic::Entity
       end
 
       if hash.respond_to?(:keys)
-        unknown_keys = hash.keys - [:id, :id1, :id2, :number, "Number", "Id", "Id1", "Id2"]
+        unknown_keys = hash.keys - id_properties.keys - id_properties.values
         raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
 
         not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }

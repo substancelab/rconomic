@@ -127,10 +127,10 @@ describe Economic::Entity::Handle do
   end
 
   describe ".to_hash" do
-    subject { Economic::Entity::Handle.new({:id => 42, :number => 37}) }
+    subject { Economic::Entity::Handle.new({:id => 42, :number => 37, :serial_number => 7}) }
 
     it "should return a handle for putting into the body of a SOAP request" do
-      subject.to_hash.should == {'Id' => 42, 'Number' => 37}
+      subject.to_hash.should == {'Id' => 42, 'Number' => 37, 'SerialNumber' => 7}
     end
 
     it "includes only the named value in the hash" do
@@ -138,7 +138,7 @@ describe Economic::Entity::Handle do
     end
 
     it "includes only the named values in the hash" do
-      subject.to_hash([:id, :number]).should == {'Id' => 42, 'Number' => 37}
+      subject.to_hash([:id, :serial_number]).should == {'Id' => 42, 'SerialNumber' => 7}
     end
   end
 
