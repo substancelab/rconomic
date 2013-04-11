@@ -132,6 +132,15 @@ describe Economic::Entity::Handle do
     it "should return a handle for putting into the body of a SOAP request" do
       subject.to_hash.should == {'Id' => 42, 'Number' => 37}
     end
+
+    it "includes only the named value in the hash" do
+      subject.to_hash(:id).should == {'Id' => 42}
+    end
+
+    it "includes only the named values in the hash" do
+      subject.to_hash([:id, :number]).should == {'Id' => 42, 'Number' => 37}
+    end
   end
+
 end
 

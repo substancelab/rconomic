@@ -12,12 +12,13 @@ class Economic::Entity
       @number = hash[:number].to_i if hash[:number]
     end
 
-    def to_hash
+    def to_hash(only_keys = [:id, :id1, :id2, :number])
+      only_keys = [only_keys].flatten
       hash = {}
-      hash['Id'] = id unless id.blank?
-      hash['Id1'] = id1 unless id1.blank?
-      hash['Id2'] = id2 unless id2.blank?
-      hash['Number'] = number unless number.blank?
+      hash['Id'] = id if only_keys.include?(:id) && !id.blank?
+      hash['Id1'] = id1 unless id1.blank? if only_keys.include?(:id1)
+      hash['Id2'] = id2 unless id2.blank? if only_keys.include?(:id2)
+      hash['Number'] = number unless number.blank? if only_keys.include?(:number)
       hash
     end
 
