@@ -105,7 +105,13 @@ describe Economic::CurrentInvoice do
   end
 
   describe "#attention" do
-    let(:contact) { (c = Economic::DebtorContact.new).tap { c.session = session }}
+    let(:contact) {
+      c = Economic::DebtorContact.new(
+        :handle => Economic::Entity::Handle.new({:id => 12, :number => 34})
+      )
+      c.session = session
+      c
+    }
 
     it "should be set- and gettable" do
       subject.attention = contact

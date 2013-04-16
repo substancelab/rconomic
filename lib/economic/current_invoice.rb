@@ -110,10 +110,6 @@ module Economic
       @debtor_handle = handle
     end
 
-    def handle
-      Handle.new(:id => @id)
-    end
-
     # Returns the current invoice lines of CurrentInvoice
     def lines
       @lines ||= CurrentInvoiceLineProxy.new(self)

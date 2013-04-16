@@ -9,7 +9,7 @@ module Economic
     has_properties :name, :number
 
     def handle
-      Handle.new({:number => @number})
+      @handle ||= Handle.new({:number => @number})
     end
 
     def entries

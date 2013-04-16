@@ -18,7 +18,7 @@ module Economic
   #   contact.name = 'John Appleseed'
   #   contact.save
   class CreditorContact < Entity
-    has_properties :handle, :id, :creditor_handle, :name, :number, :telephone_number, :email, :comments, :external_id
+    has_properties :id, :creditor_handle, :name, :number, :telephone_number, :email, :comments, :external_id
 
     def creditor
       return nil if creditor_handle.blank?
@@ -36,7 +36,7 @@ module Economic
     end
 
     def handle
-      Handle.build({:id => @id})
+      @handle ||= Handle.build({:id => @id})
     end
 
     protected

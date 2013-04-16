@@ -61,7 +61,7 @@ describe Economic::DebtorProxy do
       result.number.should == 1
       result.partial.should be_true
       result.persisted.should be_true
-      result.handle.should == Economic::Entity::Handle.new({ :number => 1 })
+      result.handle.should == Economic::Entity::Handle.new({:number => 1})
     end
 
     it "returns nil when there is no debtor" do

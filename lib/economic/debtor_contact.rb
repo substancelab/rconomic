@@ -18,10 +18,10 @@ module Economic
   #   contact.name = 'John Appleseed'
   #   contact.save
   class DebtorContact < Entity
-    has_properties :handle, :id, :debtor_handle, :name, :number, :telephone_number, :email, :comments, :external_id, :is_to_receive_email_copy_of_order, :is_to_receive_email_copy_of_invoice
+    has_properties :id, :debtor_handle, :name, :number, :telephone_number, :email, :comments, :external_id, :is_to_receive_email_copy_of_order, :is_to_receive_email_copy_of_invoice
 
     def debtor
-      return nil if debtor_handle.blank?
+      return nil if debtor_handle.nil?
       @debtor ||= session.debtors.find(debtor_handle[:number])
     end
 
@@ -36,7 +36,7 @@ module Economic
     end
 
     def handle
-      Handle.new({:id => @id})
+      @handle ||= Handle.new({:id => @id})
     end
 
     protected
