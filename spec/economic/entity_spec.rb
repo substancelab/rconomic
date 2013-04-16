@@ -215,33 +215,60 @@ describe Economic::Entity do
   end
 
   describe "equality" do
-    context "when other is nil do" do
-      let(:other) { nil }
+    subject { SpecEntity.new }
+    let(:other) { SpecEntity.new }
 
-      it "should return true" do
+    context "when other is nil do" do
+      it { should_not == nil }
+    end
+
+    context "when neither handles are present" do
+      it "returns false" do
+        subject.handle = nil
+        other.handle = nil
+        subject.should_not == other
+      end
+    end
+
+    context "when self handle isn't present" do
+      it "returns false" do
+        subject.handle = nil
+        subject.should_not == other
+      end
+    end
+
+    context "when other handle isn't present" do
+      it "returns false" do
+        other.handle = nil
         subject.should_not == other
       end
     end
 
     context "when other handle is equal" do
-      context "when other is same class" do
-        let(:other) { Economic::Entity.new(:session => session, :handle => subject.handle) }
+      let(:handle) { Economic::Entity::Handle.new(:id => 42) }
+      subject { Economic::Debtor.new(:handle => handle) }
 
+      context "when other is another class" do
+        it "should return false" do
+          other = Economic::CashBook.new(:handle => handle)
+          subject.should_not == other
+        end
+      end
+
+      context "when other is same class" do
         it "should return true" do
+          other = Economic::Debtor.new(:handle => handle)
           subject.should == other
         end
       end
 
       context "when other is child class" do
-        let(:other) { Economic::Debtor.new(:session => session, :handle => subject.handle) }
-
         it "should return true" do
-          subject.should == other
+          one = Economic::Entity.new(:handle => handle)
+          other = SpecEntity.new(:handle => handle)
+          one.should == other
         end
       end
     end
-
-
-
   end
 end

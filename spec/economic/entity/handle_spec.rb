@@ -19,6 +19,15 @@ describe Economic::Entity::Handle do
       handle_a.should_not == handle_d
     end
 
+    it "should not equal if both are empty" do
+      Economic::Entity::Handle.new({}).should_not == Economic::Entity::Handle.new({})
+    end
+
+    it "should be equal if both are the same object" do
+      handle = Economic::Entity::Handle.new({})
+      handle.should == handle
+    end
+
     describe "CashBookEntry handles" do
       let(:handle_a) { Economic::Entity::Handle.new(:id1 => 1, :id2 => 2) }
 
@@ -38,7 +47,6 @@ describe Economic::Entity::Handle do
         end
       end
     end
-
   end
 
   describe ".new" do

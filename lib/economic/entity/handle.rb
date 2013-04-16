@@ -42,7 +42,9 @@ class Economic::Entity
     end
 
     def ==(other)
+      return true if self.object_id == other.object_id
       return false if other.nil?
+      return false if empty? || (other.respond_to?(:empty?) && other.empty?)
       return false unless other.respond_to?(:id) && other.respond_to?(:number)
       self.id == other.id && self.number == other.number && self.id1 == other.id1 && self.id2 == other.id2
     end

@@ -71,7 +71,11 @@ module Economic
     end
 
     def handle
-      Handle.new({:number => @number, :id => @id})
+      @handle ||= Handle.new({:number => @number, :id => @id})
+    end
+
+    def handle=(handle)
+      @handle = Handle.build(handle)
     end
 
     def initialize(properties = {})

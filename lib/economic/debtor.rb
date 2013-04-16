@@ -28,7 +28,7 @@ module Economic
     has_properties :handle, :number, :debtor_group_handle, :name, :vat_zone, :currency_handle, :price_group_handle, :is_accessible, :ean, :public_entry_number, :email, :telephone_and_fax_number, :website, :address, :postal_code, :city, :country, :credit_maximum, :vat_number, :county, :ci_number, :term_of_payment_handle, :layout_handle, :attention_handle, :your_reference_handle, :our_reference_handle, :balance
 
     def handle
-      Handle.new({:number => @number})
+      @handle ||= Handle.new({:number => @number})
     end
 
     # Returns the Debtors contacts
