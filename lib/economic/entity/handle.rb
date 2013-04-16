@@ -2,6 +2,14 @@ class Economic::Entity
   class Handle
     attr_accessor :id, :id1, :id2, :number, :serial_number
 
+    def self.build(options)
+      return options if options.is_a?(Handle)
+      return nil if options.nil?
+      return nil if options.respond_to?(:empty?) && options.empty?
+      return nil if options.respond_to?(:values) && options.values.all?(&:nil?)
+      new(options)
+    end
+
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
       hash = prepare_hash_argument(hash) unless hash.is_a?(self.class)

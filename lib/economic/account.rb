@@ -6,7 +6,7 @@ module Economic
     
     
     def handle
-      Handle.new({:name => @name})
+      Handle.build({:name => @name})
     end
     
     

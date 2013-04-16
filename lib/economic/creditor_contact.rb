@@ -36,7 +36,7 @@ module Economic
     end
 
     def handle
-      Handle.new({:id => @id})
+      Handle.build({:id => @id})
     end
 
     protected

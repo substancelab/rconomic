@@ -12,7 +12,7 @@ module Economic
 
     # Gets data for DebtorContact from the API
     def find(handle)
-      handle = Entity::Handle.new(:id => handle) unless handle.is_a?(Entity::Handle)
+      handle = Entity::Handle.build(:id => handle) unless handle.is_a?(Entity::Handle)
       super(handle)
     end
 

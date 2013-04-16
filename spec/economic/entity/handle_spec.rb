@@ -126,6 +126,29 @@ describe Economic::Entity::Handle do
     end
   end
 
+  describe ".build" do
+    it "returns nil when given nil" do
+      Economic::Entity::Handle.build(nil).should be_nil
+    end
+
+    it "returns nil when hash is empty" do
+      Economic::Entity::Handle.build({}).should be_nil
+    end
+
+    it "returns nil when hash has no values" do
+      Economic::Entity::Handle.build({:id => nil, :number => nil}).should be_nil
+    end
+
+    it "returns handle when hash has values" do
+      Economic::Entity::Handle.build({:id2 => 42}).should == Economic::Entity::Handle.new({:id2 => 42})
+    end
+
+    it "returns a given handle" do
+      handle = Economic::Entity::Handle.new({})
+      Economic::Entity::Handle.build(handle).should === handle
+    end
+  end
+
   describe ".to_hash" do
     subject { Economic::Entity::Handle.new({:id => 42, :number => 37, :serial_number => 7}) }
 

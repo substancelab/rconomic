@@ -27,7 +27,7 @@ module Economic
     )
 
     def handle
-      Handle.new(:number => number)
+      Handle.build(:number => number)
     end
 
     def invoice

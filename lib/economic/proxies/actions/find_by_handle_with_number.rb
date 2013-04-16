@@ -3,9 +3,9 @@
 module FindByHandleWithNumber
   def find(handle)
     handle = if handle.respond_to?(:to_i)
-      Economic::Entity::Handle.new(:number => handle.to_i)
+      Economic::Entity::Handle.build(:number => handle.to_i)
     else
-      Economic::Entity::Handle.new(handle)
+      Economic::Entity::Handle.build(handle)
     end
     super(handle)
   end

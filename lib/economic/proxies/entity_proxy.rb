@@ -28,7 +28,7 @@ module Economic
     # Fetches all entities from the API.
     def all
       response = session.request(entity_class.soap_action(:get_all))
-      handles = response.values.flatten.collect { |handle| Entity::Handle.new(handle) }
+      handles = response.values.flatten.collect { |handle| Entity::Handle.build(handle) }
 
       if handles.size == 1
         # Fetch data for single entity
@@ -71,7 +71,7 @@ module Economic
 
     # Fetches Entity data from API and returns an Entity initialized with that data added to Proxy
     def find(handle)
-      handle = Entity::Handle.new(handle) unless handle.is_a?(Entity::Handle)
+      handle = Entity::Handle.new(handle)
       entity_hash = get_data(handle)
       entity = build(entity_hash)
       entity.persisted = true
@@ -80,7 +80,7 @@ module Economic
 
     # Gets data for Entity from the API. Returns Hash with the response data
     def get_data(handle)
-      handle = Entity::Handle.new(handle) unless handle.is_a?(Entity::Handle)
+      handle = Entity::Handle.new(handle)
 
       entity_hash = session.request(entity_class.soap_action(:get_data)) do
         soap.body = {

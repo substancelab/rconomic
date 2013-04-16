@@ -13,7 +13,7 @@ module Economic
 
       handle_key = "#{Support::String.underscore(entity_class_name)}_handle".intern
       handles = [ response[handle_key] ].flatten.reject(&:blank?).collect do |handle|
-        Entity::Handle.new(handle)
+        Entity::Handle.build(handle)
       end
 
       get_data_array(handles).collect do |entity_hash|
