@@ -10,6 +10,11 @@ class Economic::Entity
       new(options)
     end
 
+    # Returns true if Handle hasn't been initialized with any values yet
+    def empty?
+      to_hash.empty?
+    end
+
     def initialize(hash)
       verify_sanity_of_arguments!(hash)
       hash = prepare_hash_argument(hash) unless hash.is_a?(self.class)

@@ -51,7 +51,7 @@ module Economic
     end
 
     def attention
-      return nil if attention_handle.blank?
+      return nil if attention_handle.nil?
       @attention ||= session.contacts.find(attention_handle)
     end
 
@@ -96,7 +96,7 @@ module Economic
     end
 
     def debtor
-      return nil if debtor_handle.blank?
+      return nil if debtor_handle.nil?
       @debtor ||= session.debtors.find(debtor_handle)
     end
 

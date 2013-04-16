@@ -149,6 +149,16 @@ describe Economic::Entity::Handle do
     end
   end
 
+  describe "#empty?" do
+    it "returns true when handle has no values" do
+      Economic::Entity::Handle.new({}).should be_empty
+    end
+
+    it "returns false when handle has a value" do
+      Economic::Entity::Handle.new({:serial_number => 12}).should_not be_empty
+    end
+  end
+
   describe ".to_hash" do
     subject { Economic::Entity::Handle.new({:id => 42, :number => 37, :serial_number => 7}) }
 
