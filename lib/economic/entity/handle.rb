@@ -5,12 +5,12 @@ class Economic::Entity
     def self.build(options)
       return options if options.is_a?(Handle)
       return nil if options.nil?
-      return nil if options.respond_to?(:empty?) && options.empty?
-      return nil if options.respond_to?(:values) && options.values.all?(&:nil?)
       new(options)
     end
 
-    # Returns true if Handle hasn't been initialized with any values yet
+    # Returns true if Handle hasn't been initialized with any values yet. This
+    # usually happens when the handle is constructed for an entity whose id
+    # properties (id, number, etc) haven't been set yet.
     def empty?
       to_hash.empty?
     end

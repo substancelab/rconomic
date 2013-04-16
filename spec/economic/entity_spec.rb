@@ -1,7 +1,7 @@
 require './spec/spec_helper'
 
 class SpecEntity < Economic::Entity
-  has_properties :foo, :baz
+  has_properties :id, :foo, :baz
 
   def existing_method; end
 
@@ -222,10 +222,11 @@ describe Economic::Entity do
       it { should_not == nil }
     end
 
-    context "when neither handles are present" do
+    context "when both handles are empty" do
       it "returns false" do
-        subject.handle = nil
-        other.handle = nil
+        subject.handle = Economic::Entity::Handle.new({})
+        other.handle = Economic::Entity::Handle.new({})
+
         subject.should_not == other
       end
     end

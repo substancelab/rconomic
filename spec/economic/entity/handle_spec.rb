@@ -139,12 +139,12 @@ describe Economic::Entity::Handle do
       Economic::Entity::Handle.build(nil).should be_nil
     end
 
-    it "returns nil when hash is empty" do
-      Economic::Entity::Handle.build({}).should be_nil
+    it "returns empty handle when hash is empty" do
+      Economic::Entity::Handle.build({}).should be_empty
     end
 
     it "returns nil when hash has no values" do
-      Economic::Entity::Handle.build({:id => nil, :number => nil}).should be_nil
+      Economic::Entity::Handle.build({:id => nil, :number => nil}).should be_empty
     end
 
     it "returns handle when hash has values" do

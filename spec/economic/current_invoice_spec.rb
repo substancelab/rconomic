@@ -37,6 +37,23 @@ describe Economic::CurrentInvoice do
         savon.stubs('CurrentInvoice_CreateFromData').returns(:success)
       end
 
+      it "updates id with the created id" do
+        subject.save
+        subject.id.should == 42
+      end
+
+      it "updates handle with the created id" do
+        invoice = Economic::CurrentInvoice.new({})
+        invoice.session = session
+
+        # This line memoizes the handle with the wrong/old id (0). This is what
+        # we're testing changes
+        invoice.handle.id.should == 0
+
+        invoice.save
+        invoice.handle.should == Economic::Entity::Handle.new(:id => 42)
+      end
+
       context "when invoice has lines" do
         before :each do
           2.times do

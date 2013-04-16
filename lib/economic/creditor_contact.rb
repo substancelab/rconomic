@@ -21,7 +21,7 @@ module Economic
     has_properties :id, :creditor_handle, :name, :number, :telephone_number, :email, :comments, :external_id
 
     def creditor
-      return nil if creditor_handle.blank?
+      return nil if creditor_handle.nil?
       @creditor ||= session.creditors.find(creditor_handle[:number])
     end
 

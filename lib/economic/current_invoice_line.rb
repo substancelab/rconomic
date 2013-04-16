@@ -9,7 +9,7 @@ module Economic
   #
   # See Economic::CurrentInvoice for usage example
   class CurrentInvoiceLine < Entity
-    has_properties :invoice_handle, :description, :delivery_date, :unit_handle, :product_handle, :quantity, :unit_net_price, :discount_as_percent, :unit_cost_price, :total_net_amount, :total_margin, :margin_as_percent
+    has_properties :number, :invoice_handle, :description, :delivery_date, :unit_handle, :product_handle, :quantity, :unit_net_price, :discount_as_percent, :unit_cost_price, :total_net_amount, :total_margin, :margin_as_percent
 
     defaults(
       :invoice_handle => nil,
@@ -27,7 +27,7 @@ module Economic
     )
 
     def handle
-      Handle.build(:number => number)
+      @handle ||= Handle.build(:number => number)
     end
 
     def invoice

@@ -110,16 +110,22 @@ module Economic
       @debtor_handle = handle
     end
 
-    # Returns the current invoice lines of CurrentInvoice
+    def handle
+      @handle ||= Handle.new(:id => @id)
+    end
+
     def lines
       @lines ||= CurrentInvoiceLineProxy.new(self)
     end
 
     def save
-      result = super
-      id = result[:id]
+      lines = self.lines
 
-      self.lines.each do |invoice_line|
+      result = super
+      self.id = result[:id].to_i
+      @handle = nil # Reset a memoized handle, leaving it up to #handle to recreate it with correct id
+
+      lines.each do |invoice_line|
         invoice_line.session = session
         invoice_line.invoice = self
         invoice_line.save
@@ -158,7 +164,6 @@ module Economic
 
       return data
     end
-
   end
 
 end
