@@ -1,5 +1,9 @@
 require 'savon'
 require 'savon_spec'
+
+require 'coveralls'
+Coveralls.wear!
+
 require './lib/rconomic'
 
 RSpec.configure do |config|
