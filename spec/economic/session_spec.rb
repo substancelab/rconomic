@@ -15,7 +15,7 @@ describe Economic::Session do
     subject { Economic::Session.new(123456, 'api', 'passw0rd') }
 
     it "returns a Savon::Client" do
-      subject.client.should be_instance_of(::Savon::Client)
+      subject.send(:client).should be_instance_of(::Savon::Client)
     end
   end
 
@@ -25,10 +25,24 @@ describe Economic::Session do
       subject.connect
     end
 
-    it "stores the cookie for later connections" do
+    it "stores the cookie for later requests" do
       savon.expects('Connect').returns({:headers => {'Set-Cookie' => 'cookie'}})
       subject.connect
-      subject.client.http.headers['Cookie'].should == 'cookie'
+      subject.send(:client).stubs(:request).returns({})
+      subject.request(:foo) { }
+      subject.send(:client).http.headers['Cookie'].should == 'cookie'
+    end
+
+    it "updates the cookie for new sessions" do
+      savon.expects('Connect').returns({:headers => {'Set-Cookie' => 'cookie'}})
+      subject.connect
+      other_session = Economic::Session.new(123456, 'api', 'passw0rd')
+      savon.expects('Connect').returns({:headers => {'Set-Cookie' => 'other-cookie'}})
+      other_session.connect
+
+      subject.send(:client).stubs(:request).returns({})
+      subject.request(:foo) { }
+      subject.send(:client).http.headers['Cookie'].should == 'cookie'
     end
   end
 

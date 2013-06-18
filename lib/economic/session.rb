@@ -8,15 +8,9 @@ module Economic
       self.password = password
     end
 
-    # Returns the Savon::Client used to connect to e-conomic
-    def client
-      @client ||= Savon::Client.new do
-        wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
-      end
-    end
-
     # Authenticates with e-conomic
     def connect
+      client.http.headers["Cookie"] = nil
       response = client.request :economic, :connect do
         soap.body = {
           :agreementNumber => self.agreement_number,
@@ -24,7 +18,8 @@ module Economic
           :password => self.password
         }
       end
-      client.http.headers["Cookie"] = response.http.headers["Set-Cookie"]
+
+      @cookie = response.http.headers["Set-Cookie"]
     end
 
     # Provides access to the DebtorContacts
@@ -77,6 +72,8 @@ module Economic
     end
 
     def request(action, &block)
+      
+      client.http.headers["Cookie"]  = @cookie
       response = client.request :economic, action, &block
       response_hash = response.to_hash
 
@@ -92,6 +89,16 @@ module Economic
     # Returns self - used by proxies to access the session of their owner
     def session
       self
+    end
+
+    private
+
+    # Returns the Savon::Client used to connect to e-conomic
+    # Cached on class-level to avoid loading the big wsdl file more than once (can take several hunder megabytes of ram after a while...)
+    def client
+      @@client ||= Savon::Client.new do
+        wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
+      end
     end
   end
 end
