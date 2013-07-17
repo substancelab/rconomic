@@ -1,6 +1,10 @@
 module Economic
   module Support
     module String
+      def self.camel_back(name)
+        name[0,1].downcase + name[1..-1]
+      end
+
       def self.demodulize(class_name_in_module)
         class_name_in_module.to_s.gsub(/^.*::/, '')
       end
