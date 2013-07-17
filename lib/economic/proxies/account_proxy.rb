@@ -3,11 +3,9 @@ require 'economic/proxies/entity_proxy'
 module Economic
   class AccountProxy < EntityProxy
     def find_by_name(name)
-      response = session.request entity_class.soap_action_name('FindByName') do
-        soap.body = {
-          'name' => name
-        }
-      end
+      response = request('FindByName', {
+        'name' => name
+      })
       
       handle = response[:account_handle]
       

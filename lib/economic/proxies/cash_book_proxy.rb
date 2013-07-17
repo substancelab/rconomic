@@ -3,11 +3,9 @@ require 'economic/proxies/entity_proxy'
 module Economic
   class CashBookProxy < EntityProxy
     def find_by_name(name)
-      response = session.request entity_class.soap_action_name('FindByName') do
-        soap.body = {
-          'name' => name
-        }
-      end
+      response = request('FindByName', {
+        'name' => name
+      })
 
       cash_book = build
       cash_book.partial = true
@@ -18,7 +16,7 @@ module Economic
     end
     
     def all
-      response = session.request entity_class.soap_action_name('GetAll')
+      response = request('GetAll')
 
       handles = [response[:cash_book_handle]].flatten.reject(&:blank?)
       cash_books = []
@@ -30,13 +28,11 @@ module Economic
     end
     
     def get_name(id)
-      response = session.request entity_class.soap_action_name("GetName") do
-        soap.body = {
-          'cashBookHandle' => {
-            'Number' => id
-          }
+      response = request("GetName", {
+        'cashBookHandle' => {
+          'Number' => id
         }
-      end
+      })
 
       cash_book = build
       cash_book.number = id

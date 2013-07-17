@@ -19,11 +19,9 @@ module Economic
     # Returns DebtorContact that have the given name. The objects will only be partially loaded
     def find_by_name(name)
       # Get a list of DebtorContactHandles from e-conomic
-      response = session.request entity_class.soap_action_name('FindByName') do
-        soap.body = {
-          'name' => name
-        }
-      end
+      response = request('FindByName', {
+        'name' => name
+      })
 
       # Make sure we always have an array of handles even if the result only contains one
       handles = [response[:debtor_contact_handle]].flatten.reject(&:blank?)

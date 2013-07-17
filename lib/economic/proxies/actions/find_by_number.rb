@@ -1,11 +1,9 @@
 module FindByNumber
   # Returns handle with a given number.
   def find_by_number(number)
-    response = session.request(entity_class.soap_action_name('FindByNumber')) do
-      soap.body = {
-        'number' => number
-      }
-    end
+    response = request('FindByNumber', {
+      'number' => number
+    })
 
     if response == {}
       nil

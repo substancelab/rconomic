@@ -35,9 +35,9 @@ module Economic
     end
 
     def remainder
-      session.request(soap_action_name(:get_remainder)) do
-        soap.body = { "invoiceHandle" => handle.to_hash }
-      end
+      request(:get_remainder, {
+        "invoiceHandle" => handle.to_hash
+      })
     end
 
     # Returns the PDF version of Invoice as a String.
@@ -48,9 +48,9 @@ module Economic
     #     file << invoice.pdf
     #   end
     def pdf
-      response = session.request soap_action_name(:get_pdf) do
-        soap.body = { "invoiceHandle" => handle.to_hash }
-      end
+      response = request(:get_pdf, {
+        "invoiceHandle" => handle.to_hash
+      })
 
       Base64.decode64(response)
     end

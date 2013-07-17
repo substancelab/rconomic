@@ -134,14 +134,12 @@ module Economic
     # Deletes entity permanently from E-conomic.
     def destroy
       handleKey = "#{camel_back(class_name)}Handle"
-      response = session.request soap_action_name(:delete) do
-        soap.body = { handleKey => handle.to_hash }
-      end
+      response = request(:delete, {handleKey => handle.to_hash})
 
       @persisted = false
       @partial = true
 
-      response 
+      response
     end
 
     # Updates properties of Entity with the values from hash
@@ -170,9 +168,9 @@ module Economic
     end
 
     def create
-      response = session.request soap_action_name(:create_from_data) do
-        soap.body = {'data' => build_soap_data}
-      end
+      response = request(:create_from_data, {
+        'data' => build_soap_data
+      })
 
       if response
         @number = response[:number]
@@ -192,9 +190,9 @@ module Economic
     end
 
     def update
-      response = session.request soap_action_name(:update_from_data) do
-        soap.body = {'data' => build_soap_data}
-      end
+      response = request(:update_from_data, {
+        'data' => build_soap_data
+      })
 
       @persisted = true
       @partial = false
@@ -204,6 +202,13 @@ module Economic
 
     # Returns OrderedHash with the data structure to send to the API
     def build_soap_data
+    end
+
+    # Requests an action from the API endpoint
+    def request(action, data = nil)
+      session.request(soap_action_name(action)) do
+        soap.body = data if data
+      end
     end
 
     def soap_action_name(action)
