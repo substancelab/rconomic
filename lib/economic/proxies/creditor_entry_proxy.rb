@@ -3,7 +3,7 @@ require 'economic/proxies/entity_proxy'
 module Economic
   class CreditorEntryProxy < EntityProxy
     def find_by_invoice_number(invoice_number)
-      response = session.request(entity_class.soap_action('FindByInvoiceNumber')) do
+      response = session.request(entity_class.soap_action_name('FindByInvoiceNumber')) do
         soap.body = {
           'invoiceNumber' => invoice_number
         }
@@ -16,7 +16,7 @@ module Economic
     end
 
     def find(serial_number)
-      response = session.request(entity_class.soap_action('GetData')) do
+      response = session.request(entity_class.soap_action_name('GetData')) do
         soap.body = {
           'entityHandle' => {
             'SerialNumber' => serial_number
@@ -28,7 +28,7 @@ module Economic
     end
 
     def match(*serial_numbers)
-      response = session.request(entity_class.soap_action('MatchEntries')) do
+      response = session.request(entity_class.soap_action_name('MatchEntries')) do
         soap.body = {
           :entries => {
             "CreditorEntryHandle" => serial_numbers.map { |serial_number|

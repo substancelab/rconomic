@@ -70,7 +70,7 @@ module Economic
     #
     # Returns the resulting Economic::Invoice object
     def book
-      response = session.request soap_action(:book) do
+      response = session.request soap_action_name(:book) do
         soap.body = { "currentInvoiceHandle" => handle.to_hash }
       end
 
@@ -83,7 +83,7 @@ module Economic
     #
     # Returns the resulting Economic::Invoice object
     def book_with_number(number)
-      response = session.request soap_action(:book_with_number) do
+      response = session.request soap_action_name(:book_with_number) do
         soap.body = {
           "currentInvoiceHandle" => handle.to_hash,
           "number" => number,

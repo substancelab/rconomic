@@ -52,7 +52,7 @@ module Economic
       end
 
       # Returns the E-conomic API action name to call
-      def soap_action(action)
+      def soap_action_name(action)
         class_name = self.name
         class_name_without_modules = class_name.split('::').last
         "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
@@ -134,7 +134,7 @@ module Economic
     # Deletes entity permanently from E-conomic.
     def destroy
       handleKey = "#{camel_back(class_name)}Handle"
-      response = session.request soap_action(:delete) do
+      response = session.request soap_action_name(:delete) do
         soap.body = { handleKey => handle.to_hash }
       end
 
@@ -170,7 +170,7 @@ module Economic
     end
 
     def create
-      response = session.request soap_action(:create_from_data) do
+      response = session.request soap_action_name(:create_from_data) do
         soap.body = {'data' => build_soap_data}
       end
 
@@ -192,7 +192,7 @@ module Economic
     end
 
     def update
-      response = session.request soap_action(:update_from_data) do
+      response = session.request soap_action_name(:update_from_data) do
         soap.body = {'data' => build_soap_data}
       end
 
@@ -206,8 +206,8 @@ module Economic
     def build_soap_data
     end
 
-    def soap_action(action)
-      self.class.soap_action(action)
+    def soap_action_name(action)
+      self.class.soap_action_name(action)
     end
 
     def class_name

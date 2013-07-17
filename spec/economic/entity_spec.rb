@@ -75,11 +75,11 @@ describe Economic::Entity do
 
     describe "soap_action" do
       it "returns the name for the given soap action on this class" do
-        subject.soap_action(:get_data).should == :spec_entity_get_data
+        subject.soap_action_name(:get_data).should == :spec_entity_get_data
 
         class Car < Economic::Entity; end
-        Car.soap_action(:start_engine).should == :car_start_engine
-        Car.soap_action('StartEngine').should == :car_start_engine
+        Car.soap_action_name(:start_engine).should == :car_start_engine
+        Car.soap_action_name('StartEngine').should == :car_start_engine
       end
     end
   end

@@ -2,7 +2,7 @@ module FindByCiNumber
   # Returns Debtors that have the given ci_number. The Debtor objects will only be partially loaded
   def find_by_ci_number(ci_number)
     # Get a list of handles from e-conomic
-    response = session.request entity_class.soap_action('FindByCINumber') do
+    response = session.request entity_class.soap_action_name('FindByCINumber') do
       soap.body = {
         'ciNumber' => ci_number
       }

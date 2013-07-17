@@ -19,7 +19,7 @@ module Economic
     # Returns CreditorContact that have the given name. The objects will only be partially loaded
     def find_by_name(name)
       # Get a list of CreditorContactHandles from e-conomic
-      response = session.request entity_class.soap_action('FindByName') do
+      response = session.request entity_class.soap_action_name('FindByName') do
         soap.body = {
           'name' => name
         }

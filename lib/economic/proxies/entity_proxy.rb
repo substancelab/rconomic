@@ -27,7 +27,7 @@ module Economic
 
     # Fetches all entities from the API.
     def all
-      response = session.request(entity_class.soap_action(:get_all))
+      response = session.request(entity_class.soap_action_name(:get_all))
       handles = response.values.flatten.collect { |handle| Entity::Handle.build(handle) }
 
       if handles.size == 1
@@ -82,7 +82,7 @@ module Economic
     def get_data(handle)
       handle = Entity::Handle.new(handle)
 
-      entity_hash = session.request(entity_class.soap_action(:get_data)) do
+      entity_hash = session.request(entity_class.soap_action_name(:get_data)) do
         soap.body = {
           'entityHandle' => handle.to_hash
         }
@@ -116,7 +116,7 @@ module Economic
       return [] unless handles && handles.any?
 
       entity_class_name_for_soap_request = entity_class.name.split('::').last
-      response = session.request(entity_class.soap_action(:get_data_array)) do
+      response = session.request(entity_class.soap_action_name(:get_data_array)) do
         soap.body = {'entityHandles' => {"#{entity_class_name_for_soap_request}Handle" => handles.collect(&:to_hash)}}
       end
       [response["#{entity_class.key}_data".intern]].flatten

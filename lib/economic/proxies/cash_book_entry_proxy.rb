@@ -3,7 +3,7 @@ require 'economic/proxies/entity_proxy'
 module Economic
   class CashBookEntryProxy < EntityProxy
     def all
-      entity_hash = session.request(CashBookProxy.entity_class.soap_action(:get_entries)) do
+      entity_hash = session.request(CashBookProxy.entity_class.soap_action_name(:get_entries)) do
         soap.body = { "cashBookHandle" => owner.handle.to_hash }
       end
 
@@ -56,7 +56,7 @@ module Economic
     end
 
     def set_due_date(id, date)
-      session.request(entity_class.soap_action("SetDueDate")) do
+      session.request(entity_class.soap_action_name("SetDueDate")) do
         soap.body = { 'cashBookEntryHandle' => { 'Id1' => owner.handle[:number], 'Id2' => id }, :value => date }
       end
     end
@@ -67,7 +67,7 @@ module Economic
       handle_name = handle_name_for_action(action)
       handle_key = Economic::Support::String.underscore(handle_name).intern
 
-      response = session.request(entity_class.soap_action(action)) do
+      response = session.request(entity_class.soap_action_name(action)) do
         data = ActiveSupport::OrderedHash.new
         data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
         data[handle_name] = { 'Number'  => handles[handle_key][:number] } if handles[handle_key]

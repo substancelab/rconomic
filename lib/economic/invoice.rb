@@ -35,7 +35,7 @@ module Economic
     end
 
     def remainder
-      session.request(soap_action(:get_remainder)) do
+      session.request(soap_action_name(:get_remainder)) do
         soap.body = { "invoiceHandle" => handle.to_hash }
       end
     end
@@ -48,7 +48,7 @@ module Economic
     #     file << invoice.pdf
     #   end
     def pdf
-      response = session.request soap_action(:get_pdf) do
+      response = session.request soap_action_name(:get_pdf) do
         soap.body = { "invoiceHandle" => handle.to_hash }
       end
 

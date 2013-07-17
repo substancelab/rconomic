@@ -18,7 +18,7 @@ module Economic
 
     # Books all entries in the cashbook. Returns book result.
     def book
-      response = session.request(soap_action(:book)) do
+      response = session.request(soap_action_name(:book)) do
         soap.body = { "cashBookHandle" => handle.to_hash }
       end
       response[:number].to_i
