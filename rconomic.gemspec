@@ -23,8 +23,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "savon", "0.9.5"
   s.add_runtime_dependency "gyoku", "0.4.4"
 
-  s.add_runtime_dependency "activesupport", "~> 3.0"
-
   s.files         = `git ls-files`.split("\n").reject { |filename| ['.gitignore'].include?(filename) }
   s.test_files    = `git ls-files -- {spec}/*`.split("\n")
   s.require_paths = ["lib"]

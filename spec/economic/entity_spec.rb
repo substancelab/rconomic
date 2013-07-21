@@ -3,6 +3,7 @@ require './spec/spec_helper'
 class SpecEntity < Economic::Entity
   has_properties :id, :foo, :baz
 
+  def build_soap_data; {}; end
   def existing_method; end
 
   def proxy; Economic::SpecEntityProxy.new(session); end

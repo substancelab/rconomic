@@ -200,8 +200,9 @@ module Economic
       return response
     end
 
-    # Returns OrderedHash with the data structure to send to the API
+    # Returns Hash with the data structure to send to the API
     def build_soap_data
+      raise NotImplementedError, "Subclasses of Economic::Entity must implement `build_soap_data`"
     end
 
     # Requests an action from the API endpoint
