@@ -21,8 +21,7 @@ module Economic
         soap.body = {
           :agreementNumber => self.agreement_number,
           :userName => self.user_name,
-          :password => self.password,
-          :order! => [:agreementNumber, :userName, :password]
+          :password => self.password
         }
       end
       client.http.headers["Cookie"] = response.http.headers["Set-Cookie"]

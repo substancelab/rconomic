@@ -13,13 +13,11 @@ module Economic
     protected
     
     def build_soap_data
-      data = ActiveSupport::OrderedHash.new
-
-      data['Handle'] = handle.to_hash
-      data['Name'] = handle.number
-      data['Number'] = number
-      
-      return data
+      {
+        'Handle' => handle.to_hash,
+        'Name' => handle.number,
+        'Number' => number
+      }
     end
   end
 end

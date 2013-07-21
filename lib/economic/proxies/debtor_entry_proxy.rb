@@ -5,8 +5,7 @@ module Economic
     def find_by_invoice_number(from, to = from)
       response = request('FindByInvoiceNumber', {
         'from'  => from,
-        'to'    => to,
-        :order! => [ 'from', 'to' ]
+        'to'    => to
       })
 
       response[:debtor_entry_handle].map do |debtor_entry_handle|

@@ -70,7 +70,7 @@ module Economic
       handle_name = handle_name_for_action(action)
       handle_key = Economic::Support::String.underscore(handle_name).intern
 
-      data = ActiveSupport::OrderedHash.new
+      data = {}
       data["cashBookHandle"] = { 'Number' => owner.handle[:number] }
       data[handle_name] = { 'Number'  => handles[handle_key][:number] } if handles[handle_key]
       data["contraAccountHandle"] = { 'Number'  => handles[:contra_account_handle][:number] } if handles[:contra_account_handle]

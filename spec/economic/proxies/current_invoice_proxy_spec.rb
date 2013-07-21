@@ -68,7 +68,7 @@ describe Economic::CurrentInvoiceProxy do
     let(:unto) { Time.now }
 
     it "should be able to return a single current invoice" do
-      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601, :order! => ['first', 'last']).returns(:single)
+      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:single)
       savon.expects('CurrentInvoice_GetDataArray').returns(:single)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 1
@@ -76,7 +76,7 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "should be able to return multiple invoices" do
-      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601, :order! => ['first', 'last']).returns(:many)
+      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:many)
       savon.expects('CurrentInvoice_GetDataArray').returns(:multiple)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 2
@@ -84,7 +84,7 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "should be able to return nothing" do
-      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601, :order! => ['first', 'last']).returns(:none)
+      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:none)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 0
     end

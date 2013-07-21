@@ -47,10 +47,10 @@ module Economic
 
     protected
 
-    # Returns OrderedHash with the properties of CurrentInvoice in the correct order, camelcased and ready
-    # to be sent via SOAP
+    # Returns Hash with the properties of CurrentInvoice in the correct order,
+    # camelcased and ready to be sent via SOAP
     def build_soap_data
-      data = ActiveSupport::OrderedHash.new
+      data = {}
 
       data['Number'] = 0 # Doesn't seem to be used
       data['InvoiceHandle'] = invoice.handle.to_hash unless invoice.blank?

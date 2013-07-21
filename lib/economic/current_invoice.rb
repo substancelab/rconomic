@@ -85,8 +85,7 @@ module Economic
     def book_with_number(number)
       response = request(:book_with_number, {
         "currentInvoiceHandle" => handle.to_hash,
-        "number" => number,
-        :order! => ["currentInvoiceHandle", "number"]
+        "number" => number
       })
 
       # Find the created Invoice
@@ -132,10 +131,10 @@ module Economic
 
     protected
 
-    # Returns OrderedHash with the properties of CurrentInvoice in the correct order, camelcased and ready
-    # to be sent via SOAP
+    # Returns Hash with the properties of CurrentInvoice in the correct order,
+    # camelcased and ready to be sent via SOAP
     def build_soap_data
-      data = ActiveSupport::OrderedHash.new
+      data = {}
 
       data['Id'] = id
       data['DebtorHandle'] = debtor.handle.to_hash unless debtor.blank?

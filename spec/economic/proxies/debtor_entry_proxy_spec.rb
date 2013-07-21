@@ -12,12 +12,12 @@ describe Economic::DebtorEntryProxy do
 
   describe "#find_by_invoice_number" do
     it 'should be able to find multiple debtor entries' do
-      savon.expects("DebtorEntry_FindByInvoiceNumber").with('from' => '123', 'to' => '456', :order! => ['from', 'to']).returns(:many)
+      savon.expects("DebtorEntry_FindByInvoiceNumber").with('from' => '123', 'to' => '456').returns(:many)
       subject.find_by_invoice_number('123', '456').should == [1, 2]
     end
 
     it 'should be able to find debtor entries with one invoice id' do
-      savon.expects("DebtorEntry_FindByInvoiceNumber").with('from' => '123', 'to' => '123', :order! => ['from', 'to']).returns(:many)
+      savon.expects("DebtorEntry_FindByInvoiceNumber").with('from' => '123', 'to' => '123').returns(:many)
       subject.find_by_invoice_number('123').should == [1, 2]
     end
 

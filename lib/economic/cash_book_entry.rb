@@ -74,7 +74,7 @@ module Economic
     protected
 
     def build_soap_data
-      data = ActiveSupport::OrderedHash.new
+      data = {}
 
       data['Handle'] = handle.to_hash unless handle.empty?
       data['Id1'] = id1 unless id1.blank?
