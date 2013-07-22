@@ -12,15 +12,19 @@ module Economic
 
           def call
             # Get a list of CreditorContactHandles from e-conomic
-            response = request('FindByName', {
-              'name' => name
-            })
-
-            # Make sure we always have an array of handles even if the result only contains one
             handles = [response[:creditor_contact_handle]].flatten.reject(&:blank?)
+            contacts = build_partial_contact_entities(handles)
+            scope_to_owner(contacts)
+          end
 
-            # Create partial CreditorContact entities
-            contacts = handles.collect do |handle|
+          private
+
+          def build(*options)
+            @caller.build(options)
+          end
+
+          def build_partial_contact_entities(handles)
+            handles.collect do |handle|
               creditor_contact = build
               creditor_contact.partial = true
               creditor_contact.persisted = true
@@ -29,7 +33,21 @@ module Economic
               creditor_contact.number = handle[:number]
               creditor_contact
             end
+          end
 
+          def owner
+            @caller.owner
+          end
+
+          def request(action, data)
+            @caller.request(action, data)
+          end
+
+          def response
+            request('FindByName', {'name' => name})
+          end
+
+          def scope_to_owner(contacts)
             if owner.is_a?(Creditor)
               # Scope to the owner
               contacts.select do |creditor_contact|
@@ -39,20 +57,6 @@ module Economic
             else
               contacts
             end
-          end
-
-          private
-
-          def build(*options)
-            @caller.build(options)
-          end
-
-          def owner
-            @caller.owner
-          end
-
-          def request(action, data)
-            @caller.request(action, data)
           end
         end
       end
