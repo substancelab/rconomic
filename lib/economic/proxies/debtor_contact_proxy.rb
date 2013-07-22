@@ -1,5 +1,4 @@
 require 'economic/proxies/entity_proxy'
-require 'economic/proxies/actions/debtor_contact_proxy/find_by_name'
 
 module Economic
   class DebtorContactProxy < EntityProxy
@@ -20,7 +19,7 @@ module Economic
     # Returns DebtorContact that have the given name. The objects will only be
     # partially loaded
     def find_by_name(name)
-      Proxies::Actions::DebtorContactProxy::FindByName.new(self, name).call
+      Proxies::Actions::FindByName.new(self, name).call
     end
 
   private

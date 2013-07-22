@@ -55,7 +55,7 @@ describe Economic::CreditorContactProxy do
 
   describe "#find_by_name" do
     it "uses the FindByName command" do
-      Economic::Proxies::Actions::CreditorContactProxy::FindByName.expects(:new).
+      Economic::Proxies::Actions::FindByName.expects(:new).
         with(subject, "Bob").
         returns(lambda { "Result" })
       subject.find_by_name("Bob").should == "Result"

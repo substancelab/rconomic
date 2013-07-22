@@ -33,6 +33,8 @@ require 'economic/proxies/debtor_entry_proxy'
 require 'economic/proxies/creditor_entry_proxy'
 require 'economic/proxies/entry_proxy'
 
+require 'economic/proxies/actions/find_by_name'
+
 # http://www.e-conomic.com/apidocs/Documentation/index.html
 # https://www.e-conomic.com/secure/api1/EconomicWebService.asmx
 #

@@ -37,7 +37,7 @@ module Economic
         end
 
         def handle_key
-          :handle
+          (Support::String.underscore(@caller.class.entity_class_name) + "_handle").to_sym
         end
 
         def owner
@@ -53,7 +53,17 @@ module Economic
         end
 
         def scope_to_owner(contacts)
-          contacts
+          if owner.is_a?(Session)
+            contacts
+          else
+            owner_type = Support::String.underscore(
+              Support::String.demodulize(owner.class.name)
+            )
+            contacts.select do |contact|
+              contact.get_data
+              contact.send(owner_type) == owner
+            end
+          end
         end
       end
     end
