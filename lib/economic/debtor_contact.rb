@@ -9,7 +9,7 @@ module Economic
   # Examples
   #
   #   # Find contact
-  #   contact = economic.contacts.find(5)
+  #   contact = economic.contacts.find(:id => 5)
   #
   #   # Creating a contact
   #   contact = debtor.contacts.build

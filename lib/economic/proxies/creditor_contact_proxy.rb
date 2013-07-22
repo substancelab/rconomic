@@ -2,14 +2,8 @@ require 'economic/proxies/entity_proxy'
 
 module Economic
   class CreditorContactProxy < EntityProxy
-
-    # Gets data for CreditorContact from the API
-    def find(handle)
-      handle = Entity::Handle.build(:id => handle) unless handle.is_a?(Entity::Handle)
-      super(handle)
-    end
-
-    # Returns CreditorContact that have the given name. The objects will only be partially loaded
+    # Returns CreditorContact that have the given name. The objects will only be
+    # partially loaded
     def find_by_name(name)
       Proxies::Actions::FindByName.new(self, name).call
     end
