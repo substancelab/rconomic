@@ -107,6 +107,13 @@ module Economic
       items.size
     end
 
+    # Requests an action from the API endpoint
+    def request(action, data = nil)
+      session.request(entity_class.soap_action_name(action)) do
+        soap.body = data if data
+      end
+    end
+
   protected
 
     # Fetches all data for the given handles. Returns Array with hashes of entity data
@@ -117,13 +124,5 @@ module Economic
       response = request(:get_data_array, {'entityHandles' => {"#{entity_class_name_for_soap_request}Handle" => handles.collect(&:to_hash)}})
       [response["#{entity_class.key}_data".intern]].flatten
     end
-
-    # Requests an action from the API endpoint
-    def request(action, data = nil)
-      session.request(entity_class.soap_action_name(action)) do
-        soap.body = data if data
-      end
-    end
-
   end
 end
