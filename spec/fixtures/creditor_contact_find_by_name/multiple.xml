@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CreditorContact_FindByNameResponse xmlns="http://e-conomic.com">
+      <CreditorContact_FindByNameResult>
+        <CreditorContactHandle>
+          <Id>42</Id>
+        </CreditorContactHandle>
+        <CreditorContactHandle>
+          <Id>37</Id>
+        </CreditorContactHandle>
+      </CreditorContact_FindByNameResult>
+    </CreditorContact_FindByNameResponse>
+  </soap:Body>
+</soap:Envelope>

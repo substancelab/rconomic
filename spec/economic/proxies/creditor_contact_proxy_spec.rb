@@ -52,4 +52,29 @@ describe Economic::CreditorContactProxy do
       subject.find(42).should be_instance_of(Economic::CreditorContact)
     end
   end
+
+  describe "#find_by_name" do
+    before :each do
+      savon.stubs('CreditorContact_FindByName').returns(:multiple)
+    end
+
+    it "gets contact data from the API" do
+      savon.expects('CreditorContact_FindByName').with('name' => 'Bob').returns(:multiple)
+      subject.find_by_name("Bob")
+    end
+
+    it "returns creditor contacts" do
+      subject.find_by_name("Bob").first.should be_instance_of(Economic::CreditorContact)
+    end
+
+    it "returns each contact" do
+      subject.find_by_name("Bob").size.should == 2
+    end
+
+    it "returns empty when nothing is found" do
+      savon.stubs('CreditorContact_FindByName').returns(:none)
+      subject.find_by_name("Bob").should be_empty
+    end
+  end
 end
+
