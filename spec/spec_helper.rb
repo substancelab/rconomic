@@ -1,8 +1,10 @@
 require 'savon'
 require 'savon_spec'
 
-require 'coveralls'
-Coveralls.wear!
+if ENV['TRAVIS'] == "true"
+  require 'coveralls'
+  Coveralls.wear!
+end
 
 require './lib/rconomic'
 
