@@ -55,6 +55,7 @@ module Economic
       entity.partial = false
 
       self.append(entity)
+      initialize_properties_with_values_from_owner(entity)
 
       entity
     end
@@ -123,6 +124,11 @@ module Economic
       entity_class_name_for_soap_request = entity_class.name.split('::').last
       response = request(:get_data_array, {'entityHandles' => {"#{entity_class_name_for_soap_request}Handle" => handles.collect(&:to_hash)}})
       [response["#{entity_class.key}_data".intern]].flatten
+    end
+
+    # Initialize properties of entity with values from owner. Returns entity
+    def initialize_properties_with_values_from_owner(entity)
+      entity
     end
   end
 end

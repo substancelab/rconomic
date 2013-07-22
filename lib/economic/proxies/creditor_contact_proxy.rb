@@ -3,13 +3,6 @@ require 'economic/proxies/entity_proxy'
 module Economic
   class CreditorContactProxy < EntityProxy
 
-    # Returns a new, unpersisted Economic::CreditorContact
-    def build(properties = {})
-      contact = super
-      initialize_properties_with_values_from_owner(contact) if owner.is_a?(Creditor)
-      contact
-    end
-
     # Gets data for CreditorContact from the API
     def find(handle)
       handle = Entity::Handle.build(:id => handle) unless handle.is_a?(Entity::Handle)
@@ -25,9 +18,10 @@ module Economic
 
     # Initialize properties in contact with values from owner. Returns contact.
     def initialize_properties_with_values_from_owner(contact)
-      contact.creditor = owner
+      if owner.is_a?(Creditor)
+        contact.creditor = owner
+      end
       contact
     end
-
   end
 end
