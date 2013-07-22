@@ -15,7 +15,7 @@ module Economic
             if owner.is_a?(Debtor)
               contacts.select do |contact|
                 contact.get_data
-                contact.debtor.handle == owner.handle
+                contact.debtor == owner
               end
             else
               contacts
