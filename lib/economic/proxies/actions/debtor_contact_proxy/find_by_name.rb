@@ -12,7 +12,7 @@ module Economic
           end
 
           def scope_to_owner(contacts)
-            if owner.is_a?(Creditor)
+            if owner.is_a?(Debtor)
               contacts.select do |contact|
                 contact.get_data
                 contact.debtor.handle == owner.handle

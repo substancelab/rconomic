@@ -22,14 +22,28 @@ describe Economic::Proxies::Actions::CreditorContactProxy::FindByName do
       subject.call.first.should be_instance_of(Economic::CreditorContact)
     end
 
-    it "returns each contact" do
-      subject.call.size.should == 2
-    end
-
     it "returns empty when nothing is found" do
       savon.stubs('CreditorContact_FindByName').returns(:none)
       subject.call.should be_empty
     end
+
+    context "when calling proxy is owned by session" do
+      it "returns all creditor contacts" do
+        subject.call.size.should == 2
+      end
+    end
+
+    context "when calling proxy is owned by a creditor" do
+      it "returns only contacts for creditor" do
+        savon.stubs("CreditorContact_GetData").returns(:success)
+        savon.stubs("Creditor_GetData").returns(:success)
+        creditor = session.creditors.build
+        proxy = Economic::CreditorContactProxy.new(creditor)
+        action = Economic::Proxies::Actions::CreditorContactProxy::FindByName.new(proxy, "Bob")
+        action.call.each { |contact| contact.creditor.should == creditor }
+      end
+    end
   end
+
 end
 
