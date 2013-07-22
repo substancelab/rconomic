@@ -52,4 +52,13 @@ describe Economic::DebtorContactProxy do
       subject.find(42).should be_instance_of(Economic::DebtorContact)
     end
   end
+
+  describe "#find_by_name" do
+    it "uses the FindByName command" do
+      Economic::Proxies::Actions::DebtorContactProxy::FindByName.expects(:new).
+        with(subject, "Bob").
+        returns(lambda { "Result" })
+      subject.find_by_name("Bob").should == "Result"
+    end
+  end
 end

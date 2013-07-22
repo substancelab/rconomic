@@ -1,4 +1,5 @@
 require 'economic/proxies/entity_proxy'
+require 'economic/proxies/actions/debtor_contact_proxy/find_by_name'
 
 module Economic
   class DebtorContactProxy < EntityProxy
@@ -16,39 +17,11 @@ module Economic
       super(handle)
     end
 
-    # Returns DebtorContact that have the given name. The objects will only be partially loaded
+    # Returns DebtorContact that have the given name. The objects will only be
+    # partially loaded
     def find_by_name(name)
-      # Get a list of DebtorContactHandles from e-conomic
-      response = request('FindByName', {
-        'name' => name
-      })
-
-      # Make sure we always have an array of handles even if the result only contains one
-      handles = [response[:debtor_contact_handle]].flatten.reject(&:blank?)
-
-      # Create partial DebtorContact entities
-      contacts = handles.collect do |handle|
-        debtor_contact = build
-        debtor_contact.partial = true
-        debtor_contact.persisted = true
-        debtor_contact.handle = handle
-        debtor_contact.id = handle[:id]
-        debtor_contact.number = handle[:number]
-        debtor_contact
-      end
-
-      if owner.is_a?(Debtor)
-        # Scope to the owner
-        contacts.select do |debtor_contact|
-          debtor_contact.get_data
-          debtor_contact.debtor.handle == owner.handle
-        end
-      else
-        contacts
-      end
-
+      Proxies::Actions::DebtorContactProxy::FindByName.new(self, name).call
     end
-
 
   private
 
