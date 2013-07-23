@@ -207,9 +207,7 @@ module Economic
 
     # Requests an action from the API endpoint
     def request(action, data = nil)
-      session.request(soap_action_name(action)) do
-        soap.body = data if data
-      end
+      session.request(soap_action_name(action), data)
     end
 
     def soap_action_name(action)

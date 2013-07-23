@@ -3,9 +3,10 @@ require 'economic/proxies/entity_proxy'
 module Economic
   class CashBookEntryProxy < EntityProxy
     def all
-      entity_hash = session.request(CashBookProxy.entity_class.soap_action_name(:get_entries)) do
-        soap.body = { "cashBookHandle" => owner.handle.to_hash }
-      end
+      entity_hash = session.request(
+        CashBookProxy.entity_class.soap_action_name(:get_entries),
+        {"cashBookHandle" => owner.handle.to_hash}
+      )
 
       if entity_hash != {}
         [ entity_hash.values.first ].flatten.each do |id_hash|

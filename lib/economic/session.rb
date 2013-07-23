@@ -71,10 +71,13 @@ module Economic
       @entries ||= EntryProxy.new(self)
     end
 
-    def request(action, &block)
-      
+    # Requests an action from the API endpoint
+    def request(action, data = nil)
       client.http.headers["Cookie"]  = @cookie
-      response = client.request :economic, action, &block
+
+      response = client.request(:economic, action) do
+        soap.body = data if data
+      end
       response_hash = response.to_hash
 
       response_key = "#{action}_response".intern
