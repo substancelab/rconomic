@@ -11,7 +11,7 @@ module Economic
 
     # Returns the next available debtor number
     def next_available_number
-      session.request Debtor.soap_action_name(:get_next_available_number)
+      request :get_next_available_number
     end
   end
 end
