@@ -59,4 +59,12 @@ describe Economic::CashBookProxy do
 
   end
 
+  describe "#last" do
+    it "returns the last cash book" do
+      savon.stubs('CashBook_GetAll').returns(:multiple)
+      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+
+      subject.all.last.name.should == "Another cash book"
+    end
+  end
 end

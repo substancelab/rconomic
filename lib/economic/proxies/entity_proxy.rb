@@ -103,6 +103,11 @@ module Economic
       items.empty?
     end
 
+    # Returns the last item in proxy.
+    def last
+      items.last
+    end
+
     # Returns the number of entities in proxy
     def size
       items.size
