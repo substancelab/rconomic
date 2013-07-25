@@ -15,9 +15,9 @@ module Economic
     include Enumerable
 
     extend Forwardable
-    def_delegators :@items, :each, :empty?, :last, :size
+    def_delegators :@items, :each, :empty?, :last, :size, :[]
 
-    attr_reader :owner, :items
+    attr_reader :owner
 
     def initialize(owner)
       @owner = owner
@@ -104,6 +104,10 @@ module Economic
     end
 
   protected
+
+    def items
+      @items
+    end
 
     # Fetches all data for the given handles. Returns Array with hashes of entity data
     def get_data_array(handles)

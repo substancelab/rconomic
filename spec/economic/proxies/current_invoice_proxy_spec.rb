@@ -115,8 +115,8 @@ describe Economic::CurrentInvoiceProxy do
 
       current_invoices = subject.all
       current_invoices.size.should == 2
-      current_invoices.items.first.should be_instance_of(Economic::CurrentInvoice)
-      current_invoices.items.last.should be_instance_of(Economic::CurrentInvoice)
+      current_invoices.first.should be_instance_of(Economic::CurrentInvoice)
+      current_invoices.last.should be_instance_of(Economic::CurrentInvoice)
     end
 
   end

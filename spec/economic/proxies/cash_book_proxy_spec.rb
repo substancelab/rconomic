@@ -67,4 +67,13 @@ describe Economic::CashBookProxy do
       subject.all.last.name.should == "Another cash book"
     end
   end
+
+  describe "#[]" do
+    it "returns the specific cash book" do
+      savon.stubs('CashBook_GetAll').returns(:multiple)
+      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+
+      subject.all[1].name.should == "Another cash book"
+    end
+  end
 end

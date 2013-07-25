@@ -20,7 +20,7 @@ describe Economic::CurrentInvoiceLineProxy do
       line = Economic::CurrentInvoiceLine.new
       subject.append(line)
       subject.append(line)
-      subject.items.should == [line]
+      subject.size.should == 1
     end
   end
 
@@ -39,7 +39,7 @@ describe Economic::CurrentInvoiceLineProxy do
 
     it "adds the built line to proxy items" do
       line = subject.build
-      subject.items.should == [line]
+      subject.first.should == line
     end
 
     context "when owner is a CurrentInvoice" do
@@ -79,7 +79,7 @@ describe Economic::CurrentInvoiceLineProxy do
     it "can be appended to" do
       line = Economic::CurrentInvoiceLine.new
       subject << line
-      subject.items.should == [line]
+      subject.last.should == line
     end
 
     it "can be iterated over" do
