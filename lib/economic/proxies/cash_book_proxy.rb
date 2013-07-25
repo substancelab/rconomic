@@ -14,19 +14,7 @@ module Economic
       cash_book
 
     end
-    
-    def all
-      response = request('GetAll')
 
-      handles = [response[:cash_book_handle]].flatten.reject(&:blank?)
-      cash_books = []
-      handles.each do |handle|
-        cash_books << get_name(handle[:number])
-      end
-      
-      cash_books
-    end
-    
     def get_name(id)
       response = request("GetName", {
         'cashBookHandle' => {

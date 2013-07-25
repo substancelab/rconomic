@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CashBook_GetDataArrayResponse xmlns="http://e-conomic.com">
+      <CashBook_GetDataArrayResult>
+        <CashBookData>
+          <Handle>
+            <Number>42</Number>
+          </Handle>
+          <Number>42</Number>
+          <Name>A cash book</Name>
+        </CashBookData>
+        <CashBookData>
+          <Handle>
+            <Number>37</Number>
+          </Handle>
+          <Number>37</Number>
+          <Name>Another cash book</Name>
+        </CashBookData>
+      </CashBook_GetDataArrayResult>
+    </CashBook_GetDataArrayResponse>
+  </soap:Body>
+</soap:Envelope>

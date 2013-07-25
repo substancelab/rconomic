@@ -28,15 +28,23 @@ describe Economic::CashBookProxy do
   describe ".all" do
 
     it "returns multiple cashbooks" do
-      savon.expects('CashBook_GetAll').returns(:multiple)
-      savon.expects('CashBook_GetName').returns(:success)
-      savon.expects('CashBook_GetName').returns(:success)
+      savon.stubs('CashBook_GetAll').returns(:multiple)
+      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+
       all = subject.all
       all.size.should == 2
-      all[0].should be_instance_of(Economic::CashBook)
-      all[1].should be_instance_of(Economic::CashBook)
+      all.each { |cash_book| cash_book.should be_instance_of(Economic::CashBook) }
     end
 
+    it "properly fills out handles of cash books" do
+      # Issue #12
+      savon.stubs('CashBook_GetAll').returns(:multiple)
+      savon.stubs('CashBook_GetData').returns(:success)
+      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+
+      cash_book = subject.find(subject.all.first.handle)
+      subject.all.first.handle.should == cash_book.handle
+    end
   end
 
   describe ".get_name" do
