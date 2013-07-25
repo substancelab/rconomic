@@ -14,6 +14,9 @@ module Economic
 
     include Enumerable
 
+    extend Forwardable
+    def_delegators :@items, :each, :empty?, :last, :size
+
     attr_reader :owner, :items
 
     def initialize(owner)
@@ -94,24 +97,6 @@ module Economic
       items << item unless items.include?(item)
     end
     alias :<< :append
-
-    def each
-      items.each { |i| yield i }
-    end
-
-    def empty?
-      items.empty?
-    end
-
-    # Returns the last item in proxy.
-    def last
-      items.last
-    end
-
-    # Returns the number of entities in proxy
-    def size
-      items.size
-    end
 
     # Requests an action from the API endpoint
     def request(action, data = nil)
