@@ -10,7 +10,7 @@ module Economic
 
     # Authenticates with e-conomic
     def connect
-      client.http.headers["Cookie"] = nil
+      client.http.headers.delete("Cookie")
       response = client.request :economic, :connect do
         soap.body = {
           :agreementNumber => self.agreement_number,

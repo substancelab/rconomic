@@ -46,6 +46,12 @@ describe Economic::Session do
       subject.request(:foo) { }
       client.http.headers['Cookie'].should == 'cookie'
     end
+
+    it "removes existing cookie header before connecting" do
+      client.http.headers.expects(:delete).with('Cookie')
+      savon.stubs('Connect').returns({:headers => {'Set-Cookie' => 'cookie'}})
+      subject.connect
+    end
   end
 
   describe ".session" do
