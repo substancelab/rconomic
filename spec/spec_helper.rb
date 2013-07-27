@@ -29,17 +29,6 @@ end
 #   config.logger = Logger.new(File.join('spec', 'debug.log'))
 # end
 
-# Stub the WSDL instead of fetching it over the wire
-module Savon
-  module Wasabi
-    class Document < ::Wasabi::Document
-      def resolve_document
-        File.read(File.expand_path('../../lib/economic/economic.wsdl', __FILE__))
-      end
-    end
-  end
-end
-
 def fixture(operation, fixture)
   fixture_path = File.join(
     "spec/fixtures",
