@@ -29,12 +29,14 @@ describe Economic::DebtorEntryProxy do
 
   describe "#match" do
     it 'should match two debtor entries by serial numbers' do
-      savon.stubs("DebtorEntry_MatchEntries").with(
-        :entries => [
+      stub_request(
+        "DebtorEntry_MatchEntries",
+        {:entries => [
           { :debtor_entry_handle => { :serial_number => 1 } },
           { :debtor_entry_handle => { :serial_number => 2 } }
-        ]
-      ).returns(:success)
+        ]},
+        :success
+      )
       subject.match(1, 2)
     end
   end

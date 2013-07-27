@@ -1,5 +1,5 @@
 require 'savon'
-require 'savon_spec'
+require "savon/mock/spec_helper"
 
 if ENV['TRAVIS'] == "true"
   require 'coveralls'
@@ -9,22 +9,25 @@ end
 require './lib/rconomic'
 
 RSpec.configure do |config|
-  config.mock_with :mocha
-  config.include Savon::Spec::Macros
+  config.include Savon::SpecHelper
 
   config.before :each do
     # Ensure we don't actually send requests over the network
-    HTTPI.expects(:get).never
-    HTTPI.expects(:post).never
+    HTTPI.should_receive(:get).never
+    HTTPI.should_receive(:post).never
+    savon.mock!
+  end
+
+  config.after :each do
+    savon.unmock!
   end
 
 end
 
-Savon.configure do |config|
-  config.logger = Logger.new(File.join('spec', 'debug.log'))
-end
-
-Savon::Spec::Fixture.path = File.expand_path("../fixtures", __FILE__)
+# TODO: Logging
+# Savon.configure do |config|
+#   config.logger = Logger.new(File.join('spec', 'debug.log'))
+# end
 
 # Stub the WSDL instead of fetching it over the wire
 module Savon
@@ -37,23 +40,13 @@ module Savon
   end
 end
 
-
-class Savon::Spec::Mock
-  # Fix issue with savon_specs #with method, so that it allows other values than the expected.
-  # Without this, savon_spec 0.1.6 doesn't work with savon 0.9.3.
-  #
-  #   mock_request('Connect', {has_entries(:agreementNumber => 123456)}, :success)
-  #
-  # would trigger a irrelevant
-  #
-  #   Mocha::ExpectationError: unexpected invocation: #<AnyInstance:Savon::SOAP::XML>.body=(nil)
-  def with(soap_body)
-    if mock_method == :expects
-      Savon::SOAP::XML.any_instance.stubs(:body=)
-      Savon::SOAP::XML.any_instance.expects(:body=).with(soap_body)
-    end
-    self
-  end
+def fixture(operation, fixture)
+  fixture_path = File.join(
+    "spec/fixtures",
+    operation,
+    "#{fixture}.xml"
+  )
+  File.read(fixture_path)
 end
 
 def make_session
@@ -125,15 +118,16 @@ end
 # Set up an expectation that a specific operation must be called with specific
 # data in the message body, returning a specific response.
 def mock_request(operation, data, response)
-  mock = savon.expects(operation)
-  mock.with(data) if data
+  operation = Economic::Support::String.underscore(operation)
+  response = fixture(operation, response) if response.is_a?(Symbol)
+
+  mock = savon.expects(operation.intern)
+  mock.with(:message => data) if data
   mock.returns(response)
 end
 
 # Set up a fake request so that when operation is called with data in the 
 # message body it returns the desired response.
 def stub_request(operation, data, response)
-  stub = savon.stubs(operation)
-  stub.with(data) if data
-  stub.returns(response)
+  mock_request(operation, data || :any, response)
 end

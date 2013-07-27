@@ -14,9 +14,11 @@ describe Economic::EntryProxy do
     it 'should be able to find multiple entries' do
       from_date = Date.new
       to_date = Date.new
-      savon.expects("Entry_FindByDateInterval").
-        with('fromDate' => from_date, 'toDate' => to_date).
-        returns(:many)
+      mock_request(
+        "Entry_FindByDateInterval",
+        {'fromDate' => from_date, 'toDate' => to_date},
+        :many
+      )
       subject.find_by_date_interval(from_date, to_date).should == [1, 2]
     end
 
@@ -33,9 +35,11 @@ describe Economic::EntryProxy do
 
   describe "#find_by_serial_number_interval" do
     it 'should be able to find multiple entries' do
-      savon.expects("Entry_FindBySerialNumberInterval").
-        with('minNumber' => 123, 'maxNumber' => 456).
-        returns(:many)
+      mock_request(
+        "Entry_FindBySerialNumberInterval",
+        {'minNumber' => 123, 'maxNumber' => 456},
+        :many
+      )
       subject.find_by_serial_number_interval(123, 456).should == [1, 2]
     end
 

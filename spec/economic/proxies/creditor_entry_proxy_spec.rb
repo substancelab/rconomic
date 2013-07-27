@@ -31,12 +31,14 @@ describe Economic::CreditorEntryProxy do
 
   describe "#match" do
     it 'should match two creditor entries by serial numbers' do
-      savon.stubs("CreditorEntry_MatchEntries").with(
-        :entries => [
+      stub_request(
+        "CreditorEntry_MatchEntries",
+        {:entries => [
           { :creditor_entry_handle => { :serial_number => 1 } },
           { :credior_entry_handle => { :serial_number => 2 } }
-        ]
-      ).returns(:success)
+        ]},
+        :success
+      )
       subject.match(1, 2)
     end
   end

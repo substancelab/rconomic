@@ -86,7 +86,7 @@ describe Economic::DebtorContact do
       end
 
       it "should not clear cached debtor nor fetch the debtor from API" do
-        savon.stubs('Debtor_GetData').never
+        session.should_receive(:request).never
         subject.debtor_handle = handle
         subject.debtor.should be_instance_of(Economic::Debtor)
       end

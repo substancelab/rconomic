@@ -86,7 +86,7 @@ describe Economic::CreditorContact do
       end
 
       it "should not clear cached creditor nor fetch the creditor from API" do
-        savon.stubs('Creditor_GetData').never
+        session.should_receive(:request).never
         subject.creditor_handle = handle
         subject.creditor.should be_instance_of(Economic::Creditor)
       end
