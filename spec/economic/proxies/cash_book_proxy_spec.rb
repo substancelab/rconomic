@@ -28,8 +28,8 @@ describe Economic::CashBookProxy do
   describe ".all" do
 
     it "returns multiple cashbooks" do
-      savon.stubs('CashBook_GetAll').returns(:multiple)
-      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+      stub_request('CashBook_GetAll', nil, :multiple)
+      stub_request('CashBook_GetDataArray', nil, :multiple)
 
       all = subject.all
       all.size.should == 2
@@ -38,9 +38,9 @@ describe Economic::CashBookProxy do
 
     it "properly fills out handles of cash books" do
       # Issue #12
-      savon.stubs('CashBook_GetAll').returns(:multiple)
-      savon.stubs('CashBook_GetData').returns(:success)
-      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+      stub_request('CashBook_GetAll', nil, :multiple)
+      stub_request('CashBook_GetData', nil, :success)
+      stub_request('CashBook_GetDataArray', nil, :multiple)
 
       cash_book = subject.find(subject.all.first.handle)
       subject.all.first.handle.should == cash_book.handle
@@ -50,7 +50,7 @@ describe Economic::CashBookProxy do
   describe ".get_name" do
 
     it 'returns a cash book with a name' do
-      savon.expects('CashBook_GetName').with("cashBookHandle" => { "Number" => "52" }).returns(:success)
+      mock_request('CashBook_GetName', {"cashBookHandle" => { "Number" => "52" }}, :success)
       result = subject.get_name("52")
       result.should be_instance_of(Economic::CashBook)
       result.number.should == "52"
@@ -61,8 +61,8 @@ describe Economic::CashBookProxy do
 
   describe "#last" do
     it "returns the last cash book" do
-      savon.stubs('CashBook_GetAll').returns(:multiple)
-      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+      stub_request('CashBook_GetAll', nil, :multiple)
+      stub_request('CashBook_GetDataArray', nil, :multiple)
 
       subject.all.last.name.should == "Another cash book"
     end
@@ -70,8 +70,8 @@ describe Economic::CashBookProxy do
 
   describe "#[]" do
     it "returns the specific cash book" do
-      savon.stubs('CashBook_GetAll').returns(:multiple)
-      savon.stubs('CashBook_GetDataArray').returns(:multiple)
+      stub_request('CashBook_GetAll', nil, :multiple)
+      stub_request('CashBook_GetDataArray', nil, :multiple)
 
       subject.all[1].name.should == "Another cash book"
     end

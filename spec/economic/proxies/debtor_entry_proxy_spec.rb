@@ -12,17 +12,17 @@ describe Economic::DebtorEntryProxy do
 
   describe "#find_by_invoice_number" do
     it 'should be able to find multiple debtor entries' do
-      savon.expects("DebtorEntry_FindByInvoiceNumber").with('from' => '123', 'to' => '456').returns(:many)
+      mock_request("DebtorEntry_FindByInvoiceNumber", {'from' => '123', 'to' => '456'}, :many)
       subject.find_by_invoice_number('123', '456').should == [1, 2]
     end
 
     it 'should be able to find debtor entries with one invoice id' do
-      savon.expects("DebtorEntry_FindByInvoiceNumber").with('from' => '123', 'to' => '123').returns(:many)
+      mock_request("DebtorEntry_FindByInvoiceNumber", {'from' => '123', 'to' => '123'}, :many)
       subject.find_by_invoice_number('123').should == [1, 2]
     end
 
     it 'should handle a single serial number in the response' do
-      savon.stubs("DebtorEntry_FindByInvoiceNumber").returns(:single)
+      stub_request("DebtorEntry_FindByInvoiceNumber", nil, :single)
       subject.find_by_invoice_number('123').should == [1]
     end
   end

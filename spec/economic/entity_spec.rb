@@ -89,12 +89,12 @@ describe Economic::Entity do
     subject { (e = SpecEntity.new).tap { |e| e.session = session } }
 
     before :each do
-      savon.stubs(:spec_entity_get_data).returns(:success)
+      stub_request(:spec_entity_get_data, nil, :success)
     end
 
     it "fetches data from API" do
       subject.instance_variable_set('@number', 42)
-      savon.expects(:spec_entity_get_data).with('entityHandle' => {'Number' => 42}).returns(:success)
+      mock_request(:spec_entity_get_data, {'entityHandle' => {'Number' => 42}}, :success)
       subject.get_data
     end
 
@@ -144,12 +144,12 @@ describe Economic::Entity do
     subject { (e = SpecEntity.new).tap { |e| e.persisted = false; e.session = session } }
 
     it "sends data to the API" do
-      savon.expects(:spec_entity_create_from_data).returns(:success)
+      mock_request(:spec_entity_create_from_data, nil, :success)
       subject.save
     end
 
     it "updates handle with the number returned from API" do
-      savon.expects(:spec_entity_create_from_data).returns(:success)
+      mock_request(:spec_entity_create_from_data, nil, :success)
       subject.save
       subject.number.should == '42'
     end
@@ -167,7 +167,7 @@ describe Economic::Entity do
     subject { (e = SpecEntity.new).tap { |e| e.persisted = true; e.session = session } }
 
     it "sends data to the API" do
-      savon.expects(:spec_entity_update_from_data).returns(:success)
+      mock_request(:spec_entity_update_from_data, nil, :success)
       subject.save
     end
   end
@@ -176,17 +176,17 @@ describe Economic::Entity do
     subject { (e = SpecEntity.new).tap { |e| e.id = 42; e.persisted = true; e.partial = false; e.session = session } }
 
     it "sends data to the API" do
-      savon.expects(:spec_entity_delete).returns(:success)
+      mock_request(:spec_entity_delete, nil, :success)
       subject.destroy
     end
 
     it "should request with the correct model and id" do
-      savon.expects(:spec_entity_delete).with('specEntityHandle' => {'Id' => 42}).returns(:success)
+      mock_request(:spec_entity_delete, {'specEntityHandle' => {'Id' => 42}}, :success)
       subject.destroy
     end
 
     it "should mark the entity as not persisted and partial" do
-      savon.expects(:spec_entity_delete).returns(:success)
+      mock_request(:spec_entity_delete, nil, :success)
       subject.destroy
       subject.should_not be_persisted
       subject.should be_partial

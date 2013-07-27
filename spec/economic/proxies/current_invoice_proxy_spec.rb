@@ -50,11 +50,11 @@ describe Economic::CurrentInvoiceProxy do
 
   describe ".find" do
     before :each do
-      savon.stubs('CurrentInvoice_GetData').returns(:success)
+      stub_request('CurrentInvoice_GetData', nil, :success)
     end
 
     it "gets invoice data from API" do
-      savon.expects('CurrentInvoice_GetData').with('entityHandle' => {'Id' => 42}).returns(:success)
+      mock_request('CurrentInvoice_GetData', {'entityHandle' => {'Id' => 42}}, :success)
       subject.find(42)
     end
 
@@ -68,23 +68,23 @@ describe Economic::CurrentInvoiceProxy do
     let(:unto) { Time.now }
 
     it "should be able to return a single current invoice" do
-      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:single)
-      savon.expects('CurrentInvoice_GetDataArray').returns(:single)
+      mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :single)
+      mock_request('CurrentInvoice_GetDataArray', nil, :single)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 1
       results.first.should be_instance_of(Economic::CurrentInvoice)
     end
 
     it "should be able to return multiple invoices" do
-      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:many)
-      savon.expects('CurrentInvoice_GetDataArray').returns(:multiple)
+      mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :many)
+      mock_request('CurrentInvoice_GetDataArray', nil, :multiple)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 2
       results.first.should be_instance_of(Economic::CurrentInvoice)
     end
 
     it "should be able to return nothing" do
-      savon.expects('CurrentInvoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:none)
+      mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :none)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 0
     end
@@ -94,13 +94,13 @@ describe Economic::CurrentInvoiceProxy do
   describe ".all" do
 
     it "returns an empty array when there are no current invoices" do
-      savon.expects('CurrentInvoice_GetAll').returns(:none)
+      mock_request('CurrentInvoice_GetAll', nil, :none)
       subject.all.size.should == 0
     end
 
     it "finds and adds a single current invoice" do
-      savon.expects('CurrentInvoice_GetAll').returns(:single)
-      savon.expects('CurrentInvoice_GetData').with('entityHandle' => {'Id' => 1}).returns(:success)
+      mock_request('CurrentInvoice_GetAll', nil, :single)
+      mock_request('CurrentInvoice_GetData', {'entityHandle' => {'Id' => 1}}, :success)
 
       current_invoices = subject.all
       current_invoices.should be_instance_of(Economic::CurrentInvoiceProxy)
@@ -110,8 +110,8 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "adds multiple current invoices" do
-      savon.expects('CurrentInvoice_GetAll').returns(:multiple)
-      savon.expects('CurrentInvoice_GetDataArray').returns(:multiple)
+      mock_request('CurrentInvoice_GetAll', nil, :multiple)
+      mock_request('CurrentInvoice_GetDataArray', nil, :multiple)
 
       current_invoices = subject.all
       current_invoices.size.should == 2

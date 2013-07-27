@@ -23,12 +23,12 @@ describe Economic::Session do
 
   describe "connect" do
     it "connects to e-conomic with authentication details" do
-      savon.expects('Connect').with(has_entries(:agreementNumber => 123456, :userName => 'api', :password => 'passw0rd')).returns(:success)
+      mock_request('Connect', has_entries(:agreementNumber => 123456, :userName => 'api', :password => 'passw0rd'), :success)
       subject.connect
     end
 
     it "stores the cookie for later requests" do
-      savon.expects('Connect').returns({:headers => {'Set-Cookie' => 'cookie'}})
+      mock_request('Connect', nil, {:headers => {'Set-Cookie' => 'cookie'}})
       subject.connect
       client.stubs(:request).returns({})
       subject.request(:foo) { }
@@ -36,10 +36,10 @@ describe Economic::Session do
     end
 
     it "updates the cookie for new sessions" do
-      savon.expects('Connect').returns({:headers => {'Set-Cookie' => 'cookie'}})
+      mock_request('Connect', nil, {:headers => {'Set-Cookie' => 'cookie'}})
       subject.connect
       other_session = Economic::Session.new(123456, 'api', 'passw0rd')
-      savon.expects('Connect').returns({:headers => {'Set-Cookie' => 'other-cookie'}})
+      mock_request('Connect', nil, {:headers => {'Set-Cookie' => 'other-cookie'}})
       other_session.connect
 
       client.stubs(:request).returns({})
@@ -49,7 +49,7 @@ describe Economic::Session do
 
     it "removes existing cookie header before connecting" do
       client.http.headers.expects(:delete).with('Cookie')
-      savon.stubs('Connect').returns({:headers => {'Set-Cookie' => 'cookie'}})
+      stub_request('Connect', nil, {:headers => {'Set-Cookie' => 'cookie'}})
       subject.connect
     end
   end
@@ -107,17 +107,17 @@ describe Economic::Session do
     end
 
     it "sends data if given" do
-      savon.expects('CurrentInvoice_GetAll').with(:bar => :baz).returns(:none)
+      mock_request('CurrentInvoice_GetAll', {:bar => :baz}, :none)
       subject.request(:current_invoice_get_all, {:bar => :baz})
     end
 
     it "returns a hash with data" do
-      savon.stubs('CurrentInvoice_GetAll').returns(:single)
+      stub_request('CurrentInvoice_GetAll', nil, :single)
       subject.request(:current_invoice_get_all).should == {:current_invoice_handle => {:id => "1"}}
     end
 
     it "returns an empty hash if no data returned" do
-      savon.stubs('CurrentInvoice_GetAll').returns(:none)
+      stub_request('CurrentInvoice_GetAll', nil, :none)
       subject.request(:current_invoice_get_all).should be_empty
     end
   end

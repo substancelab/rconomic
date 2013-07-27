@@ -40,11 +40,11 @@ describe Economic::CreditorContactProxy do
 
   describe ".find" do
     before :each do
-      savon.stubs('CreditorContact_GetData').returns(:success)
+      stub_request('CreditorContact_GetData', nil, :success)
     end
 
     it "gets contact data from API" do
-      savon.expects('CreditorContact_GetData').with('entityHandle' => {'Id' => 42}).returns(:success)
+      mock_request('CreditorContact_GetData', {'entityHandle' => {'Id' => 42}}, :success)
       subject.find(42)
     end
 

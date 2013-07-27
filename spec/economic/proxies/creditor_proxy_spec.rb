@@ -12,11 +12,11 @@ describe Economic::CreditorProxy do
 
   describe "find" do
     before :each do
-      savon.stubs('Creditor_GetData').returns(:success)
+      stub_request('Creditor_GetData', nil, :success)
     end
 
     it "gets creditor data from API" do
-      savon.expects('Creditor_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
+      mock_request('Creditor_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 
@@ -27,7 +27,7 @@ describe Economic::CreditorProxy do
 
   describe "find_by_number" do
     it "can find a creditor" do
-      savon.expects('Creditor_FindByNumber').with('number' => '1').returns(:found)
+      mock_request('Creditor_FindByNumber', {'number' => '1'}, :found)
       result = subject.find_by_number('1')
       result.should be_instance_of(Economic::Creditor)
       result.number.should == 1
@@ -37,7 +37,7 @@ describe Economic::CreditorProxy do
     end
 
     it "returns nil when there is no creditor" do
-      savon.expects('Creditor_FindByNumber').with('number' => '1').returns(:not_found)
+      mock_request('Creditor_FindByNumber', {'number' => '1'}, :not_found)
       result = subject.find_by_number('1')
       result.should be_nil
     end
@@ -63,16 +63,16 @@ describe Economic::CreditorProxy do
 
   describe ".all" do
     it "returns a single creditor" do
-      savon.expects('Creditor_GetAll').returns(:single)
-      savon.expects('Creditor_GetData').with('entityHandle' => {'Number' => 1}).returns(:success)
+      mock_request('Creditor_GetAll', nil, :single)
+      mock_request('Creditor_GetData', {'entityHandle' => {'Number' => 1}}, :success)
       all = subject.all
       all.size.should == 1
       all.first.should be_instance_of(Economic::Creditor)
     end
 
     it "returns multiple creditors" do
-      savon.expects('Creditor_GetAll').returns(:multiple)
-      savon.expects('Creditor_GetDataArray').returns(:multiple)
+      mock_request('Creditor_GetAll', nil, :multiple)
+      mock_request('Creditor_GetDataArray', nil, :multiple)
       all = subject.all
       all.size.should == 2
       all.first.should be_instance_of(Economic::Creditor)

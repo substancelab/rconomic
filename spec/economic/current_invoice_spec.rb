@@ -34,7 +34,7 @@ describe Economic::CurrentInvoice do
   describe "save" do
     context "when successful" do
       before :each do
-        savon.stubs('CurrentInvoice_CreateFromData').returns(:success)
+        stub_request('CurrentInvoice_CreateFromData', nil, :success)
       end
 
       it "updates id with the created id" do
@@ -92,31 +92,31 @@ describe Economic::CurrentInvoice do
 
   describe "#book" do
     before :each do
-      savon.stubs('CurrentInvoice_Book').returns(:success)
-      savon.stubs('Invoice_GetData').returns(:success)
+      stub_request('CurrentInvoice_Book', nil, :success)
+      stub_request('Invoice_GetData', nil, :success)
     end
 
     it 'should book the current invoice and return the created invoice object' do
-      savon.expects("Invoice_GetData").with('entityHandle' => { 'Number' => 328 }).returns(:success)
+      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => 328 }}, :success)
       subject.book.should be_instance_of(Economic::Invoice)
     end
 
     it 'should request with the right key for handle' do
-      savon.expects("CurrentInvoice_Book").with('currentInvoiceHandle' => { 'Id' => 512 }).returns(:success)
+      mock_request("CurrentInvoice_Book", {'currentInvoiceHandle' => { 'Id' => 512 }}, :success)
       subject.book
     end
   end
 
   describe "#book_with_number" do
     it 'should book the current invoice with the given number and return the created invoice object' do
-      savon.stubs('CurrentInvoice_BookWithNumber').returns(:success)
-      savon.expects("Invoice_GetData").with('entityHandle' => { 'Number' => 123 }).returns(:success)
+      stub_request('CurrentInvoice_BookWithNumber', nil, :success)
+      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => 123 }}, :success)
       subject.book_with_number(123).should be_instance_of(Economic::Invoice)
     end
 
     it 'should request with the right key for handle' do
-      savon.stubs('Invoice_GetData').returns(:success)
-      savon.expects("CurrentInvoice_BookWithNumber").with('currentInvoiceHandle' => { 'Id' => 512 }, 'number' => 123).returns(:success)
+      stub_request('Invoice_GetData', nil, :success)
+      mock_request("CurrentInvoice_BookWithNumber", {'currentInvoiceHandle' => { 'Id' => 512 }, 'number' => 123}, :success)
       subject.book_with_number(123)
     end
   end

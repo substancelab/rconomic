@@ -10,7 +10,7 @@ describe Economic::Invoice do
 
   describe '#remainder' do
     it 'should get the remainder' do
-      savon.expects('Invoice_GetRemainder').with("invoiceHandle" => { "Number" => 512 }).returns(:success)
+      mock_request('Invoice_GetRemainder', {"invoiceHandle" => { "Number" => 512 }}, :success)
       subject.remainder.should == "512.32"
     end
   end
@@ -33,11 +33,11 @@ describe Economic::Invoice do
 
   describe "#pdf" do
     before :each do
-      savon.stubs('Invoice_GetPdf').returns(:success)
+      stub_request('Invoice_GetPdf', nil, :success)
     end
 
     it "gets PDF data from API" do
-      savon.expects('Invoice_GetPdf').with('invoiceHandle' => {'Number' => 512}).returns(:success)
+      mock_request('Invoice_GetPdf', {'invoiceHandle' => {'Number' => 512}}, :success)
       subject.pdf
     end
 

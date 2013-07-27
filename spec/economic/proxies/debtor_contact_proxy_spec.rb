@@ -40,11 +40,11 @@ describe Economic::DebtorContactProxy do
 
   describe ".find" do
     before :each do
-      savon.stubs('DebtorContact_GetData').returns(:success)
+      stub_request('DebtorContact_GetData', nil, :success)
     end
 
     it "gets contact data from API" do
-      savon.expects('DebtorContact_GetData').with('entityHandle' => {'Id' => 42}).returns(:success)
+      mock_request('DebtorContact_GetData', {'entityHandle' => {'Id' => 42}}, :success)
       subject.find(42)
     end
 

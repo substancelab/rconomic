@@ -27,7 +27,7 @@ describe Economic::CashBook do
 
   describe "#book" do
     it 'should book the cash book and return an invoice number' do
-      savon.expects("CashBook_Book").with('cashBookHandle' => { 'Number' => 32 }).returns(:success)
+      mock_request("CashBook_Book", {'cashBookHandle' => { 'Number' => 32 }}, :success)
       subject.book.should == 832
     end
   end

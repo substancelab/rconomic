@@ -21,12 +21,12 @@ describe Economic::EntryProxy do
     end
 
     it 'should handle a single serial number in the response' do
-      savon.stubs("Entry_FindByDateInterval").returns(:single)
+      stub_request("Entry_FindByDateInterval", nil, :single)
       subject.find_by_date_interval(Date.new, Date.new).should == [1]
     end
 
     it 'should handle an empty response' do
-      savon.stubs("Entry_FindByDateInterval").returns(:none)
+      stub_request("Entry_FindByDateInterval", nil, :none)
       subject.find_by_date_interval(Date.new, Date.new).should == []
     end
   end
@@ -40,26 +40,26 @@ describe Economic::EntryProxy do
     end
 
     it 'should handle a single serial number in the response' do
-      savon.stubs("Entry_FindBySerialNumberInterval").returns(:single)
+      stub_request("Entry_FindBySerialNumberInterval", nil, :single)
       subject.find_by_serial_number_interval(123, 456).should == [1]
     end
 
     it 'should handle an empty response' do
-      savon.stubs("Entry_FindBySerialNumberInterval").returns(:none)
+      stub_request("Entry_FindBySerialNumberInterval", nil, :none)
       subject.find_by_serial_number_interval(123, 456).should == []
     end
   end
 
   describe "#get_last_used_serial_number" do
     it 'returns the number' do
-      savon.expects("Entry_GetLastUsedSerialNumber").returns(:success)
+      mock_request("Entry_GetLastUsedSerialNumber", nil, :success)
       subject.get_last_used_serial_number.should == 123
     end
   end
 
   describe "#find" do
     it 'should get a entry by serial number' do
-      savon.expects("Entry_GetData").with('entityHandle' => { 'SerialNumber' => '123' }).returns(:success)
+      mock_request("Entry_GetData", {'entityHandle' => { 'SerialNumber' => '123' }}, :success)
       subject.find('123').should be_instance_of(Economic::Entry)
     end
   end

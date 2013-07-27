@@ -27,11 +27,11 @@ describe Economic::InvoiceProxy do
 
   describe ".find" do
     before :each do
-      savon.stubs('Invoice_GetData').returns(:success)
+      stub_request('Invoice_GetData', nil, :success)
     end
 
     it "gets invoice data from API" do
-      savon.expects('Invoice_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
+      mock_request('Invoice_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 
@@ -45,23 +45,23 @@ describe Economic::InvoiceProxy do
     let(:unto) { Time.now }
 
     it "should be able to return a single current invoice" do
-      savon.expects('Invoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:single)
-      savon.expects('Invoice_GetDataArray').returns(:single)
+      mock_request('Invoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :single)
+      mock_request('Invoice_GetDataArray', nil, :single)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 1
       results.first.should be_instance_of(Economic::Invoice)
     end
 
     it "should be able to return multiple invoices" do
-      savon.expects('Invoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:many)
-      savon.expects('Invoice_GetDataArray').returns(:multiple)
+      mock_request('Invoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :many)
+      mock_request('Invoice_GetDataArray', nil, :multiple)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 2
       results.first.should be_instance_of(Economic::Invoice)
     end
 
     it "should be able to return nothing" do
-      savon.expects('Invoice_FindByDateInterval').with('first' => from.iso8601, 'last' => unto.iso8601).returns(:none)
+      mock_request('Invoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :none)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 0
     end

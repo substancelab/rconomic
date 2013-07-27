@@ -74,7 +74,7 @@ describe Economic::DebtorContact do
       end
 
       it "should clear cached debtor and fetch the new debtor from API" do
-        savon.stubs('Debtor_GetData').returns(:success)
+        stub_request('Debtor_GetData', nil, :success)
         subject.debtor_handle = Economic::Debtor::Handle.new({:number => 1234})
         subject.debtor.should be_instance_of(Economic::Debtor)
       end

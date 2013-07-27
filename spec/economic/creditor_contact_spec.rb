@@ -74,7 +74,7 @@ describe Economic::CreditorContact do
       end
 
       it "should clear cached creditor and fetch the new creditor from API" do
-        savon.stubs('Creditor_GetData').returns(:success)
+        stub_request('Creditor_GetData', nil, :success)
         subject.creditor_handle = Economic::Creditor::Handle.new({:number => 1234})
         subject.creditor.should be_instance_of(Economic::Creditor)
       end

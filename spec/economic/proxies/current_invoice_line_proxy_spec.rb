@@ -58,11 +58,11 @@ describe Economic::CurrentInvoiceLineProxy do
 
   describe ".find" do
     before :each do
-      savon.stubs('CurrentInvoiceLine_GetData').returns(:success)
+      stub_request('CurrentInvoiceLine_GetData', nil, :success)
     end
 
     it "gets invoice_line data from API" do
-      savon.expects('CurrentInvoiceLine_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
+      mock_request('CurrentInvoiceLine_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 

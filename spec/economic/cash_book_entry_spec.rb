@@ -20,7 +20,7 @@ describe Economic::CashBookEntry do
 
   describe "#save" do
     it 'should save it' do
-      savon.stubs('CashBookEntry_CreateFromData').returns(:success)
+      stub_request('CashBookEntry_CreateFromData', nil, :success)
       subject.save
     end
   end

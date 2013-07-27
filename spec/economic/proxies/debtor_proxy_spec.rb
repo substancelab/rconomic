@@ -12,11 +12,11 @@ describe Economic::DebtorProxy do
 
   describe "find" do
     before :each do
-      savon.stubs('Debtor_GetData').returns(:success)
+      stub_request('Debtor_GetData', nil, :success)
     end
 
     it "gets debtor data from API" do
-      savon.expects('Debtor_GetData').with('entityHandle' => {'Number' => 42}).returns(:success)
+      mock_request('Debtor_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 
@@ -27,13 +27,13 @@ describe Economic::DebtorProxy do
 
   describe "find_by_ci_number" do
     it "uses FindByCINumber on API" do
-      savon.expects('Debtor_FindByCINumber').with('ciNumber' => '12345678').returns(:many)
+      mock_request('Debtor_FindByCINumber', {'ciNumber' => '12345678'}, :many)
       subject.find_by_ci_number('12345678')
     end
 
     context "when many debtors exist" do
       before :each do
-        savon.stubs('Debtor_FindByCINumber').returns(:many)
+        stub_request('Debtor_FindByCINumber', nil, :many)
       end
 
       let(:results) { subject.find_by_ci_number('12345678') }
@@ -55,7 +55,7 @@ describe Economic::DebtorProxy do
 
   describe "find_by_number" do
     it "can find a debtor" do
-      savon.expects('Debtor_FindByNumber').with('number' => '1').returns(:found)
+      mock_request('Debtor_FindByNumber', {'number' => '1'}, :found)
       result = subject.find_by_number('1')
       result.should be_instance_of(Economic::Debtor)
       result.number.should == 1
@@ -65,7 +65,7 @@ describe Economic::DebtorProxy do
     end
 
     it "returns nil when there is no debtor" do
-      savon.expects('Debtor_FindByNumber').with('number' => '1').returns(:not_found)
+      mock_request('Debtor_FindByNumber', {'number' => '1'}, :not_found)
       result = subject.find_by_number('1')
       result.should be_nil
     end
@@ -73,7 +73,7 @@ describe Economic::DebtorProxy do
 
   describe "next_available_number" do
     it "gets the next available debtor number from API" do
-      savon.expects('Debtor_GetNextAvailableNumber').returns(:success)
+      mock_request('Debtor_GetNextAvailableNumber', nil, :success)
       subject.next_available_number.should == '105'
     end
   end
@@ -100,16 +100,16 @@ describe Economic::DebtorProxy do
   # it handles debtors "Number" id.
   describe ".all" do
     it "returns a single debtor" do
-      savon.expects('Debtor_GetAll').returns(:single)
-      savon.expects('Debtor_GetData').with('entityHandle' => {'Number' => 1}).returns(:success)
+      mock_request('Debtor_GetAll', nil, :single)
+      mock_request('Debtor_GetData', {'entityHandle' => {'Number' => 1}}, :success)
       all = subject.all
       all.size.should == 1
       all.first.should be_instance_of(Economic::Debtor)
     end
 
     it "returns multiple debtors" do
-      savon.expects('Debtor_GetAll').returns(:multiple)
-      savon.expects('Debtor_GetDataArray').returns(:multiple)
+      mock_request('Debtor_GetAll', nil, :multiple)
+      mock_request('Debtor_GetDataArray', nil, :multiple)
       all = subject.all
       all.size.should == 2
       all.first.should be_instance_of(Economic::Debtor)

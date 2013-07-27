@@ -42,7 +42,7 @@ class Savon::Spec::Mock
   # Fix issue with savon_specs #with method, so that it allows other values than the expected.
   # Without this, savon_spec 0.1.6 doesn't work with savon 0.9.3.
   #
-  #   savon.expects('Connect').with(has_entries(:agreementNumber => 123456)).returns(:success)
+  #   mock_request('Connect', {has_entries(:agreementNumber => 123456)}, :success)
   #
   # would trigger a irrelevant
   #
@@ -120,4 +120,20 @@ def make_creditor(properties = {})
   creditor.ci_number ||= '12345678'
 
   creditor
+end
+
+# Set up an expectation that a specific operation must be called with specific
+# data in the message body, returning a specific response.
+def mock_request(operation, data, response)
+  mock = savon.expects(operation)
+  mock.with(data) if data
+  mock.returns(response)
+end
+
+# Set up a fake request so that when operation is called with data in the 
+# message body it returns the desired response.
+def stub_request(operation, data, response)
+  stub = savon.stubs(operation)
+  stub.with(data) if data
+  stub.returns(response)
 end

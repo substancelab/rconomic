@@ -10,11 +10,11 @@ describe Economic::Proxies::Actions::FindByName do
 
   describe "#call" do
     before :each do
-      savon.stubs('CreditorContact_FindByName').returns(:multiple)
+      stub_request('CreditorContact_FindByName', nil, :multiple)
     end
 
     it "gets contact data from the API" do
-      savon.expects('CreditorContact_FindByName').with('name' => 'Bob').returns(:multiple)
+      mock_request('CreditorContact_FindByName', {'name' => 'Bob'}, :multiple)
       subject.call
     end
 
@@ -23,7 +23,7 @@ describe Economic::Proxies::Actions::FindByName do
     end
 
     it "returns empty when nothing is found" do
-      savon.stubs('CreditorContact_FindByName').returns(:none)
+      stub_request('CreditorContact_FindByName', nil, :none)
       subject.call.should be_empty
     end
 
@@ -35,8 +35,8 @@ describe Economic::Proxies::Actions::FindByName do
 
     context "when calling proxy is owned by a creditor" do
       it "returns only contacts for creditor" do
-        savon.stubs("CreditorContact_GetData").returns(:success)
-        savon.stubs("Creditor_GetData").returns(:success)
+        stub_request("CreditorContact_GetData", nil, :success)
+        stub_request("Creditor_GetData", nil, :success)
         creditor = session.creditors.build
         proxy = Economic::CreditorContactProxy.new(creditor)
         action = Economic::Proxies::Actions::FindByName.new(proxy, "Bob")
