@@ -14,8 +14,10 @@ describe Economic::Session do
   end
 
   describe "connect" do
+    let(:authentication_details) { {:agreementNumber => 123456, :userName => 'api', :password => 'passw0rd'} }
+
     it "connects to e-conomic with authentication details" do
-      mock_request('Connect', has_entries(:agreementNumber => 123456, :userName => 'api', :password => 'passw0rd'), :success)
+      mock_request(:connect, authentication_details, :success)
       subject.connect
     end
 
@@ -109,17 +111,17 @@ describe Economic::Session do
     end
 
     it "sends data if given" do
-      mock_request('CurrentInvoice_GetAll', {:bar => :baz}, :none)
+      mock_request(:current_invoice_get_all, {:bar => :baz}, :none)
       subject.request(:current_invoice_get_all, {:bar => :baz})
     end
 
     it "returns a hash with data" do
-      stub_request('CurrentInvoice_GetAll', nil, :single)
+      stub_request(:current_invoice_get_all, nil, :single)
       subject.request(:current_invoice_get_all).should == {:current_invoice_handle => {:id => "1"}}
     end
 
     it "returns an empty hash if no data returned" do
-      stub_request('CurrentInvoice_GetAll', nil, :none)
+      stub_request(:current_invoice_get_all, nil, :none)
       subject.request(:current_invoice_get_all).should be_empty
     end
   end

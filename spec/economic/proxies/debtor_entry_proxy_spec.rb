@@ -31,10 +31,12 @@ describe Economic::DebtorEntryProxy do
     it 'should match two debtor entries by serial numbers' do
       stub_request(
         "DebtorEntry_MatchEntries",
-        {:entries => [
-          { :debtor_entry_handle => { :serial_number => 1 } },
-          { :debtor_entry_handle => { :serial_number => 2 } }
-        ]},
+        {:entries => {
+          "DebtorEntryHandle" => [
+            {"SerialNumber" => 1},
+            {"SerialNumber" => 2}
+          ]
+        }},
         :success
       )
       subject.match(1, 2)

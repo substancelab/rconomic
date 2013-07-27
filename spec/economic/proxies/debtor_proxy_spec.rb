@@ -11,16 +11,13 @@ describe Economic::DebtorProxy do
   end
 
   describe "find" do
-    before :each do
-      stub_request('Debtor_GetData', nil, :success)
-    end
-
     it "gets debtor data from API" do
       mock_request('Debtor_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 
     it "returns Debtor object" do
+      stub_request('Debtor_GetData', nil, :success)
       subject.find(42).should be_instance_of(Economic::Debtor)
     end
   end
@@ -109,7 +106,7 @@ describe Economic::DebtorProxy do
 
     it "returns multiple debtors" do
       mock_request('Debtor_GetAll', nil, :multiple)
-      mock_request('Debtor_GetDataArray', nil, :multiple)
+      mock_request('Debtor_GetDataArray', :any, :multiple)
       all = subject.all
       all.size.should == 2
       all.first.should be_instance_of(Economic::Debtor)

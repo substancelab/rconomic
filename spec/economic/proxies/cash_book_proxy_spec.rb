@@ -39,7 +39,9 @@ describe Economic::CashBookProxy do
     it "properly fills out handles of cash books" do
       # Issue #12
       stub_request('CashBook_GetAll', nil, :multiple)
+      stub_request('CashBook_GetDataArray', nil, :multiple)
       stub_request('CashBook_GetData', nil, :success)
+      stub_request('CashBook_GetAll', nil, :multiple)
       stub_request('CashBook_GetDataArray', nil, :multiple)
 
       cash_book = subject.find(subject.all.first.handle)

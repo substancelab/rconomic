@@ -39,16 +39,13 @@ describe Economic::DebtorContactProxy do
   end
 
   describe ".find" do
-    before :each do
-      stub_request('DebtorContact_GetData', nil, :success)
-    end
-
     it "gets contact data from API" do
       mock_request('DebtorContact_GetData', {'entityHandle' => {'Id' => 42}}, :success)
       subject.find(42)
     end
 
     it "returns DebtorContact object" do
+      stub_request('DebtorContact_GetData', nil, :success)
       subject.find(42).should be_instance_of(Economic::DebtorContact)
     end
   end

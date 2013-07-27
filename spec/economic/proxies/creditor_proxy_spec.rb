@@ -11,16 +11,13 @@ describe Economic::CreditorProxy do
   end
 
   describe "find" do
-    before :each do
-      stub_request('Creditor_GetData', nil, :success)
-    end
-
     it "gets creditor data from API" do
       mock_request('Creditor_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 
     it "returns Creditor object" do
+      stub_request('Creditor_GetData', nil, :success)
       subject.find(42).should be_instance_of(Economic::Creditor)
     end
   end
@@ -63,7 +60,7 @@ describe Economic::CreditorProxy do
 
   describe ".all" do
     it "returns a single creditor" do
-      mock_request('Creditor_GetAll', nil, :single)
+      stub_request('Creditor_GetAll', nil, :single)
       mock_request('Creditor_GetData', {'entityHandle' => {'Number' => 1}}, :success)
       all = subject.all
       all.size.should == 1
@@ -72,7 +69,7 @@ describe Economic::CreditorProxy do
 
     it "returns multiple creditors" do
       mock_request('Creditor_GetAll', nil, :multiple)
-      mock_request('Creditor_GetDataArray', nil, :multiple)
+      stub_request('Creditor_GetDataArray', nil, :multiple)
       all = subject.all
       all.size.should == 2
       all.first.should be_instance_of(Economic::Creditor)

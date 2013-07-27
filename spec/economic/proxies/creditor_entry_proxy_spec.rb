@@ -33,10 +33,12 @@ describe Economic::CreditorEntryProxy do
     it 'should match two creditor entries by serial numbers' do
       stub_request(
         "CreditorEntry_MatchEntries",
-        {:entries => [
-          { :creditor_entry_handle => { :serial_number => 1 } },
-          { :credior_entry_handle => { :serial_number => 2 } }
-        ]},
+        {:entries => {
+          "CreditorEntryHandle" => [
+            {"SerialNumber"=>1},
+            {"SerialNumber"=>2}
+          ]
+        }},
         :success
       )
       subject.match(1, 2)

@@ -26,19 +26,16 @@ describe Economic::InvoiceProxy do
   end
 
   describe ".find" do
-    before :each do
-      stub_request('Invoice_GetData', nil, :success)
-    end
-
     it "gets invoice data from API" do
       mock_request('Invoice_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 
     it "returns Invoice object" do
+      stub_request('Invoice_GetData', nil, :success)
       subject.find(42).should be_instance_of(Economic::Invoice)
     end
-  end  
+  end
 
   describe ".find_by_date_interval" do
     let(:from) { Time.now - 60 }
@@ -46,7 +43,7 @@ describe Economic::InvoiceProxy do
 
     it "should be able to return a single current invoice" do
       mock_request('Invoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :single)
-      mock_request('Invoice_GetDataArray', nil, :single)
+      mock_request('Invoice_GetDataArray', :any, :single)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 1
       results.first.should be_instance_of(Economic::Invoice)
@@ -54,7 +51,7 @@ describe Economic::InvoiceProxy do
 
     it "should be able to return multiple invoices" do
       mock_request('Invoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :many)
-      mock_request('Invoice_GetDataArray', nil, :multiple)
+      mock_request('Invoice_GetDataArray', :any, :multiple)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 2
       results.first.should be_instance_of(Economic::Invoice)

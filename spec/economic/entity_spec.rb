@@ -1,21 +1,21 @@
 require './spec/spec_helper'
 
-class SpecEntity < Economic::Entity
+class Account < Economic::Entity
   has_properties :id, :foo, :baz
 
-  def build_soap_data; {}; end
+  def build_soap_data; {:foo => "bar"}; end
   def existing_method; end
 
-  def proxy; Economic::SpecEntityProxy.new(session); end
+  def proxy; Economic::AccountProxy.new(session); end
 end
 
-class Economic::SpecEntityProxy < Economic::EntityProxy; end
+class Economic::AccountProxy < Economic::EntityProxy; end
 
 describe Economic::Entity do
   let(:session) { make_session }
 
   describe "class methods" do
-    subject { SpecEntity }
+    subject { Account }
 
     describe "new" do
       subject { Economic::Entity.new }
@@ -33,7 +33,7 @@ describe Economic::Entity do
       end
 
       it "initializes the entity with values from the given hash" do
-        entity = SpecEntity.new(:foo => 'bar', :baz => 'qux')
+        entity = Account.new(:foo => 'bar', :baz => 'qux')
         entity.foo.should == 'bar'
         entity.baz.should == 'qux'
       end
@@ -47,26 +47,26 @@ describe Economic::Entity do
 
     describe "has_properties" do
       it "creates getter for all properties" do
-        subject.expects(:define_method).with('name')
-        subject.expects(:define_method).with('age')
+        subject.should_receive(:define_method).with('name')
+        subject.should_receive(:define_method).with('age')
         subject.has_properties :name, :age
       end
 
       it "creates setter for all properties" do
-        subject.expects(:attr_writer).with(:name)
-        subject.expects(:attr_writer).with(:age)
+        subject.should_receive(:attr_writer).with(:name)
+        subject.should_receive(:attr_writer).with(:age)
         subject.has_properties :name, :age
       end
 
       it "does not create setter or getter for id'ish properties" do
-        subject.expects(:define_method).with('id').never
-        subject.expects(:define_method).with('number').never
-        subject.expects(:define_method).with('handle').never
+        subject.should_receive(:define_method).with('id').never
+        subject.should_receive(:define_method).with('number').never
+        subject.should_receive(:define_method).with('handle').never
         subject.has_properties :id, :number, :handle
       end
 
       it "does clobber existing methods" do
-        subject.expects(:define_method).with('existing_method')
+        subject.should_receive(:define_method).with('existing_method')
         subject.has_properties :existing_method
       end
 
@@ -76,138 +76,140 @@ describe Economic::Entity do
   end
 
   describe "get_data" do
-    subject { (e = SpecEntity.new).tap { |e| e.session = session } }
+    subject { (e = Account.new).tap { |e| e.session = session } }
 
     before :each do
-      stub_request(:spec_entity_get_data, nil, :success)
     end
 
     it "fetches data from API" do
       subject.instance_variable_set('@number', 42)
-      mock_request(:spec_entity_get_data, {'entityHandle' => {'Number' => 42}}, :success)
+      mock_request(:account_get_data, {'entityHandle' => {'Number' => 42}}, :success)
       subject.get_data
     end
 
     it "updates the entity with the response" do
-      subject.expects(:update_properties).with({:foo => 'bar', :baz => 'qux'})
+      stub_request(:account_get_data, nil, :success)
+      subject.should_receive(:update_properties).with({:foo => 'bar', :baz => 'qux'})
       subject.get_data
     end
 
     it "sets partial to false" do
+      stub_request(:account_get_data, nil, :success)
       subject.get_data
       subject.should_not be_partial
     end
 
     it "sets persisted to true" do
+      stub_request(:account_get_data, nil, :success)
       subject.get_data
       subject.should be_persisted
     end
   end
 
   describe "save" do
-    subject { (e = SpecEntity.new).tap { |e| e.session = session } }
+    subject { (e = Account.new).tap { |e| e.session = session } }
 
     context "entity has not been persisted" do
       before :each do
-        subject.stubs(:persisted?).returns(false)
+        subject.stub(:persisted?).and_return(false)
       end
 
       it "creates the entity" do
-        subject.expects(:create)
+        subject.should_receive(:create)
         subject.save
       end
     end
 
     context "entity has already been persisted" do
       before :each do
-        subject.stubs(:persisted?).returns(true)
+        subject.stub(:persisted?).and_return(true)
       end
 
       it "updates the entity" do
-        subject.expects(:update)
+        subject.should_receive(:update)
         subject.save
       end
     end
   end
 
   describe "create" do
-    subject { (e = SpecEntity.new).tap { |e| e.persisted = false; e.session = session } }
+    subject { (e = Account.new).tap { |e| e.persisted = false; e.session = session } }
 
     it "sends data to the API" do
-      mock_request(:spec_entity_create_from_data, nil, :success)
+      mock_request(:account_create_from_data, {"data" => {:foo => "bar"}}, :success)
       subject.save
     end
 
     it "updates handle with the number returned from API" do
-      mock_request(:spec_entity_create_from_data, nil, :success)
+      stub_request(:account_create_from_data, :any, :success)
       subject.save
       subject.number.should == '42'
     end
   end
 
   describe ".proxy" do
-    subject { (e = SpecEntity.new).tap { |e| e.session = session } }
+    subject { (e = Account.new).tap { |e| e.session = session } }
 
-    it "should return SpecEntityProxy" do
-      subject.proxy.should be_instance_of(Economic::SpecEntityProxy)
+    it "should return AccountProxy" do
+      subject.proxy.should be_instance_of(Economic::AccountProxy)
     end
   end
 
   describe "update" do
-    subject { (e = SpecEntity.new).tap { |e| e.persisted = true; e.session = session } }
+    subject { (e = Account.new).tap { |e| e.persisted = true; e.session = session } }
 
     it "sends data to the API" do
-      mock_request(:spec_entity_update_from_data, nil, :success)
+      mock_request(:account_update_from_data, {"data" => {:foo => "bar"}}, :success)
       subject.save
     end
   end
 
   describe "destroy" do
-    subject { (e = SpecEntity.new).tap { |e| e.id = 42; e.persisted = true; e.partial = false; e.session = session } }
+    subject { (e = Account.new).tap { |e| e.id = 42; e.persisted = true; e.partial = false; e.session = session } }
 
     it "sends data to the API" do
-      mock_request(:spec_entity_delete, nil, :success)
+      mock_request(:account_delete, :any, :success)
       subject.destroy
     end
 
     it "should request with the correct model and id" do
-      mock_request(:spec_entity_delete, {'specEntityHandle' => {'Id' => 42}}, :success)
+      mock_request(:account_delete, {'accountHandle' => {'Id' => 42}}, :success)
       subject.destroy
     end
 
     it "should mark the entity as not persisted and partial" do
-      mock_request(:spec_entity_delete, nil, :success)
+      mock_request(:account_delete, :any, :success)
       subject.destroy
       subject.should_not be_persisted
       subject.should be_partial
     end
 
     it "should return the response" do
-      session.expects(:request).returns({ :response => true })
+      session.should_receive(:request).and_return({ :response => true })
       subject.destroy.should == { :response => true }
     end
   end
 
   describe "update_properties" do
-    subject { SpecEntity.new }
+    subject { Account.new }
 
     it "sets the properties to the given values" do
       subject.class.has_properties :foo, :baz
-      subject.expects(:foo=).with('bar')
-      subject.expects(:baz=).with('qux')
+      subject.should_receive(:foo=).with('bar')
+      subject.should_receive(:baz=).with('qux')
       subject.update_properties(:foo => 'bar', 'baz' => 'qux')
     end
 
     it "only sets known properties" do
       subject.class.has_properties :foo, :bar
-      subject.expects(:foo=).with('bar')
+      subject.should_receive(:foo=).with('bar')
       subject.update_properties(:foo => 'bar', 'baz' => 'qux')
     end
   end
 
   describe "equality" do
-    subject { SpecEntity.new }
-    let(:other) { SpecEntity.new }
+    subject { Account.new }
+    let(:other) { Account.new }
 
     context "when other is nil do" do
       it { should_not == nil }
@@ -257,7 +259,7 @@ describe Economic::Entity do
       context "when other is child class" do
         it "should return true" do
           one = Economic::Entity.new(:handle => handle)
-          other = SpecEntity.new(:handle => handle)
+          other = Account.new(:handle => handle)
           one.should == other
         end
       end

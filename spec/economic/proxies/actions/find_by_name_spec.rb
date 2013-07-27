@@ -9,16 +9,13 @@ describe Economic::Proxies::Actions::FindByName do
   }
 
   describe "#call" do
-    before :each do
-      stub_request('CreditorContact_FindByName', nil, :multiple)
-    end
-
     it "gets contact data from the API" do
       mock_request('CreditorContact_FindByName', {'name' => 'Bob'}, :multiple)
       subject.call
     end
 
     it "returns creditor contacts" do
+      stub_request('CreditorContact_FindByName', nil, :multiple)
       subject.call.first.should be_instance_of(Economic::CreditorContact)
     end
 
@@ -29,12 +26,18 @@ describe Economic::Proxies::Actions::FindByName do
 
     context "when calling proxy is owned by session" do
       it "returns all creditor contacts" do
+        stub_request('CreditorContact_FindByName', nil, :multiple)
         subject.call.size.should == 2
       end
     end
 
     context "when calling proxy is owned by a creditor" do
       it "returns only contacts for creditor" do
+        # Note the order of these stubs actually matters. They need to match
+        # the order they are called in in the implementation
+        stub_request('CreditorContact_FindByName', nil, :multiple)
+        stub_request("CreditorContact_GetData", nil, :success)
+        stub_request("Creditor_GetData", nil, :success)
         stub_request("CreditorContact_GetData", nil, :success)
         stub_request("Creditor_GetData", nil, :success)
         creditor = session.creditors.build

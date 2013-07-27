@@ -32,16 +32,13 @@ describe Economic::Invoice do
   end
 
   describe "#pdf" do
-    before :each do
-      stub_request('Invoice_GetPdf', nil, :success)
-    end
-
     it "gets PDF data from API" do
       mock_request('Invoice_GetPdf', {'invoiceHandle' => {'Number' => 512}}, :success)
       subject.pdf
     end
 
     it "decodes the base64Binary encoded data" do
+      stub_request('Invoice_GetPdf', nil, :success)
       subject.pdf.should == 'This is not really PDF data'
     end
   end

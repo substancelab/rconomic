@@ -49,16 +49,13 @@ describe Economic::CurrentInvoiceProxy do
   end
 
   describe ".find" do
-    before :each do
-      stub_request('CurrentInvoice_GetData', nil, :success)
-    end
-
     it "gets invoice data from API" do
       mock_request('CurrentInvoice_GetData', {'entityHandle' => {'Id' => 42}}, :success)
       subject.find(42)
     end
 
     it "returns CurrentInvoice object" do
+      stub_request('CurrentInvoice_GetData', nil, :success)
       subject.find(42).should be_instance_of(Economic::CurrentInvoice)
     end
   end
@@ -69,7 +66,7 @@ describe Economic::CurrentInvoiceProxy do
 
     it "should be able to return a single current invoice" do
       mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :single)
-      mock_request('CurrentInvoice_GetDataArray', nil, :single)
+      stub_request('CurrentInvoice_GetDataArray', nil, :single)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 1
       results.first.should be_instance_of(Economic::CurrentInvoice)
@@ -77,7 +74,7 @@ describe Economic::CurrentInvoiceProxy do
 
     it "should be able to return multiple invoices" do
       mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :many)
-      mock_request('CurrentInvoice_GetDataArray', nil, :multiple)
+      stub_request('CurrentInvoice_GetDataArray', nil, :multiple)
       results = subject.find_by_date_interval(from, unto)
       results.size.should == 2
       results.first.should be_instance_of(Economic::CurrentInvoice)
@@ -94,12 +91,12 @@ describe Economic::CurrentInvoiceProxy do
   describe ".all" do
 
     it "returns an empty array when there are no current invoices" do
-      mock_request('CurrentInvoice_GetAll', nil, :none)
+      stub_request('CurrentInvoice_GetAll', nil, :none)
       subject.all.size.should == 0
     end
 
     it "finds and adds a single current invoice" do
-      mock_request('CurrentInvoice_GetAll', nil, :single)
+      stub_request('CurrentInvoice_GetAll', nil, :single)
       mock_request('CurrentInvoice_GetData', {'entityHandle' => {'Id' => 1}}, :success)
 
       current_invoices = subject.all
@@ -110,8 +107,8 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "adds multiple current invoices" do
-      mock_request('CurrentInvoice_GetAll', nil, :multiple)
-      mock_request('CurrentInvoice_GetDataArray', nil, :multiple)
+      stub_request('CurrentInvoice_GetAll', nil, :multiple)
+      stub_request('CurrentInvoice_GetDataArray', nil, :multiple)
 
       current_invoices = subject.all
       current_invoices.size.should == 2

@@ -57,16 +57,13 @@ describe Economic::CurrentInvoiceLineProxy do
   end
 
   describe ".find" do
-    before :each do
-      stub_request('CurrentInvoiceLine_GetData', nil, :success)
-    end
-
     it "gets invoice_line data from API" do
       mock_request('CurrentInvoiceLine_GetData', {'entityHandle' => {'Number' => 42}}, :success)
       subject.find(42)
     end
 
     it "returns CurrentInvoiceLine object" do
+      stub_request('CurrentInvoiceLine_GetData', nil, :success)
       subject.find(42).should be_instance_of(Economic::CurrentInvoiceLine)
     end
   end

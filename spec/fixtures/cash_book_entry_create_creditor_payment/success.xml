@@ -3,8 +3,8 @@
   <soap:Body>
     <CashBookEntry_CreateCreditorPaymentResponse xmlns="http://e-conomic.com">
       <CashBookEntry_CreateCreditorPaymentResult>
-        <Id1>int</Id1>
-        <Id2>int</Id2>
+        <Id1>13</Id1>
+        <Id2>14</Id2>
       </CashBookEntry_CreateCreditorPaymentResult>
     </CashBookEntry_CreateCreditorPaymentResponse>
   </soap:Body>

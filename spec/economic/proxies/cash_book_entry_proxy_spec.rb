@@ -29,7 +29,7 @@ describe Economic::CashBookEntryProxy do
   describe "#create_finance_voucher" do
     it 'should create a finance voucher and return the created cash book entry' do
       stub_request('CashBookEntry_CreateFinanceVoucher', nil, :success)
-      stub_request('CashBookEntry_GetData', {:id1 => 15, :id2 => 16}, :success)
+      stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 15, "Id2" => 16}}, :success)
       cash_book_entry = subject.create_finance_voucher(:account_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
       cash_book_entry.should be_instance_of(Economic::CashBookEntry)
     end
@@ -38,7 +38,7 @@ describe Economic::CashBookEntryProxy do
   describe "#create_debtor_payment" do
     it 'should create a debtor payment and then return the created cash book entry' do
       stub_request('CashBookEntry_CreateDebtorPayment', nil, :success)
-      stub_request('CashBookEntry_GetData', {:id1 => 13, :id2 => 14}, :success)
+      stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
       cash_book_entry = subject.create_debtor_payment(:debtor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
       cash_book_entry.should be_instance_of(Economic::CashBookEntry)
     end
@@ -47,15 +47,16 @@ describe Economic::CashBookEntryProxy do
   describe "#create_creditor_invoice" do
     it 'should create a creditor invoice and then return the created cash book entry' do
       stub_request('CashBookEntry_CreateCreditorInvoice', nil, :success)
-      stub_request('CashBookEntry_GetData', {:id1 => 13, :id2 => 14}, :success)
+      stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
       cash_book_entry = subject.create_creditor_invoice(:creditor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
       cash_book_entry.should be_instance_of(Economic::CashBookEntry)
     end
 
     it 'should not send handles that were not given' do
-      stub_request('CashBookEntry_CreateCreditorInvoice', {:cashBookHandle => { 'Number' => 13 }}, :success)
-      stub_request('CashBookEntry_GetData', {:id1 => 13, :id2 => 14}, :success)
-      cash_book_entry = subject.create_creditor_invoice({})
+      stub_request('CashBookEntry_CreateCreditorInvoice', {"cashBookHandle" => { 'Number' => 42 }}, :success)
+      stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
+      cash_book.handle.number = 42
+      cash_book_entry = subject.create_creditor_invoice({:number => 13})
       cash_book_entry.should be_instance_of(Economic::CashBookEntry)
     end
   end
@@ -63,7 +64,7 @@ describe Economic::CashBookEntryProxy do
   describe "#create_creditor_payment" do
     it 'should create a creditor payment and then return the created cash book entry' do
       stub_request('CashBookEntry_CreateCreditorPayment', nil, :success)
-      stub_request('CashBookEntry_GetData', {:id1 => 13, :id2 => 14}, :success)
+      stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
       cash_book_entry = subject.create_creditor_payment(:creditor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
       cash_book_entry.should be_instance_of(Economic::CashBookEntry)
     end

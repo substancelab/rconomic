@@ -91,18 +91,15 @@ describe Economic::CurrentInvoice do
   end
 
   describe "#book" do
-    before :each do
-      stub_request('CurrentInvoice_Book', nil, :success)
-      stub_request('Invoice_GetData', nil, :success)
-    end
-
     it 'should book the current invoice and return the created invoice object' do
+      stub_request('CurrentInvoice_Book', nil, :success)
       mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => 328 }}, :success)
       subject.book.should be_instance_of(Economic::Invoice)
     end
 
     it 'should request with the right key for handle' do
       mock_request("CurrentInvoice_Book", {'currentInvoiceHandle' => { 'Id' => 512 }}, :success)
+      stub_request('Invoice_GetData', nil, :success)
       subject.book
     end
   end
@@ -115,8 +112,8 @@ describe Economic::CurrentInvoice do
     end
 
     it 'should request with the right key for handle' do
-      stub_request('Invoice_GetData', nil, :success)
       mock_request("CurrentInvoice_BookWithNumber", {'currentInvoiceHandle' => { 'Id' => 512 }, 'number' => 123}, :success)
+      stub_request('Invoice_GetData', nil, :success)
       subject.book_with_number(123)
     end
   end
