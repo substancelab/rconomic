@@ -24,11 +24,6 @@ RSpec.configure do |config|
 
 end
 
-# TODO: Logging
-# Savon.configure do |config|
-#   config.logger = Logger.new(File.join('spec', 'debug.log'))
-# end
-
 def fixture(operation, fixture)
   fixture_path = File.join(
     "spec/fixtures",
