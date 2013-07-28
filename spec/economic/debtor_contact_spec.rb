@@ -18,7 +18,7 @@ describe Economic::DebtorContact do
         end
 
         it "should send request and let e-conomic return an error" do
-          session.expects(:request)
+          session.should_receive(:request)
           subject.save
         end
       end
@@ -40,12 +40,12 @@ describe Economic::DebtorContact do
       end
 
       it "returns a Debtor" do
-        session.debtors.expects(:find).with(42).returns(Economic::Debtor.new)
+        session.debtors.should_receive(:find).with(42).and_return(Economic::Debtor.new)
         subject.debtor.should be_instance_of(Economic::Debtor)
       end
 
       it "only looks up the debtor the first time" do
-        session.debtors.expects(:find).with(42).returns(Economic::Debtor.new)
+        session.debtors.should_receive(:find).with(42).and_return(Economic::Debtor.new)
         subject.debtor.should === subject.debtor
       end
     end

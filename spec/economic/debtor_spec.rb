@@ -34,7 +34,7 @@ describe Economic::Debtor do
         end
 
         it "should send request and let e-conomic return an error" do
-          session.expects(:request)
+          session.should_receive(:request)
           subject.save
         end
       end

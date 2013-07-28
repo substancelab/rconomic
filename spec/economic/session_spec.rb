@@ -41,7 +41,7 @@ describe Economic::Session do
     end
 
     it "removes existing cookie header before connecting" do
-      endpoint.expects(:call).with(:connect, instance_of(Hash), {"Cookie" => nil})
+      endpoint.should_receive(:call).with(:connect, an_instance_of(Hash), {"Cookie" => nil})
       subject.connect
     end
   end
@@ -100,8 +100,12 @@ describe Economic::Session do
 
   describe "request" do
     it "sends a request to API" do
-      endpoint.expects(:call).with(:foo, {}, has_key("Cookie")).returns({})
-      subject.request(:foo, {})
+      endpoint.should_receive(:call).with(
+        :invoice_get_all,
+        {},
+        "Cookie" => nil
+      ).and_return({})
+      subject.request(:invoice_get_all, {})
     end
 
     it "sends data if given" do

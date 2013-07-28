@@ -58,14 +58,14 @@ describe Economic::CurrentInvoice do
         before :each do
           2.times do
             line = Economic::CurrentInvoiceLine.new
-            line.stubs(:save)
+            line.stub(:save)
             subject.lines << line
           end
         end
 
         it "adds the lines to the invoice" do
           subject.lines.each do |line|
-            line.expects(:invoice=).with(subject)
+            line.should_receive(:invoice=).with(subject)
           end
 
           subject.save
@@ -73,7 +73,7 @@ describe Economic::CurrentInvoice do
 
         it "assigns the invoice session to each line" do
           subject.lines.each do |line|
-            line.expects(:session=).with(subject.session)
+            line.should_receive(:session=).with(subject.session)
           end
 
           subject.save
@@ -81,7 +81,7 @@ describe Economic::CurrentInvoice do
 
         it "saves each line" do
           subject.lines.each do |line|
-            line.expects(:save)
+            line.should_receive(:save)
           end
 
           subject.save

@@ -18,7 +18,7 @@ describe Economic::CreditorContact do
         end
 
         it "should send request and let e-conomic return an error" do
-          session.expects(:request)
+          session.should_receive(:request)
           subject.save
         end
       end
@@ -40,12 +40,12 @@ describe Economic::CreditorContact do
       end
 
       it "returns a Creditor" do
-        session.creditors.expects(:find).with(42).returns(Economic::Creditor.new)
+        session.creditors.should_receive(:find).with(42).and_return(Economic::Creditor.new)
         subject.creditor.should be_instance_of(Economic::Creditor)
       end
 
       it "only looks up the creditor the first time" do
-        session.creditors.expects(:find).with(42).returns(Economic::Creditor.new)
+        session.creditors.should_receive(:find).with(42).and_return(Economic::Creditor.new)
         subject.creditor.should === subject.creditor
       end
     end
