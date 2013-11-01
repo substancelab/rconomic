@@ -1,3 +1,4 @@
+require 'economic/endpoint'
 require 'economic/entity/handle'
 
 module Economic
@@ -53,9 +54,7 @@ module Economic
 
       # Returns the E-conomic API action name to call
       def soap_action_name(action)
-        class_name = self.name
-        class_name_without_modules = class_name.split('::').last
-        "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
+        Endpoint.new.soap_action_name(self, action)
       end
 
       # Returns a symbol based on the name of the entity. Used to request and read data responses.
@@ -211,7 +210,7 @@ module Economic
     end
 
     def soap_action_name(action)
-      self.class.soap_action_name(action)
+      Endpoint.new.soap_action_name(self.class, action)
     end
 
     def class_name

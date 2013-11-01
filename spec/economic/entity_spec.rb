@@ -74,7 +74,7 @@ describe Economic::Entity do
       end
     end
 
-    describe "soap_action" do
+    describe "soap_action_name" do
       it "returns the name for the given soap action on this class" do
         subject.soap_action_name(:get_data).should == :spec_entity_get_data
 
