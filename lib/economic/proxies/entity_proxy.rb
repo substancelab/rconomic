@@ -100,7 +100,10 @@ module Economic
 
     # Requests an action from the API endpoint
     def request(action, data = nil)
-      session.request(entity_class.soap_action_name(action), data)
+      session.request(
+        Endpoint.new.soap_action_name(entity_class, action),
+        data
+      )
     end
 
   protected

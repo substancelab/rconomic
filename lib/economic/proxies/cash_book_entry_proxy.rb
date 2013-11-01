@@ -4,7 +4,7 @@ module Economic
   class CashBookEntryProxy < EntityProxy
     def all
       entity_hash = session.request(
-        CashBookProxy.entity_class.soap_action_name(:get_entries),
+        Endpoint.new.soap_action_name(CashBook, :get_entries),
         {"cashBookHandle" => owner.handle.to_hash}
       )
 

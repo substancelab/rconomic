@@ -52,11 +52,6 @@ module Economic
         Economic.const_get(proxy_class_name)
       end
 
-      # Returns the E-conomic API action name to call
-      def soap_action_name(action)
-        Endpoint.new.soap_action_name(self, action)
-      end
-
       # Returns a symbol based on the name of the entity. Used to request and read data responses.
       #
       #   Entity.key #=> :entity
@@ -206,7 +201,10 @@ module Economic
 
     # Requests an action from the API endpoint
     def request(action, data = nil)
-      session.request(soap_action_name(action), data)
+      session.request(
+        Endpoint.new.soap_action_name(self.class, action),
+        data
+      )
     end
 
     def soap_action_name(action)

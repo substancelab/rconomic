@@ -73,16 +73,6 @@ describe Economic::Entity do
       describe "properties created with has_properties" do
       end
     end
-
-    describe "soap_action_name" do
-      it "returns the name for the given soap action on this class" do
-        subject.soap_action_name(:get_data).should == :spec_entity_get_data
-
-        class Car < Economic::Entity; end
-        Car.soap_action_name(:start_engine).should == :car_start_engine
-        Car.soap_action_name('StartEngine').should == :car_start_engine
-      end
-    end
   end
 
   describe "get_data" do
