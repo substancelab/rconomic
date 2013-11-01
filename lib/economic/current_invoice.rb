@@ -109,7 +109,7 @@ module Economic
     end
 
     def handle
-      @handle ||= Handle.new(:id => @id)
+      @handle || Handle.new(:id => @id)
     end
 
     def lines

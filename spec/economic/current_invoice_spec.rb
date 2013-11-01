@@ -135,7 +135,12 @@ describe Economic::CurrentInvoice do
   end
 
   describe "#debtor" do
-    let(:debtor) { (c = Economic::Debtor.new).tap { c.session = session }}
+    let(:debtor) {
+      Economic::Debtor.new.tap do |c|
+        c.session = session
+        c.number = 5
+      end
+    }
 
     it "should be set- and gettable" do
       subject.debtor = debtor

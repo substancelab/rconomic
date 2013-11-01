@@ -44,7 +44,12 @@ describe Economic::Invoice do
   end
 
   describe "#attention" do
-    let(:contact) { (c = Economic::DebtorContact.new).tap { c.session = session }}
+    let(:contact) {
+      Economic::DebtorContact.new.tap do |c|
+        c.session = session
+        c.id = 5
+      end
+    }
 
     it "should be set- and gettable" do
       subject.attention = contact
@@ -54,7 +59,12 @@ describe Economic::Invoice do
   end
 
   describe "#debtor" do
-    let(:debtor) { (c = Economic::Debtor.new).tap { c.session = session }}
+    let(:debtor) {
+      Economic::Debtor.new.tap do |c|
+        c.session = session
+        c.number = 5
+      end
+    }
 
     it "should be set- and gettable" do
       subject.debtor = debtor

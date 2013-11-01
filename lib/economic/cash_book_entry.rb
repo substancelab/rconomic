@@ -68,7 +68,7 @@ module Economic
     )
 
     def handle
-      @handle ||= Handle.new(:id1 => @id1, :id2 => @id2)
+      @handle || Handle.new(:id1 => @id1, :id2 => @id2)
     end
 
     protected
