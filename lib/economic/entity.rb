@@ -207,10 +207,6 @@ module Economic
       )
     end
 
-    def soap_action_name(action)
-      Endpoint.new.soap_action_name(self.class, action)
-    end
-
     def class_name
       self.class.to_s.split("::").last
     end
