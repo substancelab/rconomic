@@ -7,6 +7,7 @@ module Economic
         def initialize(caller, name)
           @caller = caller
           @name = name
+          @session = caller.session
         end
 
         def call
@@ -45,7 +46,10 @@ module Economic
         end
 
         def request(action, data)
-          @caller.request(action, data)
+          @session.request(
+            Endpoint.new.soap_action_name(@caller.entity_class, action),
+            data
+          )
         end
 
         def response

@@ -1,4 +1,6 @@
 module Economic
+  # The Economic::Session contains details and behaviors for a current
+  # connection to the API endpoint.
   class Session
     attr_accessor :agreement_number, :user_name, :password
 
@@ -11,13 +13,15 @@ module Economic
     # Authenticates with e-conomic
     def connect
       client.http.headers.delete("Cookie")
-      response = client.request :economic, :connect do
-        soap.body = {
+      response = endpoint.call(
+        client,
+        :connect,
+        {
           :agreementNumber => self.agreement_number,
           :userName => self.user_name,
           :password => self.password
         }
-      end
+      )
 
       @cookie = response.http.headers["Set-Cookie"]
     end
@@ -72,16 +76,14 @@ module Economic
     end
 
     # Requests an action from the API endpoint
-    def request(action, data = nil)
+    def request(soap_action, data = nil)
       client.http.headers["Cookie"]  = @cookie
 
-      response = client.request(:economic, action) do
-        soap.body = data if data
-      end
+      response = endpoint.call(client, soap_action, data)
       response_hash = response.to_hash
 
-      response_key = "#{action}_response".intern
-      result_key = "#{action}_result".intern
+      response_key = "#{soap_action}_response".intern
+      result_key = "#{soap_action}_result".intern
       if response_hash[response_key] && response_hash[response_key][result_key]
         response_hash[response_key][result_key]
       else
@@ -102,6 +104,11 @@ module Economic
       @@client ||= Savon::Client.new do
         wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
       end
+    end
+
+    # Returns the SOAP endpoint to connect to
+    def endpoint
+      @endpoint ||= Economic::Endpoint.new
     end
   end
 end

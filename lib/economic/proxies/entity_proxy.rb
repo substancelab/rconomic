@@ -100,14 +100,6 @@ module Economic
     end
     alias :<< :append
 
-    # Requests an action from the API endpoint
-    def request(action, data = nil)
-      session.request(
-        Endpoint.new.soap_action_name(entity_class, action),
-        data
-      )
-    end
-
   protected
 
     def items
@@ -126,6 +118,14 @@ module Economic
     # Initialize properties of entity with values from owner. Returns entity
     def initialize_properties_with_values_from_owner(entity)
       entity
+    end
+
+    # Requests an action from the API endpoint
+    def request(action, data = nil)
+      session.request(
+        Endpoint.new.soap_action_name(entity_class, action),
+        data
+      )
     end
   end
 end
