@@ -121,7 +121,6 @@ module Economic
 
       result = super
       self.id = result[:id].to_i
-      @handle = nil # Reset a memoized handle, leaving it up to #handle to recreate it with correct id
 
       lines.each do |invoice_line|
         invoice_line.session = session
