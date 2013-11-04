@@ -9,13 +9,23 @@ class Economic::Endpoint
   #
   # If you need access to more details from the unparsed SOAP response, supply
   # a block to `call`. A Savon::SOAP::Response will be yielded to the block.
-  def call(client, soap_action, data = {})
-    response = request(client, soap_action, data)
+  def call(soap_action, data = {})
+    response = request(soap_action, data)
 
     if block_given?
       yield response
     else
       extract_result_from_response(response, soap_action)
+    end
+  end
+
+  # Returns a Savon::Client to connect to the e-conomic endpoint
+  #
+  # Cached on class-level to avoid loading the big WSDL file more than once (can
+  # take several hundred megabytes of RAM after a while...)
+  def client
+    @@client ||= Savon::Client.new do
+      wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
     end
   end
 
@@ -41,7 +51,7 @@ class Economic::Endpoint
     end
   end
 
-  def request(client, soap_action, data)
+  def request(soap_action, data)
     client.request(:economic, soap_action) do
       soap.body = data
     end

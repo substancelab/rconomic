@@ -14,7 +14,6 @@ module Economic
     def connect
       client.http.headers.delete("Cookie")
       endpoint.call(
-        client,
         :connect,
         {
           :agreementNumber => self.agreement_number,
@@ -78,7 +77,7 @@ module Economic
     # Requests an action from the API endpoint
     def request(soap_action, data = nil)
       client.http.headers["Cookie"]  = @cookie
-      endpoint.call(client, soap_action, data)
+      endpoint.call(soap_action, data)
     end
 
     # Returns self - used by proxies to access the session of their owner
@@ -89,11 +88,8 @@ module Economic
     private
 
     # Returns the Savon::Client used to connect to e-conomic
-    # Cached on class-level to avoid loading the big wsdl file more than once (can take several hunder megabytes of ram after a while...)
     def client
-      @@client ||= Savon::Client.new do
-        wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
-      end
+      endpoint.client
     end
 
     # Returns the SOAP endpoint to connect to

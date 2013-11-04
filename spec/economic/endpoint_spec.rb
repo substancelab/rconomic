@@ -5,35 +5,33 @@ describe Economic::Endpoint do
 
   describe "call" do
     let(:client) {
-      Savon::Client.new do
-        wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
-      end
+      subject.client
     }
 
     it "uses the SOAP client to invoke a SOAP action on the API" do
       client.expects(:request).with(:economic, :foo_bar).returns({})
-      subject.call(client, :foo_bar, {:baz => 'qux'})
+      subject.call(:foo_bar, {:baz => 'qux'})
     end
 
     it "sends an actual request" do
       mock_request('Connect', nil, :success)
-      subject.call(client, :connect)
+      subject.call(:connect)
     end
 
     it "returns a hash with data" do
       stub_request('CurrentInvoice_GetAll', nil, :single)
-      subject.call(client, :current_invoice_get_all).should == {:current_invoice_handle => {:id => "1"}}
+      subject.call(:current_invoice_get_all).should == {:current_invoice_handle => {:id => "1"}}
     end
 
     it "returns an empty hash if no data returned" do
       stub_request('CurrentInvoice_GetAll', nil, :none)
-      subject.call(client, :current_invoice_get_all).should be_empty
+      subject.call(:current_invoice_get_all).should be_empty
     end
 
     it "yields a Savon response" do
       stub_request('CurrentInvoice_GetAll', nil, :single)
       @yielded_value = nil
-      subject.call(client, :current_invoice_get_all) do |response|
+      subject.call(:current_invoice_get_all) do |response|
         @yielded_value = response
       end
       @yielded_value.should be_instance_of(Savon::SOAP::Response)
