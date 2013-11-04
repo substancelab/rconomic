@@ -22,10 +22,12 @@ describe Economic::Session do
     end
 
     it "stores the authentication token for later requests" do
-      stub_request('Connect', nil, {
+      response = {
         :headers => {'Set-Cookie' => 'cookie value from e-conomic'},
-        :body => Savon::Spec::Fixture["connect/success"]}
-      )
+        :body => fixture(:connect, :success),
+        :code => 200
+      }
+      stub_request('Connect', authentication_details, response)
       subject.connect
       subject.authentication_token.should == "cookie value from e-conomic"
     end

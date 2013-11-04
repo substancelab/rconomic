@@ -27,7 +27,7 @@ end
 def fixture(operation, fixture)
   fixture_path = File.join(
     "spec/fixtures",
-    operation,
+    operation.to_s,
     "#{fixture}.xml"
   )
   File.read(fixture_path)
