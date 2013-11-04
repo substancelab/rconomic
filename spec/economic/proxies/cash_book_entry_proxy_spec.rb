@@ -8,21 +8,21 @@ describe Economic::CashBookEntryProxy do
 
   describe ".new" do
     it "stores owner" do
-      subject.owner.should == cash_book
+      expect(subject.owner).to eq(cash_book)
     end
 
     it "stores session" do
-      subject.session.should === session
+      expect(subject.session).to equal(session)
     end
   end
 
   describe ".build" do
     it "instantiates a new CashBookEntry" do
-      subject.build.should be_instance_of(Economic::CashBookEntry)
+      expect(subject.build).to be_instance_of(Economic::CashBookEntry)
     end
 
     it "assigns the session to the CashBookEntry" do
-      subject.build.session.should === session
+      expect(subject.build.session).to equal(session)
     end
   end
 
@@ -31,7 +31,7 @@ describe Economic::CashBookEntryProxy do
       stub_request('CashBookEntry_CreateFinanceVoucher', nil, :success)
       stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 15, "Id2" => 16}}, :success)
       cash_book_entry = subject.create_finance_voucher(:account_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
-      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+      expect(cash_book_entry).to be_instance_of(Economic::CashBookEntry)
     end
   end
 
@@ -40,7 +40,7 @@ describe Economic::CashBookEntryProxy do
       stub_request('CashBookEntry_CreateDebtorPayment', nil, :success)
       stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
       cash_book_entry = subject.create_debtor_payment(:debtor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
-      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+      expect(cash_book_entry).to be_instance_of(Economic::CashBookEntry)
     end
   end
 
@@ -49,7 +49,7 @@ describe Economic::CashBookEntryProxy do
       stub_request('CashBookEntry_CreateCreditorInvoice', nil, :success)
       stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
       cash_book_entry = subject.create_creditor_invoice(:creditor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
-      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+      expect(cash_book_entry).to be_instance_of(Economic::CashBookEntry)
     end
 
     it 'should not send handles that were not given' do
@@ -57,7 +57,7 @@ describe Economic::CashBookEntryProxy do
       stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
       cash_book.handle.number = 42
       cash_book_entry = subject.create_creditor_invoice({:number => 13})
-      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+      expect(cash_book_entry).to be_instance_of(Economic::CashBookEntry)
     end
   end
 
@@ -66,7 +66,7 @@ describe Economic::CashBookEntryProxy do
       stub_request('CashBookEntry_CreateCreditorPayment', nil, :success)
       stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
       cash_book_entry = subject.create_creditor_payment(:creditor_handle => { :number => 2 }, :contra_account_handle => { :number => 3 })
-      cash_book_entry.should be_instance_of(Economic::CashBookEntry)
+      expect(cash_book_entry).to be_instance_of(Economic::CashBookEntry)
     end
   end
 
@@ -80,8 +80,8 @@ describe Economic::CashBookEntryProxy do
   describe "#all" do
     it 'should get the cash book entries' do
       stub_request('CashBook_GetEntries', nil, :success)
-      subject.should_receive(:find).with({:id1 => '1', :id2 => '2'})
-      subject.should_receive(:find).with({:id1 => '11', :id2 => '12'})
+      expect(subject).to receive(:find).with({:id1 => '1', :id2 => '2'})
+      expect(subject).to receive(:find).with({:id1 => '11', :id2 => '12'})
       subject.all
     end
   end

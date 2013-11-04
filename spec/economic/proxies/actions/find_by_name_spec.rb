@@ -16,18 +16,18 @@ describe Economic::Proxies::Actions::FindByName do
 
     it "returns creditor contacts" do
       stub_request('CreditorContact_FindByName', nil, :multiple)
-      subject.call.first.should be_instance_of(Economic::CreditorContact)
+      expect(subject.call.first).to be_instance_of(Economic::CreditorContact)
     end
 
     it "returns empty when nothing is found" do
       stub_request('CreditorContact_FindByName', nil, :none)
-      subject.call.should be_empty
+      expect(subject.call).to be_empty
     end
 
     context "when calling proxy is owned by session" do
       it "returns all creditor contacts" do
         stub_request('CreditorContact_FindByName', nil, :multiple)
-        subject.call.size.should == 2
+        expect(subject.call.size).to eq(2)
       end
     end
 
@@ -43,7 +43,7 @@ describe Economic::Proxies::Actions::FindByName do
         creditor = session.creditors.build
         proxy = Economic::CreditorContactProxy.new(creditor)
         action = Economic::Proxies::Actions::FindByName.new(proxy, "Bob")
-        action.call.each { |contact| contact.creditor.should == creditor }
+        action.call.each { |contact| expect(contact.creditor).to eq(creditor) }
       end
     end
   end

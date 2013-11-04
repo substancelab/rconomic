@@ -9,7 +9,7 @@ describe Economic::Endpoint do
     }
 
     it "uses the SOAP client to invoke a SOAP action on the API" do
-      client.should_receive(:call).with(
+      expect(client).to receive(:call).with(
         :foo_bar,
         :message => {:baz => 'qux'}
       ).and_return({})
@@ -23,12 +23,12 @@ describe Economic::Endpoint do
 
     it "returns a hash with data" do
       stub_request('CurrentInvoice_GetAll', nil, :single)
-      subject.call(:current_invoice_get_all).should == {:current_invoice_handle => {:id => "1"}}
+      expect(subject.call(:current_invoice_get_all)).to eq({:current_invoice_handle => {:id => "1"}})
     end
 
     it "returns an empty hash if no data returned" do
       stub_request('CurrentInvoice_GetAll', nil, :none)
-      subject.call(:current_invoice_get_all).should be_empty
+      expect(subject.call(:current_invoice_get_all)).to be_empty
     end
 
     it "yields a Savon response" do
@@ -37,11 +37,11 @@ describe Economic::Endpoint do
       subject.call(:current_invoice_get_all) do |response|
         @yielded_value = response
       end
-      @yielded_value.should be_instance_of(Savon::Response)
+      expect(@yielded_value).to be_instance_of(Savon::Response)
     end
 
     it "adds a cookie header" do
-      client.should_receive(:call).with(
+      expect(client).to receive(:call).with(
         :current_invoice_get_all,
         :cookies => "omnomnom"
       ).and_return({})
@@ -51,21 +51,21 @@ describe Economic::Endpoint do
 
   describe "#client" do
     it "returns a Savon::Client" do
-      subject.client.should be_instance_of(::Savon::Client)
+      expect(subject.client).to be_instance_of(::Savon::Client)
     end
 
     it "returns the same Savon::Client" do
-      subject.client.should === subject.client
+      expect(subject.client).to equal(subject.client)
     end
   end
 
   describe "soap_action_name" do
     it "returns full action name for the given class and soap action" do
-      subject.soap_action_name(Economic::Debtor, :get_data).should == :debtor_get_data
+      expect(subject.soap_action_name(Economic::Debtor, :get_data)).to eq(:debtor_get_data)
     end
 
     it "returns full action name for a class given as strings" do
-      subject.soap_action_name("FooBar", "Stuff").should == :foo_bar_stuff
+      expect(subject.soap_action_name("FooBar", "Stuff")).to eq(:foo_bar_stuff)
     end
   end
 end

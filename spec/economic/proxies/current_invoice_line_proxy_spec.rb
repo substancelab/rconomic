@@ -7,11 +7,11 @@ describe Economic::CurrentInvoiceLineProxy do
 
   describe "new" do
     it "stores owner" do
-      subject.owner.should == invoice
+      expect(subject.owner).to eq(invoice)
     end
 
     it "stores session" do
-      subject.session.should == invoice.session
+      expect(subject.session).to eq(invoice.session)
     end
   end
 
@@ -20,38 +20,38 @@ describe Economic::CurrentInvoiceLineProxy do
       line = Economic::CurrentInvoiceLine.new
       subject.append(line)
       subject.append(line)
-      subject.size.should == 1
+      expect(subject.size).to eq(1)
     end
   end
 
   describe ".build" do
     it "instantiates a new CurrentInvoiceLine" do
-      subject.build.should be_instance_of(Economic::CurrentInvoiceLine)
+      expect(subject.build).to be_instance_of(Economic::CurrentInvoiceLine)
     end
 
     it "assigns the session to the CurrentInvoiceLine" do
-      subject.build.session.should == session
+      expect(subject.build.session).to eq(session)
     end
 
     it "should not build a partial CurrentInvoiceLine" do
-      subject.build.should_not be_partial
+      expect(subject.build).to_not be_partial
     end
 
     it "adds the built line to proxy items" do
       line = subject.build
-      subject.first.should == line
+      expect(subject.first).to eq(line)
     end
 
     context "when owner is a CurrentInvoice" do
       subject { invoice.lines }
 
       it "should use the Debtors session" do
-        subject.build.session.should == invoice.session
+        expect(subject.build.session).to eq(invoice.session)
       end
 
       it "should initialize with values from CurrentInvoice" do
         invoice_line = subject.build
-        invoice_line.invoice_handle.should == invoice.handle
+        expect(invoice_line.invoice_handle).to eq(invoice.handle)
       end
     end
   end
@@ -64,25 +64,25 @@ describe Economic::CurrentInvoiceLineProxy do
 
     it "returns CurrentInvoiceLine object" do
       stub_request('CurrentInvoiceLine_GetData', nil, :success)
-      subject.find(42).should be_instance_of(Economic::CurrentInvoiceLine)
+      expect(subject.find(42)).to be_instance_of(Economic::CurrentInvoiceLine)
     end
   end
 
   describe "enumerable" do
     it "can be empty" do
-      subject.should be_empty
+      expect(subject).to be_empty
     end
 
     it "can be appended to" do
       line = Economic::CurrentInvoiceLine.new
       subject << line
-      subject.last.should == line
+      expect(subject.last).to eq(line)
     end
 
     it "can be iterated over" do
       line = Economic::CurrentInvoiceLine.new
       subject << line
-      subject.all? { |l| l.is_a?(Economic::CurrentInvoiceLine) }.should be_true
+      expect(subject.all? { |l| l.is_a?(Economic::CurrentInvoiceLine) }).to be_true
     end
   end
 end

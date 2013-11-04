@@ -7,9 +7,9 @@ describe Economic::Session do
 
   describe "new" do
     it "should store authentication details" do
-      subject.agreement_number.should == 123456
-      subject.user_name.should == 'api'
-      subject.password.should == 'passw0rd'
+      expect(subject.agreement_number).to eq(123456)
+      expect(subject.user_name).to eq('api')
+      expect(subject.password).to eq('passw0rd')
     end
   end
 
@@ -27,10 +27,12 @@ describe Economic::Session do
         :body => fixture(:connect, :success)
       }
       stub_request('Connect', authentication_details, response)
+
       subject.connect
-      subject.authentication_token.collect { |cookie|
+
+      expect(subject.authentication_token.collect { |cookie|
         cookie.name_and_value.split("=").last
-      }.should == ["cookie value from e-conomic"]
+      }).to eq(["cookie value from e-conomic"])
     end
 
     it "updates the authentication token for new sessions" do
@@ -41,75 +43,75 @@ describe Economic::Session do
       other_session = Economic::Session.new(123456, 'api', 'passw0rd')
       other_session.connect
 
-      subject.authentication_token.collect { |cookie|
+      expect(subject.authentication_token.collect { |cookie|
         cookie.name_and_value.split("=").last
-      }.should == ["authentication token"]
-      other_session.authentication_token.collect { |cookie|
+      }).to eq(["authentication token"])
+      expect(other_session.authentication_token.collect { |cookie|
         cookie.name_and_value.split("=").last
-      }.should == ["another token"]
+      }).to eq(["another token"])
     end
 
     it "doesn't use existing authentication details when connecting" do
-      endpoint.should_receive(:call).with(:connect, instance_of(Hash))
+      expect(endpoint).to receive(:call).with(:connect, instance_of(Hash))
       subject.connect
     end
   end
 
   describe ".endpoint" do
     it "returns Economic::Endpoint" do
-      subject.endpoint.should be_instance_of(Economic::Endpoint)
+      expect(subject.endpoint).to be_instance_of(Economic::Endpoint)
     end
   end
 
   describe ".session" do
     it "returns self" do
-      subject.session.should === subject
+      expect(subject.session).to equal(subject)
     end
   end
 
   describe "contacts" do
     it "returns a DebtorContactProxy" do
-      subject.contacts.should be_instance_of(Economic::DebtorContactProxy)
+      expect(subject.contacts).to be_instance_of(Economic::DebtorContactProxy)
     end
 
     it "memoizes the proxy" do
-      subject.contacts.should === subject.contacts
+      expect(subject.contacts).to equal(subject.contacts)
     end
   end
 
   describe "current_invoices" do
     it "returns an CurrentInvoiceProxy" do
-      subject.current_invoices.should be_instance_of(Economic::CurrentInvoiceProxy)
+      expect(subject.current_invoices).to be_instance_of(Economic::CurrentInvoiceProxy)
     end
 
     it "memoizes the proxy" do
-      subject.current_invoices.should === subject.current_invoices
+      expect(subject.current_invoices).to equal(subject.current_invoices)
     end
   end
 
   describe "invoices" do
     it "returns an InvoiceProxy" do
-      subject.invoices.should be_instance_of(Economic::InvoiceProxy)
+      expect(subject.invoices).to be_instance_of(Economic::InvoiceProxy)
     end
 
     it "memoizes the proxy" do
-      subject.invoices.should === subject.invoices
+      expect(subject.invoices).to equal(subject.invoices)
     end
   end
 
   describe "debtors" do
     it "returns a DebtorProxy" do
-      subject.debtors.should be_instance_of(Economic::DebtorProxy)
+      expect(subject.debtors).to be_instance_of(Economic::DebtorProxy)
     end
 
     it "memoizes the proxy" do
-      subject.debtors.should === subject.debtors
+      expect(subject.debtors).to equal(subject.debtors)
     end
   end
 
   describe "request" do
     it "sends a request to API" do
-      endpoint.should_receive(:call).with(
+      expect(endpoint).to receive(:call).with(
         :invoice_get_all,
         {},
         nil
@@ -124,12 +126,12 @@ describe Economic::Session do
 
     it "returns a hash with data" do
       stub_request(:current_invoice_get_all, nil, :single)
-      subject.request(:current_invoice_get_all).should == {:current_invoice_handle => {:id => "1"}}
+      expect(subject.request(:current_invoice_get_all)).to eq({:current_invoice_handle => {:id => "1"}})
     end
 
     it "returns an empty hash if no data returned" do
       stub_request(:current_invoice_get_all, nil, :none)
-      subject.request(:current_invoice_get_all).should be_empty
+      expect(subject.request(:current_invoice_get_all)).to be_empty
     end
   end
 

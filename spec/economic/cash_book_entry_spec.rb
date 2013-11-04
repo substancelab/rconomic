@@ -5,16 +5,16 @@ describe Economic::CashBookEntry do
   subject { Economic::CashBookEntry.new(:session => session) }
 
   it "inherits from Economic::Entity" do
-    Economic::CashBookEntry.ancestors.should include(Economic::Entity)
+    expect(Economic::CashBookEntry.ancestors).to include(Economic::Entity)
   end
 
   describe ".proxy" do
     it "should return a CashBookEntryProxy" do
-      subject.proxy.should be_instance_of(Economic::CashBookEntryProxy)
+      expect(subject.proxy).to be_instance_of(Economic::CashBookEntryProxy)
     end
 
     it "should return a proxy owned by session" do
-      subject.proxy.session.should == session
+      expect(subject.proxy.session).to eq(session)
     end
   end
 

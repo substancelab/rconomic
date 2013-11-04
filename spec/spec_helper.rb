@@ -13,8 +13,8 @@ RSpec.configure do |config|
 
   config.before :each do
     # Ensure we don't actually send requests over the network
-    HTTPI.should_receive(:get).never
-    HTTPI.should_receive(:post).never
+    expect(HTTPI).to receive(:get).never
+    expect(HTTPI).to receive(:post).never
     savon.mock!
   end
 

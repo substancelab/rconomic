@@ -6,21 +6,21 @@ describe Economic::DebtorContactProxy do
 
   describe ".new" do
     it "stores session" do
-      subject.session.should === session
+      expect(subject.session).to equal(session)
     end
   end
 
   describe ".build" do
     it "instantiates a new DebtorContact" do
-      subject.build.should be_instance_of(Economic::DebtorContact)
+      expect(subject.build).to be_instance_of(Economic::DebtorContact)
     end
 
     it "assigns the session to the DebtorContact" do
-      subject.build.session.should === session
+      expect(subject.build.session).to equal(session)
     end
 
     it "should not build a partial DebtorContact" do
-      subject.build.should_not be_partial
+      expect(subject.build).to_not be_partial
     end
 
     context "when owner is a Debtor" do
@@ -28,12 +28,12 @@ describe Economic::DebtorContactProxy do
       subject { debtor.contacts }
 
       it "should use the Debtors session" do
-        subject.build.session.should == debtor.session
+        expect(subject.build.session).to eq(debtor.session)
       end
 
       it "should initialize with values from Debtor" do
         contact = subject.build
-        contact.debtor_handle.should == debtor.handle
+        expect(contact.debtor_handle).to eq(debtor.handle)
       end
     end
   end
@@ -46,16 +46,16 @@ describe Economic::DebtorContactProxy do
 
     it "returns DebtorContact object" do
       stub_request('DebtorContact_GetData', nil, :success)
-      subject.find(42).should be_instance_of(Economic::DebtorContact)
+      expect(subject.find(42)).to be_instance_of(Economic::DebtorContact)
     end
   end
 
   describe "#find_by_name" do
     it "uses the FindByName command" do
-      Economic::Proxies::Actions::FindByName.should_receive(:new).
+      expect(Economic::Proxies::Actions::FindByName).to receive(:new).
         with(subject, "Bob").
         and_return(lambda { "Result" })
-      subject.find_by_name("Bob").should == "Result"
+      expect(subject.find_by_name("Bob")).to eq("Result")
     end
   end
 end

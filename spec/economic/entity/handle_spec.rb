@@ -8,24 +8,24 @@ describe Economic::Entity::Handle do
     let(:handle_d) { Economic::Entity::Handle.new(:id => 1, :number => 3) }
 
     it "should be equal when both id and number are equal" do
-      handle_a.should == handle_b
+      expect(handle_a).to eq(handle_b)
     end
 
     it "should not be equal when id or number is missing" do
-      handle_a.should_not == handle_c
+      expect(handle_a).not_to eq(handle_c)
     end
 
     it "should not be equal when id or number is equal and the other isn't" do
-      handle_a.should_not == handle_d
+      expect(handle_a).not_to eq(handle_d)
     end
 
     it "should not equal if both are empty" do
-      Economic::Entity::Handle.new({}).should_not == Economic::Entity::Handle.new({})
+      expect(Economic::Entity::Handle.new({})).not_to eq(Economic::Entity::Handle.new({}))
     end
 
     it "should be equal if both are the same object" do
       handle = Economic::Entity::Handle.new({})
-      handle.should == handle
+      expect(handle).to eq(handle)
     end
 
     describe "CashBookEntry handles" do
@@ -35,7 +35,7 @@ describe Economic::Entity::Handle do
         let(:handle_b) { Economic::Entity::Handle.new(:id1 => 1, :id2 => 2) }
 
         it "should be equal" do
-          handle_a.should == handle_b
+          expect(handle_a).to eq(handle_b)
         end
       end
 
@@ -43,7 +43,7 @@ describe Economic::Entity::Handle do
         let(:handle_b) { Economic::Entity::Handle.new(:id1 => 11, :id2 => 12) }
 
         it "should_not be equal" do
-          handle_a.should_not == handle_b
+          expect(handle_a).not_to eq(handle_b)
         end
       end
     end
@@ -51,119 +51,119 @@ describe Economic::Entity::Handle do
 
   describe ".new" do
     it "should raise error if argument isn't supported" do
-      lambda do
+      expect(lambda do
         Economic::Entity::Handle.new(true)
-      end.should raise_error(ArgumentError)
+      end).to raise_error(ArgumentError)
     end
 
     it "should assume :id if argument is numeric" do
       handle = Economic::Entity::Handle.new(12)
-      handle.id.should == 12
-      handle.number.should be_nil
+      expect(handle.id).to eq(12)
+      expect(handle.number).to be_nil
     end
 
     it "should use to_i on numeric argument" do
       handle = Economic::Entity::Handle.new("42")
-      handle.id.should == 42
+      expect(handle.id).to eq(42)
     end
 
     it "should raise error if argument is nil" do
-      lambda do
+      expect(lambda do
         Economic::Entity::Handle.new(nil)
-      end.should raise_error(ArgumentError)
+      end).to raise_error(ArgumentError)
     end
 
     it "should raise error if argument contains invalid key" do
-      lambda do
+      expect(lambda do
         Economic::Entity::Handle.new(:Numeric => 12)
-      end.should raise_error(ArgumentError)
+      end).to raise_error(ArgumentError)
     end
 
     it "should raise error if argument contains invalid values" do
-      lambda do
+      expect(lambda do
         Economic::Entity::Handle.new(:number => {:number => 12})
-      end.should raise_error(ArgumentError)
+      end).to raise_error(ArgumentError)
     end
 
     it "should set id" do
       handle = Economic::Entity::Handle.new(:id => 12)
-      handle.id.should == 12
+      expect(handle.id).to eq(12)
     end
 
     it "should set number" do
       handle = Economic::Entity::Handle.new(:number => 12)
-      handle.number.should == 12
+      expect(handle.number).to eq(12)
     end
 
     it "should set both id and number" do
       handle = Economic::Entity::Handle.new(:id => 37, :number => 42)
-      handle.id.should == 37
-      handle.number.should == 42
+      expect(handle.id).to eq(37)
+      expect(handle.number).to eq(42)
     end
 
     it 'should set id1 and id2' do
       handle = Economic::Entity::Handle.new(:id1 => 37, :id2 => 42)
-      handle.id1.should == 37
-      handle.id2.should == 42
+      expect(handle.id1).to eq(37)
+      expect(handle.id2).to eq(42)
     end
 
     it "should to_i values" do
       handle = Economic::Entity::Handle.new(:id => "37", :number => "42")
-      handle.id.should == 37
-      handle.number.should == 42
+      expect(handle.id).to eq(37)
+      expect(handle.number).to eq(42)
     end
 
     it "should not to_i nil values" do
       handle = Economic::Entity::Handle.new(:id => "37")
-      handle.id.should == 37
-      handle.number.should be_nil
+      expect(handle.id).to eq(37)
+      expect(handle.number).to be_nil
     end
 
     it "should accept a Hash with capitalized keys" do
       handle = Economic::Entity::Handle.new({"Id" => 37, "Number" => 42})
-      handle.id.should == 37
-      handle.number.should == 42
+      expect(handle.id).to eq(37)
+      expect(handle.number).to eq(42)
     end
 
     it "should accept another Handle" do
       original_handle = Economic::Entity::Handle.new(:id => 37)
       handle = Economic::Entity::Handle.new(original_handle)
-      handle.id.should == 37
-      handle.number.should be_nil
-      handle.should == original_handle
+      expect(handle.id).to eq(37)
+      expect(handle.number).to be_nil
+      expect(handle).to eq(original_handle)
     end
   end
 
   describe ".build" do
     it "returns nil when given nil" do
-      Economic::Entity::Handle.build(nil).should be_nil
+      expect(Economic::Entity::Handle.build(nil)).to be_nil
     end
 
     it "returns empty handle when hash is empty" do
-      Economic::Entity::Handle.build({}).should be_empty
+      expect(Economic::Entity::Handle.build({})).to be_empty
     end
 
     it "returns nil when hash has no values" do
-      Economic::Entity::Handle.build({:id => nil, :number => nil}).should be_empty
+      expect(Economic::Entity::Handle.build({:id => nil, :number => nil})).to be_empty
     end
 
     it "returns handle when hash has values" do
-      Economic::Entity::Handle.build({:id2 => 42}).should == Economic::Entity::Handle.new({:id2 => 42})
+      expect(Economic::Entity::Handle.build({:id2 => 42})).to eq(Economic::Entity::Handle.new({:id2 => 42}))
     end
 
     it "returns a given handle" do
       handle = Economic::Entity::Handle.new({})
-      Economic::Entity::Handle.build(handle).should === handle
+      expect(Economic::Entity::Handle.build(handle)).to equal(handle)
     end
   end
 
   describe "#empty?" do
     it "returns true when handle has no values" do
-      Economic::Entity::Handle.new({}).should be_empty
+      expect(Economic::Entity::Handle.new({})).to be_empty
     end
 
     it "returns false when handle has a value" do
-      Economic::Entity::Handle.new({:serial_number => 12}).should_not be_empty
+      expect(Economic::Entity::Handle.new({:serial_number => 12})).to_not be_empty
     end
   end
 
@@ -171,15 +171,15 @@ describe Economic::Entity::Handle do
     subject { Economic::Entity::Handle.new({:id => 42, :number => 37, :serial_number => 7}) }
 
     it "should return a handle for putting into the body of a SOAP request" do
-      subject.to_hash.should == {'Id' => 42, 'Number' => 37, 'SerialNumber' => 7}
+      expect(subject.to_hash).to eq({'Id' => 42, 'Number' => 37, 'SerialNumber' => 7})
     end
 
     it "includes only the named value in the hash" do
-      subject.to_hash(:id).should == {'Id' => 42}
+      expect(subject.to_hash(:id)).to eq({'Id' => 42})
     end
 
     it "includes only the named values in the hash" do
-      subject.to_hash([:id, :serial_number]).should == {'Id' => 42, 'SerialNumber' => 7}
+      expect(subject.to_hash([:id, :serial_number])).to eq({'Id' => 42, 'SerialNumber' => 7})
     end
   end
 

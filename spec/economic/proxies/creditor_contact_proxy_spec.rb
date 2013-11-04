@@ -6,21 +6,21 @@ describe Economic::CreditorContactProxy do
 
   describe ".new" do
     it "stores session" do
-      subject.session.should === session
+      expect(subject.session).to equal(session)
     end
   end
 
   describe ".build" do
     it "instantiates a new CreditorContact" do
-      subject.build.should be_instance_of(Economic::CreditorContact)
+      expect(subject.build).to be_instance_of(Economic::CreditorContact)
     end
 
     it "assigns the session to the CreditorContact" do
-      subject.build.session.should === session
+      expect(subject.build.session).to equal(session)
     end
 
     it "should not build a partial CreditorContact" do
-      subject.build.should_not be_partial
+      expect(subject.build).to_not be_partial
     end
 
     context "when owner is a Creditor" do
@@ -28,12 +28,12 @@ describe Economic::CreditorContactProxy do
       subject { creditor.contacts }
 
       it "should use the Creditors session" do
-        subject.build.session.should == creditor.session
+        expect(subject.build.session).to eq(creditor.session)
       end
 
       it "should initialize with values from Creditor" do
         contact = subject.build
-        contact.creditor_handle.should == creditor.handle
+        expect(contact.creditor_handle).to eq(creditor.handle)
       end
     end
   end
@@ -46,16 +46,16 @@ describe Economic::CreditorContactProxy do
 
     it "returns CreditorContact object" do
       stub_request('CreditorContact_GetData', nil, :success)
-      subject.find(42).should be_instance_of(Economic::CreditorContact)
+      expect(subject.find(42)).to be_instance_of(Economic::CreditorContact)
     end
   end
 
   describe "#find_by_name" do
     it "uses the FindByName command" do
-      Economic::Proxies::Actions::FindByName.should_receive(:new).
+      expect(Economic::Proxies::Actions::FindByName).to receive(:new).
         with(subject, "Bob").
         and_return(lambda { "Result" })
-      subject.find_by_name("Bob").should == "Result"
+      expect(subject.find_by_name("Bob")).to eq("Result")
     end
   end
 end

@@ -5,7 +5,7 @@ describe Economic::Debtor do
   subject { Economic::Debtor.new(:session => session) }
 
   it "inherits from Economic::Entity" do
-    Economic::Debtor.ancestors.should include(Economic::Entity)
+    expect(Economic::Debtor.ancestors).to include(Economic::Entity)
   end
 
   describe "class methods" do
@@ -13,13 +13,13 @@ describe Economic::Debtor do
 
     describe ".proxy" do
       it "should return DebtorProxy" do
-        subject.proxy.should == Economic::DebtorProxy
+        expect(subject.proxy).to eq(Economic::DebtorProxy)
       end
     end
 
     describe ".key" do
       it "should == :debtor" do
-        Economic::Debtor.key.should == :debtor
+        expect(Economic::Debtor.key).to eq(:debtor)
       end
     end
   end
@@ -34,7 +34,7 @@ describe Economic::Debtor do
         end
 
         it "should send request and let e-conomic return an error" do
-          session.should_receive(:request)
+          expect(session).to receive(:request)
           subject.save
         end
       end
@@ -43,41 +43,41 @@ describe Economic::Debtor do
 
   describe ".current_invoices" do
     it "returns an CurrentInvoiceProxy" do
-      subject.current_invoices.should be_instance_of(Economic::CurrentInvoiceProxy)
+      expect(subject.current_invoices).to be_instance_of(Economic::CurrentInvoiceProxy)
     end
 
     it "memoizes the proxy" do
-      subject.current_invoices.should === subject.current_invoices
+      expect(subject.current_invoices).to equal(subject.current_invoices)
     end
 
     it "should store the session" do
-      subject.session.should_not be_nil
-      subject.current_invoices.session.should == subject.session
+      expect(subject.session).to_not be_nil
+      expect(subject.current_invoices.session).to eq(subject.session)
     end
   end
 
   describe ".contacts" do
     it "returns a DebtorContactProxy" do
-      subject.contacts.should be_instance_of(Economic::DebtorContactProxy)
+      expect(subject.contacts).to be_instance_of(Economic::DebtorContactProxy)
     end
 
     it "memoizes the proxy" do
-      subject.contacts.should === subject.contacts
+      expect(subject.contacts).to equal(subject.contacts)
     end
 
     it "should store the session" do
-      subject.session.should_not be_nil
-      subject.contacts.session.should == subject.session
+      expect(subject.session).to_not be_nil
+      expect(subject.contacts.session).to eq(subject.session)
     end
   end
 
   describe ".proxy" do
     it "should return a DebtorProxy" do
-      subject.proxy.should be_instance_of(Economic::DebtorProxy)
+      expect(subject.proxy).to be_instance_of(Economic::DebtorProxy)
     end
 
     it "should return a proxy owned by session" do
-      subject.proxy.session.should == session
+      expect(subject.proxy.session).to eq(session)
     end
   end
 
@@ -87,7 +87,7 @@ describe Economic::Debtor do
         let(:other) { Economic::Invoice.new(:session => session, :handle => subject.handle) }
 
         it "should return false" do
-          subject.should_not == other
+          expect(subject).not_to eq(other)
         end
       end
     end

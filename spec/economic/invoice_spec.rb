@@ -5,29 +5,29 @@ describe Economic::Invoice do
   subject { Economic::Invoice.new(:session => session, :number => 512) }
 
   it "inherits from Economic::Entity" do
-    Economic::Invoice.ancestors.should include(Economic::Entity)
+    expect(Economic::Invoice.ancestors).to include(Economic::Entity)
   end
 
   describe '#remainder' do
     it 'should get the remainder' do
       mock_request('Invoice_GetRemainder', {"invoiceHandle" => { "Number" => 512 }}, :success)
-      subject.remainder.should == "512.32"
+      expect(subject.remainder).to eq("512.32")
     end
   end
 
   describe ".proxy" do
     it "should return a InvoiceProxy" do
-      subject.proxy.should be_instance_of(Economic::InvoiceProxy)
+      expect(subject.proxy).to be_instance_of(Economic::InvoiceProxy)
     end
 
     it "should return a proxy owned by session" do
-      subject.proxy.session.should == session
+      expect(subject.proxy.session).to eq(session)
     end
   end
 
   describe ".key" do
     it "should == :invoice" do
-      Economic::Invoice.key.should == :invoice
+      expect(Economic::Invoice.key).to eq(:invoice)
     end
   end
 
@@ -39,7 +39,7 @@ describe Economic::Invoice do
 
     it "decodes the base64Binary encoded data" do
       stub_request('Invoice_GetPdf', nil, :success)
-      subject.pdf.should == 'This is not really PDF data'
+      expect(subject.pdf).to eq('This is not really PDF data')
     end
   end
 
@@ -48,8 +48,8 @@ describe Economic::Invoice do
 
     it "should be set- and gettable" do
       subject.attention = contact
-      subject.attention_handle.should == contact.handle
-      subject.attention.should == contact
+      expect(subject.attention_handle).to eq(contact.handle)
+      expect(subject.attention).to eq(contact)
     end
   end
 
@@ -58,8 +58,8 @@ describe Economic::Invoice do
 
     it "should be set- and gettable" do
       subject.debtor = debtor
-      subject.debtor_handle.should == debtor.handle
-      subject.debtor.should == debtor
+      expect(subject.debtor_handle).to eq(debtor.handle)
+      expect(subject.debtor).to eq(debtor)
     end
   end
 end

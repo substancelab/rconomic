@@ -6,7 +6,7 @@ describe Economic::DebtorProxy do
 
   describe "new" do
     it "stores session" do
-      subject.session.should === session
+      expect(subject.session).to equal(session)
     end
   end
 
@@ -18,7 +18,7 @@ describe Economic::DebtorProxy do
 
     it "returns Debtor object" do
       stub_request('Debtor_GetData', nil, :success)
-      subject.find(42).should be_instance_of(Economic::Debtor)
+      expect(subject.find(42)).to be_instance_of(Economic::Debtor)
     end
   end
 
@@ -36,16 +36,16 @@ describe Economic::DebtorProxy do
       let(:results) { subject.find_by_ci_number('12345678') }
 
       it "returns a Debtor object for each result" do
-        results.size.should == 2
-        results.all? { |result| result.should be_instance_of(Economic::Debtor) }
+        expect(results.size).to eq(2)
+        results.all? { |result| expect(result).to be_instance_of(Economic::Debtor) }
       end
 
       it "returns partial Debtor objects" do
-        results.all? { |result| result.should be_partial }
+        results.all? { |result| expect(result).to be_partial }
       end
 
       it "returns persisted Debtor objects" do
-        results.all? { |result| result.should be_persisted }
+        results.all? { |result| expect(result).to be_persisted }
       end
     end
   end
@@ -54,24 +54,24 @@ describe Economic::DebtorProxy do
     it "can find a debtor" do
       mock_request('Debtor_FindByNumber', {'number' => '1'}, :found)
       result = subject.find_by_number('1')
-      result.should be_instance_of(Economic::Debtor)
-      result.number.should == 1
-      result.partial.should be_true
-      result.persisted.should be_true
-      result.handle.should == Economic::Entity::Handle.new({:number => 1})
+      expect(result).to be_instance_of(Economic::Debtor)
+      expect(result.number).to eq(1)
+      expect(result.partial).to be_true
+      expect(result.persisted).to be_true
+      expect(result.handle).to eq(Economic::Entity::Handle.new({:number => 1}))
     end
 
     it "returns nil when there is no debtor" do
       mock_request('Debtor_FindByNumber', {'number' => '1'}, :not_found)
       result = subject.find_by_number('1')
-      result.should be_nil
+      expect(result).to be_nil
     end
   end
 
   describe "next_available_number" do
     it "gets the next available debtor number from API" do
       mock_request('Debtor_GetNextAvailableNumber', nil, :success)
-      subject.next_available_number.should == '105'
+      expect(subject.next_available_number).to eq('105')
     end
   end
 
@@ -79,17 +79,17 @@ describe Economic::DebtorProxy do
     subject { session.debtors.build }
 
     it "instantiates a new Debtor" do
-      subject.should be_instance_of(Economic::Debtor)
+      expect(subject).to be_instance_of(Economic::Debtor)
     end
 
     it "assigns the session to the Debtor" do
-      subject.session.should === session
+      expect(subject.session).to equal(session)
     end
   end
 
   describe "#entity_class" do
     it "should return Economic::Debtor" do
-      Economic::DebtorProxy.entity_class.should == Economic::Debtor
+      expect(Economic::DebtorProxy.entity_class).to eq(Economic::Debtor)
     end
   end
 
@@ -100,16 +100,16 @@ describe Economic::DebtorProxy do
       mock_request('Debtor_GetAll', nil, :single)
       mock_request('Debtor_GetData', {'entityHandle' => {'Number' => 1}}, :success)
       all = subject.all
-      all.size.should == 1
-      all.first.should be_instance_of(Economic::Debtor)
+      expect(all.size).to eq(1)
+      expect(all.first).to be_instance_of(Economic::Debtor)
     end
 
     it "returns multiple debtors" do
       mock_request('Debtor_GetAll', nil, :multiple)
       mock_request('Debtor_GetDataArray', :any, :multiple)
       all = subject.all
-      all.size.should == 2
-      all.first.should be_instance_of(Economic::Debtor)
+      expect(all.size).to eq(2)
+      expect(all.first).to be_instance_of(Economic::Debtor)
     end
   end
 end

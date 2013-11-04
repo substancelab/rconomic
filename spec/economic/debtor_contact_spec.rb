@@ -5,7 +5,7 @@ describe Economic::DebtorContact do
   subject { Economic::DebtorContact.new(:session => session) }
 
   it "inherits from Economic::Entity" do
-    Economic::DebtorContact.ancestors.should include(Economic::Entity)
+    expect(Economic::DebtorContact.ancestors).to include(Economic::Entity)
   end
 
   context "when saving" do
@@ -18,7 +18,7 @@ describe Economic::DebtorContact do
         end
 
         it "should send request and let e-conomic return an error" do
-          session.should_receive(:request)
+          expect(session).to receive(:request)
           subject.save
         end
       end
@@ -28,7 +28,7 @@ describe Economic::DebtorContact do
   describe ".debtor" do
     context "when debtor_handle is not set" do
       it "returns nil" do
-        subject.debtor.should be_nil
+        expect(subject.debtor).to be_nil
       end
     end
 
@@ -40,13 +40,13 @@ describe Economic::DebtorContact do
       end
 
       it "returns a Debtor" do
-        session.debtors.should_receive(:find).with(42).and_return(Economic::Debtor.new)
-        subject.debtor.should be_instance_of(Economic::Debtor)
+        expect(session.debtors).to receive(:find).with(42).and_return(Economic::Debtor.new)
+        expect(subject.debtor).to be_instance_of(Economic::Debtor)
       end
 
       it "only looks up the debtor the first time" do
-        session.debtors.should_receive(:find).with(42).and_return(Economic::Debtor.new)
-        subject.debtor.should === subject.debtor
+        expect(session.debtors).to receive(:find).with(42).and_return(Economic::Debtor.new)
+        expect(subject.debtor).to equal(subject.debtor)
       end
     end
   end
@@ -55,7 +55,7 @@ describe Economic::DebtorContact do
     let(:debtor) { make_debtor }
     it "should set debtor_handle" do
       subject.debtor = debtor
-      subject.debtor_handle.should == debtor.handle
+      expect(subject.debtor_handle).to eq(debtor.handle)
     end
   end
 
@@ -65,7 +65,7 @@ describe Economic::DebtorContact do
 
     it "should set debtor_handle" do
       subject.debtor_handle = handle
-      subject.debtor_handle.should == handle
+      expect(subject.debtor_handle).to eq(handle)
     end
 
     context "when debtor handle is for a different Debtor" do
@@ -76,7 +76,7 @@ describe Economic::DebtorContact do
       it "should clear cached debtor and fetch the new debtor from API" do
         stub_request('Debtor_GetData', nil, :success)
         subject.debtor_handle = Economic::Debtor::Handle.new({:number => 1234})
-        subject.debtor.should be_instance_of(Economic::Debtor)
+        expect(subject.debtor).to be_instance_of(Economic::Debtor)
       end
     end
 
@@ -86,20 +86,20 @@ describe Economic::DebtorContact do
       end
 
       it "should not clear cached debtor nor fetch the debtor from API" do
-        session.should_receive(:request).never
+        expect(session).to receive(:request).never
         subject.debtor_handle = handle
-        subject.debtor.should be_instance_of(Economic::Debtor)
+        expect(subject.debtor).to be_instance_of(Economic::Debtor)
       end
     end
   end
 
   describe ".proxy" do
     it "should return a DebtorContactProxy" do
-      subject.proxy.should be_instance_of(Economic::DebtorContactProxy)
+      expect(subject.proxy).to be_instance_of(Economic::DebtorContactProxy)
     end
 
     it "should return a proxy owned by session" do
-      subject.proxy.session.should == session
+      expect(subject.proxy.session).to eq(session)
     end
   end
 

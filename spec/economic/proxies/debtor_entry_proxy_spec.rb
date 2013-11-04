@@ -6,24 +6,24 @@ describe Economic::DebtorEntryProxy do
 
   describe "new" do
     it "stores session" do
-      subject.session.should === session
+      expect(subject.session).to equal(session)
     end
   end
 
   describe "#find_by_invoice_number" do
     it 'should be able to find multiple debtor entries' do
       mock_request("DebtorEntry_FindByInvoiceNumber", {'from' => '123', 'to' => '456'}, :many)
-      subject.find_by_invoice_number('123', '456').should == [1, 2]
+      expect(subject.find_by_invoice_number('123', '456')).to eq([1, 2])
     end
 
     it 'should be able to find debtor entries with one invoice id' do
       mock_request("DebtorEntry_FindByInvoiceNumber", {'from' => '123', 'to' => '123'}, :many)
-      subject.find_by_invoice_number('123').should == [1, 2]
+      expect(subject.find_by_invoice_number('123')).to eq([1, 2])
     end
 
     it 'should handle a single serial number in the response' do
       stub_request("DebtorEntry_FindByInvoiceNumber", nil, :single)
-      subject.find_by_invoice_number('123').should == [1]
+      expect(subject.find_by_invoice_number('123')).to eq([1])
     end
   end
 
@@ -45,7 +45,7 @@ describe Economic::DebtorEntryProxy do
 
   describe "#entity_class" do
     it "should return Economic::DebtorEntry" do
-      Economic::DebtorEntryProxy.entity_class.should == Economic::DebtorEntry
+      expect(Economic::DebtorEntryProxy.entity_class).to eq(Economic::DebtorEntry)
     end
   end
 end

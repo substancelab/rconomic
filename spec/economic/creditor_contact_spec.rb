@@ -5,7 +5,7 @@ describe Economic::CreditorContact do
   subject { Economic::CreditorContact.new(:session => session) }
 
   it "inherits from Economic::Entity" do
-    Economic::CreditorContact.ancestors.should include(Economic::Entity)
+    expect(Economic::CreditorContact.ancestors).to include(Economic::Entity)
   end
 
   context "when saving" do
@@ -18,7 +18,7 @@ describe Economic::CreditorContact do
         end
 
         it "should send request and let e-conomic return an error" do
-          session.should_receive(:request)
+          expect(session).to receive(:request)
           subject.save
         end
       end
@@ -28,7 +28,7 @@ describe Economic::CreditorContact do
   describe ".creditor" do
     context "when creditor_handle is not set" do
       it "returns nil" do
-        subject.creditor.should be_nil
+        expect(subject.creditor).to be_nil
       end
     end
 
@@ -40,13 +40,13 @@ describe Economic::CreditorContact do
       end
 
       it "returns a Creditor" do
-        session.creditors.should_receive(:find).with(42).and_return(Economic::Creditor.new)
-        subject.creditor.should be_instance_of(Economic::Creditor)
+        expect(session.creditors).to receive(:find).with(42).and_return(Economic::Creditor.new)
+        expect(subject.creditor).to be_instance_of(Economic::Creditor)
       end
 
       it "only looks up the creditor the first time" do
-        session.creditors.should_receive(:find).with(42).and_return(Economic::Creditor.new)
-        subject.creditor.should === subject.creditor
+        expect(session.creditors).to receive(:find).with(42).and_return(Economic::Creditor.new)
+        expect(subject.creditor).to equal(subject.creditor)
       end
     end
   end
@@ -55,7 +55,7 @@ describe Economic::CreditorContact do
     let(:creditor) { make_creditor }
     it "should set creditor_handle" do
       subject.creditor = creditor
-      subject.creditor_handle.should == creditor.handle
+      expect(subject.creditor_handle).to eq(creditor.handle)
     end
   end
 
@@ -65,7 +65,7 @@ describe Economic::CreditorContact do
 
     it "should set creditor_handle" do
       subject.creditor_handle = handle
-      subject.creditor_handle.should == handle
+      expect(subject.creditor_handle).to eq(handle)
     end
 
     context "when creditor handle is for a different Creditor" do
@@ -76,7 +76,7 @@ describe Economic::CreditorContact do
       it "should clear cached creditor and fetch the new creditor from API" do
         stub_request('Creditor_GetData', nil, :success)
         subject.creditor_handle = Economic::Creditor::Handle.new({:number => 1234})
-        subject.creditor.should be_instance_of(Economic::Creditor)
+        expect(subject.creditor).to be_instance_of(Economic::Creditor)
       end
     end
 
@@ -86,20 +86,20 @@ describe Economic::CreditorContact do
       end
 
       it "should not clear cached creditor nor fetch the creditor from API" do
-        session.should_receive(:request).never
+        expect(session).to receive(:request).never
         subject.creditor_handle = handle
-        subject.creditor.should be_instance_of(Economic::Creditor)
+        expect(subject.creditor).to be_instance_of(Economic::Creditor)
       end
     end
   end
 
   describe ".proxy" do
     it "should return a CreditorContactProxy" do
-      subject.proxy.should be_instance_of(Economic::CreditorContactProxy)
+      expect(subject.proxy).to be_instance_of(Economic::CreditorContactProxy)
     end
 
     it "should return a proxy owned by session" do
-      subject.proxy.session.should == session
+      expect(subject.proxy.session).to eq(session)
     end
   end
 

@@ -21,52 +21,52 @@ describe Economic::Entity do
       subject { Economic::Entity.new }
 
       it "creates a new instance" do
-        subject.should be_instance_of(Economic::Entity)
+        expect(subject).to be_instance_of(Economic::Entity)
       end
 
       it "sets persisted to false" do
-        subject.should_not be_persisted
+        expect(subject).to_not be_persisted
       end
 
       it "sets partial to true" do
-        subject.should be_partial
+        expect(subject).to be_partial
       end
 
       it "initializes the entity with values from the given hash" do
         entity = Account.new(:foo => 'bar', :baz => 'qux')
-        entity.foo.should == 'bar'
-        entity.baz.should == 'qux'
+        expect(entity.foo).to eq('bar')
+        expect(entity.baz).to eq('qux')
       end
     end
 
     describe "properties_not_triggering_full_load" do
       it "returns names of special id'ish properties" do
-        subject.properties_not_triggering_full_load.should == [:id, :number, :handle]
+        expect(subject.properties_not_triggering_full_load).to eq([:id, :number, :handle])
       end
     end
 
     describe "has_properties" do
       it "creates getter for all properties" do
-        subject.should_receive(:define_method).with('name')
-        subject.should_receive(:define_method).with('age')
+        expect(subject).to receive(:define_method).with('name')
+        expect(subject).to receive(:define_method).with('age')
         subject.has_properties :name, :age
       end
 
       it "creates setter for all properties" do
-        subject.should_receive(:attr_writer).with(:name)
-        subject.should_receive(:attr_writer).with(:age)
+        expect(subject).to receive(:attr_writer).with(:name)
+        expect(subject).to receive(:attr_writer).with(:age)
         subject.has_properties :name, :age
       end
 
       it "does not create setter or getter for id'ish properties" do
-        subject.should_receive(:define_method).with('id').never
-        subject.should_receive(:define_method).with('number').never
-        subject.should_receive(:define_method).with('handle').never
+        expect(subject).to receive(:define_method).with('id').never
+        expect(subject).to receive(:define_method).with('number').never
+        expect(subject).to receive(:define_method).with('handle').never
         subject.has_properties :id, :number, :handle
       end
 
       it "does clobber existing methods" do
-        subject.should_receive(:define_method).with('existing_method')
+        expect(subject).to receive(:define_method).with('existing_method')
         subject.has_properties :existing_method
       end
 
@@ -89,20 +89,20 @@ describe Economic::Entity do
 
     it "updates the entity with the response" do
       stub_request(:account_get_data, nil, :success)
-      subject.should_receive(:update_properties).with({:foo => 'bar', :baz => 'qux'})
+      expect(subject).to receive(:update_properties).with({:foo => 'bar', :baz => 'qux'})
       subject.get_data
     end
 
     it "sets partial to false" do
       stub_request(:account_get_data, nil, :success)
       subject.get_data
-      subject.should_not be_partial
+      expect(subject).to_not be_partial
     end
 
     it "sets persisted to true" do
       stub_request(:account_get_data, nil, :success)
       subject.get_data
-      subject.should be_persisted
+      expect(subject).to be_persisted
     end
   end
 
@@ -111,22 +111,22 @@ describe Economic::Entity do
 
     context "entity has not been persisted" do
       before :each do
-        subject.stub(:persisted?).and_return(false)
+        allow(subject).to receive(:persisted?).and_return(false)
       end
 
       it "creates the entity" do
-        subject.should_receive(:create)
+        expect(subject).to receive(:create)
         subject.save
       end
     end
 
     context "entity has already been persisted" do
       before :each do
-        subject.stub(:persisted?).and_return(true)
+        allow(subject).to receive(:persisted?).and_return(true)
       end
 
       it "updates the entity" do
-        subject.should_receive(:update)
+        expect(subject).to receive(:update)
         subject.save
       end
     end
@@ -143,7 +143,7 @@ describe Economic::Entity do
     it "updates handle with the number returned from API" do
       stub_request(:account_create_from_data, :any, :success)
       subject.save
-      subject.number.should == '42'
+      expect(subject.number).to eq('42')
     end
   end
 
@@ -151,7 +151,7 @@ describe Economic::Entity do
     subject { (e = Account.new).tap { |e| e.session = session } }
 
     it "should return AccountProxy" do
-      subject.proxy.should be_instance_of(Economic::AccountProxy)
+      expect(subject.proxy).to be_instance_of(Economic::AccountProxy)
     end
   end
 
@@ -180,13 +180,13 @@ describe Economic::Entity do
     it "should mark the entity as not persisted and partial" do
       mock_request(:account_delete, :any, :success)
       subject.destroy
-      subject.should_not be_persisted
-      subject.should be_partial
+      expect(subject).to_not be_persisted
+      expect(subject).to be_partial
     end
 
     it "should return the response" do
-      session.should_receive(:request).and_return({ :response => true })
-      subject.destroy.should == { :response => true }
+      expect(session).to receive(:request).and_return({ :response => true })
+      expect(subject.destroy).to eq({ :response => true })
     end
   end
 
@@ -195,14 +195,14 @@ describe Economic::Entity do
 
     it "sets the properties to the given values" do
       subject.class.has_properties :foo, :baz
-      subject.should_receive(:foo=).with('bar')
-      subject.should_receive(:baz=).with('qux')
+      expect(subject).to receive(:foo=).with('bar')
+      expect(subject).to receive(:baz=).with('qux')
       subject.update_properties(:foo => 'bar', 'baz' => 'qux')
     end
 
     it "only sets known properties" do
       subject.class.has_properties :foo, :bar
-      subject.should_receive(:foo=).with('bar')
+      expect(subject).to receive(:foo=).with('bar')
       subject.update_properties(:foo => 'bar', 'baz' => 'qux')
     end
   end
@@ -220,21 +220,21 @@ describe Economic::Entity do
         subject.handle = Economic::Entity::Handle.new({})
         other.handle = Economic::Entity::Handle.new({})
 
-        subject.should_not == other
+        expect(subject).not_to eq(other)
       end
     end
 
     context "when self handle isn't present" do
       it "returns false" do
         subject.handle = nil
-        subject.should_not == other
+        expect(subject).not_to eq(other)
       end
     end
 
     context "when other handle isn't present" do
       it "returns false" do
         other.handle = nil
-        subject.should_not == other
+        expect(subject).not_to eq(other)
       end
     end
 
@@ -245,14 +245,14 @@ describe Economic::Entity do
       context "when other is another class" do
         it "should return false" do
           other = Economic::CashBook.new(:handle => handle)
-          subject.should_not == other
+          expect(subject).not_to eq(other)
         end
       end
 
       context "when other is same class" do
         it "should return true" do
           other = Economic::Debtor.new(:handle => handle)
-          subject.should == other
+          expect(subject).to eq(other)
         end
       end
 
@@ -260,7 +260,7 @@ describe Economic::Entity do
         it "should return true" do
           one = Economic::Entity.new(:handle => handle)
           other = Account.new(:handle => handle)
-          one.should == other
+          expect(one).to eq(other)
         end
       end
     end

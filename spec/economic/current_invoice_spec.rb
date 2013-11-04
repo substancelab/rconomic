@@ -5,29 +5,29 @@ describe Economic::CurrentInvoice do
   subject { (i = Economic::CurrentInvoice.new( :id => 512 )).tap { i.session = session } }
 
   it "inherits from Economic::Entity" do
-    Economic::CurrentInvoice.ancestors.should include(Economic::Entity)
+    expect(Economic::CurrentInvoice.ancestors).to include(Economic::Entity)
   end
 
   describe "new" do
     it "initializes lines as an empty proxy" do
-      subject.lines.should be_instance_of(Economic::CurrentInvoiceLineProxy)
-      subject.lines.should be_empty
+      expect(subject.lines).to be_instance_of(Economic::CurrentInvoiceLineProxy)
+      expect(subject.lines).to be_empty
     end
   end
 
   describe ".key" do
     it "should == :current_invoice" do
-      Economic::CurrentInvoice.key.should == :current_invoice
+      expect(Economic::CurrentInvoice.key).to eq(:current_invoice)
     end
   end
 
   describe ".proxy" do
     it "should return a CurrentInvoiceProxy" do
-      subject.proxy.should be_instance_of(Economic::CurrentInvoiceProxy)
+      expect(subject.proxy).to be_instance_of(Economic::CurrentInvoiceProxy)
     end
 
     it "should return a proxy owned by session" do
-      subject.proxy.session.should == session
+      expect(subject.proxy.session).to eq(session)
     end
   end
 
@@ -39,7 +39,7 @@ describe Economic::CurrentInvoice do
 
       it "updates id with the created id" do
         subject.save
-        subject.id.should == 42
+        expect(subject.id).to eq(42)
       end
 
       it "updates handle with the created id" do
@@ -48,24 +48,24 @@ describe Economic::CurrentInvoice do
 
         # This line memoizes the handle with the wrong/old id (0). This is what
         # we're testing changes
-        invoice.handle.id.should == 0
+        expect(invoice.handle.id).to eq(0)
 
         invoice.save
-        invoice.handle.should == Economic::Entity::Handle.new(:id => 42)
+        expect(invoice.handle).to eq(Economic::Entity::Handle.new(:id => 42))
       end
 
       context "when invoice has lines" do
         before :each do
           2.times do
             line = Economic::CurrentInvoiceLine.new
-            line.stub(:save)
+            allow(line).to receive(:save)
             subject.lines << line
           end
         end
 
         it "adds the lines to the invoice" do
           subject.lines.each do |line|
-            line.should_receive(:invoice=).with(subject)
+            expect(line).to receive(:invoice=).with(subject)
           end
 
           subject.save
@@ -73,7 +73,7 @@ describe Economic::CurrentInvoice do
 
         it "assigns the invoice session to each line" do
           subject.lines.each do |line|
-            line.should_receive(:session=).with(subject.session)
+            expect(line).to receive(:session=).with(subject.session)
           end
 
           subject.save
@@ -81,7 +81,7 @@ describe Economic::CurrentInvoice do
 
         it "saves each line" do
           subject.lines.each do |line|
-            line.should_receive(:save)
+            expect(line).to receive(:save)
           end
 
           subject.save
@@ -94,7 +94,7 @@ describe Economic::CurrentInvoice do
     it 'should book the current invoice and return the created invoice object' do
       stub_request('CurrentInvoice_Book', nil, :success)
       mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => 328 }}, :success)
-      subject.book.should be_instance_of(Economic::Invoice)
+      expect(subject.book).to be_instance_of(Economic::Invoice)
     end
 
     it 'should request with the right key for handle' do
@@ -108,7 +108,7 @@ describe Economic::CurrentInvoice do
     it 'should book the current invoice with the given number and return the created invoice object' do
       stub_request('CurrentInvoice_BookWithNumber', nil, :success)
       mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => 123 }}, :success)
-      subject.book_with_number(123).should be_instance_of(Economic::Invoice)
+      expect(subject.book_with_number(123)).to be_instance_of(Economic::Invoice)
     end
 
     it 'should request with the right key for handle' do
@@ -129,8 +129,8 @@ describe Economic::CurrentInvoice do
 
     it "should be set- and gettable" do
       subject.attention = contact
-      subject.attention_handle.should == contact.handle
-      subject.attention.should == contact
+      expect(subject.attention_handle).to eq(contact.handle)
+      expect(subject.attention).to eq(contact)
     end
   end
 
@@ -139,8 +139,8 @@ describe Economic::CurrentInvoice do
 
     it "should be set- and gettable" do
       subject.debtor = debtor
-      subject.debtor_handle.should == debtor.handle
-      subject.debtor.should == debtor
+      expect(subject.debtor_handle).to eq(debtor.handle)
+      expect(subject.debtor).to eq(debtor)
     end
   end
 end

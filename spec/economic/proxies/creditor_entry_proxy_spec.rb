@@ -6,26 +6,26 @@ describe Economic::CreditorEntryProxy do
 
   describe "new" do
     it "stores session" do
-      subject.session.should === session
+      expect(subject.session).to equal(session)
     end
   end
 
   describe "#find_by_invoice_number" do
     it 'should be able to find multiple creditor entries' do
       mock_request("CreditorEntry_FindByInvoiceNumber", {'invoiceNumber' => '123'}, :many)
-      subject.find_by_invoice_number('123').should == [1, 2]
+      expect(subject.find_by_invoice_number('123')).to eq([1, 2])
     end
 
     it 'should handle a single serial number in the response' do
       stub_request("CreditorEntry_FindByInvoiceNumber", nil, :single)
-      subject.find_by_invoice_number('123').should == [1]
+      expect(subject.find_by_invoice_number('123')).to eq([1])
     end
   end
 
   describe "#find" do
     it 'should get a creditor entry by serial number' do
       mock_request("CreditorEntry_GetData", {'entityHandle' => { 'SerialNumber' => '123' }}, :success)
-      subject.find('123').should be_instance_of(Economic::CreditorEntry)
+      expect(subject.find('123')).to be_instance_of(Economic::CreditorEntry)
     end
   end
 
@@ -47,7 +47,7 @@ describe Economic::CreditorEntryProxy do
 
   describe "#entity_class" do
     it "should return Economic::CreditorEntry" do
-      Economic::CreditorEntryProxy.entity_class.should == Economic::CreditorEntry
+      expect(Economic::CreditorEntryProxy.entity_class).to eq(Economic::CreditorEntry)
     end
   end
 end
