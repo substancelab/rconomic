@@ -9,7 +9,9 @@ class Economic::Endpoint
   #
   # If you need access to more details from the unparsed SOAP response, supply
   # a block to `call`. A Savon::SOAP::Response will be yielded to the block.
-  def call(soap_action, data = {})
+  def call(soap_action, data = {}, headers = {})
+    set_client_headers(headers)
+
     response = request(soap_action, data)
 
     if block_given?
@@ -54,6 +56,16 @@ class Economic::Endpoint
   def request(soap_action, data)
     client.request(:economic, soap_action) do
       soap.body = data
+    end
+  end
+
+  def set_client_headers(headers)
+    headers.each do |header, value|
+      if value.nil?
+        client.http.headers.delete(header)
+      else
+        client.http.headers[header] = value
+      end
     end
   end
 end

@@ -1,9 +1,9 @@
 require './spec/spec_helper'
 
 describe Economic::Session do
-  let(:client) { subject.send(:client) }
-
   subject { Economic::Session.new(123456, 'api', 'passw0rd') }
+
+  let(:endpoint) { subject.endpoint }
 
   describe "new" do
     it "should store authentication details" do
@@ -13,47 +13,42 @@ describe Economic::Session do
     end
   end
 
-  describe "client" do
-    subject { Economic::Session.new(123456, 'api', 'passw0rd') }
-
-    it "returns a Savon::Client" do
-      client.should be_instance_of(::Savon::Client)
-    end
-  end
-
   describe "connect" do
     it "connects to e-conomic with authentication details" do
       mock_request('Connect', has_entries(:agreementNumber => 123456, :userName => 'api', :password => 'passw0rd'), :success)
       subject.connect
     end
 
-    it "stores the cookie for later requests" do
-      mock_request('Connect', nil, {
-        :headers => {'Set-Cookie' => 'cookie'},
+    it "stores the authentication token for later requests" do
+      stub_request('Connect', nil, {
+        :headers => {'Set-Cookie' => 'cookie value from e-conomic'},
         :body => Savon::Spec::Fixture["connect/success"]}
       )
       subject.connect
-      client.stubs(:request).returns({})
-      subject.request(:foo) { }
-      client.http.headers['Cookie'].should == 'cookie'
+      subject.cookie.should == "cookie value from e-conomic"
     end
 
-    it "updates the cookie for new sessions" do
-      mock_request('Connect', nil, {:headers => {'Set-Cookie' => 'cookie'}})
+    it "updates the authentication token for new sessions" do
+      stub_request("Connect", nil, {:headers => {"Set-Cookie" => "authentication token"}})
       subject.connect
+
+      stub_request('Connect', nil, {:headers => {"Set-Cookie" => "another token"}})
       other_session = Economic::Session.new(123456, 'api', 'passw0rd')
-      mock_request('Connect', nil, {:headers => {'Set-Cookie' => 'other-cookie'}})
       other_session.connect
 
-      client.stubs(:request).returns({})
-      subject.request(:foo) { }
-      client.http.headers['Cookie'].should == 'cookie'
+      subject.cookie.should == "authentication token"
+      other_session.cookie.should == "another token"
     end
 
     it "removes existing cookie header before connecting" do
-      client.http.headers.expects(:delete).with('Cookie')
-      stub_request('Connect', nil, {:headers => {'Set-Cookie' => 'cookie'}})
+      endpoint.expects(:call).with(:connect, instance_of(Hash), {"Cookie" => nil})
       subject.connect
+    end
+  end
+
+  describe ".endpoint" do
+    it "returns Economic::Endpoint" do
+      subject.endpoint.should be_instance_of(Economic::Endpoint)
     end
   end
 
@@ -105,7 +100,7 @@ describe Economic::Session do
 
   describe "request" do
     it "sends a request to API" do
-      client.expects(:request).with(:economic, :foo).returns({})
+      endpoint.expects(:call).with(:foo, {}, has_key("Cookie")).returns({})
       subject.request(:foo, {})
     end
 

@@ -36,6 +36,28 @@ describe Economic::Endpoint do
       end
       @yielded_value.should be_instance_of(Savon::SOAP::Response)
     end
+
+    it "adds a cookie header" do
+      stub_request('CurrentInvoice_GetAll', nil, :single)
+      subject.call(:current_invoice_get_all, {}, {"Cookie" => "omnomnom"})
+      client.http.headers["Cookie"].should == "omnomnom"
+    end
+
+    it "deletes the cookie header" do
+      stub_request('CurrentInvoice_GetAll', nil, :single)
+      subject.call(:current_invoice_get_all, {}, {"Cookie" => nil})
+      client.http.headers.should_not have_key("Cookie")
+    end
+  end
+
+  describe "#client" do
+    it "returns a Savon::Client" do
+      subject.client.should be_instance_of(::Savon::Client)
+    end
+
+    it "returns the same Savon::Client" do
+      subject.client.should === subject.client
+    end
   end
 
   describe "soap_action_name" do
