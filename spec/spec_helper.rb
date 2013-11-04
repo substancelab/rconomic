@@ -103,7 +103,11 @@ end
 # data in the message body, returning a specific response.
 def mock_request(operation, data, response)
   operation = Economic::Support::String.underscore(operation)
-  response = fixture(operation, response) if response.is_a?(Symbol)
+  response = if response.is_a?(Symbol)
+    fixture(operation, response)
+  elsif response.is_a?(Hash)
+    {:code => 200}.merge(response)
+  end
 
   mock = savon.expects(operation.intern)
   mock.with(:message => data) if data

@@ -24,8 +24,7 @@ describe Economic::Session do
     it "stores the authentication token for later requests" do
       response = {
         :headers => {'Set-Cookie' => 'cookie value from e-conomic'},
-        :body => fixture(:connect, :success),
-        :code => 200
+        :body => fixture(:connect, :success)
       }
       stub_request('Connect', authentication_details, response)
       subject.connect
