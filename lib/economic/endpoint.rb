@@ -33,21 +33,27 @@ class Economic::Endpoint
 
   # Returns the E-conomic API action name to call
   def soap_action_name(entity_class, action)
-    class_name = entity_class.to_s
-    class_name_without_modules = class_name.split('::').last
-    "#{class_name_without_modules.snakecase}_#{action.to_s.snakecase}".intern
+    [
+      class_name_without_modules(entity_class),
+      action.to_s
+    ].collect(&:snakecase).join("_").intern
   end
 
   private
 
+  def class_name_without_modules(entity_class)
+    class_name = entity_class.to_s
+    class_name.split('::').last
+  end
+
   def extract_result_from_response(response, soap_action)
-    response_hash = response.to_hash
+    response = response.to_hash
 
     response_key = "#{soap_action}_response".intern
     result_key = "#{soap_action}_result".intern
 
-    if response_hash[response_key] && response_hash[response_key][result_key]
-      response_hash[response_key][result_key]
+    if response[response_key] && response[response_key][result_key]
+      response[response_key][result_key]
     else
       {}
     end
