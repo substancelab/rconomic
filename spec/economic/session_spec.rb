@@ -28,7 +28,10 @@ describe Economic::Session do
     end
 
     it "stores the cookie for later requests" do
-      mock_request('Connect', nil, {:headers => {'Set-Cookie' => 'cookie'}})
+      mock_request('Connect', nil, {
+        :headers => {'Set-Cookie' => 'cookie'},
+        :body => Savon::Spec::Fixture["connect/success"]}
+      )
       subject.connect
       client.stubs(:request).returns({})
       subject.request(:foo) { }

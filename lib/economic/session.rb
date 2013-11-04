@@ -13,7 +13,7 @@ module Economic
     # Authenticates with e-conomic
     def connect
       client.http.headers.delete("Cookie")
-      response = endpoint.call(
+      endpoint.call(
         client,
         :connect,
         {
@@ -21,9 +21,9 @@ module Economic
           :userName => self.user_name,
           :password => self.password
         }
-      )
-
-      @cookie = response.http.headers["Set-Cookie"]
+      ) do |response|
+        @cookie = response.http.headers["Set-Cookie"]
+      end
     end
 
     # Provides access to the DebtorContacts
@@ -78,17 +78,7 @@ module Economic
     # Requests an action from the API endpoint
     def request(soap_action, data = nil)
       client.http.headers["Cookie"]  = @cookie
-
-      response = endpoint.call(client, soap_action, data)
-      response_hash = response.to_hash
-
-      response_key = "#{soap_action}_response".intern
-      result_key = "#{soap_action}_result".intern
-      if response_hash[response_key] && response_hash[response_key][result_key]
-        response_hash[response_key][result_key]
-      else
-        {}
-      end
+      endpoint.call(client, soap_action, data)
     end
 
     # Returns self - used by proxies to access the session of their owner

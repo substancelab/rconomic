@@ -20,9 +20,23 @@ describe Economic::Endpoint do
       subject.call(client, :connect)
     end
 
-    it "returns a Savon response" do
+    it "returns a hash with data" do
       stub_request('CurrentInvoice_GetAll', nil, :single)
-      subject.call(client, :current_invoice_get_all).should be_instance_of(Savon::SOAP::Response)
+      subject.call(client, :current_invoice_get_all).should == {:current_invoice_handle => {:id => "1"}}
+    end
+
+    it "returns an empty hash if no data returned" do
+      stub_request('CurrentInvoice_GetAll', nil, :none)
+      subject.call(client, :current_invoice_get_all).should be_empty
+    end
+
+    it "yields a Savon response" do
+      stub_request('CurrentInvoice_GetAll', nil, :single)
+      @yielded_value = nil
+      subject.call(client, :current_invoice_get_all) do |response|
+        @yielded_value = response
+      end
+      @yielded_value.should be_instance_of(Savon::SOAP::Response)
     end
   end
 
