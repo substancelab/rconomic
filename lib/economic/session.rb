@@ -2,7 +2,8 @@ module Economic
   # The Economic::Session contains details and behaviors for a current
   # connection to the API endpoint.
   class Session
-    attr_accessor :agreement_number, :user_name, :password, :cookie
+    attr_accessor :agreement_number, :user_name, :password
+    attr_reader :authentication_token
 
     def initialize(agreement_number, user_name, password)
       self.agreement_number = agreement_number
@@ -14,14 +15,10 @@ module Economic
     def connect
       endpoint.call(
         :connect,
-        {
-          :agreementNumber => self.agreement_number,
-          :userName => self.user_name,
-          :password => self.password
-        },
+        authentication_details,
         {"Cookie" => nil}
       ) do |response|
-        @cookie = response.http.headers["Set-Cookie"]
+        store_authentication_token(response)
       end
     end
 
@@ -76,7 +73,7 @@ module Economic
 
     # Requests an action from the API endpoint
     def request(soap_action, data = nil)
-      endpoint.call(soap_action, data, {"Cookie" => @cookie})
+      endpoint.call(soap_action, data, {"Cookie" => authentication_token})
     end
 
     # Returns self - used by proxies to access the session of their owner
@@ -87,6 +84,20 @@ module Economic
     # Returns the SOAP endpoint to connect to
     def endpoint
       @endpoint ||= Economic::Endpoint.new
+    end
+
+    private
+
+    def authentication_details
+      {
+        :agreementNumber => self.agreement_number,
+        :userName => self.user_name,
+        :password => self.password
+      }
+    end
+
+    def store_authentication_token(response)
+      @authentication_token = response.http.headers["Set-Cookie"]
     end
   end
 end

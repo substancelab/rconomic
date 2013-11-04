@@ -25,7 +25,7 @@ describe Economic::Session do
         :body => Savon::Spec::Fixture["connect/success"]}
       )
       subject.connect
-      subject.cookie.should == "cookie value from e-conomic"
+      subject.authentication_token.should == "cookie value from e-conomic"
     end
 
     it "updates the authentication token for new sessions" do
@@ -36,8 +36,8 @@ describe Economic::Session do
       other_session = Economic::Session.new(123456, 'api', 'passw0rd')
       other_session.connect
 
-      subject.cookie.should == "authentication token"
-      other_session.cookie.should == "another token"
+      subject.authentication_token.should == "authentication token"
+      other_session.authentication_token.should == "another token"
     end
 
     it "removes existing cookie header before connecting" do
