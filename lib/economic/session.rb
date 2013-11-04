@@ -15,8 +15,7 @@ module Economic
     def connect
       endpoint.call(
         :connect,
-        authentication_details,
-        {"Cookie" => nil}
+        authentication_details
       ) do |response|
         store_authentication_token(response)
       end
@@ -74,7 +73,7 @@ module Economic
 
     # Requests an action from the API endpoint
     def request(soap_action, data = nil)
-      endpoint.call(soap_action, data, {"Cookie" => authentication_token})
+      endpoint.call(soap_action, data, authentication_token)
     end
 
     # Returns self - used by proxies to access the session of their owner
@@ -98,7 +97,7 @@ module Economic
     end
 
     def store_authentication_token(response)
-      @authentication_token = response.http.headers["Set-Cookie"]
+      @authentication_token = response.http.cookies
     end
   end
 end

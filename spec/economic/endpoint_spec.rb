@@ -41,15 +41,11 @@ describe Economic::Endpoint do
     end
 
     it "adds a cookie header" do
-      stub_request('CurrentInvoice_GetAll', nil, :single)
-      subject.call(:current_invoice_get_all, {}, {"Cookie" => "omnomnom"})
-      # TODO: This doesn't actually test anything
-    end
-
-    it "deletes the cookie header" do
-      stub_request('CurrentInvoice_GetAll', nil, :single)
-      subject.call(:current_invoice_get_all, {}, {"Cookie" => nil})
-      # TODO: This doesn't actually test anything
+      client.should_receive(:call).with(
+        :current_invoice_get_all,
+        :cookies => "omnomnom"
+      ).and_return({})
+      subject.call(:current_invoice_get_all, {}, "omnomnom")
     end
   end
 

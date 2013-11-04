@@ -28,7 +28,9 @@ describe Economic::Session do
       }
       stub_request('Connect', authentication_details, response)
       subject.connect
-      subject.authentication_token.should == "cookie value from e-conomic"
+      subject.authentication_token.collect { |cookie|
+        cookie.name_and_value.split("=").last
+      }.should == ["cookie value from e-conomic"]
     end
 
     it "updates the authentication token for new sessions" do
@@ -39,12 +41,16 @@ describe Economic::Session do
       other_session = Economic::Session.new(123456, 'api', 'passw0rd')
       other_session.connect
 
-      subject.authentication_token.should == "authentication token"
-      other_session.authentication_token.should == "another token"
+      subject.authentication_token.collect { |cookie|
+        cookie.name_and_value.split("=").last
+      }.should == ["authentication token"]
+      other_session.authentication_token.collect { |cookie|
+        cookie.name_and_value.split("=").last
+      }.should == ["another token"]
     end
 
-    it "removes existing cookie header before connecting" do
-      endpoint.should_receive(:call).with(:connect, an_instance_of(Hash), {"Cookie" => nil})
+    it "doesn't use existing authentication details when connecting" do
+      endpoint.should_receive(:call).with(:connect, instance_of(Hash))
       subject.connect
     end
   end
@@ -106,7 +112,7 @@ describe Economic::Session do
       endpoint.should_receive(:call).with(
         :invoice_get_all,
         {},
-        "Cookie" => nil
+        nil
       ).and_return({})
       subject.request(:invoice_get_all, {})
     end
