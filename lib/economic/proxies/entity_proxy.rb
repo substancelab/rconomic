@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Economic
   class EntityProxy
     class << self
