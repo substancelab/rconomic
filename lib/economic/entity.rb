@@ -25,7 +25,8 @@ module Economic
         @properties = properties
         properties.each do |property|
           unless properties_not_triggering_full_load.include?(property)
-            # Create property accessors that loads the full Entity from the API if necessary
+            # Create property accessors that loads the full Entity from the API
+            # if necessary
             define_method "#{property}" do
               value = instance_variable_get("@#{property}")
               if value.nil? && partial? && persisted?
@@ -52,7 +53,8 @@ module Economic
         Economic.const_get(proxy_class_name)
       end
 
-      # Returns a symbol based on the name of the entity. Used to request and read data responses.
+      # Returns a symbol based on the name of the entity. Used to request and
+      # read data responses.
       #
       #   Entity.key #=> :entity
       #   CurrentInvoice.key #=> :current_invoice
@@ -86,13 +88,15 @@ module Economic
       self.partial = false
       self.persisted = true
     end
-    
-    # Returns the number of Entity. This does not trigger a load from the API even if Entity is partial
+
+    # Returns the number of Entity. This does not trigger a load from the API
+    # even if Entity is partial
     def number
       @number
     end
 
-    # Returns the id of Entity. This does not trigger a load from the API even if Entity is partial
+    # Returns the id of Entity. This does not trigger a load from the API even
+    # if Entity is partial
     def id
       @id
     end
@@ -108,9 +112,9 @@ module Economic
       !!@partial
     end
 
-    # Returns a proxy for entities of the current class. For example if called on an
-    # Economic::Debtor it returns an instance of Economic::DebtorProxy with the Debtors session as
-    # owner.
+    # Returns a proxy for entities of the current class. For example if called
+    # on an Economic::Debtor it returns an instance of Economic::DebtorProxy
+    # with the Debtors session as owner.
     def proxy
       self.class.proxy.new(session)
     end
@@ -151,7 +155,7 @@ module Economic
       self.handle == other.handle && other.is_a?(self.class)
     end
 
-  protected
+    protected
 
     def create_or_update
       if persisted?
@@ -217,5 +221,4 @@ module Economic
       end
     end
   end
-
 end

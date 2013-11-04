@@ -75,7 +75,8 @@ module Economic
       self.class.entity_class_name
     end
 
-    # Fetches Entity data from API and returns an Entity initialized with that data added to Proxy
+    # Fetches Entity data from API and returns an Entity initialized with that
+    # data added to Proxy
     def find(handle)
       handle = Entity::Handle.new(handle)
       entity_hash = get_data(handle)
@@ -100,13 +101,14 @@ module Economic
     end
     alias :<< :append
 
-  protected
+    protected
 
     def items
       @items
     end
 
-    # Fetches all data for the given handles. Returns Array with hashes of entity data
+    # Fetches all data for the given handles. Returns Array with hashes of
+    # entity data
     def get_data_array(handles)
       return [] unless handles && handles.any?
 

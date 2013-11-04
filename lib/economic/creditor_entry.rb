@@ -5,7 +5,6 @@ module Economic
   # Represents a creditor entry in E-conomic.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICreditorEntry.html
-
   class CreditorEntry < Entity
     has_properties :account,
       :amount,

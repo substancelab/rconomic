@@ -2,7 +2,20 @@ require 'economic/entity'
 
 module Economic
   class Invoice < Entity
-    has_properties :number, :net_amount, :vat_amount, :due_date, :debtor_handle, :debtor_name, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :debtor_ean, :attention_handle, :heading
+    has_properties :number,
+      :net_amount,
+      :vat_amount,
+      :due_date,
+      :debtor_handle,
+      :debtor_name,
+      :debtor_name,
+      :debtor_address,
+      :debtor_postal_code,
+      :debtor_city,
+      :debtor_country,
+      :debtor_ean,
+      :attention_handle,
+      :heading
 
     def attention
       return nil if attention_handle.nil?
@@ -49,7 +62,7 @@ module Economic
     #   end
     def pdf
       response = request(:get_pdf, {
-        "invoiceHandle" => handle.to_hash
+                           "invoiceHandle" => handle.to_hash
       })
 
       Base64.decode64(response)

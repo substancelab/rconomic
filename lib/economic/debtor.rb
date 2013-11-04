@@ -25,7 +25,32 @@ module Economic
   #   debtor.layout_handle = { :id => 16 }
   #   debtor.save
   class Debtor < Entity
-    has_properties :number, :debtor_group_handle, :name, :vat_zone, :currency_handle, :price_group_handle, :is_accessible, :ean, :public_entry_number, :email, :telephone_and_fax_number, :website, :address, :postal_code, :city, :country, :credit_maximum, :vat_number, :county, :ci_number, :term_of_payment_handle, :layout_handle, :attention_handle, :your_reference_handle, :our_reference_handle, :balance
+    has_properties :number,
+      :debtor_group_handle,
+      :name,
+      :vat_zone,
+      :currency_handle,
+      :price_group_handle,
+      :is_accessible,
+      :ean,
+      :public_entry_number,
+      :email,
+      :telephone_and_fax_number,
+      :website,
+      :address,
+      :postal_code,
+      :city,
+      :country,
+      :credit_maximum,
+      :vat_number,
+      :county,
+      :ci_number,
+      :term_of_payment_handle,
+      :layout_handle,
+      :attention_handle,
+      :your_reference_handle,
+      :our_reference_handle,
+      :balance
 
     def handle
       @handle ||= Handle.new({:number => @number})
@@ -36,7 +61,8 @@ module Economic
       @contacts ||= DebtorContactProxy.new(self)
     end
 
-    # Provides access to the current invoices for Debtor - ie invoices that haven't yet been booked
+    # Provides access to the current invoices for Debtor - ie invoices that
+    # haven't yet been booked
     def current_invoices
       @current_invoices ||= CurrentInvoiceProxy.new(self)
     end
@@ -76,7 +102,5 @@ module Economic
 
       return data
     end
-
   end
-
 end

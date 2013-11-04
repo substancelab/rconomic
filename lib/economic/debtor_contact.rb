@@ -18,7 +18,16 @@ module Economic
   #   contact.name = 'John Appleseed'
   #   contact.save
   class DebtorContact < Entity
-    has_properties :id, :debtor_handle, :name, :number, :telephone_number, :email, :comments, :external_id, :is_to_receive_email_copy_of_order, :is_to_receive_email_copy_of_invoice
+    has_properties :id,
+      :debtor_handle,
+      :name,
+      :number,
+      :telephone_number,
+      :email,
+      :comments,
+      :external_id,
+      :is_to_receive_email_copy_of_order,
+      :is_to_receive_email_copy_of_invoice
 
     def debtor
       return nil if debtor_handle.nil?
@@ -58,7 +67,5 @@ module Economic
 
       return data
     end
-
   end
-
 end

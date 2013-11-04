@@ -19,6 +19,5 @@ module Economic
         entity
       end
     end
-
   end
 end

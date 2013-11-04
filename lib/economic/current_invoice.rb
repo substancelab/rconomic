@@ -2,7 +2,8 @@ require 'economic/entity'
 
 module Economic
 
-  # CurrentInvoices are invoices that are not yet booked. They are therefore not read-only.
+  # CurrentInvoices are invoices that are not yet booked. They are therefore not
+  # read-only.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICurrentInvoice.html
   #
@@ -65,8 +66,8 @@ module Economic
       @attention_handle = handle
     end
 
-    # Books a current invoice. An invoice number greater than all other invoice numbers will be
-    # assigned to the resulting Economic::Invoice.
+    # Books a current invoice. An invoice number greater than all other invoice
+    # numbers will be assigned to the resulting Economic::Invoice.
     #
     # Returns the resulting Economic::Invoice object
     def book

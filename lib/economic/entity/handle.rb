@@ -49,7 +49,7 @@ class Economic::Entity
       self.id == other.id && self.number == other.number && self.id1 == other.id1 && self.id2 == other.id2
     end
 
-  private
+    private
 
     def id_properties
       {:id => 'Id', :id1 => 'Id1', :id2 => 'Id2', :number => 'Number', :serial_number => 'SerialNumber'}

@@ -6,15 +6,14 @@ module Economic
       response = request('FindByName', {
         'name' => name
       })
-      
+
       handle = response[:account_handle]
-      
+
       entity = build(response)
       entity.name = name
       entity.number = handle[:number]
       entity.persisted = true
       entity
-      
     end
   end
 end
