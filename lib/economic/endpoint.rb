@@ -8,11 +8,11 @@ class Economic::Endpoint
   # Returns a Hash with the resulting response from the endpoint as a Hash.
   #
   # If you need access to more details from the unparsed SOAP response, supply
-  # a block to `call`. A Savon::SOAP::Response will be yielded to the block.
-  def call(soap_action, data = {}, headers = {})
-    set_client_headers(headers)
+  # a block to `call`. A Savon::Response will be yielded to the block.
+  def call(soap_action, data = nil, headers = {})
+    # set_client_headers(headers)
 
-    response = request(soap_action, data)
+    response = request(soap_action, data, headers[:Cookie])
 
     if block_given?
       yield response
@@ -26,8 +26,8 @@ class Economic::Endpoint
   # Cached on class-level to avoid loading the big WSDL file more than once (can
   # take several hundred megabytes of RAM after a while...)
   def client
-    @@client ||= Savon::Client.new do
-      wsdl.document = File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
+    @@client ||= Savon.client do
+      wsdl File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
     end
   end
 
@@ -59,10 +59,15 @@ class Economic::Endpoint
     end
   end
 
-  def request(soap_action, data)
-    client.request(:economic, soap_action) do
-      soap.body = data
-    end
+  def request(soap_action, data, cookies)
+    locals = {}
+    locals[:message] = data if data
+    locals[:cookies] = cookies if cookies
+
+    client.call(
+      soap_action,
+      locals
+    )
   end
 
   def set_client_headers(headers)
