@@ -1,6 +1,6 @@
 require './spec/spec_helper'
 
-describe Economic::EntityMapper do
+describe Economic::Entity::Mapper do
   let(:entity) { double("Entity", {
     :handle => Economic::Entity::Handle.new(:id => 42),
     :creditor_handle => Economic::Entity::Handle.new(:number => 37),
@@ -18,7 +18,7 @@ describe Economic::EntityMapper do
     ]
   }
 
-  subject { Economic::EntityMapper.new(entity, fields) }
+  subject { Economic::Entity::Mapper.new(entity, fields) }
 
   describe "#to_hash" do
     it "returns a Hash with fields as per the field descriptions" do
@@ -41,7 +41,7 @@ describe Economic::EntityMapper do
       :is_to_receive_email_copy_of_order => nil
     }) }
 
-    subject { Economic::EntityMapper.new(entity, fields) }
+    subject { Economic::Entity::Mapper.new(entity, fields) }
 
     it "returns the minimal set of required fields" do
       subject.to_hash.should == {

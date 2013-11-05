@@ -42,7 +42,7 @@ module Economic
     protected
 
     def build_soap_data
-      Economic::EntityMapper.new(self, fields).to_hash
+      Economic::Entity::Mapper.new(self, fields).to_hash
     end
 
     def fields

@@ -1,11 +1,11 @@
 module Economic
-  # EntityMapper provides a generic way of building SOAP data structures for
+  # Entity::Mapper provides a generic way of building SOAP data structures for
   # entities.
   #
   # Based on an Entity and a set of rules that define the fields to map to, it
   # returns a Hash named and ordered properly, ready for passing to the
   # endpoint as SOAP data.
-  class EntityMapper
+  class Entity::Mapper
     attr_reader :entity, :fields
 
     def initialize(entity, fields = [])

@@ -51,7 +51,7 @@ module Economic
     protected
 
     def build_soap_data
-      Economic::EntityMapper.new(self, fields).to_hash
+      Economic::Entity::Mapper.new(self, fields).to_hash
     end
 
     # Returns the field rules to use when mapping to SOAP data
