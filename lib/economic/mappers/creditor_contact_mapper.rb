@@ -9,17 +9,41 @@ module Economic::Mappers
     def to_hash
       data = {}
 
-      data['Handle'] = entity.handle.to_hash
-      data['Id'] = entity.id unless entity.id.blank?
-      data['CreditorHandle'] = { 'Number' => entity.creditor_handle[:number] } unless entity.creditor_handle.blank?
-      data['Name'] = entity.name unless entity.name.blank?
-      data['Number'] = entity.handle.number
-      data['TelephoneNumber'] = entity.telephone_number unless entity.telephone_number.blank?
-      data['Email'] = entity.email unless entity.email.blank?
-      data['Comments'] = entity.comments unless entity.comments.blank?
-      data['ExternalId'] = entity.external_id unless entity.external_id.blank?
+      fields.each do |field, method, formatter, required|
+        value = entity.send(method)
+        present = present?(value)
+
+        if present || required
+          value = formatter.call(value) if formatter
+          data[field] = value
+        end
+      end
 
       return data
+    end
+
+    private
+
+    def fields
+      # SOAP field, entity method, formatter proc, required?
+      [
+        ["Handle", :handle, Proc.new { |v| v.to_hash }, :required],
+        ["Id", :id, nil],
+        ["CreditorHandle", :creditor_handle, Proc.new {|v| {"Number" => v[:number]}}],
+        ["Name", :name],
+        ["Number", :handle, Proc.new { |v| v.number }, :required],
+        ["TelephoneNumber", :telephone_number],
+        ["Email", :email],
+        ["Comments", :comments],
+        ["ExternalId", :external_id]
+      ]
+    end
+
+    def present?(value)
+      !(
+        (value.respond_to?(:blank?) && value.blank?) ||
+        (value.respond_to?(:empty?) && value.empty?)
+      )
     end
   end
 end

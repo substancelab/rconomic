@@ -19,7 +19,7 @@ describe Economic::Mappers::CreditorContactMapper do
     subject.to_hash.should be_instance_of(Hash)
   end
 
-  it "returns the fields required by the SOAP endpoint" do
+  it "returns the fields formatted for the SOAP endpoint" do
     subject.to_hash.keys.should == [
       "Handle",
       "Id",
