@@ -1,5 +1,4 @@
 require 'economic/entity'
-require 'economic/mappers/debtor_contact_mapper'
 
 module Economic
 
@@ -52,7 +51,24 @@ module Economic
     protected
 
     def build_soap_data
-      Economic::Mappers::DebtorContactMapper.new(self).to_hash
+      Economic::EntityMapper.new(self, fields).to_hash
+    end
+
+    # Returns the field rules to use when mapping to SOAP data
+    def fields
+      [
+        ["Handle", :handle, Proc.new { |v| v.to_hash }, :required],
+        ["Id", :handle, Proc.new { |v| v.id }, :required],
+        ["DebtorHandle", :debtor, Proc.new { |v| v.handle.to_hash }],
+        ["Name", :name, nil, :required],
+        ["Number", :handle, Proc.new { |v| v.number }],
+        ["TelephoneNumber", :telephone_number],
+        ["Email", :email],
+        ["Comments", :comments],
+        ["ExternalId", :external_id],
+        ["IsToReceiveEmailCopyOfOrder", :is_to_receive_email_copy_of_order, Proc.new { |v| v || false }, :required],
+        ["IsToReceiveEmailCopyOfInvoice", :is_to_receive_email_copy_of_invoice, Proc.new { |v| v || false }, :required]
+      ]
     end
   end
 end

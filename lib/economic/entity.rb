@@ -1,5 +1,6 @@
 require 'economic/endpoint'
 require 'economic/entity/handle'
+require 'economic/entity_mapper'
 
 module Economic
   class Entity

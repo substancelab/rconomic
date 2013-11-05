@@ -1,5 +1,4 @@
 require 'economic/entity'
-require 'economic/mappers/creditor_contact_mapper'
 
 module Economic
 
@@ -43,9 +42,22 @@ module Economic
     protected
 
     def build_soap_data
-      Economic::Mappers::CreditorContactMapper.new(self).to_hash
+      Economic::EntityMapper.new(self, fields).to_hash
     end
 
+    def fields
+      # SOAP field, entity method, formatter proc, required?
+      [
+        ["Handle", :handle, Proc.new { |v| v.to_hash }, :required],
+        ["Id", :id, nil],
+        ["CreditorHandle", :creditor_handle, Proc.new {|v| {"Number" => v[:number]}}],
+        ["Name", :name],
+        ["Number", :handle, Proc.new { |v| v.number }, :required],
+        ["TelephoneNumber", :telephone_number],
+        ["Email", :email],
+        ["Comments", :comments],
+        ["ExternalId", :external_id]
+      ]
+    end
   end
-
 end
