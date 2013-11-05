@@ -23,6 +23,15 @@ describe Economic::DebtorContact do
         end
       end
     end
+
+    it "builds and sends data to API" do
+      mock_request(
+        :debtor_contact_create_from_data,
+        {"data" => {"Handle" => {}, "Id" => nil, "Name" => nil, "IsToReceiveEmailCopyOfOrder" => false, "IsToReceiveEmailCopyOfInvoice" => false}},
+        :success
+      )
+      subject.save
+    end
   end
 
   describe ".debtor" do

@@ -1,4 +1,5 @@
 require 'economic/entity'
+require 'economic/mappers/debtor_contact_mapper'
 
 module Economic
 
@@ -51,21 +52,7 @@ module Economic
     protected
 
     def build_soap_data
-      data = {}
-
-      data['Handle'] = handle.to_hash
-      data['Id'] = handle.id
-      data['DebtorHandle'] = debtor.handle.to_hash unless debtor.blank?
-      data['Name'] = name
-      data['Number'] = number unless number.blank?
-      data['TelephoneNumber'] = telephone_number unless telephone_number.blank?
-      data['Email'] = email unless email.blank?
-      data['Comments'] = comments unless comments.blank?
-      data['ExternalId'] = external_id unless external_id.blank?
-      data['IsToReceiveEmailCopyOfOrder'] = is_to_receive_email_copy_of_order || false
-      data['IsToReceiveEmailCopyOfInvoice'] = is_to_receive_email_copy_of_invoice || false
-
-      return data
+      Economic::Mappers::DebtorContactMapper.new(self).to_hash
     end
   end
 end
