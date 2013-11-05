@@ -1,4 +1,5 @@
 require 'economic/entity'
+require 'economic/mappers/creditor_contact_mapper'
 
 module Economic
 
@@ -42,19 +43,7 @@ module Economic
     protected
 
     def build_soap_data
-      data = {}
-
-      data['Handle'] = handle.to_hash
-      data['Id'] = id unless id.blank?
-      data['CreditorHandle'] = { 'Number' => creditor_handle[:number] } unless creditor_handle.blank?
-      data['Name'] = name unless name.blank?
-      data['Number'] = handle.number
-      data['TelephoneNumber'] = telephone_number unless telephone_number.blank?
-      data['Email'] = email unless email.blank?
-      data['Comments'] = comments unless comments.blank?
-      data['ExternalId'] = external_id unless external_id.blank?
-
-      return data
+      Economic::Mappers::CreditorContactMapper.new(self).to_hash
     end
 
   end

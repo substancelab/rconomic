@@ -23,6 +23,15 @@ describe Economic::CreditorContact do
         end
       end
     end
+
+    it "builds and sends data to API" do
+      mock_request(
+        :creditor_contact_create_from_data,
+        {"data" => {"Handle" => {}, "Number" => nil}},
+        :success
+      )
+      subject.save
+    end
   end
 
   describe ".creditor" do
