@@ -33,16 +33,41 @@ describe Economic::CurrentInvoice do
 
   describe "save" do
     context "when successful" do
-      before :each do
-        stub_request('CurrentInvoice_CreateFromData', nil, :success)
+      it "builds and sends data to API" do
+        time = Time.now
+        subject.date = time
+
+        mock_request(
+          "CurrentInvoice_CreateFromData", {
+            "data" => {
+              "Id" => 512,
+              "DebtorName" => nil,
+              "Date" => time.iso8601,
+              "DueDate" => nil,
+              "ExchangeRate" => 100,
+              "IsVatIncluded" => nil,
+              "DeliveryDate" => nil,
+              "NetAmount" => 0,
+              "VatAmount" => 0,
+              "GrossAmount" => 0,
+              "Margin" => 0,
+              "MarginAsPercent" => 0
+            }
+          },
+          :success
+        )
+        subject.save
       end
 
       it "updates id with the created id" do
+        stub_request('CurrentInvoice_CreateFromData', nil, :success)
         subject.save
         expect(subject.id).to eq(42)
       end
 
       it "updates handle with the created id" do
+        stub_request('CurrentInvoice_CreateFromData', nil, :success)
+
         invoice = Economic::CurrentInvoice.new({})
         invoice.session = session
 
@@ -56,6 +81,8 @@ describe Economic::CurrentInvoice do
 
       context "when invoice has lines" do
         before :each do
+          stub_request('CurrentInvoice_CreateFromData', nil, :success)
+
           2.times do
             line = Economic::CurrentInvoiceLine.new
             allow(line).to receive(:save)

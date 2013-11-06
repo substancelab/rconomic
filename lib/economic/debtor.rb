@@ -70,37 +70,39 @@ module Economic
     protected
 
     def build_soap_data
-      data = {}
+      Entity::Mapper.new(self, fields).to_hash
+    end
 
-      data['Handle'] = handle.to_hash
-      data['Number'] = handle.number
-      data['DebtorGroupHandle'] = { 'Number' => debtor_group_handle[:number] } unless debtor_group_handle.blank?
-      data['Name'] = name
-      data['VatZone'] = vat_zone
-      data['CurrencyHandle'] = { 'Code' => currency_handle[:code] } unless currency_handle.blank?
-      data['PriceGroupHandle'] = { 'Number' => price_group_handle[:number] } unless price_group_handle.blank?
-      data['IsAccessible'] = is_accessible
-      data['Ean'] = ean unless ean.blank?
-      data['PublicEntryNumber'] = public_entry_number unless public_entry_number.blank?
-      data['Email'] = email unless email.blank?
-      data['TelephoneAndFaxNumber'] = telephone_and_fax_number unless telephone_and_fax_number.blank?
-      data['Website'] = website unless website.blank?
-      data['Address'] = address unless address.blank?
-      data['PostalCode'] = postal_code unless postal_code.blank?
-      data['City'] = city unless city.blank?
-      data['Country'] = country unless country.blank?
-      data['CreditMaximum'] = credit_maximum unless credit_maximum.blank?
-      data['VatNumber'] = vat_number unless vat_number.blank?
-      data['County'] = county unless county.blank?
-      data['CINumber'] = ci_number unless ci_number.blank?
-      data['TermOfPaymentHandle'] = { 'Id' => term_of_payment_handle[:id] } unless term_of_payment_handle.blank?
-      data['LayoutHandle'] = { 'Id' => layout_handle[:id] } unless layout_handle.blank?
-      data['AttentionHandle'] = attention_handle unless attention_handle.blank?
-      data['YourReferenceHandle'] = your_reference_handle unless your_reference_handle.blank?
-      data['OurReferenceHandle'] = our_reference_handle unless our_reference_handle.blank?
-      data['Balance'] = balance unless balance.blank?
-
-      return data
+    def fields
+      [
+        ["Handle", :handle, Proc.new { |h| h.to_hash }, :required],
+        ["Number", :handle, Proc.new { |h| h.number }, :required],
+        ["DebtorGroupHandle", :debtor_group_handle, Proc.new { |v| {"Number" => v[:number]} }],
+        ["Name", :name, nil, :required],
+        ["VatZone", :vat_zone, nil, :required],
+        ["CurrencyHandle", :currency_handle, Proc.new { |h| {"Code" => h[:code]} }],
+        ["PriceGroupHandle", :price_group_handle, Proc.new { |h| {"Number" => h[:number]} }],
+        ["IsAccessible", :is_accessible, nil, :required],
+        ["Ean", :ean],
+        ["PublicEntryNumber", :public_entry_number],
+        ["Email", :email],
+        ["TelephoneAndFaxNumber", :telephone_and_fax_number],
+        ["Website", :website],
+        ["Address", :address],
+        ["PostalCode", :postal_code],
+        ["City", :city],
+        ["Country", :country],
+        ["CreditMaximum", :credit_maximum],
+        ["VatNumber", :vat_number],
+        ["County", :county],
+        ["CINumber", :ci_number],
+        ["TermOfPaymentHandle", :term_of_payment_handle, Proc.new { |h| {"Id" => h[:id]} }],
+        ["LayoutHandle", :layout_handle, Proc.new { |h| {"Id" => h[:id]} }],
+        ["AttentionHandle", :attention_handle],
+        ["YourReferenceHandle", :your_reference_handle],
+        ["OurReferenceHandle", :our_reference_handle],
+        ["Balance", :balance]
+      ]
     end
   end
 end

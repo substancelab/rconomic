@@ -131,36 +131,36 @@ module Economic
 
     protected
 
-    # Returns Hash with the properties of CurrentInvoice in the correct order,
-    # camelcased and ready to be sent via SOAP
     def build_soap_data
-      data = {}
+      Entity::Mapper.new(self, fields).to_hash
+    end
 
-      data['Id'] = id
-      data['DebtorHandle'] = debtor.handle.to_hash unless debtor.blank?
-      data['DebtorName'] = debtor_name
-      data['DebtorAddress'] = debtor_address unless debtor_address.blank?
-      data['DebtorPostalCode'] = debtor_postal_code unless debtor_postal_code.blank?
-      data['DebtorCity'] = debtor_city unless debtor_city.blank?
-      data['DebtorCountry'] = debtor_country unless debtor_country.blank?
-      data['AttentionHandle'] = { 'Id' => attention_handle[:id] } unless attention_handle.blank?
-      data['Date'] = date.iso8601 unless date.blank?
-      data['TermOfPaymentHandle'] = { 'Id' => term_of_payment_handle[:id] } unless term_of_payment_handle.blank?
-      data['DueDate'] = (due_date.blank? ? nil : due_date.iso8601)
-      data['CurrencyHandle'] = { 'Code' => currency_handle[:code] } unless currency_handle.blank?
-      data['ExchangeRate'] = exchange_rate
-      data['IsVatIncluded'] = is_vat_included
-      data['LayoutHandle'] = { 'Id' => layout_handle[:id] } unless layout_handle.blank?
-      data['DeliveryDate'] = delivery_date ? delivery_date.iso8601 : nil
-      data['Heading'] = heading unless heading.blank?
-      data['NetAmount'] = net_amount
-      data['VatAmount'] = vat_amount
-      data['GrossAmount'] = gross_amount
-      data['Margin'] = margin
-      data['MarginAsPercent'] = margin_as_percent
-
-      return data
+    def fields
+      date_formatter = Proc.new { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
+      [
+        ["Id", :id, nil, :required],
+        ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
+        ["DebtorName", :debtor_name, nil, :required],
+        ["DebtorAddress", :debtor_address],
+        ["DebtorPostalCode", :debtor_postal_code],
+        ["DebtorCity", :debtor_city],
+        ["DebtorCountry", :debtor_country],
+        ["AttentionHandle", :attention_handle, Proc.new { |h| {"Id" => h[:id]}}],
+        ["Date", :date, date_formatter],
+        ["TermOfPaymentHandle", :term_of_payment_handle, Proc.new { |h| {"Id" => h[:id]} }],
+        ["DueDate", :due_date, date_formatter, :required],
+        ["CurrencyHandle", :currency_handle, Proc.new { |h| {"Code" => h[:code]} }],
+        ["ExchangeRate", :exchange_rate],
+        ["IsVatIncluded", :is_vat_included, nil, :required],
+        ["LayoutHandle", :layout_handle, Proc.new { |h| {"Id" => h[:id]} }],
+        ["DeliveryDate", :delivery_date, date_formatter, :required],
+        ["Heading", :heading],
+        ["NetAmount", :net_amount, nil, :required],
+        ["VatAmount", :vat_amount, nil, :required],
+        ["GrossAmount", :gross_amount, nil, :required],
+        ["Margin", :margin, nil, :required],
+        ["MarginAsPercent", :margin_as_percent, nil, :required]
+      ]
     end
   end
-
 end

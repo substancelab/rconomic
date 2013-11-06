@@ -74,41 +74,43 @@ module Economic
     protected
 
     def build_soap_data
-      data = {}
+      Entity::Mapper.new(self, fields).to_hash
+    end
 
-      data['Handle'] = handle.to_hash unless handle.empty?
-      data['Id1'] = id1 unless id1.blank?
-      data['Id2'] = id2 unless id2.blank?
-      data['Type'] = type unless type.blank?
-      data['CashBookHandle'] = { 'Number' => cash_book_handle[:number] } unless cash_book_handle.blank?
-      data['DebtorHandle'] = { 'Number' => debtor_handle[:number] } unless debtor_handle.blank?
-      data['CreditorHandle'] = { 'Number' => creditor_handle[:number] } unless creditor_handle.blank?
-      data['AccountHandle'] = { 'Number' => account_handle[:number] } unless account_handle.blank?
-      data['ContraAccountHandle'] = { 'Number' => contra_account_handle[:number] } unless contra_account_handle.blank?
-      data['Date'] = date
-      data['VoucherNumber'] = voucher_number
-      data['Text'] = text
-      data['AmountDefaultCurrency'] = amount_default_currency
-      data['CurrencyHandle'] = { 'Code' => currency_handle[:code] } unless currency_handle.blank?
-      data['Amount'] = amount
-      data['VatAccountHandle'] = { 'Number' => vat_account_handle[:number] } unless vat_account_handle.blank?
-      data['ContraVatAccountHandle'] = { 'Number' => contra_vat_account_handle[:number] } unless contra_vat_account_handle.blank?
-      data['DebtorInvoiceNumber'] = debtor_invoice_number unless debtor_invoice_number.blank?
-      data['CreditorInvoiceNumber'] = creditor_invoice_number unless creditor_invoice_number.blank?
-      data['DueDate'] = due_date
-      data['DepartmentHandle'] = { 'Number' => department_handle[:number] } unless department_handle.blank?
-      data['DistributionKeyHandle'] = { 'Number' => distribution_key_handle[:number] } unless distribution_key_handle.blank?
-      data['ProjectHandle'] = { 'Number' => project_handle[:number] } unless project_handle.blank?
-      data['CostTypeHandle'] = { 'Number' => cost_type_handle[:number] } unless cost_type_handle.blank?
-      data['BankPaymentTypeHandle'] = { 'Number' => bank_payment_type_handle[:number] } unless bank_payment_type_handle.blank?
-      data['BankPaymentCreditorId'] = bank_payment_creditor_id unless bank_payment_creditor_id.blank?
-      data['BankPaymentCreditorInvoiceId'] = bank_payment_creditor_invoice_id unless bank_payment_creditor_invoice_id.blank?
-      data['CapitaliseHandle'] = { 'Number' => capitalise_handle[:number] } unless capitalise_handle.blank?
-      data['StartDate'] = start_date
-      data['EndDate'] = end_date
-      data['EmployeeHandle'] = { 'Number' => employee_handle[:number] } unless employee_handle.blank?
-
-      return data
+    def fields
+      hash_with_number = Proc.new { |handle| {"Number" => handle[:number]} }
+      [
+        ["Handle", :handle, Proc.new { |v| v.to_hash }],
+        ["Id1", :id1],
+        ["Id2", :id2],
+        ["Type", :type],
+        ["CashBookHandle", :cash_book_handle, hash_with_number],
+        ["DebtorHandle", :debtor_handle, hash_with_number],
+        ["AccountHandle", :account_handle, hash_with_number],
+        ["ContraAccountHandle", :contra_account_handle, hash_with_number],
+        ["Date", :date, nil, :required],
+        ["VoucherNumber", :voucher_number, nil, :required],
+        ["Text", :text, nil, :required],
+        ["AmountDefaultCurrency", :amount_default_currency, nil, :required],
+        ["CurrencyHandle", :currency_handle, Proc.new { |v| {"Code" => v[:code]} }],
+        ["Amount", :amount, nil, :required],
+        ["VatAccountHandle", :vat_account_handle, hash_with_number],
+        ["ContraVatAccountHandle", :contra_vat_account_handle, hash_with_number],
+        ["DebtorInvoiceNumber", :debtor_invoice_number],
+        ["CreditorInvoiceNumber", :creditor_invoice_number],
+        ["DueDate", :due_date, nil, :required],
+        ["DepartmentHandle", :department_handle, hash_with_number],
+        ["DistributionKeyHandle", :distribution_key_handle, hash_with_number],
+        ["ProjectHandle", :project_handle, hash_with_number],
+        ["CostTypeHandle", :cost_type_handle, hash_with_number],
+        ["BankPaymentTypeHandle", :bank_payment_type_handle, hash_with_number],
+        ["BankPaymentCreditorId", :bank_payment_creditor_id],
+        ["BankPaymentCreditorInvoiceId", :bank_payment_creditor_invoice_id],
+        ["CapitaliseHandle", :capitalise_handle, hash_with_number],
+        ["StartDate", :start_date, nil, :required],
+        ["EndDate", :end_date, nil, :required],
+        ["EmployeeHandle", :employee_handle, hash_with_number]
+      ]
     end
   end
 end

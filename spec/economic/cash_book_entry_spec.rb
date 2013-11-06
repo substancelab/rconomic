@@ -23,6 +23,28 @@ describe Economic::CashBookEntry do
       stub_request('CashBookEntry_CreateFromData', nil, :success)
       subject.save
     end
-  end
 
+    it "builds and sends data to API" do
+      time = Time.now
+      subject.date = subject.start_date = time
+      subject.account_handle = Economic::Entity::Handle.new(:number => 12)
+      mock_request(
+        :cash_book_entry_create_from_data, {
+          "data" => {
+            "AccountHandle" => {"Number" => 12},
+            "Date" => time,
+            "VoucherNumber" => 0,
+            "Text" => "",
+            "AmountDefaultCurrency" => 0,
+            "Amount" => 0,
+            "DueDate" => nil,
+            "StartDate" => time,
+            "EndDate" => nil
+          }
+        },
+        :success
+      )
+      subject.save
+    end
+  end
 end

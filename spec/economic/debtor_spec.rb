@@ -93,4 +93,26 @@ describe Economic::Debtor do
     end
   end
 
+  describe "#save" do
+    it 'should save it' do
+      stub_request('Debtor_CreateFromData', nil, :success)
+      subject.save
+    end
+
+    it "builds and sends data to API" do
+      mock_request(
+        :debtor_create_from_data, {
+          "data" => {
+            "Handle" => {},
+            "Number" => nil,
+            "Name" => nil,
+            "VatZone" => nil,
+            "IsAccessible" => nil
+          }
+        },
+        :success
+      )
+      subject.save
+    end
+  end
 end
