@@ -48,8 +48,14 @@ describe Economic::Invoice do
 
     it "should be set- and gettable" do
       subject.attention = contact
-      expect(subject.attention_handle).to eq(contact.handle)
       expect(subject.attention).to eq(contact)
+    end
+
+    it "updates the handle" do
+      handle = Economic::Entity::Handle.new(:number => 42)
+      contact.handle = handle
+      subject.attention = contact
+      expect(subject.attention_handle).to eq(handle)
     end
   end
 
@@ -58,8 +64,14 @@ describe Economic::Invoice do
 
     it "should be set- and gettable" do
       subject.debtor = debtor
-      expect(subject.debtor_handle).to eq(debtor.handle)
       expect(subject.debtor).to eq(debtor)
+    end
+
+    it "updates the handle" do
+      handle = Economic::Entity::Handle.new(:number => 42)
+      debtor.handle = handle
+      subject.debtor = debtor
+      expect(subject.debtor_handle).to eq(handle)
     end
   end
 end
