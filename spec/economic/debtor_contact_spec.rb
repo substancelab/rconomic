@@ -27,9 +27,10 @@ describe Economic::DebtorContact do
     it "builds and sends data to API" do
       mock_request(
         :debtor_contact_create_from_data,
-        {"data" => {"Handle" => {}, "Id" => nil, "Name" => nil, "IsToReceiveEmailCopyOfOrder" => false, "IsToReceiveEmailCopyOfInvoice" => false}},
+        {"data" => {"Handle" => {}, "Id" => nil, "Name" => nil, "Number" => 42, "IsToReceiveEmailCopyOfOrder" => false, "IsToReceiveEmailCopyOfInvoice" => false}},
         :success
       )
+      subject.number = 42
       subject.save
     end
   end

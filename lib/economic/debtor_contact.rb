@@ -61,7 +61,7 @@ module Economic
         ["Id", :handle, Proc.new { |v| v.id }, :required],
         ["DebtorHandle", :debtor, Proc.new { |v| v.handle.to_hash }],
         ["Name", :name, nil, :required],
-        ["Number", :handle, Proc.new { |v| v.number }],
+        ["Number", :number],
         ["TelephoneNumber", :telephone_number],
         ["Email", :email],
         ["Comments", :comments],
