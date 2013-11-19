@@ -53,7 +53,7 @@ module Economic
       :balance
 
     def handle
-      @handle ||= Handle.new({:number => @number})
+      @handle || Handle.new({:number => @number})
     end
 
     # Returns the Debtors contacts

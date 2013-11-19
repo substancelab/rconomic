@@ -38,7 +38,7 @@ describe Economic::CurrentInvoiceLineProxy do
     end
 
     it "adds the built line to proxy items" do
-      line = subject.build
+      line = subject.build(:number => 5)
       expect(subject.first).to eq(line)
     end
 
@@ -74,7 +74,7 @@ describe Economic::CurrentInvoiceLineProxy do
     end
 
     it "can be appended to" do
-      line = Economic::CurrentInvoiceLine.new
+      line = Economic::CurrentInvoiceLine.new(:number => 5)
       subject << line
       expect(subject.last).to eq(line)
     end

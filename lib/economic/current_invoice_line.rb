@@ -39,7 +39,7 @@ module Economic
     )
 
     def handle
-      @handle ||= Handle.build(:number => number)
+      @handle || Handle.build(:number => number)
     end
 
     def invoice

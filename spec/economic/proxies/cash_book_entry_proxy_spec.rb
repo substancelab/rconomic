@@ -8,6 +8,7 @@ describe Economic::CashBookEntryProxy do
 
   describe ".new" do
     it "stores owner" do
+      subject.owner.number = 2
       expect(subject.owner).to eq(cash_book)
     end
 
@@ -55,7 +56,7 @@ describe Economic::CashBookEntryProxy do
     it 'should not send handles that were not given' do
       stub_request('CashBookEntry_CreateCreditorInvoice', {"cashBookHandle" => { 'Number' => 42 }}, :success)
       stub_request('CashBookEntry_GetData', {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
-      cash_book.handle.number = 42
+      cash_book.number = 42
       cash_book_entry = subject.create_creditor_invoice({:number => 13})
       expect(cash_book_entry).to be_instance_of(Economic::CashBookEntry)
     end

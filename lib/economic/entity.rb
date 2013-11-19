@@ -68,7 +68,7 @@ module Economic
     end
 
     def handle
-      @handle ||= Handle.build({:number => @number, :id => @id})
+      @handle || Handle.build({:number => @number, :id => @id})
     end
 
     def handle=(handle)
