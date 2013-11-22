@@ -18,35 +18,51 @@ module Economic
         @default_values || {}
       end
 
+      # Create a setter method for property that converts its input to a Handle
+      def handle_writer(property)
+        define_method "#{property}=" do |value|
+          value = Economic::Entity::Handle.new(value) if value
+          instance_variable_set("@#{property}", value)
+        end
+      end
+
       def properties_not_triggering_full_load
         [:id, :number, :handle]
+      end
+
+      # Create a property getter that loads the full Entity from the API if
+      # necessary
+      def property_reader(property)
+        define_method "#{property}" do
+          value = instance_variable_get("@#{property}")
+          if value.nil? && partial? && persisted?
+            instance_variable_get("@#{property}")
+          else
+            value
+          end
+        end
+      end
+
+      # Create a property setter for property
+      def property_writer(property)
+        if property.to_s.end_with?("_handle")
+          handle_writer property
+        else
+          # Just use regular writers
+          attr_writer property
+        end
       end
 
       def has_properties(*properties)
         @properties = properties
         properties.each do |property|
+          # Create a getter for property
           unless properties_not_triggering_full_load.include?(property)
-            # Create property accessors that loads the full Entity from the API
-            # if necessary
-            define_method "#{property}" do
-              value = instance_variable_get("@#{property}")
-              if value.nil? && partial? && persisted?
-                instance_variable_get("@#{property}")
-              else
-                value
-              end
-            end
+            property_reader property
           end
 
-          if property.to_s.end_with?("_handle")
-            define_method "#{property}=" do |value|
-              value = Economic::Entity::Handle.new(value) if value
-              instance_variable_set("@#{property}", value)
-            end
-          else
-            # Just use regular writers
-            attr_writer property
-          end
+          # Create a setter for property
+          property_writer property
         end
       end
 
