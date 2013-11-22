@@ -146,7 +146,7 @@ module Economic
         ["Date", :date, date_formatter],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
-        ["CurrencyHandle", :currency_handle, Proc.new { |h| {"Code" => h[:code]} }],
+        ["CurrencyHandle", :currency_handle, to_hash],
         ["ExchangeRate", :exchange_rate],
         ["IsVatIncluded", :is_vat_included, nil, :required],
         ["LayoutHandle", :layout_handle, to_hash],

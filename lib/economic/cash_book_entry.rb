@@ -88,7 +88,7 @@ module Economic
         ["VoucherNumber", :voucher_number, nil, :required],
         ["Text", :text, nil, :required],
         ["AmountDefaultCurrency", :amount_default_currency, nil, :required],
-        ["CurrencyHandle", :currency_handle, Proc.new { |v| {"Code" => v[:code]} }],
+        ["CurrencyHandle", :currency_handle, to_hash],
         ["Amount", :amount, nil, :required],
         ["VatAccountHandle", :vat_account_handle, to_hash],
         ["ContraVatAccountHandle", :contra_vat_account_handle, to_hash],

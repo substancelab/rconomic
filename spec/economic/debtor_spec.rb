@@ -119,7 +119,7 @@ describe Economic::Debtor do
       )
 
       subject.debtor_group_handle = Economic::Entity::Handle.new({:number => 42})
-      subject.currency_handle = {:code => 'BTC'}
+      subject.currency_handle = Economic::Entity::Handle.new({:code => 'BTC'})
       subject.price_group_handle = Economic::Entity::Handle.new({:number => 37})
       subject.term_of_payment_handle = Economic::Entity::Handle.new({:id => 314})
       subject.layout_handle = Economic::Entity::Handle.new({:id => 21})

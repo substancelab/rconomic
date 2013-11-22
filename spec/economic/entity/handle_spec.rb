@@ -168,10 +168,10 @@ describe Economic::Entity::Handle do
   end
 
   describe ".to_hash" do
-    subject { Economic::Entity::Handle.new({:id => 42, :number => 37, :serial_number => 7}) }
+    subject { Economic::Entity::Handle.new({:id => 42, :number => 37, :serial_number => 7, :code => "USD", :vat_code => 1}) }
 
     it "should return a handle for putting into the body of a SOAP request" do
-      expect(subject.to_hash).to eq({'Id' => 42, 'Number' => 37, 'SerialNumber' => 7})
+      expect(subject.to_hash).to eq({'Id' => 42, 'Number' => 37, 'SerialNumber' => 7, 'Code' => 'USD', 'VatCode' => 1})
     end
 
     it "includes only the named value in the hash" do
@@ -182,6 +182,5 @@ describe Economic::Entity::Handle do
       expect(subject.to_hash([:id, :serial_number])).to eq({'Id' => 42, 'SerialNumber' => 7})
     end
   end
-
 end
 

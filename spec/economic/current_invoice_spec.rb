@@ -38,7 +38,7 @@ describe Economic::CurrentInvoice do
         subject.date = time
         subject.attention_handle = Economic::Entity::Handle.new(:id => 42)
         subject.term_of_payment_handle = Economic::Entity::Handle.new(:id => 37)
-        subject.currency_handle = {:code => "BTC"}
+        subject.currency_handle = Economic::Entity::Handle.new({:code => "BTC"})
         subject.layout_handle = Economic::Entity::Handle.new(:id => 314)
 
         mock_request(

@@ -77,7 +77,7 @@ module Economic
         ["DebtorGroupHandle", :debtor_group_handle, to_hash],
         ["Name", :name, nil, :required],
         ["VatZone", :vat_zone, nil, :required],
-        ["CurrencyHandle", :currency_handle, Proc.new { |h| {"Code" => h[:code]} }],
+        ["CurrencyHandle", :currency_handle, to_hash],
         ["PriceGroupHandle", :price_group_handle, to_hash],
         ["IsAccessible", :is_accessible, nil, :required],
         ["Ean", :ean],
