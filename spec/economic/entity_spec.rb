@@ -1,7 +1,7 @@
 require './spec/spec_helper'
 
 class Account < Economic::Entity
-  has_properties :id, :foo, :baz
+  has_properties :id, :foo, :baz, :bar_handle
 
   def build_soap_data; {:foo => "bar"}; end
   def existing_method; end
@@ -56,6 +56,20 @@ describe Economic::Entity do
         expect(subject).to receive(:attr_writer).with(:name)
         expect(subject).to receive(:attr_writer).with(:age)
         subject.has_properties :name, :age
+      end
+
+      describe "setter for handles" do
+        subject { Account.new }
+
+        it "accepts a Handle" do
+          subject.bar_handle = Economic::Entity::Handle.new(:id => 2)
+          expect(subject.bar_handle.id).to eq(2)
+        end
+
+        it "converts Hash input to Handle" do
+          subject.bar_handle = {:id => 1}
+          expect(subject.bar_handle).to eq(Economic::Entity::Handle.new(:id => 1))
+        end
       end
 
       it "does not create setter or getter for id'ish properties" do

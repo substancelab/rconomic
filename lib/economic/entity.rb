@@ -38,8 +38,15 @@ module Economic
             end
           end
 
-          # Just use regular writers
-          attr_writer property
+          if property.to_s.end_with?("_handle")
+            define_method "#{property}=" do |value|
+              value = Economic::Entity::Handle.new(value) if value
+              instance_variable_set("@#{property}", value)
+            end
+          else
+            # Just use regular writers
+            attr_writer property
+          end
         end
       end
 
