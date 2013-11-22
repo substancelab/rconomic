@@ -73,10 +73,6 @@ module Economic
 
     protected
 
-    def build_soap_data
-      Entity::Mapper.new(self, fields).to_hash
-    end
-
     def fields
       hash_with_number = Proc.new { |handle| {"Number" => handle[:number]} }
       [

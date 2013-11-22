@@ -41,10 +41,6 @@ module Economic
 
     protected
 
-    def build_soap_data
-      Economic::Entity::Mapper.new(self, fields).to_hash
-    end
-
     def fields
       # SOAP field, entity method, formatter proc, required?
       [

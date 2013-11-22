@@ -69,10 +69,6 @@ module Economic
 
     protected
 
-    def build_soap_data
-      Entity::Mapper.new(self, fields).to_hash
-    end
-
     def fields
       [
         ["Handle", :handle, Proc.new { |h| h.to_hash }, :required],

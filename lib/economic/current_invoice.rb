@@ -131,10 +131,6 @@ module Economic
 
     protected
 
-    def build_soap_data
-      Entity::Mapper.new(self, fields).to_hash
-    end
-
     def fields
       date_formatter = Proc.new { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
       [
