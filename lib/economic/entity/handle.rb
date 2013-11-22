@@ -1,12 +1,28 @@
 class Economic::Entity
   class Handle
-    attr_accessor :code, :id, :id1, :id2, :number, :serial_number, :vat_code
-
     def self.build(options)
       return options if options.is_a?(Handle)
       return nil if options.nil?
       new(options)
     end
+
+    def self.id_properties
+      {
+        :code => 'Code',
+        :id => 'Id',
+        :id1 => 'Id1',
+        :id2 => 'Id2',
+        :number => 'Number',
+        :serial_number => 'SerialNumber',
+        :vat_code => 'VatCode'
+      }
+    end
+
+    def self.supported_keys
+      id_properties.keys
+    end
+
+    attr_accessor *supported_keys
 
     # Returns true if Handle hasn't been initialized with any values yet. This
     # usually happens when the handle is constructed for an entity whose id
@@ -19,38 +35,26 @@ class Economic::Entity
       verify_sanity_of_arguments!(hash)
       hash = prepare_hash_argument(hash) unless hash.is_a?(self.class)
 
-      @code = hash[:code] if hash[:code]
-      @id = hash[:id].to_i if hash[:id]
-      @id1 = hash[:id1].to_i if hash[:id1]
-      @id2 = hash[:id2].to_i if hash[:id2]
-      @number = hash[:number].to_i if hash[:number]
-      @serial_number = hash[:serial_number].to_i if hash[:serial_number]
-      @vat_code = hash[:vat_code] if hash[:vat_code]
+      [:code, :vat_code].each do |key|
+        instance_variable_set("@#{key}", hash[key]) if hash[key]
+      end
+      [:id, :id1, :id2, :number, :serial_number].each do |key|
+        instance_variable_set("@#{key}", hash[key].to_i) if hash[key]
+      end
     end
 
     def to_hash(only_keys = id_properties.keys)
       only_keys = [only_keys].flatten
-      hash = {}
-      hash['Code'] = code if only_keys.include?(:code) && !code.blank?
-      hash['Id'] = id if only_keys.include?(:id) && !id.blank?
-      hash['Id1'] = id1 unless id1.blank? if only_keys.include?(:id1)
-      hash['Id2'] = id2 unless id2.blank? if only_keys.include?(:id2)
-      hash['Number'] = number unless number.blank? if only_keys.include?(:number)
-      hash['SerialNumber'] = serial_number unless serial_number.blank? if only_keys.include?(:serial_number)
-      hash['VatCode'] = vat_code if only_keys.include?(:vat_code) && !vat_code.blank?
-      hash
+      only_keys.each_with_object({}) do |key, hash|
+        property = id_properties[key]
+        value = self.send(key)
+        next if value.blank?
+        hash[property] = value
+      end
     end
 
     def [](key)
-      {
-        :code => @code,
-        :id => @id,
-        :id1 => @id1,
-        :id2 => @id2,
-        :number => @number,
-        :serial_number => @serial_number,
-        :vat_code => @vat_code
-      }[key]
+      instance_variable_get("@#{key}")
     end
 
     def ==(other)
@@ -64,18 +68,11 @@ class Economic::Entity
     private
 
     def id_properties
-      {
-        :code => 'Code',
-        :id => 'Id',
-        :id1 => 'Id1',
-        :id2 => 'Id2',
-        :number => 'Number',
-        :serial_number => 'SerialNumber',
-        :vat_code => 'VatCode'
-      }
+      self.class.id_properties
     end
 
-    # Raises exceptions if hash doesn't contain values we can use to construct a new handle
+    # Raises exceptions if hash doesn't contain values we can use to construct a
+    # new handle
     def verify_sanity_of_arguments!(hash)
       return if hash.is_a?(self.class)
 
