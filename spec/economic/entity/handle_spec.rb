@@ -79,12 +79,6 @@ describe Economic::Entity::Handle do
       end).to raise_error(ArgumentError)
     end
 
-    it "should raise error if argument contains invalid values" do
-      expect(lambda do
-        Economic::Entity::Handle.new(:number => {:number => 12})
-      end).to raise_error(ArgumentError)
-    end
-
     it "should set id" do
       handle = Economic::Entity::Handle.new(:id => 12)
       expect(handle.id).to eq(12)

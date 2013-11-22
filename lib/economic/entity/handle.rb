@@ -83,9 +83,6 @@ class Economic::Entity
       if hash.respond_to?(:keys)
         unknown_keys = hash.keys - id_properties.keys - id_properties.values
         raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
-
-        not_to_iable = hash.select { |k, v| !v.respond_to?(:to_i) }
-        raise ArgumentError.new("All values must respond to to_i. #{not_to_iable.inspect} didn't") unless not_to_iable.empty?
       end
     end
 
