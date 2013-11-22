@@ -36,16 +36,24 @@ describe Economic::CurrentInvoice do
       it "builds and sends data to API" do
         time = Time.now
         subject.date = time
+        subject.attention_handle = Economic::Entity::Handle.new(:id => 42)
+        subject.term_of_payment_handle = Economic::Entity::Handle.new(:id => 37)
+        subject.currency_handle = {:code => "BTC"}
+        subject.layout_handle = Economic::Entity::Handle.new(:id => 314)
 
         mock_request(
           "CurrentInvoice_CreateFromData", {
             "data" => {
               "Id" => 512,
               "DebtorName" => nil,
+              "AttentionHandle" => {"Id" => 42},
               "Date" => time.iso8601,
+              "TermOfPaymentHandle" => {"Id" => 37},
               "DueDate" => nil,
+              "CurrencyHandle" => {"Code" => "BTC"},
               "ExchangeRate" => 100,
               "IsVatIncluded" => nil,
+              "LayoutHandle" => {"Id" => 314},
               "DeliveryDate" => nil,
               "NetAmount" => 0,
               "VatAmount" => 0,

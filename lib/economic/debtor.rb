@@ -70,14 +70,15 @@ module Economic
     protected
 
     def fields
+      to_hash = Proc.new { |handle| handle.to_hash }
       [
-        ["Handle", :handle, Proc.new { |h| h.to_hash }, :required],
+        ["Handle", :handle, to_hash, :required],
         ["Number", :handle, Proc.new { |h| h.number }, :required],
-        ["DebtorGroupHandle", :debtor_group_handle, Proc.new { |v| {"Number" => v[:number]} }],
+        ["DebtorGroupHandle", :debtor_group_handle, to_hash],
         ["Name", :name, nil, :required],
         ["VatZone", :vat_zone, nil, :required],
         ["CurrencyHandle", :currency_handle, Proc.new { |h| {"Code" => h[:code]} }],
-        ["PriceGroupHandle", :price_group_handle, Proc.new { |h| {"Number" => h[:number]} }],
+        ["PriceGroupHandle", :price_group_handle, to_hash],
         ["IsAccessible", :is_accessible, nil, :required],
         ["Ean", :ean],
         ["PublicEntryNumber", :public_entry_number],
@@ -92,8 +93,8 @@ module Economic
         ["VatNumber", :vat_number],
         ["County", :county],
         ["CINumber", :ci_number],
-        ["TermOfPaymentHandle", :term_of_payment_handle, Proc.new { |h| {"Id" => h[:id]} }],
-        ["LayoutHandle", :layout_handle, Proc.new { |h| {"Id" => h[:id]} }],
+        ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
+        ["LayoutHandle", :layout_handle, to_hash],
         ["AttentionHandle", :attention_handle],
         ["YourReferenceHandle", :your_reference_handle],
         ["OurReferenceHandle", :our_reference_handle],

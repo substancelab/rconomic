@@ -105,13 +105,25 @@ describe Economic::Debtor do
           "data" => {
             "Handle" => {},
             "Number" => nil,
+            "DebtorGroupHandle" => {"Number" => 42},
             "Name" => nil,
             "VatZone" => nil,
-            "IsAccessible" => nil
+            "CurrencyHandle" => {"Code" => "BTC"},
+            "PriceGroupHandle" => {"Number" => 37},
+            "IsAccessible" => nil,
+            "TermOfPaymentHandle" => {"Id" => 314},
+            "LayoutHandle" => {"Id" => 21}
           }
         },
         :success
       )
+
+      subject.debtor_group_handle = Economic::Entity::Handle.new({:number => 42})
+      subject.currency_handle = {:code => 'BTC'}
+      subject.price_group_handle = Economic::Entity::Handle.new({:number => 37})
+      subject.term_of_payment_handle = Economic::Entity::Handle.new({:id => 314})
+      subject.layout_handle = Economic::Entity::Handle.new({:id => 21})
+
       subject.save
     end
   end

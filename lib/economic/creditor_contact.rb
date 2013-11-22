@@ -42,11 +42,12 @@ module Economic
     protected
 
     def fields
+      to_hash = Proc.new { |handle| handle.to_hash }
       # SOAP field, entity method, formatter proc, required?
       [
         ["Handle", :handle, Proc.new { |v| v.to_hash }, :required],
         ["Id", :id, nil],
-        ["CreditorHandle", :creditor_handle, Proc.new {|v| {"Number" => v[:number]}}],
+        ["CreditorHandle", :creditor_handle, to_hash],
         ["Name", :name],
         ["Number", :handle, Proc.new { |v| v.number }, :required],
         ["TelephoneNumber", :telephone_number],

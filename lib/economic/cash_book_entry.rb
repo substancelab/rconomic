@@ -74,38 +74,38 @@ module Economic
     protected
 
     def fields
-      hash_with_number = Proc.new { |handle| {"Number" => handle[:number]} }
+      to_hash = Proc.new { |handle| handle.to_hash }
       [
         ["Handle", :handle, Proc.new { |v| v.to_hash }],
         ["Id1", :id1],
         ["Id2", :id2],
         ["Type", :type],
-        ["CashBookHandle", :cash_book_handle, hash_with_number],
-        ["DebtorHandle", :debtor_handle, hash_with_number],
-        ["AccountHandle", :account_handle, hash_with_number],
-        ["ContraAccountHandle", :contra_account_handle, hash_with_number],
+        ["CashBookHandle", :cash_book_handle, to_hash],
+        ["DebtorHandle", :debtor_handle, to_hash],
+        ["AccountHandle", :account_handle, to_hash],
+        ["ContraAccountHandle", :contra_account_handle, to_hash],
         ["Date", :date, nil, :required],
         ["VoucherNumber", :voucher_number, nil, :required],
         ["Text", :text, nil, :required],
         ["AmountDefaultCurrency", :amount_default_currency, nil, :required],
         ["CurrencyHandle", :currency_handle, Proc.new { |v| {"Code" => v[:code]} }],
         ["Amount", :amount, nil, :required],
-        ["VatAccountHandle", :vat_account_handle, hash_with_number],
-        ["ContraVatAccountHandle", :contra_vat_account_handle, hash_with_number],
+        ["VatAccountHandle", :vat_account_handle, to_hash],
+        ["ContraVatAccountHandle", :contra_vat_account_handle, to_hash],
         ["DebtorInvoiceNumber", :debtor_invoice_number],
         ["CreditorInvoiceNumber", :creditor_invoice_number],
         ["DueDate", :due_date, nil, :required],
-        ["DepartmentHandle", :department_handle, hash_with_number],
-        ["DistributionKeyHandle", :distribution_key_handle, hash_with_number],
-        ["ProjectHandle", :project_handle, hash_with_number],
-        ["CostTypeHandle", :cost_type_handle, hash_with_number],
-        ["BankPaymentTypeHandle", :bank_payment_type_handle, hash_with_number],
+        ["DepartmentHandle", :department_handle, to_hash],
+        ["DistributionKeyHandle", :distribution_key_handle, to_hash],
+        ["ProjectHandle", :project_handle, to_hash],
+        ["CostTypeHandle", :cost_type_handle, to_hash],
+        ["BankPaymentTypeHandle", :bank_payment_type_handle, to_hash],
         ["BankPaymentCreditorId", :bank_payment_creditor_id],
         ["BankPaymentCreditorInvoiceId", :bank_payment_creditor_invoice_id],
-        ["CapitaliseHandle", :capitalise_handle, hash_with_number],
+        ["CapitaliseHandle", :capitalise_handle, to_hash],
         ["StartDate", :start_date, nil, :required],
         ["EndDate", :end_date, nil, :required],
-        ["EmployeeHandle", :employee_handle, hash_with_number]
+        ["EmployeeHandle", :employee_handle, to_hash]
       ]
     end
   end

@@ -133,6 +133,7 @@ module Economic
 
     def fields
       date_formatter = Proc.new { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
+      to_hash = Proc.new { |handle| handle.to_hash }
       [
         ["Id", :id, nil, :required],
         ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
@@ -141,14 +142,14 @@ module Economic
         ["DebtorPostalCode", :debtor_postal_code],
         ["DebtorCity", :debtor_city],
         ["DebtorCountry", :debtor_country],
-        ["AttentionHandle", :attention_handle, Proc.new { |h| {"Id" => h[:id]}}],
+        ["AttentionHandle", :attention_handle, to_hash],
         ["Date", :date, date_formatter],
-        ["TermOfPaymentHandle", :term_of_payment_handle, Proc.new { |h| {"Id" => h[:id]} }],
+        ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
         ["CurrencyHandle", :currency_handle, Proc.new { |h| {"Code" => h[:code]} }],
         ["ExchangeRate", :exchange_rate],
         ["IsVatIncluded", :is_vat_included, nil, :required],
-        ["LayoutHandle", :layout_handle, Proc.new { |h| {"Id" => h[:id]} }],
+        ["LayoutHandle", :layout_handle, to_hash],
         ["DeliveryDate", :delivery_date, date_formatter, :required],
         ["Heading", :heading],
         ["NetAmount", :net_amount, nil, :required],
