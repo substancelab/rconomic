@@ -12,6 +12,7 @@ class Economic::Entity
         :id => 'Id',
         :id1 => 'Id1',
         :id2 => 'Id2',
+        :name => 'Name',
         :number => 'Number',
         :serial_number => 'SerialNumber',
         :vat_code => 'VatCode'
@@ -35,7 +36,7 @@ class Economic::Entity
       verify_sanity_of_arguments!(hash)
       hash = prepare_hash_argument(hash) unless hash.is_a?(self.class)
 
-      [:code, :vat_code].each do |key|
+      [:code, :name, :vat_code].each do |key|
         instance_variable_set("@#{key}", hash[key]) if hash[key]
       end
       [:id, :id1, :id2, :number, :serial_number].each do |key|
