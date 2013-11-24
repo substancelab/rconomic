@@ -35,33 +35,32 @@ module Economic
 
     protected
 
-    def build_soap_data
-      data = {}
-
-      data['Handle'] = handle.to_hash
-      data['Number'] = handle.number
-      data['CreditorGroupHandle'] = { 'Number' => creditor_group_handle[:number] } unless creditor_group_handle.blank?
-      data['Name'] = name unless name.blank?
-      data['VatZone'] = vat_zone unless vat_zone.blank?
-      data['CurrencyHandle'] = { 'Code' => currency_handle[:code] } unless currency_handle.blank?
-      data['TermOfPaymentHandle'] = { 'Id' => term_of_payment_handle[:id] } unless term_of_payment_handle.blank?
-      data['IsAccessible'] = is_accessible unless is_accessible.blank?
-      data['CINumber'] = ci_number unless ci_number.blank?
-      data['Email'] = email unless email.blank?
-      data['Address'] = address unless address.blank?
-      data['PostalCode'] = postal_code unless postal_code.blank?
-      data['City'] = city unless city.blank?
-      data['Country'] = country unless country.blank?
-      data['BankAccount'] = bank_account unless bank_account.blank?
-      data['AttentionHandle'] = { 'Id' => attention_handle[:id] } unless attention_handle.blank?
-      data['YourReferenceHandle'] = { 'Id' => your_reference_handle[:id] } unless your_reference_handle.blank?
-      data['OurReferenceHandle'] = { 'Number' => our_reference_handle[:number] } unless our_reference_handle.blank?
-      data['DefaultPaymentTypeHandle'] = { 'Number' => default_payment_type_handle[:number] } unless default_payment_type_handle.blank?
-      data['DefaultPaymentCreditorId'] = default_payment_creditor_id unless default_payment_creditor_id.blank?
-      data['County'] = county unless county.blank?
-      data['AutoContraAccountHandle'] = { 'Number' => auto_contra_account_handle[:number] } unless auto_contra_account_handle.blank?
-
-      data
+    def fields
+      to_hash = Proc.new { |h| h.to_hash }
+      [
+        ["Handle", :handle, to_hash, :required],
+        ["Number", :number, nil, :required],
+        ["CreditorGroupHandle", :creditor_group_handle, to_hash],
+        ["Name", :name],
+        ["VatZone", :vat_zone],
+        ["CurrencyHandle", :currency_handle, to_hash],
+        ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
+        ["IsAccessible", :is_accessible],
+        ["CINumber", :ci_number],
+        ["Email", :email],
+        ["Address", :address],
+        ["PostalCode", :postal_code],
+        ["City", :city],
+        ["Country", :country],
+        ["BankAccount", :bank_account],
+        ["AttentionHandle", :attention_handle, to_hash],
+        ["YourReferenceHandle", :your_reference_handle, to_hash],
+        ["OurReferenceHandle", :our_reference_handle, to_hash],
+        ["DefaultPaymentTypeHandle", :default_payment_type_handle, to_hash],
+        ["DefaultPaymentCreditorId", :default_payment_creditor_id, to_hash],
+        ["County", :county],
+        ["AutoContraAccountHandle", :auto_contra_account_handle, to_hash]
+      ]
     end
   end
 end

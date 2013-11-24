@@ -45,4 +45,25 @@ describe Economic::CurrentInvoiceLine do
     end
   end
 
+  describe "#save" do
+    context "when successful" do
+      it "builds and sends data to API" do
+        mock_request(
+          "CurrentInvoiceLine_CreateFromData", {
+            "data" => {
+              "Number" => 0,
+              "DeliveryDate" => nil,
+              "DiscountAsPercent" => 0,
+              "UnitCostPrice" => 0,
+              "TotalNetAmount" => nil,
+              "TotalMargin" => 0,
+              "MarginAsPercent" => 0
+            }
+          },
+          :success
+        )
+        subject.save
+      end
+    end
+  end
 end

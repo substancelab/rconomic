@@ -31,4 +31,32 @@ describe Economic::CashBook do
       expect(subject.book).to eq(832)
     end
   end
+
+  describe "#save" do
+    before :each do
+      subject.persisted = true
+    end
+
+    it 'should save it' do
+      stub_request('CashBook_UpdateFromData', nil, :success)
+      subject.save
+    end
+
+    it "builds and sends data to API" do
+      subject.handle = {"Number" => 42}
+      subject.name = "Bob"
+      subject.number = 42
+      mock_request(
+        :cash_book_update_from_data, {
+          "data" => {
+            "Handle" => {"Number" => 42},
+            "Name" => "Bob",
+            "Number" => 42
+          }
+        },
+        :success
+      )
+      subject.save
+    end
+  end
 end

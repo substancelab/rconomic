@@ -13,5 +13,22 @@ describe Economic::Account do
       stub_request('Account_CreateFromData', nil, :success)
       subject.save
     end
+
+    it "builds and sends data to API" do
+      subject.handle = {"Name" => "Bob"}
+      subject.name = "Bob"
+      subject.number = 42
+      mock_request(
+        :account_create_from_data, {
+          "data" => {
+            "Handle" => {"Name" => "Bob"},
+            "Name" => "Bob",
+            "Number" => 42
+          }
+        },
+        :success
+      )
+      subject.save
+    end
   end
 end

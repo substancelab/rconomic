@@ -26,12 +26,12 @@ module Economic
 
     protected
 
-    def build_soap_data
-      {
-        'Handle' => handle.to_hash,
-        'Name' => name,
-        'Number' => number
-      }
+    def fields
+      [
+        ["Handle", :handle, Proc.new { |h| h.to_hash }, :required],
+        ["Name", :name, nil, :required],
+        ["Number", :number, nil, :required]
+      ]
     end
   end
 end

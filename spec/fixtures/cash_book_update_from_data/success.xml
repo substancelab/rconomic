@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <CashBook_UpdateFromData xmlns="http://e-conomic.com">
+      <data>
+        <Handle>
+          <Number>int</Number>
+        </Handle>
+        <Number>int</Number>
+        <Name>string</Name>
+      </data>
+    </CashBook_UpdateFromData>
+  </soap:Body>
+</soap:Envelope>

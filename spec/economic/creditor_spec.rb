@@ -49,4 +49,23 @@ describe Economic::Creditor do
     end
   end
 
+  describe "#save" do
+    it 'should save it' do
+      stub_request('Creditor_CreateFromData', nil, :success)
+      subject.save
+    end
+
+    it "builds and sends data to API" do
+      mock_request(
+        :creditor_create_from_data, {
+          "data" => {
+            "Handle" => {},
+            "Number" => nil
+          }
+        },
+        :success
+      )
+      subject.save
+    end
+  end
 end
