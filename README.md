@@ -104,3 +104,9 @@ Credits
 -------
 
 Sponsored by [Lokalebasen.dk](http://lokalebasen.dk)
+
+
+License
+-------
+
+R-conomic is licensed under the MIT license. See LICENSE for details.
