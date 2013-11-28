@@ -48,7 +48,9 @@ module Economic
       :gross_amount,
       :margin,
       :margin_as_percent,
-      :heading
+      :heading,
+      :text_line1,
+      :text_line2
 
     defaults(
       :id => 0,
@@ -173,6 +175,8 @@ module Economic
         ["LayoutHandle", :layout_handle, to_hash],
         ["DeliveryDate", :delivery_date, date_formatter, :required],
         ["Heading", :heading],
+        ['TextLine1', :text_line1],
+        ['TextLine2', :text_line2],
         ["NetAmount", :net_amount, nil, :required],
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],
