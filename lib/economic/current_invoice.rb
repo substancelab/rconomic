@@ -27,7 +27,30 @@ module Economic
   #
   #   invoice.save
   class CurrentInvoice < Entity
-    has_properties :id, :debtor_handle, :debtor_name, :debtor_address, :debtor_postal_code, :debtor_city, :debtor_country, :attention_handle, :date, :term_of_payment_handle, :due_date, :currency_handle, :exchange_rate, :is_vat_included, :layout_handle, :delivery_date, :net_amount, :vat_amount, :gross_amount, :margin, :margin_as_percent, :heading
+    has_properties :id,
+      :debtor_handle,
+      :debtor_name,
+      :debtor_address,
+      :debtor_postal_code,
+      :debtor_city,
+      :debtor_country,
+      :attention_handle,
+      :date,
+      :term_of_payment_handle,
+      :due_date,
+      :currency_handle,
+      :exchange_rate,
+      :is_vat_included,
+      :layout_handle,
+      :delivery_date,
+      :net_amount,
+      :vat_amount,
+      :gross_amount,
+      :margin,
+      :margin_as_percent,
+      :heading,
+      :text_line1,
+      :text_line2
 
     defaults(
       :id => 0,
@@ -152,6 +175,8 @@ module Economic
         ["LayoutHandle", :layout_handle, to_hash],
         ["DeliveryDate", :delivery_date, date_formatter, :required],
         ["Heading", :heading],
+        ['TextLine1', :text_line1],
+        ['TextLine2', :text_line2],
         ["NetAmount", :net_amount, nil, :required],
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],
