@@ -27,7 +27,9 @@ class Economic::Endpoint
   # take several hundred megabytes of RAM after a while...)
   def client
     @@client ||= Savon.client do
-      wsdl File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
+      wsdl      File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
+      log       false
+      log_level :info
     end
   end
 
