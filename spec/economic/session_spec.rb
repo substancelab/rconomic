@@ -11,6 +11,14 @@ describe Economic::Session do
       expect(subject.user_name).to eq('api')
       expect(subject.password).to eq('passw0rd')
     end
+
+    it "yields the endpoint if a block is given" do
+      endpoint_mock = double("Endpoint")
+      Economic::Endpoint.stub(:new).and_return(endpoint_mock)
+      expect{|b|
+        Economic::Session.new(123456, 'api', 'passw0rd', &b)
+      }.to yield_with_args(endpoint_mock)
+    end
   end
 
   describe "connect" do
