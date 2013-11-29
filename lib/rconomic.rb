@@ -3,6 +3,7 @@ require 'time'
 require 'savon'
 
 require 'economic/support/string'
+require 'economic/support/soap_action_name'
 require 'economic/session'
 
 require 'economic/debtor'

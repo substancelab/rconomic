@@ -47,7 +47,7 @@ module Economic
 
         def request(action, data)
           @session.request(
-            Endpoint.new.soap_action_name(@caller.entity_class, action),
+            Support::SOAPActionName.for_entity_with_action(@caller.entity_class, action),
             data
           )
         end

@@ -58,14 +58,4 @@ describe Economic::Endpoint do
       expect(subject.client).to equal(subject.client)
     end
   end
-
-  describe "soap_action_name" do
-    it "returns full action name for the given class and soap action" do
-      expect(subject.soap_action_name(Economic::Debtor, :get_data)).to eq(:debtor_get_data)
-    end
-
-    it "returns full action name for a class given as strings" do
-      expect(subject.soap_action_name("FooBar", "Stuff")).to eq(:foo_bar_stuff)
-    end
-  end
 end
