@@ -2,6 +2,10 @@ module Economic
   # The Economic::Session contains details and behaviors for a current
   # connection to the API endpoint.
   class Session
+    extend Forwardable
+
+    def_delegators :endpoint, :logger=, :log_level=, :log=
+
     attr_accessor :agreement_number, :user_name, :password
     attr_reader :authentication_token
 

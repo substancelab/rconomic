@@ -2,6 +2,11 @@
 #
 # This is where all knowledge of SOAP actions and requests exists.
 class Economic::Endpoint
+  extend Forwardable
+
+  def_delegator "client.globals", :logger, :logger=
+  def_delegator "client.globals", :log_level, :log_level=
+  def_delegator "client.globals", :log, :log=
 
   # Invokes soap_action on the API endpoint with the given data.
   #
