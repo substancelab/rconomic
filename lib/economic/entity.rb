@@ -234,7 +234,7 @@ module Economic
     # Requests an action from the API endpoint
     def request(action, data = nil)
       session.request(
-        Endpoint.new.soap_action_name(self.class, action),
+        Support::SOAPActionName.for_entity_with_action(self.class, action),
         data
       )
     end
