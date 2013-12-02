@@ -11,6 +11,14 @@ describe Economic::Session do
       expect(subject.user_name).to eq('api')
       expect(subject.password).to eq('passw0rd')
     end
+
+    it "yields the endpoint if a block is given" do
+      endpoint_mock = double("Endpoint")
+      Economic::Endpoint.stub(:new).and_return(endpoint_mock)
+      expect{|b|
+        Economic::Session.new(123456, 'api', 'passw0rd', &b)
+      }.to yield_with_args(endpoint_mock)
+    end
   end
 
   describe "connect" do
@@ -135,4 +143,27 @@ describe Economic::Session do
     end
   end
 
+  describe "savon configuration" do
+    let(:endpoint) { double("Endpoint") }
+
+    before :each do
+      Economic::Endpoint.stub(:new).and_return(endpoint)
+    end
+
+    it "sets the log_level option of the endpoint" do
+      endpoint.should_receive(:log_level=).with(:info)
+      subject.log_level = :info
+    end
+
+    it "sets the log option of the endpoint" do
+      endpoint.should_receive(:log=).with(true)
+      subject.log = true
+    end
+
+    it "sets the logger option of the boolean" do
+      logger = double("MyLogger")
+      endpoint.should_receive(:logger=).with(logger)
+      subject.logger = logger
+    end
+  end
 end

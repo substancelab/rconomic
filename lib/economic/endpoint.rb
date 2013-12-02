@@ -2,6 +2,11 @@
 #
 # This is where all knowledge of SOAP actions and requests exists.
 class Economic::Endpoint
+  extend Forwardable
+
+  def_delegator "client.globals", :logger, :logger=
+  def_delegator "client.globals", :log_level, :log_level=
+  def_delegator "client.globals", :log, :log=
 
   # Invokes soap_action on the API endpoint with the given data.
   #
@@ -27,7 +32,9 @@ class Economic::Endpoint
   # take several hundred megabytes of RAM after a while...)
   def client
     @@client ||= Savon.client do
-      wsdl File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
+      wsdl      File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
+      log       false
+      log_level :info
     end
   end
 
