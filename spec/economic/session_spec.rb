@@ -65,6 +65,16 @@ describe Economic::Session do
     end
   end
 
+  it "is testing" do
+    economic = Economic::Session.new
+    economic.connect_with_token 'PU3UCZiHfsu2zxrfmhNgDdmU3Clvw8HlBOhy5E7Nzf01', '4rykqsOI83I6ORwALHU48z-0DqvHBxu-2JJhQHgXYsE1'
+
+    debtor = economic.debtors.find_by_telephone_and_fax_number("71999944")
+    invoices = economic.invoices.find_by_debtor_handle(debtor.handle)
+    invoices.map &:get_data
+    raise invoices.inspect
+  end
+
   describe "connecting with access ID" do
     # As per http://www.e-conomic.com/developer/tutorials
     let(:authentication_details) { {:appToken => 'the_private_app_id', :token => 'the_access_id_you_got_from_the_grant'} }
