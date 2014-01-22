@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Economic
   # The Economic::Session contains details and behaviors for a current
   # connection to the API endpoint.
@@ -9,11 +11,23 @@ module Economic
     attr_accessor :agreement_number, :user_name, :password
     attr_reader :authentication_token
 
-    def initialize(agreement_number, user_name, password)
+    def initialize(agreement_number = nil, user_name = nil, password = nil)
       self.agreement_number = agreement_number
       self.user_name = user_name
       self.password = password
       yield endpoint if block_given?
+    end
+
+    def connect_with_token(private_app_id, access_id)
+      endpoint.call(
+        :connect_with_token,
+        {
+          :token => access_id,
+          :appToken => private_app_id
+        }
+      ) do |response|
+        store_authentication_token(response)
+      end
     end
 
     # Authenticates with e-conomic
