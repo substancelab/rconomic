@@ -65,6 +65,53 @@ describe Economic::Session do
     end
   end
 
+  describe "connecting with access ID" do
+    # As per http://www.e-conomic.com/developer/tutorials
+    let(:authentication_details) { {:appToken => 'the_private_app_id', :token => 'the_access_id_you_got_from_the_grant'} }
+    let(:private_app_id) { authentication_details[:appToken] }
+    let(:access_id) { authentication_details[:token] }
+    subject { Economic::Session.new }
+    it "connects to e-conomic with tokens details" do
+      mock_request(:connect_with_token, authentication_details, :success)
+      subject.connect_with_token private_app_id, access_id
+    end
+
+    it "stores the authentication token for later requests" do
+      response = {
+        :headers => {'Set-Cookie' => 'cookie value from e-conomic'},
+        :body => fixture(:connect_with_token, :success)
+      }
+      stub_request('ConnectWithToken', authentication_details, response)
+
+      subject.connect_with_token private_app_id, access_id
+
+      expect(subject.authentication_token.collect { |cookie|
+        cookie.name_and_value.split("=").last
+      }).to eq(["cookie value from e-conomic"])
+    end
+
+    it "updates the authentication token for new sessions" do
+      stub_request("ConnectWithToken", nil, {:headers => {"Set-Cookie" => "authentication token"}})
+      subject.connect_with_token private_app_id, access_id
+
+      stub_request('Connect', nil, {:headers => {"Set-Cookie" => "another token"}})
+      other_session = Economic::Session.new(123456, 'api', 'passw0rd')
+      other_session.connect
+
+      expect(subject.authentication_token.collect { |cookie|
+        cookie.name_and_value.split("=").last
+      }).to eq(["authentication token"])
+      expect(other_session.authentication_token.collect { |cookie|
+        cookie.name_and_value.split("=").last
+      }).to eq(["another token"])
+    end
+
+    it "doesn't use existing authentication details when connecting" do
+      expect(endpoint).to receive(:call).with(:connect_with_token, instance_of(Hash))
+      subject.connect_with_token private_app_id, access_id
+    end
+  end
+
   describe ".endpoint" do
     it "returns Economic::Endpoint" do
       expect(subject.endpoint).to be_instance_of(Economic::Endpoint)

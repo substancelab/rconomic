@@ -13,13 +13,18 @@ Usage example
 
     economic = Economic::Session.new(123456, 'API', 'passw0rd')
     economic.connect
-    
+
+    # Or connect using a Private app ID and an access ID provided by the "Grant Access"
+    # As described here: http://www.e-conomic.com/developer/tutorials
+    economic = Economic::Session.new
+    economic.connect_with_token 'the_private_app_id', 'the_access_id_you_got_from_the_grant'
+
     # Find a debtor:
     debtor = economic.debtors.find(101)
-    
+
     # Creating a debtor:
     debtor = economic.debtors.build
-    
+
     debtor.number = economic.debtors.next_available_number
     debtor.debtor_group_handle = { :number => 1 }
     debtor.name = 'Bob'
@@ -31,14 +36,14 @@ Usage example
     debtor.term_of_payment_handle = { :id => 1 }
     debtor.layout_handle = { :id => 16 }
     debtor.save
-    
+
     # Create invoice for debtor:
     current_invoice = economic.current_invoices.build
     current_invoice.date = Time.now
     current_invoice.due_date = Time.now + 15
     current_invoice.exchange_rate = 100
     current_invoice.is_vat_included = false
-    
+
     invoice_line = Economic::CurrentInvoiceLine.new
     invoice_line.description = 'Line on invoice'
     invoice_line.unit_handle = { :number => 1 }

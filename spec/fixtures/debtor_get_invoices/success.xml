@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <Debtor_GetInvoicesResponse xmlns="http://e-conomic.com">
+      <Debtor_GetInvoicesResult>
+        <InvoiceHandle>
+          <Number>1</Number>
+        </InvoiceHandle>
+        <InvoiceHandle>
+          <Number>2</Number>
+        </InvoiceHandle>
+      </Debtor_GetInvoicesResult>
+    </Debtor_GetInvoicesResponse>
+  </soap:Body>
+</soap:Envelope>
