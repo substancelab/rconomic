@@ -1,15 +1,19 @@
 require './spec/spec_helper'
 
 describe Economic::Session do
-  subject { Economic::Session.new(123456, 'api', 'passw0rd') }
+  let(:credentials) { [123456, 'api', 'passw0rd'] }
+  subject { Economic::Session.new }
 
   let(:endpoint) { subject.endpoint }
 
   describe "new" do
-    it "should store authentication details" do
-      expect(subject.agreement_number).to eq(123456)
-      expect(subject.user_name).to eq('api')
-      expect(subject.password).to eq('passw0rd')
+    describe "legacy connect" do
+      subject { Economic::Session.new *credentials }
+      it "should store authentication details" do
+        expect(subject.agreement_number).to eq(123456)
+        expect(subject.user_name).to eq('api')
+        expect(subject.password).to eq('passw0rd')
+      end
     end
 
     it "yields the endpoint if a block is given" do
@@ -24,9 +28,15 @@ describe Economic::Session do
   describe "connect" do
     let(:authentication_details) { {:agreementNumber => 123456, :userName => 'api', :password => 'passw0rd'} }
 
+    it "can connect old-style" do
+      mock_request(:connect, authentication_details, :success)
+      e = Economic::Session.new(*credentials)
+      e.connect
+    end
+
     it "connects to e-conomic with authentication details" do
       mock_request(:connect, authentication_details, :success)
-      subject.connect
+      subject.connect_with_credentials(*credentials)
     end
 
     it "stores the authentication token for later requests" do
@@ -36,7 +46,7 @@ describe Economic::Session do
       }
       stub_request('Connect', authentication_details, response)
 
-      subject.connect
+      subject.connect_with_credentials(*credentials)
 
       expect(subject.authentication_token.collect { |cookie|
         cookie.name_and_value.split("=").last
@@ -45,11 +55,11 @@ describe Economic::Session do
 
     it "updates the authentication token for new sessions" do
       stub_request("Connect", nil, {:headers => {"Set-Cookie" => "authentication token"}})
-      subject.connect
+      subject.connect_with_credentials(*credentials)
 
       stub_request('Connect', nil, {:headers => {"Set-Cookie" => "another token"}})
-      other_session = Economic::Session.new(123456, 'api', 'passw0rd')
-      other_session.connect
+      other_session = Economic::Session.new
+      other_session.connect_with_credentials(123456, 'api', 'passw0rd')
 
       expect(subject.authentication_token.collect { |cookie|
         cookie.name_and_value.split("=").last
@@ -61,7 +71,7 @@ describe Economic::Session do
 
     it "doesn't use existing authentication details when connecting" do
       expect(endpoint).to receive(:call).with(:connect, instance_of(Hash))
-      subject.connect
+      subject.connect_with_credentials(*credentials)
     end
   end
 
@@ -95,8 +105,8 @@ describe Economic::Session do
       subject.connect_with_token private_app_id, access_id
 
       stub_request('Connect', nil, {:headers => {"Set-Cookie" => "another token"}})
-      other_session = Economic::Session.new(123456, 'api', 'passw0rd')
-      other_session.connect
+      other_session = Economic::Session.new
+      other_session.connect_with_credentials(123456, 'api', 'passw0rd')
 
       expect(subject.authentication_token.collect { |cookie|
         cookie.name_and_value.split("=").last

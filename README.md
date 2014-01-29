@@ -11,8 +11,8 @@ E-conomic is a web-based accounting system. For their marketing speak, see [http
 Usage example
 -------------
 
-    economic = Economic::Session.new(123456, 'API', 'passw0rd')
-    economic.connect
+    economic = Economic::Session.new
+    economic.connect_with_credentials(123456, 'API', 'passw0rd')
 
     # Or connect using a Private app ID and an access ID provided by the "Grant Access"
     # As described here: http://www.e-conomic.com/developer/tutorials
