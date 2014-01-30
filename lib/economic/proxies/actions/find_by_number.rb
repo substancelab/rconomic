@@ -5,7 +5,7 @@ module FindByNumber
       'number' => number
     })
 
-    if response == {}
+    if response.empty?
       nil
     else
       entity = build

@@ -16,7 +16,7 @@ module Economic
           'debtorHandle' => { 'Number' => handle.number }
         }
       )
-      if response == {}
+      if response.empty?
         nil
       else
         entities = []
