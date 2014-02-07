@@ -99,6 +99,11 @@ module Economic
       @entries ||= EntryProxy.new(self)
     end
 
+    # Provides access to products
+    def products
+      @products ||= ProductProxy.new(self)
+    end
+
     # Requests an action from the API endpoint
     def request(soap_action, data = nil)
       endpoint.call(soap_action, data, authentication_token)
