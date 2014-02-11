@@ -5,6 +5,7 @@ module Economic
     has_properties :number,
       :net_amount,
       :vat_amount,
+      :gross_amount,
       :due_date,
       :debtor_handle,
       :debtor_name,
