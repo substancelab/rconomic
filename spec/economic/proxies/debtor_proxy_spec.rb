@@ -68,6 +68,23 @@ describe Economic::DebtorProxy do
     end
   end
 
+  describe "find_by_telephone_and_fax_number" do
+    it "can find a debtor" do
+      mock_request('Debtor_FindByTelephoneAndFaxNumber', {'telephoneAndFaxNumber' => '22334455'}, :found)
+      result = subject.find_by_telephone_and_fax_number('22334455')
+      expect(result).to be_instance_of(Economic::Debtor)
+      expect(result.number).to eq(1)
+      expect(result.partial).to be_true
+      expect(result.persisted).to be_true
+    end
+
+    it "returns nil when there is no debtor" do
+      mock_request('Debtor_FindByTelephoneAndFaxNumber', {'telephoneAndFaxNumber' => '22334455'}, :not_found)
+      result = subject.find_by_telephone_and_fax_number('22334455')
+      expect(result).to be_nil
+    end
+  end
+
   describe "next_available_number" do
     it "gets the next available debtor number from API" do
       mock_request('Debtor_GetNextAvailableNumber', nil, :success)
@@ -112,4 +129,20 @@ describe Economic::DebtorProxy do
       expect(all.first).to be_instance_of(Economic::Debtor)
     end
   end
+
+  describe ".get_invoices" do
+    let(:handle) { Economic::Entity::Handle.new({:number => 1}) }
+    it "gets invoice data from API" do
+      mock_request('Debtor_GetInvoices', {"debtorHandle"=>{"Number"=>1}}, :success)
+      subject.get_invoices(handle)
+    end
+
+    it "returns Invoice object" do
+      stub_request('Debtor_GetInvoices', nil, :success)
+      subject.get_invoices(handle).each do |i|
+        expect(i).to be_instance_of(Economic::Invoice)
+      end
+    end
+  end
+
 end

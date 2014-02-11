@@ -1,3 +1,5 @@
+require 'forwardable'
+
 module Economic
   # The Economic::Session contains details and behaviors for a current
   # connection to the API endpoint.
@@ -9,21 +11,42 @@ module Economic
     attr_accessor :agreement_number, :user_name, :password
     attr_reader :authentication_token
 
-    def initialize(agreement_number, user_name, password)
+    def initialize(agreement_number = nil, user_name = nil, password = nil)
       self.agreement_number = agreement_number
       self.user_name = user_name
       self.password = password
       yield endpoint if block_given?
     end
 
-    # Authenticates with e-conomic
-    def connect
+    def connect_with_token(private_app_id, access_id)
       endpoint.call(
-        :connect,
-        authentication_details
+        :connect_with_token,
+        {
+          :token => access_id,
+          :appToken => private_app_id
+        }
       ) do |response|
         store_authentication_token(response)
       end
+    end
+
+    def connect_with_credentials(agreement_number, user_name, password)
+      endpoint.call(
+        :connect,
+        {
+          :agreementNumber => agreement_number,
+          :userName => user_name,
+          :password => password
+        }
+      ) do |response|
+        store_authentication_token(response)
+      end
+    end
+
+    # Authenticates with E-conomic using credentials
+    # Assumes ::new was called with credentials as arguments.
+    def connect
+      connect_with_credentials(self.agreement_number, self.user_name, self.password)
     end
 
     # Provides access to the DebtorContacts
@@ -97,14 +120,6 @@ module Economic
     end
 
     private
-
-    def authentication_details
-      {
-        :agreementNumber => self.agreement_number,
-        :userName => self.user_name,
-        :password => self.password
-      }
-    end
 
     def store_authentication_token(response)
       @authentication_token = response.http.cookies
