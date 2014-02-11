@@ -65,6 +65,11 @@ module Economic
       @invoices ||= InvoiceProxy.new(self)
     end
 
+    # Provides access to the orders
+    def orders
+      @orders ||= OrderProxy.new(self)
+    end
+
     # Provides access to the debtors
     def debtors
       @debtors ||= DebtorProxy.new(self)
