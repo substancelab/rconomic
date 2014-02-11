@@ -88,7 +88,6 @@ module Economic
     # Gets data for Entity from the API. Returns Hash with the response data
     def get_data(handle)
       handle = Entity::Handle.new(handle)
-
       entity_hash = request(:get_data, {
         'entityHandle' => handle.to_hash
       })

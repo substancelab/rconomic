@@ -1,30 +1,17 @@
 require 'economic/proxies/entity_proxy'
+require 'economic/proxies/actions/find_by_date_interval'
+require 'economic/proxies/actions/find_by_handle_with_number'
 
 module Economic
   class OrderProxy < EntityProxy
+    include FindByDateInterval
+    include FindByHandleWithNumber
 
-    # Returns handle for orders for debtor.
-    def find_by_debtor_handle(handle)
-      response = session.request(
-        Endpoint.new.soap_action_name("Debtor", "GetOrders"),
-        {
-          'debtorHandle' => { 'Number' => handle.number }
-        }
-      )
-
-      if response == {}
-        nil
+    def find(handle)
+      if handle.is_a?(Hash)
+        super handle
       else
-        entities = []
-        [response[:order_handle]].flatten.each do |handle|
-          entity = build
-          entity.partial = true
-          entity.persisted = true
-          entity.handle = handle
-          entity.number = handle[:id].to_i
-          entities << entity
-        end
-        entities
+        super({:id => handle})
       end
     end
   end
