@@ -129,4 +129,20 @@ describe Economic::DebtorProxy do
       expect(all.first).to be_instance_of(Economic::Debtor)
     end
   end
+
+  describe ".get_invoices" do
+    let(:handle) { Economic::Entity::Handle.new({:number => 1}) }
+    it "gets invoice data from API" do
+      mock_request('Debtor_GetInvoices', {"debtorHandle"=>{"Number"=>1}}, :success)
+      subject.get_invoices(handle)
+    end
+
+    it "returns Invoice object" do
+      stub_request('Debtor_GetInvoices', nil, :success)
+      subject.get_invoices(handle).each do |i|
+        expect(i).to be_instance_of(Economic::Invoice)
+      end
+    end
+  end
+
 end

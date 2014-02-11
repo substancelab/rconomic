@@ -37,21 +37,6 @@ describe Economic::InvoiceProxy do
     end
   end
 
-  describe ".find_by_debtor_handle" do
-    let(:handle) { Economic::Entity::Handle.new({:number => 1}) }
-    it "gets invoice data from API" do
-      mock_request('Debtor_GetInvoices', {"debtorHandle"=>{"Number"=>1}}, :success)
-      subject.find_by_debtor_handle(handle)
-    end
-
-    it "returns Invoice object" do
-      stub_request('Debtor_GetInvoices', nil, :success)
-      subject.find_by_debtor_handle(handle).each do |i|
-        expect(i).to be_instance_of(Economic::Invoice)
-      end
-    end
-  end
-
   describe ".find_by_date_interval" do
     let(:from) { Time.now - 60 }
     let(:unto) { Time.now }

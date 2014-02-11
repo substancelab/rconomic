@@ -15,5 +15,25 @@ module Economic
     def next_available_number
       request :get_next_available_number
     end
+
+    def get_invoices(debtor_handle)
+      response = request :get_invoices, {
+        'debtorHandle' => { 'Number' => debtor_handle.number }
+      }
+      if response.empty?
+        nil
+      else
+        entities = []
+        response[:invoice_handle].each do |handle|
+          entity = Economic::Invoice.new(:session => session)
+          entity.partial = true
+          entity.persisted = true
+          entity.handle = handle
+          entity.number = handle[:number].to_i
+          entities << entity
+        end
+        entities
+      end
+    end
   end
 end
