@@ -72,6 +72,11 @@ module Economic
       @invoices ||= DebtorProxy.new(self).get_invoices(self.handle)
     end
 
+    def orders
+      return [] if self.handle.empty?
+      @orders ||= DebtorProxy.new(self).get_orders(self.handle)
+    end
+
     protected
 
     def fields
