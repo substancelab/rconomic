@@ -69,6 +69,19 @@ describe Economic::Debtor do
     end
   end
 
+  describe ".orders" do
+    it "return nothing if no handle" do
+      expect(subject.orders).to be_empty
+    end
+    it "returns invoices if there is a handle" do
+      mock_request('Debtor_GetOrders', {"debtorHandle"=>{"Number"=>1}}, :success)
+      subject.handle = Economic::Entity::Handle.new({:number => "1"})
+      subject.orders.each do |i|
+        expect(i).to be_instance_of(Economic::Order)
+      end
+    end
+  end
+
   describe ".contacts" do
     it "returns a DebtorContactProxy" do
       expect(subject.contacts).to be_instance_of(Economic::DebtorContactProxy)
