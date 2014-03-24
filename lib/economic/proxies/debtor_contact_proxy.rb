@@ -8,6 +8,10 @@ module Economic
       Proxies::Actions::FindByName.new(self, name).call
     end
 
+    def all
+      Proxies::Actions::DebtorContact::All.new(self).call
+    end
+
   private
 
     # Initialize properties in contact with values from owner. Returns contact.
