@@ -25,7 +25,7 @@ describe Economic::DebtorContactProxy do
 
     context "when owner is a Debtor" do
       let(:debtor) { make_debtor(:session => session) }
-      subject { debtor.contacts }
+      subject { Economic::DebtorContactProxy.new(debtor) }
 
       it "should use the Debtors session" do
         expect(subject.build.session).to eq(debtor.session)

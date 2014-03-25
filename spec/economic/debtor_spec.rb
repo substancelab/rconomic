@@ -83,17 +83,16 @@ describe Economic::Debtor do
   end
 
   describe ".contacts" do
-    it "returns a DebtorContactProxy" do
-      expect(subject.contacts).to be_instance_of(Economic::DebtorContactProxy)
+    it "returns nothing if no handle" do
+      expect(subject.contacts).to be_empty
     end
 
-    it "memoizes the proxy" do
-      expect(subject.contacts).to equal(subject.contacts)
-    end
-
-    it "should store the session" do
-      expect(subject.session).to_not be_nil
-      expect(subject.contacts.session).to eq(subject.session)
+    it "returns debtor contacts if there is a handle" do
+      mock_request('Debtor_GetDebtorContacts', {"debtorHandle"=>{"Number"=>1}}, :multiple)
+      subject.handle = Economic::Entity::Handle.new({:number => "1"})
+      subject.contacts.each do |contact|
+        expect(contact).to be_instance_of(Economic::DebtorContact)
+      end
     end
   end
 

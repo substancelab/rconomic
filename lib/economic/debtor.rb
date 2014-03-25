@@ -56,15 +56,16 @@ module Economic
       @handle || Handle.new({:number => @number})
     end
 
-    # Returns the Debtors contacts
-    def contacts
-      @contacts ||= DebtorContactProxy.new(self)
-    end
-
     # Provides access to the current invoices for Debtor - ie invoices that
     # haven't yet been booked
     def current_invoices
       @current_invoices ||= CurrentInvoiceProxy.new(self)
+    end
+
+    # Returns the Debtors contacts
+    def contacts
+      return [] if self.handle.empty?
+      @contacts ||= DebtorProxy.new(self).get_debtor_contacts(self.handle)
     end
 
     def invoices
