@@ -68,5 +68,11 @@ module Economic
 
       Base64.decode64(response)
     end
+
+    def xml
+      request(:get_oio_xml, {
+        "invoiceHandle" => handle.to_hash
+      })
+    end
   end
 end
