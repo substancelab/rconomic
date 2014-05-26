@@ -13,12 +13,12 @@ module Economic
   #
   #   # Creating a product:
   #   product = economic.products.build
-  #   product.number = 1234
+  #   product.number = 'ESC2014-LED-DISPLAY'
   #   product.product_group_handle = { :number => 1 }
-  #   product.name = 'Shitty Economics API'
-  #   product.sales_price = 959
-  #   product.cost_price = 121
-  #   product.recommended_price = 959
+  #   product.name = '100 meter LED display'
+  #   product.sales_price = 999999
+  #   product.cost_price = 100000
+  #   product.recommended_price = 999999
   #   product.is_accessible = true
   #   product.volume = 1
   #   product.save
@@ -42,7 +42,7 @@ module Economic
       :available
 
     def handle
-      @handle || Handle.new({:number => @number})
+      @handle ||= Handle.new({:number => @number})
     end
 
     protected
