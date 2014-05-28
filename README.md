@@ -75,6 +75,20 @@ Usage example
 
     cash_book.book
 
+    # Find a product:
+    product = economic.products.find(1234)
+
+    # Creating a product:
+    product = economic.products.build
+    product.number = 'ESC2014-LED-DISPLAY'
+    product.product_group_handle = { :number => 1 }
+    product.name = '100 meter LED display'
+    product.sales_price = 999999
+    product.cost_price = 100000
+    product.recommended_price = 999999
+    product.is_accessible = true
+    product.volume = 1
+    product.save
 
 How to enable e-conomic API access
 ----------------------------------
@@ -103,7 +117,7 @@ Not even remotely... For now, limited to a small subset of all the [available op
     DebtorEntry        | X      | X    | X      | X
     Entry              | X      | X    | X      | X
     Invoice            | X      | X    |        |
-
+    Product            | X      | X    | X      | X
 
 Credits
 -------

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Product_GetDataResponse xmlns="http://e-conomic.com">
+      <Product_GetDataResult>
+        <Handle>
+          <Number>string</Number>
+        </Handle>
+        <Number>string</Number>
+        <ProductGroupHandle>
+          <Number>int</Number>
+        </ProductGroupHandle>
+        <Name>string</Name>
+        <Description>string</Description>
+        <BarCode>string</BarCode>
+        <SalesPrice>decimal</SalesPrice>
+        <CostPrice>decimal</CostPrice>
+        <RecommendedPrice>decimal</RecommendedPrice>
+        <UnitHandle>
+          <Number>int</Number>
+        </UnitHandle>
+        <IsAccessible>boolean</IsAccessible>
+        <Volume>decimal</Volume>
+        <DepartmentHandle>
+          <Number>int</Number>
+        </DepartmentHandle>
+        <DistributionKeyHandle>
+          <Number>int</Number>
+        </DistributionKeyHandle>
+        <InStock>decimal</InStock>
+        <OnOrder>decimal</OnOrder>
+        <Ordered>decimal</Ordered>
+        <Available>decimal</Available>
+      </Product_GetDataResult>
+    </Product_GetDataResponse>
+  </soap:Body>
+</soap:Envelope>

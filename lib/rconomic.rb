@@ -19,6 +19,7 @@ require 'economic/account'
 require 'economic/debtor_entry'
 require 'economic/creditor_entry'
 require 'economic/entry'
+require 'economic/product'
 
 require 'economic/proxies/current_invoice_proxy'
 require 'economic/proxies/current_invoice_line_proxy'
@@ -34,6 +35,7 @@ require 'economic/proxies/account_proxy'
 require 'economic/proxies/debtor_entry_proxy'
 require 'economic/proxies/creditor_entry_proxy'
 require 'economic/proxies/entry_proxy'
+require 'economic/proxies/product_proxy'
 
 require 'economic/proxies/actions/find_by_name'
 
@@ -46,4 +48,3 @@ require 'economic/proxies/actions/find_by_name'
 
 module Economic
 end
-
