@@ -28,8 +28,8 @@ describe Economic::CreditorProxy do
       result = subject.find_by_number('1')
       expect(result).to be_instance_of(Economic::Creditor)
       expect(result.number).to eq(1)
-      expect(result.partial).to be_true
-      expect(result.persisted).to be_true
+      expect(result.partial).to be_truthy
+      expect(result.persisted).to be_truthy
       expect(result.handle).to eq(Economic::Entity::Handle.new({ :number => 1 }))
     end
 
