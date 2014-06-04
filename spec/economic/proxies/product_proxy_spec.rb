@@ -27,10 +27,10 @@ describe Economic::ProductProxy do
       mock_request('Product_FindByNumber', {'number' => '1'}, :found)
       result = subject.find_by_number('1')
       expect(result).to be_instance_of(Economic::Product)
-      expect(result.number).to eq(1)
-      expect(result.partial).to be_true
-      expect(result.persisted).to be_true
-      expect(result.handle).to eq(Economic::Entity::Handle.new({ :number => 1 }))
+      expect(result.number).to eq('1')
+      expect(result.partial).to be_truthy
+      expect(result.persisted).to be_truthy
+      expect(result.handle).to eq(Economic::Entity::Handle.new({ :number => "1" }))
     end
 
     it "returns nil when there is no product" do
@@ -61,7 +61,7 @@ describe Economic::ProductProxy do
   describe ".all" do
     it "returns a single product" do
       stub_request('Product_GetAll', nil, :single)
-      mock_request('Product_GetData', {'entityHandle' => {'Number' => 1}}, :success)
+      mock_request('Product_GetData', {'entityHandle' => {'Number' => "1"}}, :success)
       all = subject.all
       expect(all.size).to eq(1)
       expect(all.first).to be_instance_of(Economic::Product)

@@ -55,10 +55,10 @@ describe Economic::DebtorProxy do
       mock_request('Debtor_FindByNumber', {'number' => '1'}, :found)
       result = subject.find_by_number('1')
       expect(result).to be_instance_of(Economic::Debtor)
-      expect(result.number).to eq(1)
       expect(result.partial).to be_truthy
       expect(result.persisted).to be_truthy
-      expect(result.handle).to eq(Economic::Entity::Handle.new({:number => 1}))
+      expect(result.number).to eq('1')
+      expect(result.handle).to eq(Economic::Entity::Handle.new({:number => "1"}))
     end
 
     it "returns nil when there is no debtor" do
@@ -115,7 +115,7 @@ describe Economic::DebtorProxy do
   describe ".all" do
     it "returns a single debtor" do
       mock_request('Debtor_GetAll', nil, :single)
-      mock_request('Debtor_GetData', {'entityHandle' => {'Number' => 1}}, :success)
+      mock_request('Debtor_GetData', {'entityHandle' => {'Number' => "1"}}, :success)
       all = subject.all
       expect(all.size).to eq(1)
       expect(all.first).to be_instance_of(Economic::Debtor)

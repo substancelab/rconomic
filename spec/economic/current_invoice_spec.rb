@@ -128,7 +128,7 @@ describe Economic::CurrentInvoice do
   describe "#book" do
     it 'should book the current invoice and return the created invoice object' do
       stub_request('CurrentInvoice_Book', nil, :success)
-      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => 328 }}, :success)
+      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => '328' }}, :success)
       expect(subject.book).to be_instance_of(Economic::Invoice)
     end
 
@@ -142,7 +142,7 @@ describe Economic::CurrentInvoice do
   describe "#book_with_number" do
     it 'should book the current invoice with the given number and return the created invoice object' do
       stub_request('CurrentInvoice_BookWithNumber', nil, :success)
-      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => 123 }}, :success)
+      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => '123' }}, :success)
       expect(subject.book_with_number(123)).to be_instance_of(Economic::Invoice)
     end
 
