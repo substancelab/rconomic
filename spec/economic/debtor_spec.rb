@@ -61,7 +61,7 @@ describe Economic::Debtor do
       expect(subject.invoices).to be_empty
     end
     it "returns invoices if there is a handle" do
-      mock_request('Debtor_GetInvoices', {"debtorHandle"=>{"Number"=>1}}, :success)
+      mock_request('Debtor_GetInvoices', {"debtorHandle"=>{"Number"=>"1"}}, :success)
       subject.handle = Economic::Entity::Handle.new({:number => "1"})
       subject.invoices.each do |i|
         expect(i).to be_instance_of(Economic::Invoice)
@@ -74,7 +74,7 @@ describe Economic::Debtor do
       expect(subject.orders).to be_empty
     end
     it "returns invoices if there is a handle" do
-      mock_request('Debtor_GetOrders', {"debtorHandle"=>{"Number"=>1}}, :success)
+      mock_request('Debtor_GetOrders', {"debtorHandle"=>{"Number"=>"1"}}, :success)
       subject.handle = Economic::Entity::Handle.new({:number => "1"})
       subject.orders.each do |i|
         expect(i).to be_instance_of(Economic::Order)
@@ -88,7 +88,7 @@ describe Economic::Debtor do
     end
 
     it "returns debtor contacts if there is a handle" do
-      mock_request('Debtor_GetDebtorContacts', {"debtorHandle"=>{"Number"=>1}}, :multiple)
+      mock_request('Debtor_GetDebtorContacts', {"debtorHandle"=>{"Number"=>"1"}}, :multiple)
       subject.handle = Economic::Entity::Handle.new({:number => "1"})
       subject.contacts.each do |contact|
         expect(contact).to be_instance_of(Economic::DebtorContact)

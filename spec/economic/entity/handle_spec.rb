@@ -104,7 +104,6 @@ describe Economic::Entity::Handle do
     it "should to_i values" do
       handle = Economic::Entity::Handle.new(:id => "37", :number => "42")
       expect(handle.id).to eq(37)
-      expect(handle.number).to eq(42)
     end
 
     it "should not to_i nil values" do
@@ -177,4 +176,3 @@ describe Economic::Entity::Handle do
     end
   end
 end
-

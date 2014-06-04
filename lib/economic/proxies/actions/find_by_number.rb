@@ -12,7 +12,7 @@ module FindByNumber
       entity.partial = true
       entity.persisted = true
       entity.handle = response
-      entity.number = response[:number].to_i
+      entity.number = response[:number]
       entity
     end
   end
