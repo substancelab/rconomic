@@ -46,5 +46,28 @@ describe Economic::CashBookEntry do
       )
       subject.save
     end
+
+    it "can build a CashBookEntry with a CreditorHandle" do
+      time = Time.now
+      subject.date = subject.start_date = time
+      subject.creditor_handle = Economic::Entity::Handle.new(:number => 12)
+      mock_request(
+        :cash_book_entry_create_from_data, {
+          "data" => {
+            "CreditorHandle" => {"Number" => 12},
+            "Date" => time,
+            "VoucherNumber" => 0,
+            "Text" => "",
+            "AmountDefaultCurrency" => 0,
+            "Amount" => 0,
+            "DueDate" => nil,
+            "StartDate" => time,
+            "EndDate" => nil
+          }
+        },
+        :success
+      )
+      subject.save
+    end
   end
 end

@@ -82,6 +82,7 @@ module Economic
         ["Type", :type],
         ["CashBookHandle", :cash_book_handle, to_hash],
         ["DebtorHandle", :debtor_handle, to_hash],
+        ["CreditorHandle", :creditor_handle, to_hash],
         ["AccountHandle", :account_handle, to_hash],
         ["ContraAccountHandle", :contra_account_handle, to_hash],
         ["Date", :date, nil, :required],
