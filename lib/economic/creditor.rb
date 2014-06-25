@@ -13,7 +13,7 @@ module Economic
   #
   #   # Creating a creditor:
   #   creditor = economic.creditors.build
-  #   creditor.number = economic.creditors.next_available_number
+  #   creditor.number = 42
   #   creditor.creditor_group_handle = { :number => 1 }
   #   creditor.name = 'Apple Inc'
   #   creditor.vat_zone = 'HomeCountry' # HomeCountry, EU, Abroad
