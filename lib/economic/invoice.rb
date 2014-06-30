@@ -54,6 +54,17 @@ module Economic
       }).to_f
     end
 
+    def days_past_due
+      days = DateTime.now.mjd - due_date.mjd
+      days > 0 ? days : 0
+    end
+
+    # Returns true if the due date has expired, and there is a remainder
+    # left on the invoice
+    def is_past_due
+      days_past_due > 0 && remainder > 0
+    end
+
     # Returns the PDF version of Invoice as a String.
     #
     # To get it as a file you can do:
