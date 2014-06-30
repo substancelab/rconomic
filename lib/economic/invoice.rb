@@ -49,9 +49,9 @@ module Economic
     end
 
     def remainder
-      request(:get_remainder, {
+      @remainder ||= request(:get_remainder, {
         "invoiceHandle" => handle.to_hash
-      })
+      }).to_f
     end
 
     # Returns the PDF version of Invoice as a String.
