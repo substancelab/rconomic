@@ -60,7 +60,7 @@ module Economic
 
     # Returns true if the due date has expired, and there is a remainder
     # left on the invoice
-    def is_past_due
+    def past_due?
       days_past_due > 0 && remainder > 0
     end
 

@@ -97,33 +97,33 @@ describe Economic::Invoice do
     end
   end
 
-  describe "#is_past_due" do
+  describe "#past_due?" do
     it "when due date has passed and the invoiced hasn't been paid" do
       subject.due_date = (Date.today - 3).to_datetime
       subject.instance_variable_set "@remainder", 1
 
-      expect(subject.is_past_due).to eq(true)
+      expect(subject.past_due?).to eq(true)
     end
 
     it "when due date has passed and the invoice has been paid" do
       subject.due_date = (Date.today - 3).to_datetime
       subject.instance_variable_set "@remainder", 0
 
-      expect(subject.is_past_due).to eq(false)
+      expect(subject.past_due?).to eq(false)
     end
 
     it "before due date has passed and the invoiced hasn't been paid" do
       subject.due_date = (Date.today + 3).to_datetime
       subject.instance_variable_set "@remainder", 1
 
-      expect(subject.is_past_due).to eq(false)
+      expect(subject.past_due?).to eq(false)
     end
 
     it "before due date has passed and the invoice has been paid" do
       subject.due_date = (Date.today + 3).to_datetime
       subject.instance_variable_set "@remainder", 0
 
-      expect(subject.is_past_due).to eq(false)
+      expect(subject.past_due?).to eq(false)
     end
   end
 end
