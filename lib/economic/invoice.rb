@@ -54,7 +54,7 @@ module Economic
     end
 
     def days_past_due
-      days = DateTime.now.mjd - due_date.mjd
+      days = Date.today - due_date.to_date
       days > 0 ? days : 0
     end
 
