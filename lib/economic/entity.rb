@@ -113,6 +113,11 @@ module Economic
       self.persisted = true
     end
 
+    # Get default Entity with its number from the API
+    def get
+      proxy.get
+    end
+
     # Returns the number of Entity. This does not trigger a load from the API
     # even if Entity is partial
     def number
