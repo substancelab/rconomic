@@ -106,7 +106,11 @@ module Economic
 
     # Provides access to products
     def products
-        @products ||= ProductProxy.new(self)
+      @products ||= ProductProxy.new(self)
+    end
+
+    def company
+      @company ||= CompanyProxy.new(self)
     end
 
     # Requests an action from the API endpoint
