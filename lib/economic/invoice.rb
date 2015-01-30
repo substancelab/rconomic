@@ -6,6 +6,7 @@ module Economic
       :net_amount,
       :vat_amount,
       :gross_amount,
+      :date,
       :due_date,
       :debtor_handle,
       :debtor_name,
