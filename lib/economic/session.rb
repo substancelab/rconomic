@@ -8,13 +8,14 @@ module Economic
 
     def_delegators :endpoint, :logger=, :log_level=, :log=
 
-    attr_accessor :agreement_number, :user_name, :password
+    attr_accessor :agreement_number, :user_name, :password, :app_identifier
     attr_reader :authentication_token
 
-    def initialize(agreement_number = nil, user_name = nil, password = nil)
+    def initialize(agreement_number = nil, user_name = nil, password = nil, app_identifier = nil)
       self.agreement_number = agreement_number
       self.user_name = user_name
       self.password = password
+      self.app_identifier = app_identifier
       yield endpoint if block_given?
     end
 
@@ -30,7 +31,9 @@ module Economic
       end
     end
 
-    def connect_with_credentials(agreement_number, user_name, password)
+    def connect_with_credentials(agreement_number, user_name, password, app_identifier = nil)
+      self.app_identifier = app_identifier if app_identifier
+
       endpoint.call(
         :connect,
         {
@@ -46,7 +49,7 @@ module Economic
     # Authenticates with E-conomic using credentials
     # Assumes ::new was called with credentials as arguments.
     def connect
-      connect_with_credentials(self.agreement_number, self.user_name, self.password)
+      connect_with_credentials(self.agreement_number, self.user_name, self.password, self.app_identifier)
     end
 
     # Provides access to the DebtorContacts
@@ -121,7 +124,7 @@ module Economic
 
     # Returns the SOAP endpoint to connect to
     def endpoint
-      @endpoint ||= Economic::Endpoint.new
+      @endpoint ||= Economic::Endpoint.new(app_identifier)
     end
 
     private

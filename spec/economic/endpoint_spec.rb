@@ -86,4 +86,12 @@ describe Economic::Endpoint do
       subject.logger = logger
     end
   end
+
+  describe "app identifier configuration" do
+    let(:app_id) { 'my awesome app v.4.0.9-beta-rc1' }
+
+    it "can be instantiated with an app_identifier" do
+      expect(Economic::Endpoint.new(app_id).client).to be_instance_of(::Savon::Client)
+    end
+  end
 end
