@@ -10,7 +10,6 @@ module Economic
       :due_date,
       :debtor_handle,
       :debtor_name,
-      :debtor_name,
       :debtor_address,
       :debtor_postal_code,
       :debtor_city,
