@@ -11,7 +11,7 @@ describe Economic::Invoice do
   describe '#remainder' do
     it 'should get the remainder' do
       mock_request('Invoice_GetRemainder', {"invoiceHandle" => { "Number" => 512 }}, :success)
-      expect(subject.remainder).to eq("512.32")
+      expect(subject.remainder).to eq(512.32)
     end
   end
 
@@ -82,6 +82,48 @@ describe Economic::Invoice do
       debtor.handle = handle
       subject.debtor = debtor
       expect(subject.debtor_handle).to eq(handle)
+    end
+  end
+
+  describe "#days_past_due" do
+    it "after date has passed" do
+      subject.due_date = (Date.today - 3).to_datetime
+      expect(subject.days_past_due).to eq(3)
+    end
+
+    it "before date has passed" do
+      subject.due_date = (Date.today + 3).to_datetime
+      expect(subject.days_past_due).to eq(0)
+    end
+  end
+
+  describe "#past_due?" do
+    it "when due date has passed and the invoiced hasn't been paid" do
+      subject.due_date = (Date.today - 3).to_datetime
+      subject.instance_variable_set "@remainder", 1
+
+      expect(subject.past_due?).to eq(true)
+    end
+
+    it "when due date has passed and the invoice has been paid" do
+      subject.due_date = (Date.today - 3).to_datetime
+      subject.instance_variable_set "@remainder", 0
+
+      expect(subject.past_due?).to eq(false)
+    end
+
+    it "before due date has passed and the invoiced hasn't been paid" do
+      subject.due_date = (Date.today + 3).to_datetime
+      subject.instance_variable_set "@remainder", 1
+
+      expect(subject.past_due?).to eq(false)
+    end
+
+    it "before due date has passed and the invoice has been paid" do
+      subject.due_date = (Date.today + 3).to_datetime
+      subject.instance_variable_set "@remainder", 0
+
+      expect(subject.past_due?).to eq(false)
     end
   end
 end

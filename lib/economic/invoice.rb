@@ -49,9 +49,20 @@ module Economic
     end
 
     def remainder
-      request(:get_remainder, {
+      @remainder ||= request(:get_remainder, {
         "invoiceHandle" => handle.to_hash
-      })
+      }).to_f
+    end
+
+    def days_past_due
+      days = Date.today - due_date.to_date
+      days > 0 ? days : 0
+    end
+
+    # Returns true if the due date has expired, and there is a remainder
+    # left on the invoice
+    def past_due?
+      days_past_due > 0 && remainder > 0
     end
 
     # Returns the PDF version of Invoice as a String.
