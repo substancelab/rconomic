@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <Company_GetDataResponse xmlns="http://e-conomic.com">
+      <Company_GetDataResult>
+        <Handle>
+          <Number>string</Number>
+        </Handle>
+        <Number>string</Number>
+        <BaseCurrencyHandle>
+          <Code>string</Code>
+        </BaseCurrencyHandle>
+        <Name>string</Name>
+        <Address1>string</Address1>
+        <Address2>string</Address2>
+        <PostalCode>string</PostalCode>
+        <City>string</City>
+        <County>string</County>
+        <Country>string</Country>
+        <TelephoneNumber>string</TelephoneNumber>
+        <FaxNumber>string</FaxNumber>
+        <MobileNumber>string</MobileNumber>
+        <Contact>string</Contact>
+        <WebSite>string</WebSite>
+        <Email>string</Email>
+        <CINumber>string</CINumber>
+        <VatNumber>string</VatNumber>
+        <SignUpDate>dateTime</SignUpDate>
+      </Company_GetDataResult>
+    </Company_GetDataResponse>
+  </soap12:Body>
+</soap12:Envelope>
