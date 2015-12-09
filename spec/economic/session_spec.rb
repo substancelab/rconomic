@@ -14,6 +14,11 @@ describe Economic::Session do
         expect(subject.user_name).to eq('api')
         expect(subject.password).to eq('passw0rd')
       end
+
+      it "can also store an app_id" do
+        session = Economic::Session.new *credentials, 'app_id'
+        expect(session.app_identifier).to eq('app_id')
+      end
     end
 
     it "yields the endpoint if a block is given" do

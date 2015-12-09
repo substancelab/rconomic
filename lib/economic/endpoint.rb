@@ -8,6 +8,18 @@ class Economic::Endpoint
   def_delegator "client.globals", :log_level, :log_level=
   def_delegator "client.globals", :log, :log=
 
+  # Create a new Endpoint
+  #
+  # Economic::Session uses this internally
+  #
+  # ==== Attributes
+  #
+  # * +app_identifier+ - A string identifiying your application, as described in http://techtalk.e-conomic.com/e-conomic-soap-api-now-requires-you-to-specify-a-custom-x-economicappidentifier-header/
+  #
+  def initialize(app_identifier = nil)
+    @app_identifier = app_identifier
+  end
+
   # Invokes soap_action on the API endpoint with the given data.
   #
   # Returns a Hash with the resulting response from the endpoint as a Hash.
@@ -35,6 +47,7 @@ class Economic::Endpoint
       wsdl      File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
       log       false
       log_level :info
+      headers({'X-EconomicAppIdentifier' => @app_identifier }) if @app_identifier
     end
   end
 
