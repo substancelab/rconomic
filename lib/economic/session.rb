@@ -19,6 +19,15 @@ module Economic
       yield endpoint if block_given?
     end
 
+    # Connect/authenticate with an API token and app id
+    #
+    # Reference: http://techtalk.e-conomic.com/why-were-implementing-a-new-api-connection-model/
+    #
+    # ==== Attributes
+    #
+    # * +private_app_id+ - The App ID created in your developer agreement
+    # * +access_id+ - The Access ID or token for your App ID
+    #
     def connect_with_token(private_app_id, access_id)
       endpoint.call(
         :connect_with_token,
@@ -31,6 +40,15 @@ module Economic
       end
     end
 
+    # Connect/authenticate with credentials
+    #
+    # ==== Attributes
+    #
+    # * +agreement_number+ - your economic agreement number
+    # * +user_name+ - your username
+    # * +password+ - your passsword
+    # * +app_identifier+ - A string identifiying your application, as described in http://techtalk.e-conomic.com/e-conomic-soap-api-now-requires-you-to-specify-a-custom-x-economicappidentifier-header/
+    #
     def connect_with_credentials(agreement_number, user_name, password, app_identifier = nil)
       self.app_identifier = app_identifier if app_identifier
 
