@@ -32,6 +32,27 @@ module Economic
       )
     end
 
+    def get_current_invoices(debtor_handle)
+      response = request :get_current_invoices, {
+        'debtorHandle' => { 'Number' => debtor_handle.number }
+      }
+      if response.empty?
+        nil
+      else
+        entities = []
+        [response[:current_invoice_handle]].flatten.each do |handle|
+          entity = Economic::CurrentInvoice.new(:session => session)
+          entity.partial = true
+          entity.persisted = true
+          entity.handle = handle
+          entity.number = handle[:number].to_i
+          entities << entity
+        end
+        entities
+      end
+    end
+
+
     # Returns handle for orders for debtor.
     def get_orders(debtor_handle)
       response = fetch_response(:get_orders, debtor_handle)
