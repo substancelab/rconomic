@@ -155,6 +155,13 @@ module Economic
       end
     end
 
+    def pdf
+      response = request(:get_pdf, {
+                           "currentInvoiceHandle" => handle.to_hash
+      })
+      Base64.decode64(response)
+    end
+
     protected
 
     def fields
