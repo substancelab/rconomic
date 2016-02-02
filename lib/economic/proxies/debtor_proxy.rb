@@ -45,7 +45,6 @@ module Economic
           entity.partial = true
           entity.persisted = true
           entity.handle = handle
-          entity.number = handle[:number].to_i
           entities << entity
         end
         entities
