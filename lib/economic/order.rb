@@ -8,6 +8,7 @@ module Economic
 
   class Order < Entity
     has_properties :id,
+      :number,
       :debtor_handle,
       :debtor_name,
       :debtor_address,
@@ -37,6 +38,7 @@ module Economic
 
     defaults(
       :id => 0,
+      :number => 0,
       :date => Time.now,
       :term_of_payment_handle => nil,
       :due_date => nil,
@@ -124,7 +126,8 @@ module Economic
       date_formatter = Proc.new { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
       to_hash = Proc.new { |handle| handle.to_hash }
       [
-        ["Id", :id, nil, :required],
+        ["Id", :id],
+        ["Number", :number, nil, :required],
         ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
         ["DebtorName", :debtor_name, nil, :required],
         ["DebtorAddress", :debtor_address],
