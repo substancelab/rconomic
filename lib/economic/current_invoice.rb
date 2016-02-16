@@ -182,7 +182,7 @@ module Economic
         ["AttentionHandle", :attention_handle, to_hash],
         ["YourReferenceHandle", :your_reference_handle, to_hash],
         ["OurReferenceHandle", :our_reference_handle, to_hash],
-        ["OtherReference", :other_reference, to_hash],
+        ["OtherReference", :other_reference],
         ["Date", :date, date_formatter],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
