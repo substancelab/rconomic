@@ -36,6 +36,7 @@ module Economic
       :attention_handle,
       :your_reference_handle,
       :our_reference_handle,
+      :other_reference,
       :date,
       :term_of_payment_handle,
       :due_date,
@@ -62,6 +63,7 @@ module Economic
       :currency_handle => nil,
       :your_reference_handle => nil,
       :our_reference_handle => nil,
+      :other_reference => nil,
       :exchange_rate => 100, # Why am _I_ inputting this?
       :is_vat_included => nil,
       :layout_handle => nil,
@@ -180,6 +182,7 @@ module Economic
         ["AttentionHandle", :attention_handle, to_hash],
         ["YourReferenceHandle", :your_reference_handle, to_hash],
         ["OurReferenceHandle", :our_reference_handle, to_hash],
+        ["OtherReference", :other_reference, to_hash],
         ["Date", :date, date_formatter],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
