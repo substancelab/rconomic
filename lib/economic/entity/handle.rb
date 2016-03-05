@@ -73,8 +73,9 @@ class Economic::Entity
 
     def handleish?(object)
       return false if object.nil?
+      return true if object.is_a?(self.class)
+      return true if object.is_a?(Hash)
       return true if object.respond_to?(:to_i)
-      return true if object.respond_to?(:keys) && object.respond_to?(:values)
       false
     end
 
