@@ -5,7 +5,7 @@ describe Economic::CompanyProxy do
   subject { Economic::CompanyProxy.new(session) }
 
   describe ".get" do
-    let!(:company) { (e = Economic::Company.new).tap { |e| e.session = session } }
+    let!(:company) { Economic::Company.new.tap { |e| e.session = session } }
 
     it "Calls CompanyGet endpoint" do
       mock_request("Company_Get", nil, :success)

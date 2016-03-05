@@ -20,11 +20,11 @@ module Economic
     end
 
     def match(*serial_numbers)
-      response = request("MatchEntries", :entries => {
-                           "CreditorEntryHandle" => serial_numbers.map { |serial_number|
-                             {"SerialNumber" => serial_number}
-                           }
-                         })
+      request("MatchEntries", :entries => {
+        "CreditorEntryHandle" => serial_numbers.map { |serial_number|
+          {"SerialNumber" => serial_number}
+        }
+      })
     end
   end
 end

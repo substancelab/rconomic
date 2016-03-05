@@ -95,7 +95,7 @@ describe Economic::Entity do
   end
 
   describe "get_data" do
-    subject { (e = Account.new).tap { |e| e.session = session } }
+    subject { Account.new.tap { |e| e.session = session } }
 
     before :each do
     end
@@ -126,7 +126,7 @@ describe Economic::Entity do
   end
 
   describe "save" do
-    subject { (e = Account.new).tap { |e| e.session = session } }
+    subject { Account.new.tap { |e| e.session = session } }
 
     context "entity has not been persisted" do
       before :each do
@@ -152,7 +152,7 @@ describe Economic::Entity do
   end
 
   describe "create" do
-    subject { (e = Account.new).tap { |e| e.persisted = false; e.session = session } }
+    subject { Account.new.tap { |e| e.persisted = false; e.session = session } }
 
     it "sends data to the API" do
       mock_request(:account_create_from_data, {"data" => {:foo => "bar"}}, :success)
@@ -167,7 +167,7 @@ describe Economic::Entity do
   end
 
   describe ".proxy" do
-    subject { (e = Account.new).tap { |e| e.session = session } }
+    subject { Account.new.tap { |e| e.session = session } }
 
     it "should return AccountProxy" do
       expect(subject.proxy).to be_instance_of(Economic::AccountProxy)
@@ -175,7 +175,7 @@ describe Economic::Entity do
   end
 
   describe "update" do
-    subject { (e = Account.new).tap { |e| e.persisted = true; e.session = session } }
+    subject { Account.new.tap { |e| e.persisted = true; e.session = session } }
 
     it "sends data to the API" do
       mock_request(:account_update_from_data, {"data" => {:foo => "bar"}}, :success)
@@ -184,7 +184,7 @@ describe Economic::Entity do
   end
 
   describe "destroy" do
-    subject { (e = Account.new).tap { |e| e.id = 42; e.persisted = true; e.partial = false; e.session = session } }
+    subject { Account.new.tap { |e| e.id = 42; e.persisted = true; e.partial = false; e.session = session } }
 
     it "sends data to the API" do
       mock_request(:account_delete, :any, :success)
