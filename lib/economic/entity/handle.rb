@@ -96,8 +96,6 @@ class Economic::Entity
     # Raises exceptions if hash doesn't contain values we can use to construct a
     # new handle
     def verify_sanity_of_arguments!(hash)
-      return if hash.is_a?(self.class)
-
       verify_usability_for_handle(hash)
       verify_all_keys_are_known(hash)
     end
