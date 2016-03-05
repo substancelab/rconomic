@@ -5,7 +5,7 @@ Ruby wrapper for the [e-conomic](http://www.e-conomic.co.uk) SOAP API, that aims
 
 E-conomic is a web-based accounting system. For their marketing speak, see [http://www.e-conomic.co.uk/about/](http://www.e-conomic.co.uk/about/). More details about their API at [http://www.e-conomic.com/developer](http://www.e-conomic.com/developer).
 
-[![Build Status](https://secure.travis-ci.org/lokalebasen/rconomic.png?branch=master)](http://travis-ci.org/lokalebasen/rconomic) [![Coverage Status](https://coveralls.io/repos/lokalebasen/rconomic/badge.png?branch=master)](https://coveralls.io/r/lokalebasen/rconomic?branch=master) [![Code Climate](https://codeclimate.com/github/lokalebasen/rconomic.png)](https://codeclimate.com/github/lokalebasen/rconomic)
+[![Build Status](https://travis-ci.org/substancelab/rconomic.svg?branch=master)](https://travis-ci.org/substancelab/rconomic) [![Coverage Status](https://coveralls.io/repos/lokalebasen/rconomic/badge.png?branch=master)](https://coveralls.io/r/lokalebasen/rconomic?branch=master) [![Code Climate](https://codeclimate.com/github/lokalebasen/rconomic.png)](https://codeclimate.com/github/lokalebasen/rconomic)
 
 
 Usage example
