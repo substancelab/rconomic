@@ -21,20 +21,18 @@ module Economic
         :get_debtor_contacts,
         "debtorHandle" => {"Number" => debtor_handle.number}
       )
-      if response.empty?
-        nil
-      else
-        entities = []
-        [response[:debtor_contact_handle]].flatten.each do |handle|
-          entity = Economic::DebtorContact.new(:session => session)
-          entity.partial = true
-          entity.persisted = true
-          entity.handle = handle
-          entity.number = handle[:number].to_i
-          entities << entity
-        end
-        entities
+      return nil if response.empty?
+
+      entities = []
+      [response[:debtor_contact_handle]].flatten.each do |handle|
+        entity = Economic::DebtorContact.new(:session => session)
+        entity.partial = true
+        entity.persisted = true
+        entity.handle = handle
+        entity.number = handle[:number].to_i
+        entities << entity
       end
+      entities
     end
 
     def get_invoices(debtor_handle)
@@ -42,20 +40,18 @@ module Economic
         :get_invoices,
         "debtorHandle" => {"Number" => debtor_handle.number}
       )
-      if response.empty?
-        nil
-      else
-        entities = []
-        [response[:invoice_handle]].flatten.each do |handle|
-          entity = Economic::Invoice.new(:session => session)
-          entity.partial = true
-          entity.persisted = true
-          entity.handle = handle
-          entity.number = handle[:number].to_i
-          entities << entity
-        end
-        entities
+      return nil if response.empty?
+
+      entities = []
+      [response[:invoice_handle]].flatten.each do |handle|
+        entity = Economic::Invoice.new(:session => session)
+        entity.partial = true
+        entity.persisted = true
+        entity.handle = handle
+        entity.number = handle[:number].to_i
+        entities << entity
       end
+      entities
     end
 
     # Returns handle for orders for debtor.
@@ -64,20 +60,18 @@ module Economic
         :get_orders,
         "debtorHandle" => {"Number" => debtor_handle.number}
       )
-      if response.empty?
-        nil
-      else
-        entities = []
-        [response[:order_handle]].flatten.each do |handle|
-          entity = Economic::Order.new(:session => session)
-          entity.partial = true
-          entity.persisted = true
-          entity.handle = handle
-          entity.number = handle[:id].to_i
-          entities << entity
-        end
-        entities
+      return nil if response.empty?
+
+      entities = []
+      [response[:order_handle]].flatten.each do |handle|
+        entity = Economic::Order.new(:session => session)
+        entity.partial = true
+        entity.persisted = true
+        entity.handle = handle
+        entity.number = handle[:id].to_i
+        entities << entity
       end
+      entities
     end
   end
 end
