@@ -40,13 +40,19 @@ describe Economic::CreditorContactProxy do
 
   describe ".find" do
     it "gets contact data from API" do
-      mock_request("CreditorContact_GetData", {"entityHandle" => {"Id" => 42}}, :success)
+      mock_request(
+        "CreditorContact_GetData",
+        {"entityHandle" => {"Id" => 42}},
+        :success
+      )
       subject.find(42)
     end
 
     it "returns CreditorContact object" do
       stub_request("CreditorContact_GetData", nil, :success)
-      expect(subject.find(42)).to be_instance_of(Economic::CreditorContact)
+      expect(
+        subject.find(42)
+      ).to be_instance_of(Economic::CreditorContact)
     end
   end
 

@@ -56,17 +56,6 @@ describe Economic::Entity::Handle do
       end).to raise_error(ArgumentError)
     end
 
-    it "should assume :id if argument is numeric" do
-      handle = Economic::Entity::Handle.new(12)
-      expect(handle.id).to eq(12)
-      expect(handle.number).to be_nil
-    end
-
-    it "should use to_i on numeric argument" do
-      handle = Economic::Entity::Handle.new("42")
-      expect(handle.id).to eq(42)
-    end
-
     it "should raise error if argument is nil" do
       expect(lambda do
         Economic::Entity::Handle.new(nil)

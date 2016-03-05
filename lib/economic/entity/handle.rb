@@ -75,7 +75,6 @@ class Economic::Entity
       return false if object.nil?
       return true if object.is_a?(self.class)
       return true if object.is_a?(Hash)
-      return true if object.respond_to?(:to_i)
       false
     end
 
@@ -105,15 +104,11 @@ class Economic::Entity
 
       raise(
         ArgumentError,
-        "Expected Number, Hash or Economic::Entity::Handle " \
-        " - got #{hash.inspect}"
+        "Expected Hash or Economic::Entity::Handle - got #{hash.inspect}"
       )
     end
 
     # Examples
-    #
-    #   prepare_hash_argument(12)
-    #   #=> {:id => 12}
     #
     #   prepare_hash_argument(:id => 12)
     #   #=> {:id => 12}
@@ -124,7 +119,6 @@ class Economic::Entity
     #   prepare_hash_argument('Id' => 12, 'Number' => 13)
     #   #=> {:id => 12, :number => 13}
     def prepare_hash_argument(hash)
-      hash = {:id => hash.to_i} unless hash.blank? || !hash.respond_to?(:to_i)
       hash[:id] ||= hash["Id"]
       hash[:number] ||= hash["Number"]
       hash

@@ -78,7 +78,11 @@ module Economic
     # Fetches Entity data from API and returns an Entity initialized with that
     # data added to Proxy
     def find(handle)
-      handle = Entity::Handle.new(handle)
+      handle = if handle.respond_to?(:to_i)
+        Entity::Handle.new(:id => handle)
+      else
+        Entity::Handle.new(handle)
+      end
       entity_hash = get_data(handle)
       entity = build(entity_hash)
       entity.persisted = true
