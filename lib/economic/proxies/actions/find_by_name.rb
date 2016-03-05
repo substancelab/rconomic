@@ -53,7 +53,7 @@ module Economic
         end
 
         def response
-          request('FindByName', {'name' => name})
+          request("FindByName", {"name" => name})
         end
 
         def scope_to_owner(contacts)

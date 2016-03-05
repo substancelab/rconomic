@@ -1,7 +1,6 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
-
   # Represents a debtor in E-conomic.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_IDebtor.html
@@ -53,7 +52,7 @@ module Economic
       :balance
 
     def handle
-      @handle || Handle.new({:number => @number})
+      @handle || Handle.new(:number => @number)
     end
 
     # Provides access to the current invoices for Debtor - ie invoices that
@@ -64,27 +63,27 @@ module Economic
 
     # Returns the Debtors contacts
     def contacts
-      return [] if self.handle.empty?
-      @contacts ||= DebtorProxy.new(self).get_debtor_contacts(self.handle)
+      return [] if handle.empty?
+      @contacts ||= DebtorProxy.new(self).get_debtor_contacts(handle)
     end
 
     def invoices
-      return [] if self.handle.empty?
-      @invoices ||= DebtorProxy.new(self).get_invoices(self.handle)
+      return [] if handle.empty?
+      @invoices ||= DebtorProxy.new(self).get_invoices(handle)
     end
 
     def orders
-      return [] if self.handle.empty?
-      @orders ||= DebtorProxy.new(self).get_orders(self.handle)
+      return [] if handle.empty?
+      @orders ||= DebtorProxy.new(self).get_orders(handle)
     end
 
     protected
 
     def fields
-      to_hash = Proc.new { |handle| handle.to_hash }
+      to_hash = proc { |handle| handle.to_hash }
       [
         ["Handle", :handle, to_hash, :required],
-        ["Number", :handle, Proc.new { |h| h.number }, :required],
+        ["Number", :handle, proc { |h| h.number }, :required],
         ["DebtorGroupHandle", :debtor_group_handle, to_hash],
         ["Name", :name, nil, :required],
         ["VatZone", :vat_zone, nil, :required],

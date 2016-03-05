@@ -1,12 +1,17 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 class Account < Economic::Entity
   has_properties :id, :foo, :baz, :bar_handle
 
-  def build_soap_data; {:foo => "bar"}; end
+  def build_soap_data
+    {:foo => "bar"}
+  end
+
   def existing_method; end
 
-  def proxy; Economic::AccountProxy.new(session); end
+  def proxy
+    Economic::AccountProxy.new(session)
+  end
 end
 
 class Economic::AccountProxy < Economic::EntityProxy; end
@@ -33,9 +38,9 @@ describe Economic::Entity do
       end
 
       it "initializes the entity with values from the given hash" do
-        entity = Account.new(:foo => 'bar', :baz => 'qux')
-        expect(entity.foo).to eq('bar')
-        expect(entity.baz).to eq('qux')
+        entity = Account.new(:foo => "bar", :baz => "qux")
+        expect(entity.foo).to eq("bar")
+        expect(entity.baz).to eq("qux")
       end
     end
 
@@ -47,8 +52,8 @@ describe Economic::Entity do
 
     describe "has_properties" do
       it "creates getter for all properties" do
-        expect(subject).to receive(:define_method).with('name')
-        expect(subject).to receive(:define_method).with('age')
+        expect(subject).to receive(:define_method).with("name")
+        expect(subject).to receive(:define_method).with("age")
         subject.has_properties :name, :age
       end
 
@@ -73,14 +78,14 @@ describe Economic::Entity do
       end
 
       it "does not create setter or getter for id'ish properties" do
-        expect(subject).to receive(:define_method).with('id').never
-        expect(subject).to receive(:define_method).with('number').never
-        expect(subject).to receive(:define_method).with('handle').never
+        expect(subject).to receive(:define_method).with("id").never
+        expect(subject).to receive(:define_method).with("number").never
+        expect(subject).to receive(:define_method).with("handle").never
         subject.has_properties :id, :number, :handle
       end
 
       it "does clobber existing methods" do
-        expect(subject).to receive(:define_method).with('existing_method')
+        expect(subject).to receive(:define_method).with("existing_method")
         subject.has_properties :existing_method
       end
 
@@ -96,14 +101,14 @@ describe Economic::Entity do
     end
 
     it "fetches data from API" do
-      subject.instance_variable_set('@number', 42)
-      mock_request(:account_get_data, {'entityHandle' => {'Number' => 42}}, :success)
+      subject.instance_variable_set("@number", 42)
+      mock_request(:account_get_data, {"entityHandle" => {"Number" => 42}}, :success)
       subject.get_data
     end
 
     it "updates the entity with the response" do
       stub_request(:account_get_data, nil, :success)
-      expect(subject).to receive(:update_properties).with({:foo => 'bar', :baz => 'qux'})
+      expect(subject).to receive(:update_properties).with(:foo => "bar", :baz => "qux")
       subject.get_data
     end
 
@@ -157,7 +162,7 @@ describe Economic::Entity do
     it "updates handle with the number returned from API" do
       stub_request(:account_create_from_data, :any, :success)
       subject.save
-      expect(subject.number).to eq('42')
+      expect(subject.number).to eq("42")
     end
   end
 
@@ -187,7 +192,7 @@ describe Economic::Entity do
     end
 
     it "should request with the correct model and id" do
-      mock_request(:account_delete, {'accountHandle' => {'Id' => 42}}, :success)
+      mock_request(:account_delete, {"accountHandle" => {"Id" => 42}}, :success)
       subject.destroy
     end
 
@@ -199,8 +204,8 @@ describe Economic::Entity do
     end
 
     it "should return the response" do
-      expect(session).to receive(:request).and_return({ :response => true })
-      expect(subject.destroy).to eq({ :response => true })
+      expect(session).to receive(:request).and_return(:response => true)
+      expect(subject.destroy).to eq(:response => true)
     end
   end
 
@@ -209,15 +214,15 @@ describe Economic::Entity do
 
     it "sets the properties to the given values" do
       subject.class.has_properties :foo, :baz
-      expect(subject).to receive(:foo=).with('bar')
-      expect(subject).to receive(:baz=).with('qux')
-      subject.update_properties(:foo => 'bar', 'baz' => 'qux')
+      expect(subject).to receive(:foo=).with("bar")
+      expect(subject).to receive(:baz=).with("qux")
+      subject.update_properties(:foo => "bar", "baz" => "qux")
     end
 
     it "only sets known properties" do
       subject.class.has_properties :foo, :bar
-      expect(subject).to receive(:foo=).with('bar')
-      subject.update_properties(:foo => 'bar', 'baz' => 'qux')
+      expect(subject).to receive(:foo=).with("bar")
+      subject.update_properties(:foo => "bar", "baz" => "qux")
     end
   end
 

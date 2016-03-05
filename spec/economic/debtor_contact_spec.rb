@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::DebtorContact do
   let(:session) { make_session }
@@ -43,7 +43,7 @@ describe Economic::DebtorContact do
     end
 
     context "when debtor_handle is set" do
-      let(:handle) { Economic::DebtorContact::Handle.new({:number => 42}) }
+      let(:handle) { Economic::DebtorContact::Handle.new(:number => 42) }
 
       before :each do
         subject.debtor_handle = handle
@@ -84,8 +84,8 @@ describe Economic::DebtorContact do
       end
 
       it "should clear cached debtor and fetch the new debtor from API" do
-        stub_request('Debtor_GetData', nil, :success)
-        subject.debtor_handle = Economic::Debtor::Handle.new({:number => 1234})
+        stub_request("Debtor_GetData", nil, :success)
+        subject.debtor_handle = Economic::Debtor::Handle.new(:number => 1234)
         expect(subject.debtor).to be_instance_of(Economic::Debtor)
       end
     end
@@ -112,5 +112,4 @@ describe Economic::DebtorContact do
       expect(subject.proxy.session).to eq(session)
     end
   end
-
 end

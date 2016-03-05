@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::Product do
   let(:session) { make_session }
@@ -35,8 +35,8 @@ describe Economic::Product do
   end
 
   describe "#save" do
-    it 'should save it' do
-      stub_request('Product_CreateFromData', nil, :success)
+    it "should save it" do
+      stub_request("Product_CreateFromData", nil, :success)
       subject.save
     end
 
@@ -61,10 +61,10 @@ describe Economic::Product do
         :success
       )
 
-      subject.product_group_handle = Economic::Entity::Handle.new({:number => 1})
-      subject.unit_handle = Economic::Entity::Handle.new({:number => 2})
-      subject.department_handle = Economic::Entity::Handle.new({:number => 1})
-      subject.distribution_key_handle = Economic::Entity::Handle.new({:number => 314})
+      subject.product_group_handle = Economic::Entity::Handle.new(:number => 1)
+      subject.unit_handle = Economic::Entity::Handle.new(:number => 2)
+      subject.department_handle = Economic::Entity::Handle.new(:number => 1)
+      subject.distribution_key_handle = Economic::Entity::Handle.new(:number => 314)
 
       subject.save
     end

@@ -47,7 +47,7 @@ class Economic::Endpoint
       wsdl      File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
       log       false
       log_level :info
-      headers({'X-EconomicAppIdentifier' => @app_identifier }) if @app_identifier
+      headers("X-EconomicAppIdentifier" => @app_identifier) if @app_identifier
     end
   end
 
@@ -63,7 +63,7 @@ class Economic::Endpoint
 
   def class_name_without_modules(entity_class)
     class_name = entity_class.to_s
-    class_name.split('::').last
+    class_name.split("::").last
   end
 
   def extract_result_from_response(response, soap_action)

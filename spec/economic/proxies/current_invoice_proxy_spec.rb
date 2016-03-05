@@ -1,7 +1,6 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::CurrentInvoiceProxy do
-
   let(:session) { make_session }
   subject { Economic::CurrentInvoiceProxy.new(session) }
 
@@ -50,12 +49,12 @@ describe Economic::CurrentInvoiceProxy do
 
   describe ".find" do
     it "gets invoice data from API" do
-      mock_request('CurrentInvoice_GetData', {'entityHandle' => {'Id' => 42}}, :success)
+      mock_request("CurrentInvoice_GetData", {"entityHandle" => {"Id" => 42}}, :success)
       subject.find(42)
     end
 
     it "returns CurrentInvoice object" do
-      stub_request('CurrentInvoice_GetData', nil, :success)
+      stub_request("CurrentInvoice_GetData", nil, :success)
       expect(subject.find(42)).to be_instance_of(Economic::CurrentInvoice)
     end
   end
@@ -65,39 +64,37 @@ describe Economic::CurrentInvoiceProxy do
     let(:unto) { Time.now }
 
     it "should be able to return a single current invoice" do
-      mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :single)
-      stub_request('CurrentInvoice_GetDataArray', nil, :single)
+      mock_request("CurrentInvoice_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :single)
+      stub_request("CurrentInvoice_GetDataArray", nil, :single)
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(1)
       expect(results.first).to be_instance_of(Economic::CurrentInvoice)
     end
 
     it "should be able to return multiple invoices" do
-      mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :many)
-      stub_request('CurrentInvoice_GetDataArray', nil, :multiple)
+      mock_request("CurrentInvoice_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :many)
+      stub_request("CurrentInvoice_GetDataArray", nil, :multiple)
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(2)
       expect(results.first).to be_instance_of(Economic::CurrentInvoice)
     end
 
     it "should be able to return nothing" do
-      mock_request('CurrentInvoice_FindByDateInterval', {'first' => from.iso8601, 'last' => unto.iso8601}, :none)
+      mock_request("CurrentInvoice_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :none)
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(0)
     end
-
   end
-  
-  describe ".all" do
 
+  describe ".all" do
     it "returns an empty array when there are no current invoices" do
-      stub_request('CurrentInvoice_GetAll', nil, :none)
+      stub_request("CurrentInvoice_GetAll", nil, :none)
       expect(subject.all.size).to eq(0)
     end
 
     it "finds and adds a single current invoice" do
-      stub_request('CurrentInvoice_GetAll', nil, :single)
-      mock_request('CurrentInvoice_GetData', {'entityHandle' => {'Id' => 1}}, :success)
+      stub_request("CurrentInvoice_GetAll", nil, :single)
+      mock_request("CurrentInvoice_GetData", {"entityHandle" => {"Id" => 1}}, :success)
 
       current_invoices = subject.all
       expect(current_invoices).to be_instance_of(Economic::CurrentInvoiceProxy)
@@ -107,14 +104,13 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "adds multiple current invoices" do
-      stub_request('CurrentInvoice_GetAll', nil, :multiple)
-      stub_request('CurrentInvoice_GetDataArray', nil, :multiple)
+      stub_request("CurrentInvoice_GetAll", nil, :multiple)
+      stub_request("CurrentInvoice_GetDataArray", nil, :multiple)
 
       current_invoices = subject.all
       expect(current_invoices.size).to eq(2)
       expect(current_invoices.first).to be_instance_of(Economic::CurrentInvoice)
       expect(current_invoices.last).to be_instance_of(Economic::CurrentInvoice)
     end
-
   end
 end

@@ -3,9 +3,7 @@ module FindByCiNumber
   # be partially loaded
   def find_by_ci_number(ci_number)
     # Get a list of handles from e-conomic
-    response = request(:find_by_ci_number, {
-      'ciNumber' => ci_number
-    })
+    response = request(:find_by_ci_number, "ciNumber" => ci_number)
 
     # Make sure we always have an array of handles even if the result only
     # contains one

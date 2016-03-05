@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::Endpoint do
   subject { Economic::Endpoint.new }
@@ -11,28 +11,28 @@ describe Economic::Endpoint do
     it "uses the SOAP client to invoke a SOAP action on the API" do
       expect(client).to receive(:call).with(
         :foo_bar,
-        :message => {:baz => 'qux'}
+        :message => {:baz => "qux"}
       ).and_return({})
-      subject.call(:foo_bar, {:baz => 'qux'})
+      subject.call(:foo_bar, :baz => "qux")
     end
 
     it "sends an actual request" do
-      mock_request('Connect', nil, :success)
+      mock_request("Connect", nil, :success)
       subject.call(:connect)
     end
 
     it "returns a hash with data" do
-      stub_request('CurrentInvoice_GetAll', nil, :single)
-      expect(subject.call(:current_invoice_get_all)).to eq({:current_invoice_handle => {:id => "1"}})
+      stub_request("CurrentInvoice_GetAll", nil, :single)
+      expect(subject.call(:current_invoice_get_all)).to eq(:current_invoice_handle => {:id => "1"})
     end
 
     it "returns an empty hash if no data returned" do
-      stub_request('CurrentInvoice_GetAll', nil, :none)
+      stub_request("CurrentInvoice_GetAll", nil, :none)
       expect(subject.call(:current_invoice_get_all)).to be_empty
     end
 
     it "yields a Savon response" do
-      stub_request('CurrentInvoice_GetAll', nil, :single)
+      stub_request("CurrentInvoice_GetAll", nil, :single)
       @yielded_value = nil
       subject.call(:current_invoice_get_all) do |response|
         @yielded_value = response
@@ -88,7 +88,7 @@ describe Economic::Endpoint do
   end
 
   describe "app identifier configuration" do
-    let(:app_id) { 'my awesome app v.4.0.9-beta-rc1' }
+    let(:app_id) { "my awesome app v.4.0.9-beta-rc1" }
 
     it "can be instantiated with an app_identifier" do
       expect(Economic::Endpoint.new(app_id).client).to be_instance_of(::Savon::Client)

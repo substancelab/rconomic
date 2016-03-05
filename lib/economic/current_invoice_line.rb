@@ -1,8 +1,7 @@
-require 'economic/entity'
-require 'economic/current_invoice'
+require "economic/entity"
+require "economic/current_invoice"
 
 module Economic
-
   # Represents a current invoice line.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICurrentInvoiceLine.html
@@ -60,9 +59,9 @@ module Economic
     protected
 
     def fields
-      to_hash = Proc.new { |h| h.to_hash }
+      to_hash = proc { |h| h.to_hash }
       [
-        ["Number", :number, Proc.new { 0 }, :required], # Doesn't seem to be used
+        ["Number", :number, proc { 0 }, :required], # Doesn't seem to be used
         ["InvoiceHandle", :invoice_handle, to_hash],
         ["Description", :description],
         ["DeliveryDate", :delivery_date, nil, :required],

@@ -1,4 +1,4 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
   # Represents a cash book in E-conomic.
@@ -74,9 +74,9 @@ module Economic
     protected
 
     def fields
-      to_hash = Proc.new { |handle| handle.to_hash }
+      to_hash = proc { |handle| handle.to_hash }
       [
-        ["Handle", :handle, Proc.new { |v| v.to_hash }],
+        ["Handle", :handle, proc { |v| v.to_hash }],
         ["Id1", :id1],
         ["Id2", :id2],
         ["Type", :type],

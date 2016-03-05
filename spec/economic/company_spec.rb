@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::Company do
   let(:session) { make_session }
@@ -17,5 +17,4 @@ describe Economic::Company do
       expect(subject.proxy.session).to eq(session)
     end
   end
-
 end

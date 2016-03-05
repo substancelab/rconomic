@@ -1,7 +1,6 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
-
   # Represents an entry in E-conomic.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_IEntry.html

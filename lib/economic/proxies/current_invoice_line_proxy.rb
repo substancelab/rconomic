@@ -1,4 +1,4 @@
-require 'economic/proxies/entity_proxy'
+require "economic/proxies/entity_proxy"
 
 module Economic
   class CurrentInvoiceLineProxy < EntityProxy
@@ -8,7 +8,7 @@ module Economic
       super(handle)
     end
 
-  private
+    private
 
     # Initialize properties in invoice_line with values from owner
     def initialize_properties_with_values_from_owner(invoice_line)

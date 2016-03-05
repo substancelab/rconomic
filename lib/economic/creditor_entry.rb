@@ -1,7 +1,6 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
-
   # Represents a creditor entry in E-conomic.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICreditorEntry.html
@@ -21,5 +20,4 @@ module Economic
       :type,
       :voucher_number
   end
-
 end

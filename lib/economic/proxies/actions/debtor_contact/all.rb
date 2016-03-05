@@ -3,7 +3,6 @@ module Economic
     module Actions
       module DebtorContact
         class All
-
           def initialize(caller)
             @caller = caller
             @session = caller.session
@@ -45,19 +44,18 @@ module Economic
 
           def request(action, data)
             @session.request(
-                soap_action_name('Debtor', action),
-                data
+              soap_action_name("Debtor", action),
+              data
             )
           end
 
           def response
-            request('get_debtor_contacts', {'debtorHandle' => {'Number' => owner.number}})
+            request("get_debtor_contacts", {"debtorHandle" => {"Number" => owner.number}})
           end
 
           def soap_action_name(entity_class, action)
             Endpoint.new.soap_action_name(entity_class, action)
           end
-
         end
       end
     end

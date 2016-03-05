@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::CurrentInvoiceLineProxy do
   let(:session) { make_session }
@@ -58,12 +58,12 @@ describe Economic::CurrentInvoiceLineProxy do
 
   describe ".find" do
     it "gets invoice_line data from API" do
-      mock_request('CurrentInvoiceLine_GetData', {'entityHandle' => {'Number' => 42}}, :success)
+      mock_request("CurrentInvoiceLine_GetData", {"entityHandle" => {"Number" => 42}}, :success)
       subject.find(42)
     end
 
     it "returns CurrentInvoiceLine object" do
-      stub_request('CurrentInvoiceLine_GetData', nil, :success)
+      stub_request("CurrentInvoiceLine_GetData", nil, :success)
       expect(subject.find(42)).to be_instance_of(Economic::CurrentInvoiceLine)
     end
   end

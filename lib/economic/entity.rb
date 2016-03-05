@@ -1,6 +1,6 @@
-require 'economic/endpoint'
-require 'economic/entity/handle'
-require 'economic/entity/mapper'
+require "economic/endpoint"
+require "economic/entity/handle"
+require "economic/entity/mapper"
 
 module Economic
   class Entity
@@ -33,7 +33,7 @@ module Economic
       # Create a property getter that loads the full Entity from the API if
       # necessary
       def property_reader(property)
-        define_method "#{property}" do
+        define_method property.to_s do
           value = instance_variable_get("@#{property}")
           if value.nil? && partial? && persisted?
             instance_variable_get("@#{property}")
@@ -72,7 +72,7 @@ module Economic
 
       # Returns the class used to instantiate a proxy for Entity
       def proxy
-        class_name = name.split('::').last
+        class_name = name.split("::").last
         proxy_class_name = "#{class_name}Proxy"
         Economic.const_get(proxy_class_name)
       end
@@ -83,7 +83,7 @@ module Economic
       #   Entity.key #=> :entity
       #   CurrentInvoice.key #=> :current_invoice
       def key
-        key = self.name
+        key = name
         key = Economic::Support::String.demodulize(key)
         key = Economic::Support::String.underscore(key)
         key.intern
@@ -91,7 +91,7 @@ module Economic
     end
 
     def handle
-      @handle || Handle.build({:number => @number, :id => @id})
+      @handle || Handle.build(:number => @number, :id => @id)
     end
 
     def handle=(handle)
@@ -108,7 +108,7 @@ module Economic
     # Updates Entity with its data from the API
     def get_data
       response = proxy.get_data(handle)
-      self.update_properties(response)
+      update_properties(response)
       self.partial = false
       self.persisted = true
     end
@@ -120,15 +120,11 @@ module Economic
 
     # Returns the number of Entity. This does not trigger a load from the API
     # even if Entity is partial
-    def number
-      @number
-    end
+    attr_reader :number
 
     # Returns the id of Entity. This does not trigger a load from the API even
     # if Entity is partial
-    def id
-      @id
-    end
+    attr_reader :id
 
     # Returns true if CurrentInvoiceLine has been persisted in e-conomic
     def persisted?
@@ -149,8 +145,8 @@ module Economic
     end
 
     def inspect
-      props = self.class.properties.collect { |p| "#{p}=#{self.send(p).inspect}" }
-      "#<#{self.class}:#{self.object_id} partial=#{partial?}, persisted=#{persisted?}, #{props.join(', ')}>"
+      props = self.class.properties.collect { |p| "#{p}=#{send(p).inspect}" }
+      "#<#{self.class}:#{object_id} partial=#{partial?}, persisted=#{persisted?}, #{props.join(', ')}>"
     end
 
     # Persist the Entity to the API
@@ -161,7 +157,7 @@ module Economic
     # Deletes entity permanently from E-conomic.
     def destroy
       handleKey = "#{Support::String.camel_back(class_name)}Handle"
-      response = request(:delete, {handleKey => handle.to_hash})
+      response = request(:delete, handleKey => handle.to_hash)
 
       @persisted = false
       @partial = true
@@ -173,15 +169,15 @@ module Economic
     def update_properties(hash)
       hash.each do |key, value|
         setter_method = "#{key}="
-        if self.respond_to?(setter_method)
-          self.send(setter_method, value)
+        if respond_to?(setter_method)
+          send(setter_method, value)
         end
       end
     end
 
     def ==(other)
       return false if other.nil?
-      self.handle == other.handle && other.is_a?(self.class)
+      handle == other.handle && other.is_a?(self.class)
     end
 
     protected
@@ -195,9 +191,7 @@ module Economic
     end
 
     def create
-      response = request(:create_from_data, {
-        'data' => build_soap_data
-      })
+      response = request(:create_from_data, "data" => build_soap_data)
 
       if response
         @number = response[:number]
@@ -209,7 +203,7 @@ module Economic
       @persisted = true
       @partial = false
 
-      return response
+      response
     end
 
     def defaults
@@ -217,14 +211,12 @@ module Economic
     end
 
     def update
-      response = request(:update_from_data, {
-        'data' => build_soap_data
-      })
+      response = request(:update_from_data, "data" => build_soap_data)
 
       @persisted = true
       @partial = false
 
-      return response
+      response
     end
 
     # Returns Hash with the data structure to send to the API
@@ -250,7 +242,7 @@ module Economic
 
     def initialize_defaults
       defaults.each do |property_name, default_value|
-        self.send("#{property_name}=", default_value)
+        send("#{property_name}=", default_value)
       end
     end
   end

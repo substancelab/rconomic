@@ -8,14 +8,14 @@ class Economic::Entity
 
     def self.id_properties
       {
-        :code => 'Code',
-        :id => 'Id',
-        :id1 => 'Id1',
-        :id2 => 'Id2',
-        :name => 'Name',
-        :number => 'Number',
-        :serial_number => 'SerialNumber',
-        :vat_code => 'VatCode'
+        :code => "Code",
+        :id => "Id",
+        :id1 => "Id1",
+        :id2 => "Id2",
+        :name => "Name",
+        :number => "Number",
+        :serial_number => "SerialNumber",
+        :vat_code => "VatCode"
       }
     end
 
@@ -48,7 +48,7 @@ class Economic::Entity
       only_keys = [only_keys].flatten
       only_keys.each_with_object({}) do |key, hash|
         property = id_properties[key]
-        value = self.send(key)
+        value = send(key)
         next if value.blank?
         hash[property] = value
       end
@@ -59,11 +59,11 @@ class Economic::Entity
     end
 
     def ==(other)
-      return true if self.object_id == other.object_id
+      return true if object_id == other.object_id
       return false if other.nil?
       return false if empty? || (other.respond_to?(:empty?) && other.empty?)
       return false unless other.respond_to?(:id) && other.respond_to?(:number)
-      self.id == other.id && self.number == other.number && self.id1 == other.id1 && self.id2 == other.id2
+      id == other.id && number == other.number && id1 == other.id1 && id2 == other.id2
     end
 
     private
@@ -94,9 +94,9 @@ class Economic::Entity
     #   prepare_hash_argument('Id' => 12) #=> {:id => 12}
     #   prepare_hash_argument('Id' => 12, 'Number' => 13) #=> {:id => 12, :number => 13}
     def prepare_hash_argument(hash)
-      hash = {:id => hash.to_i} if hash.respond_to?(:to_i) unless hash.blank?
-      hash[:id] ||= hash['Id']
-      hash[:number] ||= hash['Number']
+      hash = {:id => hash.to_i} unless hash.blank? || !hash.respond_to?(:to_i)
+      hash[:id] ||= hash["Id"]
+      hash[:number] ||= hash["Number"]
       hash
     end
   end

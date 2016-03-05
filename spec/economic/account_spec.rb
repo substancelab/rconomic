@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::Account do
   let(:session) { make_session }
@@ -9,8 +9,8 @@ describe Economic::Account do
   end
 
   describe "#save" do
-    it 'should save it' do
-      stub_request('Account_CreateFromData', nil, :success)
+    it "should save it" do
+      stub_request("Account_CreateFromData", nil, :success)
       subject.save
     end
 

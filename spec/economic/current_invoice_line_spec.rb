@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::CurrentInvoiceLine do
   let(:session) { make_session }
@@ -17,8 +17,8 @@ describe Economic::CurrentInvoiceLine do
     end
 
     it "should not be equal when numbers are different" do
-      line1 = Economic::CurrentInvoiceLine.new({:number => 1})
-      line2 = Economic::CurrentInvoiceLine.new({:number => 2})
+      line1 = Economic::CurrentInvoiceLine.new(:number => 1)
+      line2 = Economic::CurrentInvoiceLine.new(:number => 2)
 
       expect(line1).not_to eq(line2)
     end

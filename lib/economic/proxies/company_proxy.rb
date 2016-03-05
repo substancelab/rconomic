@@ -1,4 +1,4 @@
-require 'economic/proxies/entity_proxy'
+require "economic/proxies/entity_proxy"
 
 module Economic
   class CompanyProxy < EntityProxy

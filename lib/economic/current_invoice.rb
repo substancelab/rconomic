@@ -1,7 +1,6 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
-
   # CurrentInvoices are invoices that are not yet booked. They are therefore not
   # read-only.
   #
@@ -94,9 +93,7 @@ module Economic
     #
     # Returns the resulting Economic::Invoice object
     def book
-      response = request(:book, {
-        "currentInvoiceHandle" => handle.to_hash
-      })
+      response = request(:book, "currentInvoiceHandle" => handle.to_hash)
 
       # Find the created Invoice
       session.invoices.find(response[:number])
@@ -107,10 +104,8 @@ module Economic
     #
     # Returns the resulting Economic::Invoice object
     def book_with_number(number)
-      response = request(:book_with_number, {
-        "currentInvoiceHandle" => handle.to_hash,
-        "number" => number
-      })
+      response = request(:book_with_number, "currentInvoiceHandle" => handle.to_hash,
+                                            "number" => number)
 
       # Find the created Invoice
       session.invoices.find(response[:number])
@@ -155,11 +150,11 @@ module Economic
     protected
 
     def fields
-      date_formatter = Proc.new { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
-      to_hash = Proc.new { |handle| handle.to_hash }
+      date_formatter = proc { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
+      to_hash = proc { |handle| handle.to_hash }
       [
         ["Id", :id, nil, :required],
-        ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
+        ["DebtorHandle", :debtor, proc { |d| d.handle.to_hash }],
         ["DebtorName", :debtor_name, nil, :required],
         ["DebtorAddress", :debtor_address],
         ["DebtorPostalCode", :debtor_postal_code],
@@ -175,8 +170,8 @@ module Economic
         ["LayoutHandle", :layout_handle, to_hash],
         ["DeliveryDate", :delivery_date, date_formatter, :required],
         ["Heading", :heading],
-        ['TextLine1', :text_line1],
-        ['TextLine2', :text_line2],
+        ["TextLine1", :text_line1],
+        ["TextLine2", :text_line2],
         ["NetAmount", :net_amount, nil, :required],
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],

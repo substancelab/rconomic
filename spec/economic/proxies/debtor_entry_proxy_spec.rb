@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::DebtorEntryProxy do
   let(:session) { make_session }
@@ -11,24 +11,24 @@ describe Economic::DebtorEntryProxy do
   end
 
   describe "#find_by_invoice_number" do
-    it 'should be able to find multiple debtor entries' do
-      mock_request("DebtorEntry_FindByInvoiceNumber", {'from' => '123', 'to' => '456'}, :many)
-      expect(subject.find_by_invoice_number('123', '456')).to eq([1, 2])
+    it "should be able to find multiple debtor entries" do
+      mock_request("DebtorEntry_FindByInvoiceNumber", {"from" => "123", "to" => "456"}, :many)
+      expect(subject.find_by_invoice_number("123", "456")).to eq([1, 2])
     end
 
-    it 'should be able to find debtor entries with one invoice id' do
-      mock_request("DebtorEntry_FindByInvoiceNumber", {'from' => '123', 'to' => '123'}, :many)
-      expect(subject.find_by_invoice_number('123')).to eq([1, 2])
+    it "should be able to find debtor entries with one invoice id" do
+      mock_request("DebtorEntry_FindByInvoiceNumber", {"from" => "123", "to" => "123"}, :many)
+      expect(subject.find_by_invoice_number("123")).to eq([1, 2])
     end
 
-    it 'should handle a single serial number in the response' do
+    it "should handle a single serial number in the response" do
       stub_request("DebtorEntry_FindByInvoiceNumber", nil, :single)
-      expect(subject.find_by_invoice_number('123')).to eq([1])
+      expect(subject.find_by_invoice_number("123")).to eq([1])
     end
   end
 
   describe "#match" do
-    it 'should match two debtor entries by serial numbers' do
+    it "should match two debtor entries by serial numbers" do
       stub_request(
         "DebtorEntry_MatchEntries",
         {:entries => {

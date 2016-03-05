@@ -1,4 +1,4 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
   class Invoice < Entity
@@ -49,9 +49,7 @@ module Economic
     end
 
     def remainder
-      @remainder ||= request(:get_remainder, {
-        "invoiceHandle" => handle.to_hash
-      }).to_f
+      @remainder ||= request(:get_remainder, "invoiceHandle" => handle.to_hash).to_f
     end
 
     def days_past_due
@@ -73,9 +71,7 @@ module Economic
     #     file << invoice.pdf
     #   end
     def pdf
-      response = request(:get_pdf, {
-                           "invoiceHandle" => handle.to_hash
-      })
+      response = request(:get_pdf, "invoiceHandle" => handle.to_hash)
 
       Base64.decode64(response)
     end

@@ -1,4 +1,4 @@
-require 'economic/proxies/entity_proxy'
+require "economic/proxies/entity_proxy"
 
 module Economic
   class CreditorContactProxy < EntityProxy
@@ -8,7 +8,7 @@ module Economic
       Proxies::Actions::FindByName.new(self, name).call
     end
 
-  private
+    private
 
     # Initialize properties in contact with values from owner. Returns contact.
     def initialize_properties_with_values_from_owner(contact)

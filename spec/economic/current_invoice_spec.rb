@@ -1,8 +1,8 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::CurrentInvoice do
   let(:session) { make_session }
-  subject { (i = Economic::CurrentInvoice.new( :id => 512 )).tap { i.session = session } }
+  subject { (i = Economic::CurrentInvoice.new(:id => 512)).tap { i.session = session } }
 
   it "inherits from Economic::Entity" do
     expect(Economic::CurrentInvoice.ancestors).to include(Economic::Entity)
@@ -38,7 +38,7 @@ describe Economic::CurrentInvoice do
         subject.date = time
         subject.attention_handle = Economic::Entity::Handle.new(:id => 42)
         subject.term_of_payment_handle = Economic::Entity::Handle.new(:id => 37)
-        subject.currency_handle = Economic::Entity::Handle.new({:code => "BTC"})
+        subject.currency_handle = Economic::Entity::Handle.new(:code => "BTC")
         subject.layout_handle = Economic::Entity::Handle.new(:id => 314)
 
         mock_request(
@@ -68,13 +68,13 @@ describe Economic::CurrentInvoice do
       end
 
       it "updates id with the created id" do
-        stub_request('CurrentInvoice_CreateFromData', nil, :success)
+        stub_request("CurrentInvoice_CreateFromData", nil, :success)
         subject.save
         expect(subject.id).to eq(42)
       end
 
       it "updates handle with the created id" do
-        stub_request('CurrentInvoice_CreateFromData', nil, :success)
+        stub_request("CurrentInvoice_CreateFromData", nil, :success)
 
         invoice = Economic::CurrentInvoice.new({})
         invoice.session = session
@@ -89,7 +89,7 @@ describe Economic::CurrentInvoice do
 
       context "when invoice has lines" do
         before :each do
-          stub_request('CurrentInvoice_CreateFromData', nil, :success)
+          stub_request("CurrentInvoice_CreateFromData", nil, :success)
 
           2.times do
             line = Economic::CurrentInvoiceLine.new
@@ -126,29 +126,29 @@ describe Economic::CurrentInvoice do
   end
 
   describe "#book" do
-    it 'should book the current invoice and return the created invoice object' do
-      stub_request('CurrentInvoice_Book', nil, :success)
-      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => '328' }}, :success)
+    it "should book the current invoice and return the created invoice object" do
+      stub_request("CurrentInvoice_Book", nil, :success)
+      mock_request("Invoice_GetData", {"entityHandle" => {"Number" => "328"}}, :success)
       expect(subject.book).to be_instance_of(Economic::Invoice)
     end
 
-    it 'should request with the right key for handle' do
-      mock_request("CurrentInvoice_Book", {'currentInvoiceHandle' => { 'Id' => 512 }}, :success)
-      stub_request('Invoice_GetData', nil, :success)
+    it "should request with the right key for handle" do
+      mock_request("CurrentInvoice_Book", {"currentInvoiceHandle" => {"Id" => 512}}, :success)
+      stub_request("Invoice_GetData", nil, :success)
       subject.book
     end
   end
 
   describe "#book_with_number" do
-    it 'should book the current invoice with the given number and return the created invoice object' do
-      stub_request('CurrentInvoice_BookWithNumber', nil, :success)
-      mock_request("Invoice_GetData", {'entityHandle' => { 'Number' => '123' }}, :success)
+    it "should book the current invoice with the given number and return the created invoice object" do
+      stub_request("CurrentInvoice_BookWithNumber", nil, :success)
+      mock_request("Invoice_GetData", {"entityHandle" => {"Number" => "123"}}, :success)
       expect(subject.book_with_number(123)).to be_instance_of(Economic::Invoice)
     end
 
-    it 'should request with the right key for handle' do
-      mock_request("CurrentInvoice_BookWithNumber", {'currentInvoiceHandle' => { 'Id' => 512 }, 'number' => 123}, :success)
-      stub_request('Invoice_GetData', nil, :success)
+    it "should request with the right key for handle" do
+      mock_request("CurrentInvoice_BookWithNumber", {"currentInvoiceHandle" => {"Id" => 512}, "number" => 123}, :success)
+      stub_request("Invoice_GetData", nil, :success)
       subject.book_with_number(123)
     end
   end
@@ -156,7 +156,7 @@ describe Economic::CurrentInvoice do
   describe "#attention" do
     let(:contact) {
       c = Economic::DebtorContact.new(
-        :handle => Economic::Entity::Handle.new({:id => 12, :number => 34})
+        :handle => Economic::Entity::Handle.new(:id => 12, :number => 34)
       )
       c.session = session
       c

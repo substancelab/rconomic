@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::Invoice do
   let(:session) { make_session }
@@ -9,8 +9,8 @@ describe Economic::Invoice do
   end
 
   describe '#remainder' do
-    it 'should get the remainder' do
-      mock_request('Invoice_GetRemainder', {"invoiceHandle" => { "Number" => 512 }}, :success)
+    it "should get the remainder" do
+      mock_request("Invoice_GetRemainder", {"invoiceHandle" => {"Number" => 512}}, :success)
       expect(subject.remainder).to eq(512.32)
     end
   end
@@ -33,13 +33,13 @@ describe Economic::Invoice do
 
   describe "#pdf" do
     it "gets PDF data from API" do
-      mock_request('Invoice_GetPdf', {'invoiceHandle' => {'Number' => 512}}, :success)
+      mock_request("Invoice_GetPdf", {"invoiceHandle" => {"Number" => 512}}, :success)
       subject.pdf
     end
 
     it "decodes the base64Binary encoded data" do
-      stub_request('Invoice_GetPdf', nil, :success)
-      expect(subject.pdf).to eq('This is not really PDF data')
+      stub_request("Invoice_GetPdf", nil, :success)
+      expect(subject.pdf).to eq("This is not really PDF data")
     end
   end
 

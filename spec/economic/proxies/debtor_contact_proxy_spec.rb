@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::DebtorContactProxy do
   let(:session) { make_session }
@@ -40,12 +40,12 @@ describe Economic::DebtorContactProxy do
 
   describe ".find" do
     it "gets contact data from API" do
-      mock_request('DebtorContact_GetData', {'entityHandle' => {'Id' => 42}}, :success)
+      mock_request("DebtorContact_GetData", {"entityHandle" => {"Id" => 42}}, :success)
       subject.find(42)
     end
 
     it "returns DebtorContact object" do
-      stub_request('DebtorContact_GetData', nil, :success)
+      stub_request("DebtorContact_GetData", nil, :success)
       expect(subject.find(42)).to be_instance_of(Economic::DebtorContact)
     end
   end
@@ -54,7 +54,7 @@ describe Economic::DebtorContactProxy do
     it "uses the FindByName command" do
       expect(Economic::Proxies::Actions::FindByName).to receive(:new).
         with(subject, "Bob").
-        and_return(lambda { "Result" })
+        and_return(-> { "Result" })
       expect(subject.find_by_name("Bob")).to eq("Result")
     end
   end

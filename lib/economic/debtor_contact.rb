@@ -1,7 +1,6 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
-
   # Represents a debtor contact.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_IDebtorContact.html
@@ -45,7 +44,7 @@ module Economic
     end
 
     def handle
-      @handle || Handle.new({:id => @id})
+      @handle || Handle.new(:id => @id)
     end
 
     protected
@@ -53,17 +52,17 @@ module Economic
     # Returns the field rules to use when mapping to SOAP data
     def fields
       [
-        ["Handle", :handle, Proc.new { |v| v.to_hash }, :required],
-        ["Id", :handle, Proc.new { |v| v.id }, :required],
-        ["DebtorHandle", :debtor, Proc.new { |v| v.handle.to_hash }],
+        ["Handle", :handle, proc { |v| v.to_hash }, :required],
+        ["Id", :handle, proc { |v| v.id }, :required],
+        ["DebtorHandle", :debtor, proc { |v| v.handle.to_hash }],
         ["Name", :name, nil, :required],
         ["Number", :number],
         ["TelephoneNumber", :telephone_number],
         ["Email", :email],
         ["Comments", :comments],
         ["ExternalId", :external_id],
-        ["IsToReceiveEmailCopyOfOrder", :is_to_receive_email_copy_of_order, Proc.new { |v| v || false }, :required],
-        ["IsToReceiveEmailCopyOfInvoice", :is_to_receive_email_copy_of_invoice, Proc.new { |v| v || false }, :required]
+        ["IsToReceiveEmailCopyOfOrder", :is_to_receive_email_copy_of_order, proc { |v| v || false }, :required],
+        ["IsToReceiveEmailCopyOfInvoice", :is_to_receive_email_copy_of_invoice, proc { |v| v || false }, :required]
       ]
     end
   end

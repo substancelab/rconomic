@@ -1,4 +1,4 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
   class Order < Entity
@@ -56,9 +56,7 @@ module Economic
     #     file << invoice.pdf
     #   end
     def pdf
-      response = request(:get_pdf, {
-                           "orderHandle" => handle.to_hash
-      })
+      response = request(:get_pdf, "orderHandle" => handle.to_hash)
 
       Base64.decode64(response)
     end

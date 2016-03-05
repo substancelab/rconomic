@@ -26,7 +26,7 @@ module Economic
         end
       end
 
-      return data
+      data
     end
 
     private

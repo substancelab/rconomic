@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::Proxies::Actions::DebtorContact::All do
   let(:session) { make_session }
@@ -13,17 +13,14 @@ describe Economic::Proxies::Actions::DebtorContact::All do
   end
 
   describe "#call" do
-
     it "returns debtor contacts" do
-      stub_request('Debtor_GetDebtorContacts', nil, :multiple)
+      stub_request("Debtor_GetDebtorContacts", nil, :multiple)
       expect(subject.call.first).to be_instance_of(Economic::DebtorContact)
     end
 
     it "returns empty array when nothing is found" do
-      stub_request('Debtor_GetDebtorContacts', nil, :none)
+      stub_request("Debtor_GetDebtorContacts", nil, :none)
       expect(subject.call).to be_empty
     end
-
   end
-
 end

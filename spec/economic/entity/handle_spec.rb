@@ -1,4 +1,4 @@
-require './spec/spec_helper'
+require "./spec/spec_helper"
 
 describe Economic::Entity::Handle do
   describe "equality" do
@@ -95,7 +95,7 @@ describe Economic::Entity::Handle do
       expect(handle.number).to eq(42)
     end
 
-    it 'should set id1 and id2' do
+    it "should set id1 and id2" do
       handle = Economic::Entity::Handle.new(:id1 => 37, :id2 => 42)
       expect(handle.id1).to eq(37)
       expect(handle.id2).to eq(42)
@@ -113,7 +113,7 @@ describe Economic::Entity::Handle do
     end
 
     it "should accept a Hash with capitalized keys" do
-      handle = Economic::Entity::Handle.new({"Id" => 37, "Number" => 42})
+      handle = Economic::Entity::Handle.new("Id" => 37, "Number" => 42)
       expect(handle.id).to eq(37)
       expect(handle.number).to eq(42)
     end
@@ -137,11 +137,11 @@ describe Economic::Entity::Handle do
     end
 
     it "returns nil when hash has no values" do
-      expect(Economic::Entity::Handle.build({:id => nil, :number => nil})).to be_empty
+      expect(Economic::Entity::Handle.build(:id => nil, :number => nil)).to be_empty
     end
 
     it "returns handle when hash has values" do
-      expect(Economic::Entity::Handle.build({:id2 => 42})).to eq(Economic::Entity::Handle.new({:id2 => 42}))
+      expect(Economic::Entity::Handle.build(:id2 => 42)).to eq(Economic::Entity::Handle.new(:id2 => 42))
     end
 
     it "returns a given handle" do
@@ -156,23 +156,23 @@ describe Economic::Entity::Handle do
     end
 
     it "returns false when handle has a value" do
-      expect(Economic::Entity::Handle.new({:serial_number => 12})).to_not be_empty
+      expect(Economic::Entity::Handle.new(:serial_number => 12)).to_not be_empty
     end
   end
 
   describe ".to_hash" do
-    subject { Economic::Entity::Handle.new({:id => 42, :number => 37, :serial_number => 7, :code => "USD", :name => "Bob", :vat_code => 1}) }
+    subject { Economic::Entity::Handle.new(:id => 42, :number => 37, :serial_number => 7, :code => "USD", :name => "Bob", :vat_code => 1) }
 
     it "should return a handle for putting into the body of a SOAP request" do
-      expect(subject.to_hash).to eq({'Id' => 42, 'Number' => 37, 'SerialNumber' => 7, 'Code' => 'USD', 'Name' => 'Bob', 'VatCode' => 1})
+      expect(subject.to_hash).to eq("Id" => 42, "Number" => 37, "SerialNumber" => 7, "Code" => "USD", "Name" => "Bob", "VatCode" => 1)
     end
 
     it "includes only the named value in the hash" do
-      expect(subject.to_hash(:id)).to eq({'Id' => 42})
+      expect(subject.to_hash(:id)).to eq("Id" => 42)
     end
 
     it "includes only the named values in the hash" do
-      expect(subject.to_hash([:id, :serial_number])).to eq({'Id' => 42, 'SerialNumber' => 7})
+      expect(subject.to_hash([:id, :serial_number])).to eq("Id" => 42, "SerialNumber" => 7)
     end
   end
 end

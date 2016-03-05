@@ -1,11 +1,11 @@
-require 'economic/proxies/entity_proxy'
-require 'economic/proxies/actions/find_by_date_interval'
+require "economic/proxies/entity_proxy"
+require "economic/proxies/actions/find_by_date_interval"
 
 module Economic
   class CurrentInvoiceProxy < EntityProxy
     include FindByDateInterval
 
-  private
+    private
 
     # Initialize properties in invoice with values from owner
     def initialize_properties_with_values_from_owner(invoice)

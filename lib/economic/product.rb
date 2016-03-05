@@ -1,7 +1,6 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
-
   # Represents a product in E-conomic.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_IProduct.html
@@ -42,16 +41,16 @@ module Economic
       :available
 
     def handle
-      @handle ||= Handle.new({:number => @number})
+      @handle ||= Handle.new(:number => @number)
     end
 
     protected
 
     def fields
-      to_hash = Proc.new { |handle| handle.to_hash }
+      to_hash = proc { |handle| handle.to_hash }
       [
         ["Handle", :handle, to_hash, :required],
-        ["Number", :handle, Proc.new { |h| h.number }, :required],
+        ["Number", :handle, proc { |h| h.number }, :required],
         ["ProductGroupHandle", :product_group_handle, to_hash],
         ["Name", :name, nil, :required],
         ["Description", :description, nil],

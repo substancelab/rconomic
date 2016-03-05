@@ -1,4 +1,4 @@
-require 'forwardable'
+require "forwardable"
 
 module Economic
   # The Economic::Session contains details and behaviors for a current
@@ -31,10 +31,8 @@ module Economic
     def connect_with_token(private_app_id, access_id)
       endpoint.call(
         :connect_with_token,
-        {
-          :token => access_id,
-          :appToken => private_app_id
-        }
+        :token => access_id,
+        :appToken => private_app_id
       ) do |response|
         store_authentication_token(response)
       end
@@ -54,11 +52,9 @@ module Economic
 
       endpoint.call(
         :connect,
-        {
-          :agreementNumber => agreement_number,
-          :userName => user_name,
-          :password => password
-        }
+        :agreementNumber => agreement_number,
+        :userName => user_name,
+        :password => password
       ) do |response|
         store_authentication_token(response)
       end
@@ -67,7 +63,7 @@ module Economic
     # Authenticates with E-conomic using credentials
     # Assumes ::new was called with credentials as arguments.
     def connect
-      connect_with_credentials(self.agreement_number, self.user_name, self.password, self.app_identifier)
+      connect_with_credentials(agreement_number, user_name, password, app_identifier)
     end
 
     # Provides access to the DebtorContacts

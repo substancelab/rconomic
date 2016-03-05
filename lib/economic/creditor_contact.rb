@@ -1,7 +1,6 @@
-require 'economic/entity'
+require "economic/entity"
 
 module Economic
-
   # Represents a creditor contact.
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICreditorContact.html
@@ -36,20 +35,20 @@ module Economic
     end
 
     def handle
-      @handle || Handle.build({:id => @id})
+      @handle || Handle.build(:id => @id)
     end
 
     protected
 
     def fields
-      to_hash = Proc.new { |handle| handle.to_hash }
+      to_hash = proc { |handle| handle.to_hash }
       # SOAP field, entity method, formatter proc, required?
       [
-        ["Handle", :handle, Proc.new { |v| v.to_hash }, :required],
+        ["Handle", :handle, proc { |v| v.to_hash }, :required],
         ["Id", :id, nil],
         ["CreditorHandle", :creditor_handle, to_hash],
         ["Name", :name],
-        ["Number", :handle, Proc.new { |v| v.number }, :required],
+        ["Number", :handle, proc { |v| v.number }, :required],
         ["TelephoneNumber", :telephone_number],
         ["Email", :email],
         ["Comments", :comments],
