@@ -112,9 +112,15 @@ class Economic::Entity
 
     # Examples
     #
-    #   prepare_hash_argument(12) #=> {:id => 12}
-    #   prepare_hash_argument(:id => 12) #=> {:id => 12}
-    #   prepare_hash_argument('Id' => 12) #=> {:id => 12}
+    #   prepare_hash_argument(12)
+    #   #=> {:id => 12}
+    #
+    #   prepare_hash_argument(:id => 12)
+    #   #=> {:id => 12}
+    #
+    #   prepare_hash_argument('Id' => 12)
+    #   #=> {:id => 12}
+    #
     #   prepare_hash_argument('Id' => 12, 'Number' => 13)
     #   #=> {:id => 12, :number => 13}
     def prepare_hash_argument(hash)
