@@ -51,7 +51,7 @@ module Economic
 
       # Create a property setter for property
       def property_writer(property)
-        if property.to_s.end_with?("_handle")
+        if property.to_s.end_with?("_handle") || property == :handle
           handle_writer property
         else
           # Just use regular writers
@@ -74,6 +74,12 @@ module Economic
 
       def property(name, default: nil, serialize: nil, required: false, formatter: nil)
         properties << name
+        property_definitions[name] = {
+          :default => default,
+          :formatter => formatter,
+          :required => required,
+          :serialize => serialize
+        }
 
         # Create a getter for property
         unless properties_not_triggering_full_load.include?(name)
@@ -84,8 +90,12 @@ module Economic
         property_writer name
       end
 
+      def property_definitions
+        @property_definitions ||= {}
+      end
+
       def properties
-        @properties || []
+        @properties ||= []
       end
 
       # Returns the class used to instantiate a proxy for Entity
