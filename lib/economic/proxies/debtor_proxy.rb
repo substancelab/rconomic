@@ -17,10 +17,7 @@ module Economic
     end
 
     def get_debtor_contacts(debtor_handle)
-      response = request(
-        :get_debtor_contacts,
-        "debtorHandle" => {"Number" => debtor_handle.number}
-      )
+      response = fetch_response(:get_debtor_contacts, debtor_handle)
       return nil if response.empty?
 
       build_entities_from_response(
@@ -30,10 +27,7 @@ module Economic
     end
 
     def get_invoices(debtor_handle)
-      response = request(
-        :get_invoices,
-        "debtorHandle" => {"Number" => debtor_handle.number}
-      )
+      response = fetch_response(:get_invoices, debtor_handle)
       return nil if response.empty?
 
       build_entities_from_response(
@@ -44,10 +38,7 @@ module Economic
 
     # Returns handle for orders for debtor.
     def get_orders(debtor_handle)
-      response = request(
-        :get_orders,
-        "debtorHandle" => {"Number" => debtor_handle.number}
-      )
+      response = fetch_response(:get_orders, debtor_handle)
       return nil if response.empty?
 
       build_entities_from_response(
@@ -67,6 +58,13 @@ module Economic
         entity.number = handle[:id].to_i
         entity
       end
+    end
+
+    def fetch_response(operation, debtor_handle)
+      request(
+        operation,
+        "debtorHandle" => {"Number" => debtor_handle.number}
+      )
     end
   end
 end
