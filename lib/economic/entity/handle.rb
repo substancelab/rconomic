@@ -71,6 +71,13 @@ class Economic::Entity
 
     private
 
+    def handleish?(object)
+      return false if object.nil?
+      return true if object.respond_to?(:to_i)
+      return true if object.respond_to?(:keys) && object.respond_to?(:values)
+      false
+    end
+
     def id_properties
       self.class.id_properties
     end
@@ -80,11 +87,7 @@ class Economic::Entity
     def verify_sanity_of_arguments!(hash)
       return if hash.is_a?(self.class)
 
-      if hash.nil? || (
-        !hash.respond_to?(:to_i) && (
-          !hash.respond_to?(:keys) && !hash.respond_to?(:values)
-        )
-      )
+      unless handleish?(hash)
         raise(
           ArgumentError,
           "Expected Number, Hash or Economic::Entity::Handle " \
