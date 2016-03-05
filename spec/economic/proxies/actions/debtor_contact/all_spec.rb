@@ -9,7 +9,7 @@ describe Economic::Proxies::Actions::DebtorContact::All do
   }
 
   before :each do
-    session.stub(:number) { 123 }
+    allow(session).to receive(:number) { 123 }
   end
 
   describe "#call" do

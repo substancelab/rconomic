@@ -22,13 +22,13 @@ describe Economic::Entity::Mapper do
 
   describe "#to_hash" do
     it "returns a Hash with fields as per the field descriptions" do
-      subject.to_hash.should == {
+      expect(subject.to_hash).to eq({
         "Handle" => {"Id" => 42},
         "CreditorHandle" => {"Number" => 37},
         "Id" => 42,
         "Name" => "David Brent",
         "IsToReceiveEmailCopyOfOrder" => true
-      }
+      })
     end
   end
 
@@ -44,11 +44,11 @@ describe Economic::Entity::Mapper do
     subject { Economic::Entity::Mapper.new(entity, fields) }
 
     it "returns the minimal set of required fields" do
-      subject.to_hash.should == {
+      expect(subject.to_hash).to eq({
         "Handle" => {},
         "Id" => nil,
         "IsToReceiveEmailCopyOfOrder" => false
-      }
+      })
     end
   end
 end

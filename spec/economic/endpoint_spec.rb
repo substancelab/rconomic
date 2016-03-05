@@ -71,18 +71,18 @@ describe Economic::Endpoint do
 
   describe "savon globals configuration" do
     it "sets the log_level option of the endpoint" do
-      subject.client.globals.should_receive(:log_level).with(:fatal)
+      expect(subject.client.globals).to receive(:log_level).with(:fatal)
       subject.log_level = :fatal
     end
 
     it "sets the log option of the endpoint" do
-      subject.client.globals.should_receive(:log).with(true)
+      expect(subject.client.globals).to receive(:log).with(true)
       subject.log = true
     end
 
     it "sets the logger option of the boolean" do
       logger = double("MyLogger")
-      subject.client.globals.should_receive(:logger).with(logger)
+      expect(subject.client.globals).to receive(:logger).with(logger)
       subject.logger = logger
     end
   end

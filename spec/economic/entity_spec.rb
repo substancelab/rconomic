@@ -226,7 +226,7 @@ describe Economic::Entity do
     let(:other) { Account.new }
 
     context "when other is nil do" do
-      it { should_not == nil }
+      it { is_expected.not_to eq(nil) }
     end
 
     context "when both handles are empty" do

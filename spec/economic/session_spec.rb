@@ -23,7 +23,7 @@ describe Economic::Session do
 
     it "yields the endpoint if a block is given" do
       endpoint_mock = double("Endpoint")
-      Economic::Endpoint.stub(:new).and_return(endpoint_mock)
+      allow(Economic::Endpoint).to receive(:new).and_return(endpoint_mock)
       expect{|b|
         Economic::Session.new(123456, 'api', 'passw0rd', &b)
       }.to yield_with_args(endpoint_mock)
@@ -209,22 +209,22 @@ describe Economic::Session do
     let(:endpoint) { double("Endpoint") }
 
     before :each do
-      Economic::Endpoint.stub(:new).and_return(endpoint)
+      allow(Economic::Endpoint).to receive(:new).and_return(endpoint)
     end
 
     it "sets the log_level option of the endpoint" do
-      endpoint.should_receive(:log_level=).with(:info)
+      expect(endpoint).to receive(:log_level=).with(:info)
       subject.log_level = :info
     end
 
     it "sets the log option of the endpoint" do
-      endpoint.should_receive(:log=).with(true)
+      expect(endpoint).to receive(:log=).with(true)
       subject.log = true
     end
 
     it "sets the logger option of the boolean" do
       logger = double("MyLogger")
-      endpoint.should_receive(:logger=).with(logger)
+      expect(endpoint).to receive(:logger=).with(logger)
       subject.logger = logger
     end
   end
