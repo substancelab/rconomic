@@ -57,7 +57,7 @@ module Economic
       :term_of_payment_handle => nil,
       :due_date => nil,
       :currency_handle => nil,
-      :exchange_rate => 100, # Why am _I_ inputting this?
+      :exchange_rate => 100,
       :is_vat_included => nil,
       :layout_handle => nil,
       :delivery_date => nil,
@@ -66,7 +66,7 @@ module Economic
       :vat_amount => 0,
       :gross_amount => 0,
       :margin => 0,
-      :margin_as_percent => 0 # Why do I have to input both Margin and MarginAsPercent? Shouldn't powerful Windows machines running ASP.NET be able to compute this?
+      :margin_as_percent => 0
     )
 
     def initialize(properties = {})
