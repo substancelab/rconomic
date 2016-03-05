@@ -58,7 +58,11 @@ describe Economic::CurrentInvoiceLineProxy do
 
   describe ".find" do
     it "gets invoice_line data from API" do
-      mock_request("CurrentInvoiceLine_GetData", {"entityHandle" => {"Number" => 42}}, :success)
+      mock_request(
+        "CurrentInvoiceLine_GetData",
+        {"entityHandle" => {"Number" => 42}},
+        :success
+      )
       subject.find(42)
     end
 
@@ -82,7 +86,9 @@ describe Economic::CurrentInvoiceLineProxy do
     it "can be iterated over" do
       line = Economic::CurrentInvoiceLine.new
       subject << line
-      expect(subject.all? { |l| l.is_a?(Economic::CurrentInvoiceLine) }).to be_truthy
+      expect(subject.all? { |l|
+        l.is_a?(Economic::CurrentInvoiceLine)
+      }).to be_truthy
     end
   end
 end

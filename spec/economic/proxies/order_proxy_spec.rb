@@ -41,7 +41,11 @@ describe Economic::OrderProxy do
     let(:unto) { Time.now }
 
     it "should be able to return a single current order" do
-      mock_request("Order_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :single)
+      mock_request(
+        "Order_FindByDateInterval",
+        {"first" => from.iso8601, "last" => unto.iso8601},
+        :single
+      )
       mock_request("Order_GetDataArray", :any, :single)
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(1)
@@ -49,7 +53,11 @@ describe Economic::OrderProxy do
     end
 
     it "should be able to return multiple orders" do
-      mock_request("Order_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :many)
+      mock_request(
+        "Order_FindByDateInterval",
+        {"first" => from.iso8601, "last" => unto.iso8601},
+        :many
+      )
       mock_request("Order_GetDataArray", :any, :multiple)
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(2)
@@ -57,7 +65,11 @@ describe Economic::OrderProxy do
     end
 
     it "should be able to return nothing" do
-      mock_request("Order_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :none)
+      mock_request(
+        "Order_FindByDateInterval",
+        {"first" => from.iso8601, "last" => unto.iso8601},
+        :none
+      )
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(0)
     end

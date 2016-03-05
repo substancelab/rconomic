@@ -12,12 +12,20 @@ describe Economic::DebtorEntryProxy do
 
   describe "#find_by_invoice_number" do
     it "should be able to find multiple debtor entries" do
-      mock_request("DebtorEntry_FindByInvoiceNumber", {"from" => "123", "to" => "456"}, :many)
+      mock_request(
+        "DebtorEntry_FindByInvoiceNumber",
+        {"from" => "123", "to" => "456"},
+        :many
+      )
       expect(subject.find_by_invoice_number("123", "456")).to eq([1, 2])
     end
 
     it "should be able to find debtor entries with one invoice id" do
-      mock_request("DebtorEntry_FindByInvoiceNumber", {"from" => "123", "to" => "123"}, :many)
+      mock_request(
+        "DebtorEntry_FindByInvoiceNumber",
+        {"from" => "123", "to" => "123"},
+        :many
+      )
       expect(subject.find_by_invoice_number("123")).to eq([1, 2])
     end
 
@@ -45,7 +53,9 @@ describe Economic::DebtorEntryProxy do
 
   describe "#entity_class" do
     it "should return Economic::DebtorEntry" do
-      expect(Economic::DebtorEntryProxy.entity_class).to eq(Economic::DebtorEntry)
+      expect(
+        Economic::DebtorEntryProxy.entity_class
+      ).to eq(Economic::DebtorEntry)
     end
   end
 end

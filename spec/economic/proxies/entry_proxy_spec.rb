@@ -63,7 +63,11 @@ describe Economic::EntryProxy do
 
   describe "#find" do
     it "should get a entry by serial number" do
-      mock_request("Entry_GetData", {"entityHandle" => {"SerialNumber" => "123"}}, :success)
+      mock_request(
+        "Entry_GetData",
+        {"entityHandle" => {"SerialNumber" => "123"}},
+        :success
+      )
       expect(subject.find("123")).to be_instance_of(Economic::Entry)
     end
   end

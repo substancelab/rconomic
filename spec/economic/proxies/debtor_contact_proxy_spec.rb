@@ -40,7 +40,11 @@ describe Economic::DebtorContactProxy do
 
   describe ".find" do
     it "gets contact data from API" do
-      mock_request("DebtorContact_GetData", {"entityHandle" => {"Id" => 42}}, :success)
+      mock_request(
+        "DebtorContact_GetData",
+        {"entityHandle" => {"Id" => 42}},
+        :success
+      )
       subject.find(42)
     end
 

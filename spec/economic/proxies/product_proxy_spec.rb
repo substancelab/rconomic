@@ -12,7 +12,11 @@ describe Economic::ProductProxy do
 
   describe "find" do
     it "gets product data from API" do
-      mock_request("Product_GetData", {"entityHandle" => {"Number" => 42}}, :success)
+      mock_request(
+        "Product_GetData",
+        {"entityHandle" => {"Number" => 42}},
+        :success
+      )
       subject.find(42)
     end
 
@@ -61,7 +65,11 @@ describe Economic::ProductProxy do
   describe ".all" do
     it "returns a single product" do
       stub_request("Product_GetAll", nil, :single)
-      mock_request("Product_GetData", {"entityHandle" => {"Number" => "1"}}, :success)
+      mock_request(
+        "Product_GetData",
+        {"entityHandle" => {"Number" => "1"}},
+        :success
+      )
       all = subject.all
       expect(all.size).to eq(1)
       expect(all.first).to be_instance_of(Economic::Product)

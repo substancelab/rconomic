@@ -40,7 +40,9 @@ describe Economic::CurrentInvoiceProxy do
         expect(invoice.debtor_city).to eq(debtor.city)
 
         expect(invoice.debtor_handle).to eq(debtor.handle)
-        expect(invoice.term_of_payment_handle).to eq(debtor.term_of_payment_handle)
+        expect(invoice.term_of_payment_handle).to eq(
+          debtor.term_of_payment_handle
+        )
         expect(invoice.layout_handle).to eq(debtor.layout_handle)
         expect(invoice.currency_handle).to eq(debtor.currency_handle)
       end
@@ -49,7 +51,11 @@ describe Economic::CurrentInvoiceProxy do
 
   describe ".find" do
     it "gets invoice data from API" do
-      mock_request("CurrentInvoice_GetData", {"entityHandle" => {"Id" => 42}}, :success)
+      mock_request(
+        "CurrentInvoice_GetData",
+        {"entityHandle" => {"Id" => 42}},
+        :success
+      )
       subject.find(42)
     end
 
@@ -64,7 +70,11 @@ describe Economic::CurrentInvoiceProxy do
     let(:unto) { Time.now }
 
     it "should be able to return a single current invoice" do
-      mock_request("CurrentInvoice_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :single)
+      mock_request(
+        "CurrentInvoice_FindByDateInterval",
+        {"first" => from.iso8601, "last" => unto.iso8601},
+        :single
+      )
       stub_request("CurrentInvoice_GetDataArray", nil, :single)
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(1)
@@ -72,7 +82,11 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "should be able to return multiple invoices" do
-      mock_request("CurrentInvoice_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :many)
+      mock_request(
+        "CurrentInvoice_FindByDateInterval",
+        {"first" => from.iso8601, "last" => unto.iso8601},
+        :many
+      )
       stub_request("CurrentInvoice_GetDataArray", nil, :multiple)
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(2)
@@ -80,7 +94,11 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     it "should be able to return nothing" do
-      mock_request("CurrentInvoice_FindByDateInterval", {"first" => from.iso8601, "last" => unto.iso8601}, :none)
+      mock_request(
+        "CurrentInvoice_FindByDateInterval",
+        {"first" => from.iso8601, "last" => unto.iso8601},
+        :none
+      )
       results = subject.find_by_date_interval(from, unto)
       expect(results.size).to eq(0)
     end
@@ -94,7 +112,11 @@ describe Economic::CurrentInvoiceProxy do
 
     it "finds and adds a single current invoice" do
       stub_request("CurrentInvoice_GetAll", nil, :single)
-      mock_request("CurrentInvoice_GetData", {"entityHandle" => {"Id" => 1}}, :success)
+      mock_request(
+        "CurrentInvoice_GetData",
+        {"entityHandle" => {"Id" => 1}},
+        :success
+      )
 
       current_invoices = subject.all
       expect(current_invoices).to be_instance_of(Economic::CurrentInvoiceProxy)

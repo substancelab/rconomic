@@ -12,7 +12,11 @@ describe Economic::DebtorProxy do
 
   describe "find" do
     it "gets debtor data from API" do
-      mock_request("Debtor_GetData", {"entityHandle" => {"Number" => 42}}, :success)
+      mock_request(
+        "Debtor_GetData",
+        {"entityHandle" => {"Number" => 42}},
+        :success
+      )
       subject.find(42)
     end
 
@@ -24,7 +28,11 @@ describe Economic::DebtorProxy do
 
   describe "find_by_ci_number" do
     it "uses FindByCINumber on API" do
-      mock_request("Debtor_FindByCINumber", {"ciNumber" => "12345678"}, :many)
+      mock_request(
+        "Debtor_FindByCINumber",
+        {"ciNumber" => "12345678"},
+        :many
+      )
       subject.find_by_ci_number("12345678")
     end
 
@@ -37,7 +45,9 @@ describe Economic::DebtorProxy do
 
       it "returns a Debtor object for each result" do
         expect(results.size).to eq(2)
-        results.all? { |result| expect(result).to be_instance_of(Economic::Debtor) }
+        results.all? { |result|
+          expect(result).to be_instance_of(Economic::Debtor)
+        }
       end
 
       it "returns partial Debtor objects" do
@@ -70,7 +80,11 @@ describe Economic::DebtorProxy do
 
   describe "find_by_telephone_and_fax_number" do
     it "can find a debtor" do
-      mock_request("Debtor_FindByTelephoneAndFaxNumber", {"telephoneAndFaxNumber" => "22334455"}, :found)
+      mock_request(
+        "Debtor_FindByTelephoneAndFaxNumber",
+        {"telephoneAndFaxNumber" => "22334455"},
+        :found
+      )
       result = subject.find_by_telephone_and_fax_number("22334455")
       expect(result).to be_instance_of(Economic::Debtor)
       expect(result.number).to eq(1)
@@ -79,7 +93,11 @@ describe Economic::DebtorProxy do
     end
 
     it "returns nil when there is no debtor" do
-      mock_request("Debtor_FindByTelephoneAndFaxNumber", {"telephoneAndFaxNumber" => "22334455"}, :not_found)
+      mock_request(
+        "Debtor_FindByTelephoneAndFaxNumber",
+        {"telephoneAndFaxNumber" => "22334455"},
+        :not_found
+      )
       result = subject.find_by_telephone_and_fax_number("22334455")
       expect(result).to be_nil
     end
@@ -110,12 +128,16 @@ describe Economic::DebtorProxy do
     end
   end
 
-  # Complete specs in current_invoice, no point in duplicating them here, just ensuring that
-  # it handles debtors "Number" id.
+  # Complete specs in current_invoice, no point in duplicating them here, just
+  # ensuring that it handles debtors "Number" id.
   describe ".all" do
     it "returns a single debtor" do
       mock_request("Debtor_GetAll", nil, :single)
-      mock_request("Debtor_GetData", {"entityHandle" => {"Number" => "1"}}, :success)
+      mock_request(
+        "Debtor_GetData",
+        {"entityHandle" => {"Number" => "1"}},
+        :success
+      )
       all = subject.all
       expect(all.size).to eq(1)
       expect(all.first).to be_instance_of(Economic::Debtor)
@@ -133,7 +155,11 @@ describe Economic::DebtorProxy do
   describe ".get_debtor_contacts" do
     let(:handle) { Economic::Entity::Handle.new(:number => 1) }
     it "gets debtor contact data from API" do
-      mock_request("Debtor_GetDebtorContacts", {"debtorHandle" => {"Number" => 1}}, :multiple)
+      mock_request(
+        "Debtor_GetDebtorContacts",
+        {"debtorHandle" => {"Number" => 1}},
+        :multiple
+      )
       subject.get_debtor_contacts(handle)
     end
 
@@ -148,7 +174,11 @@ describe Economic::DebtorProxy do
   describe ".get_invoices" do
     let(:handle) { Economic::Entity::Handle.new(:number => 1) }
     it "gets invoice data from API" do
-      mock_request("Debtor_GetInvoices", {"debtorHandle" => {"Number" => 1}}, :success)
+      mock_request(
+        "Debtor_GetInvoices",
+        {"debtorHandle" => {"Number" => 1}},
+        :success
+      )
       subject.get_invoices(handle)
     end
 
@@ -163,7 +193,11 @@ describe Economic::DebtorProxy do
   describe ".get_order" do
     let(:handle) { Economic::Entity::Handle.new(:number => 1) }
     it "gets invoice data from API" do
-      mock_request("Debtor_GetOrders", {"debtorHandle" => {"Number" => 1}}, :success)
+      mock_request(
+        "Debtor_GetOrders",
+        {"debtorHandle" => {"Number" => 1}},
+        :success
+      )
       subject.get_orders(handle)
     end
 
