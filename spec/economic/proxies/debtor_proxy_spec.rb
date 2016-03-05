@@ -214,5 +214,12 @@ describe Economic::DebtorProxy do
         expect(i.number).to eq(1)
       end
     end
+
+    it "returns nil if no orders are found" do
+      stub_request("Debtor_GetOrders", nil, :none)
+      expect(
+        subject.get_orders(handle)
+      ).to be_nil
+    end
   end
 end

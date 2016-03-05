@@ -18,8 +18,6 @@ module Economic
 
     def get_debtor_contacts(debtor_handle)
       response = fetch_response(:get_debtor_contacts, debtor_handle)
-      return nil if response.empty?
-
       build_entities_from_response(
         Economic::DebtorContact,
         response[:debtor_contact_handle]
@@ -28,8 +26,6 @@ module Economic
 
     def get_invoices(debtor_handle)
       response = fetch_response(:get_invoices, debtor_handle)
-      return nil if response.empty?
-
       build_entities_from_response(
         Economic::Invoice,
         response[:invoice_handle]
@@ -39,8 +35,6 @@ module Economic
     # Returns handle for orders for debtor.
     def get_orders(debtor_handle)
       response = fetch_response(:get_orders, debtor_handle)
-      return nil if response.empty?
-
       build_entities_from_response(
         Economic::Order,
         response[:order_handle]
@@ -50,6 +44,7 @@ module Economic
     private
 
     def build_entities_from_response(entity_class, handles)
+      return nil if handles.nil?
       [handles].flatten.map do |handle|
         entity = entity_class.new(:session => session)
         entity.partial = true
