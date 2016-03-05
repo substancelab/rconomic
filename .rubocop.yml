@@ -1,0 +1,40 @@
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    - 'db/schema.rb'
+
+Lint/EndAlignment:
+  AlignWith: variable
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/FileName:
+  Enabled: false
+
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/WordArray:
+  Enabled: false
