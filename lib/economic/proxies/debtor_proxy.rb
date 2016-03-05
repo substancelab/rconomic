@@ -17,7 +17,10 @@ module Economic
     end
 
     def get_debtor_contacts(debtor_handle)
-      response = request :get_debtor_contacts, "debtorHandle" => {"Number" => debtor_handle.number}
+      response = request(
+        :get_debtor_contacts,
+        "debtorHandle" => {"Number" => debtor_handle.number}
+      )
       if response.empty?
         nil
       else
@@ -35,7 +38,10 @@ module Economic
     end
 
     def get_invoices(debtor_handle)
-      response = request :get_invoices, "debtorHandle" => {"Number" => debtor_handle.number}
+      response = request(
+        :get_invoices,
+        "debtorHandle" => {"Number" => debtor_handle.number}
+      )
       if response.empty?
         nil
       else
@@ -54,7 +60,10 @@ module Economic
 
     # Returns handle for orders for debtor.
     def get_orders(debtor_handle)
-      response = request :get_orders, "debtorHandle" => {"Number" => debtor_handle.number}
+      response = request(
+        :get_orders,
+        "debtorHandle" => {"Number" => debtor_handle.number}
+      )
       if response.empty?
         nil
       else
