@@ -104,8 +104,11 @@ module Economic
     #
     # Returns the resulting Economic::Invoice object
     def book_with_number(number)
-      response = request(:book_with_number, "currentInvoiceHandle" => handle.to_hash,
-                                            "number" => number)
+      response = request(
+        :book_with_number,
+        "currentInvoiceHandle" => handle.to_hash,
+        "number" => number
+      )
 
       # Find the created Invoice
       session.invoices.find(response[:number])
@@ -150,7 +153,9 @@ module Economic
     protected
 
     def fields
-      date_formatter = proc { |date| date.respond_to?(:iso8601) ? date.iso8601 : nil }
+      date_formatter = proc { |date|
+        date.respond_to?(:iso8601) ? date.iso8601 : nil
+      }
       to_hash = proc { |handle| handle.to_hash }
       [
         ["Id", :id, nil, :required],
