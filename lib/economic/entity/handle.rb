@@ -83,19 +83,7 @@ class Economic::Entity
       self.class.id_properties
     end
 
-    # Raises exceptions if hash doesn't contain values we can use to construct a
-    # new handle
-    def verify_sanity_of_arguments!(hash)
-      return if hash.is_a?(self.class)
-
-      unless handleish?(hash)
-        raise(
-          ArgumentError,
-          "Expected Number, Hash or Economic::Entity::Handle " \
-          " - got #{hash.inspect}"
-        )
-      end
-
+    def verify_all_keys_are_known(hash)
       if hash.respond_to?(:keys)
         unknown_keys = hash.keys - id_properties.keys - id_properties.values
         raise(
@@ -103,6 +91,25 @@ class Economic::Entity
           "Unknown keys in handle: #{unknown_keys.inspect}"
         ) unless unknown_keys.empty?
       end
+    end
+
+    # Raises exceptions if hash doesn't contain values we can use to construct a
+    # new handle
+    def verify_sanity_of_arguments!(hash)
+      return if hash.is_a?(self.class)
+
+      verify_usability_for_handle(hash)
+      verify_all_keys_are_known(hash)
+    end
+
+    def verify_usability_for_handle(hash)
+      return if handleish?(hash)
+
+      raise(
+        ArgumentError,
+        "Expected Number, Hash or Economic::Entity::Handle " \
+        " - got #{hash.inspect}"
+      )
     end
 
     # Examples
