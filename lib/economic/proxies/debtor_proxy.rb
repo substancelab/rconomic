@@ -23,16 +23,14 @@ module Economic
       )
       return nil if response.empty?
 
-      entities = []
-      [response[:debtor_contact_handle]].flatten.each do |handle|
+      [response[:debtor_contact_handle]].flatten.map do |handle|
         entity = Economic::DebtorContact.new(:session => session)
         entity.partial = true
         entity.persisted = true
         entity.handle = handle
         entity.number = handle[:number].to_i
-        entities << entity
+        entity
       end
-      entities
     end
 
     def get_invoices(debtor_handle)
@@ -42,16 +40,14 @@ module Economic
       )
       return nil if response.empty?
 
-      entities = []
-      [response[:invoice_handle]].flatten.each do |handle|
+      [response[:invoice_handle]].flatten.map do |handle|
         entity = Economic::Invoice.new(:session => session)
         entity.partial = true
         entity.persisted = true
         entity.handle = handle
         entity.number = handle[:number].to_i
-        entities << entity
+        entity
       end
-      entities
     end
 
     # Returns handle for orders for debtor.
@@ -62,16 +58,14 @@ module Economic
       )
       return nil if response.empty?
 
-      entities = []
-      [response[:order_handle]].flatten.each do |handle|
+      [response[:order_handle]].flatten.map do |handle|
         entity = Economic::Order.new(:session => session)
         entity.partial = true
         entity.persisted = true
         entity.handle = handle
         entity.number = handle[:id].to_i
-        entities << entity
+        entity
       end
-      entities
     end
   end
 end
