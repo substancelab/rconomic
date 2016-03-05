@@ -66,6 +66,18 @@ module Economic
         end
       end
 
+      def property(name, default: nil, serialize: nil, required: false, formatter: nil)
+        properties << name
+
+        # Create a getter for property
+        unless properties_not_triggering_full_load.include?(name)
+          property_reader name
+        end
+
+        # Create a setter for property
+        property_writer name
+      end
+
       def properties
         @properties || []
       end

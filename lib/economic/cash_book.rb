@@ -5,7 +5,8 @@ module Economic
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICashBook.html
   class CashBook < Entity
-    has_properties :name, :number
+    property(:name, :serialize => "Name", :required => true)
+    property(:number, :serialize => "Number", :required => true)
 
     def handle
       @handle || Handle.new(:number => @number)
