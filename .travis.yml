@@ -10,3 +10,7 @@ rvm:
 notifications:
   recipients:
     - jakob@mentalized.net
+
+addons:
+  code_climate:
+    repo_token: 6746eb72f5d9759f7d83ea90e8f49e3f01480d3b8f6334eea9e7cd9991c41ea4

@@ -1,10 +1,8 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 require 'savon'
 require "savon/mock/spec_helper"
-
-if ENV['TRAVIS'] == "true"
-  require 'coveralls'
-  Coveralls.wear!
-end
 
 require './lib/rconomic'
 
