@@ -23,7 +23,7 @@ class Economic::Entity
       id_properties.keys
     end
 
-    attr_accessor *supported_keys
+    attr_accessor(*supported_keys)
 
     # Returns true if Handle hasn't been initialized with any values yet. This
     # usually happens when the handle is constructed for an entity whose id
@@ -63,7 +63,10 @@ class Economic::Entity
       return false if other.nil?
       return false if empty? || (other.respond_to?(:empty?) && other.empty?)
       return false unless other.respond_to?(:id) && other.respond_to?(:number)
-      id == other.id && number == other.number && id1 == other.id1 && id2 == other.id2
+      id == other.id &&
+        number == other.number &&
+        id1 == other.id1 &&
+        id2 == other.id2
     end
 
     private
@@ -77,13 +80,24 @@ class Economic::Entity
     def verify_sanity_of_arguments!(hash)
       return if hash.is_a?(self.class)
 
-      if hash.nil? || (!hash.respond_to?(:to_i) && (!hash.respond_to?(:keys) && !hash.respond_to?(:values)))
-        raise ArgumentError.new("Expected Number, Hash or Economic::Entity::Handle - got #{hash.inspect}")
+      if hash.nil? || (
+        !hash.respond_to?(:to_i) && (
+          !hash.respond_to?(:keys) && !hash.respond_to?(:values)
+        )
+      )
+        raise(
+          ArgumentError,
+          "Expected Number, Hash or Economic::Entity::Handle " \
+          " - got #{hash.inspect}"
+        )
       end
 
       if hash.respond_to?(:keys)
         unknown_keys = hash.keys - id_properties.keys - id_properties.values
-        raise ArgumentError.new("Unknown keys in handle: #{unknown_keys.inspect}") unless unknown_keys.empty?
+        raise(
+          ArgumentError,
+          "Unknown keys in handle: #{unknown_keys.inspect}"
+        ) unless unknown_keys.empty?
       end
     end
 
@@ -92,7 +106,8 @@ class Economic::Entity
     #   prepare_hash_argument(12) #=> {:id => 12}
     #   prepare_hash_argument(:id => 12) #=> {:id => 12}
     #   prepare_hash_argument('Id' => 12) #=> {:id => 12}
-    #   prepare_hash_argument('Id' => 12, 'Number' => 13) #=> {:id => 12, :number => 13}
+    #   prepare_hash_argument('Id' => 12, 'Number' => 13)
+    #   #=> {:id => 12, :number => 13}
     def prepare_hash_argument(hash)
       hash = {:id => hash.to_i} unless hash.blank? || !hash.respond_to?(:to_i)
       hash[:id] ||= hash["Id"]
