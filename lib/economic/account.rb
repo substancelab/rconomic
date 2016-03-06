@@ -2,7 +2,20 @@ require "economic/entity"
 
 module Economic
   class Account < Entity
-    has_properties :name, :number, :balance, :block_direct_entries, :contra_account, :debit_credit, :department, :distribution_key, :is_accessible, :opening_account, :total_from, :type, :vat_account
+    property(:handle, :serialize => "Handle", :formatter => proc { |handle| handle.to_hash }, :required => true)
+    property(:name, :serialize => "Name", :required => true)
+    property(:number, :serialize => "Number", :required => true)
+    property(:balance, :serialize => "Balance")
+    property(:block_direct_entries, :serialize => "BlockDirectEntries")
+    property(:contra_account, :serialize => "ContraAccount")
+    property(:debit_credit, :serialize => "DebitCredit")
+    property(:department, :serialize => "Department")
+    property(:distribution_key, :serialize => "DistributionKey")
+    property(:is_accessible, :serialize => "IsAccessible")
+    property(:opening_account, :serialize => "OpeningAccount")
+    property(:total_from, :serialize => "TotalFrom")
+    property(:type, :serialize => "Type")
+    property(:vat_account, :serialize => "VatAccount")
 
     def handle
       Handle.build(:name => @name)
@@ -11,11 +24,15 @@ module Economic
     protected
 
     def fields
-      [
-        ["Handle", :handle, proc { |handle| handle.to_hash }, :required],
-        ["Name", :name, nil, :required],
-        ["Number", :number, nil, :required]
-      ]
+      self.class.properties.map do |name|
+        field = self.class.property_definitions[name]
+        [
+          field.fetch(:serialize),
+          name,
+          field[:formatter],
+          (field[:required] ? :required : nil)
+        ]
+      end
     end
   end
 end
