@@ -72,7 +72,30 @@ module Economic
         end
       end
 
-      def property(name, default: nil, required: false, formatter: nil)
+      # Declare a property on the Entity that can be serialized to and from
+      # E-conomic.
+      #
+      # This creates getter- and setter-methods on the Entity.
+      #
+      # Options:
+      #
+      # * name: The local, Ruby-style method name as a symbol. The SOAP field is
+      #   a camel-cased version of the name.
+      #
+      # * default: The default value for the property. New Entity instances will
+      #   have the property initialized with this value.
+      #
+      # * formatter: A proc to call when formatting the property for inclusion
+      #   in the SOAP message.
+      #
+      # * required: By default properties without values aren't serialized in
+      #   the SOAP message. If a property is marked as required it will be
+      #   included in the SOAP message even if it its value is nil.
+      #
+      # Note that the order that properties are declared in matters, as it
+      # defines the order the properties are serialized in and the E-conomic API
+      # requires SOAP properties to be in a specific order.
+      def property(name, default: nil, formatter: nil, required: false)
         properties << name
         property_definitions[name] = {
           :default => default,
