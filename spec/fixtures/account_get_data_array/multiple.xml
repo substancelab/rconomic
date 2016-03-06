@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Body>
+    <Account_GetDataArrayResponse xmlns="http://e-conomic.com">
+      <Account_GetDataArrayResult>
+        <AccountData>
+          <Handle>
+            <Number>37</Number>
+          </Handle>
+          <Number>37</Number>
+          <Name>Some account</Name>
+          <Type>ProfitAndLoss or Status or TotalFrom or Heading or HeadingStart or SumInterval or SumAlpha</Type>
+          <DebitCredit>Debit or Credit</DebitCredit>
+          <IsAccessible>boolean</IsAccessible>
+          <BlockDirectEntries>boolean</BlockDirectEntries>
+          <VatAccountHandle>
+            <VatCode>string</VatCode>
+          </VatAccountHandle>
+          <ContraAccountHandle>
+            <Number>int</Number>
+          </ContraAccountHandle>
+          <OpeningAccountHandle>
+            <Number>int</Number>
+          </OpeningAccountHandle>
+          <TotalFromHandle>
+            <Number>int</Number>
+          </TotalFromHandle>
+          <Balance>decimal</Balance>
+          <DepartmentHandle>
+            <Number>int</Number>
+          </DepartmentHandle>
+          <DistributionKeyHandle>
+            <Number>int</Number>
+          </DistributionKeyHandle>
+        </AccountData>
+        <AccountData>
+          <Handle>
+            <Number>42</Number>
+          </Handle>
+          <Number>42</Number>
+          <Name>Another account</Name>
+          <Type>ProfitAndLoss or Status or TotalFrom or Heading or HeadingStart or SumInterval or SumAlpha</Type>
+          <DebitCredit>Debit or Credit</DebitCredit>
+          <IsAccessible>boolean</IsAccessible>
+          <BlockDirectEntries>boolean</BlockDirectEntries>
+          <VatAccountHandle>
+            <VatCode>string</VatCode>
+          </VatAccountHandle>
+          <ContraAccountHandle>
+            <Number>int</Number>
+          </ContraAccountHandle>
+          <OpeningAccountHandle>
+            <Number>int</Number>
+          </OpeningAccountHandle>
+          <TotalFromHandle>
+            <Number>int</Number>
+          </TotalFromHandle>
+          <Balance>decimal</Balance>
+          <DepartmentHandle>
+            <Number>int</Number>
+          </DepartmentHandle>
+          <DistributionKeyHandle>
+            <Number>int</Number>
+          </DistributionKeyHandle>
+        </AccountData>
+      </Account_GetDataArrayResult>
+    </Account_GetDataArrayResponse>
+  </soap:Body>
+</soap:Envelope>
