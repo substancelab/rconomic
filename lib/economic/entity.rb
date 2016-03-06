@@ -16,9 +16,11 @@ module Economic
       # Returns the default values for properties
       def default_values
         if property_definitions.any?
-          property_definitions.map { |name, options|
-            [name, options[:default]]
-          }.to_h
+          Hash[
+            property_definitions.map { |name, options|
+              [name, options[:default]]
+            }
+          ]
         else
           @default_values || {}
         end
