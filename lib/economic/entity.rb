@@ -72,13 +72,12 @@ module Economic
         end
       end
 
-      def property(name, serialize, default: nil, required: false, formatter: nil)
+      def property(name, default: nil, required: false, formatter: nil)
         properties << name
         property_definitions[name] = {
           :default => default,
           :formatter => formatter,
-          :required => required,
-          :serialize => serialize
+          :required => required
         }
 
         # Create a getter for property
@@ -256,7 +255,7 @@ module Economic
       self.class.properties.map do |name|
         field = self.class.property_definitions[name]
         [
-          field.fetch(:serialize),
+          Economic::Support::String.camel_case(name),
           name,
           field[:formatter],
           (field[:required] ? :required : nil)

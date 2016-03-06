@@ -5,6 +5,14 @@ module Economic
         name[0, 1].downcase + name[1..-1]
       end
 
+      def self.camel_case(name)
+        name.
+          to_s.
+          split("_").
+          map(&:capitalize).
+          join
+      end
+
       def self.demodulize(class_name_in_module)
         class_name_in_module.to_s.gsub(/^.*::/, "")
       end
@@ -21,7 +29,7 @@ module Economic
 
       def self.snakecase(word)
         # Use the method from Savon::CoreExt::String.snakecase
-        word.snakecase
+        word.to_s.snakecase
       end
     end
   end
