@@ -72,7 +72,7 @@ module Economic
         end
       end
 
-      def property(name, default: nil, serialize: nil, required: false, formatter: nil)
+      def property(name, serialize, default: nil, required: false, formatter: nil)
         properties << name
         property_definitions[name] = {
           :default => default,

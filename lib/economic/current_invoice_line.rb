@@ -8,19 +8,19 @@ module Economic
   #
   # See Economic::CurrentInvoice for usage example
   class CurrentInvoiceLine < Entity
-    property(:number, :serialize => "Number", :formatter => proc { 0 }, :required => true)
-    property(:invoice_handle, :serialize => "InvoiceHandle", :formatter => proc { |h| h.to_hash })
-    property(:description, :serialize => "Description")
-    property(:delivery_date, :serialize => "DeliveryDate", :required => true)
-    property(:unit_handle, :serialize => "UnitHandle", :formatter => proc { |h| h.to_hash })
-    property(:product_handle, :serialize => "ProductHandle", :formatter => proc { |h| h.to_hash })
-    property(:quantity, :serialize => "Quantity")
-    property(:unit_net_price, :serialize => "UnitNetPrice")
-    property(:discount_as_percent, :serialize => "DiscountAsPercent", :default => 0)
-    property(:unit_cost_price, :serialize => "UnitCostPrice", :default => 0)
-    property(:total_net_amount, :serialize => "TotalNetAmount", :required => true)
-    property(:total_margin, :serialize => "TotalMargin", :default => 0)
-    property(:margin_as_percent, :serialize => "MarginAsPercent", :default => 0)
+    property(:number, "Number", :formatter => proc { 0 }, :required => true)
+    property(:invoice_handle, "InvoiceHandle", :formatter => proc { |h| h.to_hash })
+    property(:description, "Description")
+    property(:delivery_date, "DeliveryDate", :required => true)
+    property(:unit_handle, "UnitHandle", :formatter => proc { |h| h.to_hash })
+    property(:product_handle, "ProductHandle", :formatter => proc { |h| h.to_hash })
+    property(:quantity, "Quantity")
+    property(:unit_net_price, "UnitNetPrice")
+    property(:discount_as_percent, "DiscountAsPercent", :default => 0)
+    property(:unit_cost_price, "UnitCostPrice", :default => 0)
+    property(:total_net_amount, "TotalNetAmount", :required => true)
+    property(:total_margin, "TotalMargin", :default => 0)
+    property(:margin_as_percent, "MarginAsPercent", :default => 0)
 
     def handle
       @handle || Handle.build(:number => number)

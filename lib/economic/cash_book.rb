@@ -5,9 +5,9 @@ module Economic
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICashBook.html
   class CashBook < Entity
-    property(:handle, :serialize => "Handle", :required => true, :formatter => proc { |h| h.to_hash })
-    property(:name, :serialize => "Name", :required => true)
-    property(:number, :serialize => "Number", :required => true)
+    property(:handle, "Handle", :required => true, :formatter => proc { |h| h.to_hash })
+    property(:name, "Name", :required => true)
+    property(:number, "Number", :required => true)
 
     def handle
       @handle || Handle.new(:number => @number)
