@@ -66,7 +66,8 @@ class Economic::Entity
       id == other.id &&
         number == other.number &&
         id1 == other.id1 &&
-        id2 == other.id2
+        id2 == other.id2 &&
+        name == other.name
     end
 
     private
