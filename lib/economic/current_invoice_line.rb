@@ -8,26 +8,19 @@ module Economic
   #
   # See Economic::CurrentInvoice for usage example
   class CurrentInvoiceLine < Entity
-    has_properties :number,
-      :invoice_handle,
-      :description,
-      :delivery_date,
-      :unit_handle,
-      :product_handle,
-      :quantity,
-      :unit_net_price,
-      :discount_as_percent,
-      :unit_cost_price,
-      :total_net_amount,
-      :total_margin,
-      :margin_as_percent
-
-    defaults(
-      :discount_as_percent => 0,
-      :unit_cost_price => 0,
-      :total_margin => 0,
-      :margin_as_percent => 0
-    )
+    property(:number, :serialize => "Number", :formatter => proc { 0 }, :required => true)
+    property(:invoice_handle, :serialize => "InvoiceHandle", :formatter => proc { |h| h.to_hash })
+    property(:description, :serialize => "Description")
+    property(:delivery_date, :serialize => "DeliveryDate", :required => true)
+    property(:unit_handle, :serialize => "UnitHandle", :formatter => proc { |h| h.to_hash })
+    property(:product_handle, :serialize => "ProductHandle", :formatter => proc { |h| h.to_hash })
+    property(:quantity, :serialize => "Quantity")
+    property(:unit_net_price, :serialize => "UnitNetPrice")
+    property(:discount_as_percent, :serialize => "DiscountAsPercent", :default => 0)
+    property(:unit_cost_price, :serialize => "UnitCostPrice", :default => 0)
+    property(:total_net_amount, :serialize => "TotalNetAmount", :required => true)
+    property(:total_margin, :serialize => "TotalMargin", :default => 0)
+    property(:margin_as_percent, :serialize => "MarginAsPercent", :default => 0)
 
     def handle
       @handle || Handle.build(:number => number)
@@ -51,22 +44,15 @@ module Economic
     protected
 
     def fields
-      to_hash = proc { |h| h.to_hash }
-      [
-        ["Number", :number, proc { 0 }, :required], # Doesn't seem to be used
-        ["InvoiceHandle", :invoice_handle, to_hash],
-        ["Description", :description],
-        ["DeliveryDate", :delivery_date, nil, :required],
-        ["UnitHandle", :unit_handle, to_hash],
-        ["ProductHandle", :product_handle, to_hash],
-        ["Quantity", :quantity],
-        ["UnitNetPrice", :unit_net_price],
-        ["DiscountAsPercent", :discount_as_percent],
-        ["UnitCostPrice", :unit_cost_price],
-        ["TotalNetAmount", :total_net_amount, nil, :required],
-        ["TotalMargin", :total_margin],
-        ["MarginAsPercent", :margin_as_percent]
-      ]
+      self.class.properties.map do |name|
+        field = self.class.property_definitions[name]
+        [
+          field.fetch(:serialize),
+          name,
+          field[:formatter],
+          (field[:required] ? :required : nil)
+        ]
+      end
     end
   end
 end
