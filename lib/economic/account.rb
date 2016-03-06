@@ -2,7 +2,7 @@ require "economic/entity"
 
 module Economic
   class Account < Entity
-    property(:handle, :formatter => proc { |handle| handle.to_hash }, :required => true)
+    property(:handle, :formatter => Properties::Formatters::HANDLE, :required => true)
     property(:name, :required => true)
     property(:number, :required => true)
     property(:balance)

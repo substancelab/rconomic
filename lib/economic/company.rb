@@ -11,9 +11,9 @@ module Economic
   #   creditor = economic.company.get
   #
   class Company < Entity
-    property(:handle, :formatter => proc { |h| h.to_hash }, :required => true)
+    property(:handle, :formatter => Properties::Formatters::HANDLE, :required => true)
     property(:number, :required => true)
-    property(:base_currency_handle, :formatter => proc { |h| h.to_hash })
+    property(:base_currency_handle, :formatter => Properties::Formatters::HANDLE)
     property(:name)
     property(:address_1)
     property(:address_2)

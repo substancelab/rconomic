@@ -21,13 +21,13 @@ module Economic
   #   creditor.term_of_payment = 1
   #   creditor.save
   class Creditor < Entity
-    property(:handle, :formatter => proc { |h| h.to_hash }, :required => true)
+    property(:handle, :formatter => Properties::Formatters::HANDLE, :required => true)
     property(:number, :required => true)
-    property(:creditor_group_handle, :formatter => proc { |h| h.to_hash })
+    property(:creditor_group_handle, :formatter => Properties::Formatters::HANDLE)
     property(:name)
     property(:vat_zone)
-    property(:currency_handle, :formatter => proc { |h| h.to_hash })
-    property(:term_of_payment_handle, :formatter => proc { |h| h.to_hash })
+    property(:currency_handle, :formatter => Properties::Formatters::HANDLE)
+    property(:term_of_payment_handle, :formatter => Properties::Formatters::HANDLE)
     property(:is_accessible)
     property(:ci_number)
     property(:email)
@@ -36,13 +36,13 @@ module Economic
     property(:city)
     property(:country)
     property(:bank_account)
-    property(:attention_handle, :formatter => proc { |h| h.to_hash })
-    property(:your_reference_handle, :formatter => proc { |h| h.to_hash })
-    property(:our_reference_handle, :formatter => proc { |h| h.to_hash })
-    property(:default_payment_type_handle, :formatter => proc { |h| h.to_hash })
-    property(:default_payment_creditor_id, :formatter => proc { |h| h.to_hash })
+    property(:attention_handle, :formatter => Properties::Formatters::HANDLE)
+    property(:your_reference_handle, :formatter => Properties::Formatters::HANDLE)
+    property(:our_reference_handle, :formatter => Properties::Formatters::HANDLE)
+    property(:default_payment_type_handle, :formatter => Properties::Formatters::HANDLE)
+    property(:default_payment_creditor_id, :formatter => Properties::Formatters::HANDLE)
     property(:county)
-    property(:auto_contra_account_handle, :formatter => proc { |h| h.to_hash })
+    property(:auto_contra_account_handle, :formatter => Properties::Formatters::HANDLE)
 
     def handle
       @handle || Handle.build(:number => @number)

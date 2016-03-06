@@ -9,11 +9,11 @@ module Economic
   # See Economic::CurrentInvoice for usage example
   class CurrentInvoiceLine < Entity
     property(:number, :formatter => proc { 0 }, :required => true)
-    property(:invoice_handle, :formatter => proc { |h| h.to_hash })
+    property(:invoice_handle, :formatter => Properties::Formatters::HANDLE)
     property(:description)
     property(:delivery_date, :required => true)
-    property(:unit_handle, :formatter => proc { |h| h.to_hash })
-    property(:product_handle, :formatter => proc { |h| h.to_hash })
+    property(:unit_handle, :formatter => Properties::Formatters::HANDLE)
+    property(:product_handle, :formatter => Properties::Formatters::HANDLE)
     property(:quantity)
     property(:unit_net_price)
     property(:discount_as_percent, :default => 0)

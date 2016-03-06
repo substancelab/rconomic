@@ -17,9 +17,9 @@ module Economic
   #   contact.name = 'John Appleseed'
   #   contact.save
   class CreditorContact < Entity
-    property(:handle, :formatter => proc { |v| v.to_hash }, :required => true)
+    property(:handle, :formatter => Properties::Formatters::HANDLE, :required => true)
     property(:id)
-    property(:creditor_handle, :formatter => proc { |handle| handle.to_hash })
+    property(:creditor_handle, :formatter => Properties::Formatters::HANDLE)
     property(:name)
     property(:number, :required => true)
     property(:telephone_number)
