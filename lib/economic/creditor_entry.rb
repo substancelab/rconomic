@@ -5,19 +5,19 @@ module Economic
   #
   # API documentation: http://www.e-conomic.com/apidocs/Documentation/T_Economic_Api_ICreditorEntry.html
   class CreditorEntry < Entity
-    has_properties :account,
-      :amount,
-      :amount_default_currency,
-      :creditor,
-      :currency,
-      :date,
-      :due_date,
-      :invoice_number,
-      :remainder,
-      :remainder_default_currency,
-      :serial_number,
-      :text,
-      :type,
-      :voucher_number
+    property(:account)
+    property(:amount)
+    property(:amount_default_currency)
+    property(:creditor)
+    property(:currency)
+    property(:date)
+    property(:due_date)
+    property(:invoice_number)
+    property(:remainder)
+    property(:remainder_default_currency)
+    property(:serial_number)
+    property(:text)
+    property(:type)
+    property(:voucher_number)
   end
 end
