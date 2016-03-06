@@ -15,7 +15,13 @@ module Economic
 
       # Returns the default values for properties
       def default_values
-        @default_values || {}
+        if property_definitions.any?
+          property_definitions.map { |name, options|
+            [name, options[:default]]
+          }.to_h
+        else
+          @default_values || {}
+        end
       end
 
       # Create a setter method for property that converts its input to a Handle
