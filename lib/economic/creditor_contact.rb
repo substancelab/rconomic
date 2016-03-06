@@ -17,7 +17,15 @@ module Economic
   #   contact.name = 'John Appleseed'
   #   contact.save
   class CreditorContact < Entity
-    has_properties :id, :creditor_handle, :name, :number, :telephone_number, :email, :comments, :external_id
+    property(:handle, :formatter => proc { |v| v.to_hash }, :required => true)
+    property(:id)
+    property(:creditor_handle, :formatter => proc { |handle| handle.to_hash })
+    property(:name)
+    property(:number, :required => true)
+    property(:telephone_number)
+    property(:email)
+    property(:comments)
+    property(:external_id)
 
     def creditor
       return nil if creditor_handle.nil?
@@ -38,22 +46,8 @@ module Economic
       @handle || Handle.build(:id => @id)
     end
 
-    protected
-
-    def fields
-      to_hash = proc { |handle| handle.to_hash }
-      # SOAP field, entity method, formatter proc, required?
-      [
-        ["Handle", :handle, proc { |v| v.to_hash }, :required],
-        ["Id", :id, nil],
-        ["CreditorHandle", :creditor_handle, to_hash],
-        ["Name", :name],
-        ["Number", :handle, proc { |v| v.number }, :required],
-        ["TelephoneNumber", :telephone_number],
-        ["Email", :email],
-        ["Comments", :comments],
-        ["ExternalId", :external_id]
-      ]
+    def number
+      handle.number
     end
   end
 end
