@@ -110,6 +110,7 @@ Not even remotely... For now, limited to a small subset of all the [available op
     -------------------+--------+------+--------+-------
     CashBook           | X      | X    | X      | X
     CashBookEntry      | X      | X    | X      | X
+    Company            | X      | X    | X      | X
     Creditor           | X      | X    | X      | X
     CreditorContact    | X      | X    | X      | X
     CreditorEntry      | X      | X    | X      | X
