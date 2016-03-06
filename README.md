@@ -112,6 +112,7 @@ Not even remotely... For now, limited to a small subset of all the [available op
     CashBookEntry      | X      | X    | X      | X
     Company            | X      | X    | X      | X
     Creditor           | X      | X    | X      | X
+    CreditorEntry      | X      | X    |        |
     CreditorContact    | X      | X    | X      | X
     CreditorEntry      | X      | X    | X      | X
     CurrentInvoice     | X      | X    | X      | X
