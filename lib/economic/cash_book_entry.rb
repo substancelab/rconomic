@@ -37,33 +37,12 @@ module Economic
       :voucher_number
 
     defaults(
-      :account_handle => nil,
       :amount => 0,
       :amount_default_currency => 0,
-      :bank_payment_creditor_id => nil,
-      :bank_payment_creditor_invoice_id => nil,
-      :bank_payment_type_handle => nil,
-      :capitalise_handle => nil,
-      :cash_book_handle => nil,
-      :contra_account_handle => nil,
-      :contra_vat_account_handle => nil,
-      :cost_type_handle => nil,
-      :creditor_handle => nil,
-      :creditor_invoice_number => nil,
-      :currency_handle => nil,
       :date => Time.now,
-      :debtor_handle => nil,
-      :debtor_invoice_number => nil,
-      :department_handle => nil,
-      :distribution_key_handle => nil,
-      :due_date => nil,
-      :employee_handle => nil,
-      :end_date => nil,
-      :project_handle => nil,
       :start_date => Time.now,
       :text => "",
       :type => "",
-      :vat_account_handle => nil,
       :voucher_number => 0
     )
 

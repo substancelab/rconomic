@@ -23,16 +23,8 @@ module Economic
       :margin_as_percent
 
     defaults(
-      :invoice_handle => nil,
-      :description => nil,
-      :delivery_date => nil,
-      :unit_handle => nil,
-      :product_handle => nil,
-      :quantity => nil,
-      :unit_net_price => nil,
       :discount_as_percent => 0,
       :unit_cost_price => 0,
-      :total_net_amount => nil,
       :total_margin => 0,
       :margin_as_percent => 0
     )
