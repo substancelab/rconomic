@@ -20,19 +20,5 @@ module Economic
     def handle
       Handle.build(:name => @name)
     end
-
-    protected
-
-    def fields
-      self.class.properties.map do |name|
-        field = self.class.property_definitions[name]
-        [
-          field.fetch(:serialize),
-          name,
-          field[:formatter],
-          (field[:required] ? :required : nil)
-        ]
-      end
-    end
   end
 end

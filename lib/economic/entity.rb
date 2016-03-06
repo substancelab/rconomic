@@ -253,7 +253,15 @@ module Economic
     end
 
     def fields
-      raise NotImplementedError, "Subclasses of Economic::Entity must implement `fields`"
+      self.class.properties.map do |name|
+        field = self.class.property_definitions[name]
+        [
+          field.fetch(:serialize),
+          name,
+          field[:formatter],
+          (field[:required] ? :required : nil)
+        ]
+      end
     end
 
     # Requests an action from the API endpoint

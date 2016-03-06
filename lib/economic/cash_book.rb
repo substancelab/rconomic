@@ -22,19 +22,5 @@ module Economic
       response = request(:book, "cashBookHandle" => handle.to_hash)
       response[:number].to_i
     end
-
-    protected
-
-    def fields
-      self.class.properties.map do |name|
-        field = self.class.property_definitions[name]
-        [
-          field.fetch(:serialize),
-          name,
-          field[:formatter],
-          (field[:required] ? :required : nil)
-        ]
-      end
-    end
   end
 end
