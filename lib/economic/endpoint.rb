@@ -45,7 +45,7 @@ class Economic::Endpoint
   def client
     @@client ||= Savon.client do
       wsdl      File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
-      log       false
+      log       true
       log_level :info
       headers("X-EconomicAppIdentifier" => @app_identifier) if @app_identifier
     end
