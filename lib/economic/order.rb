@@ -15,6 +15,8 @@ module Economic
       :debtor_postal_code,
       :debtor_city,
       :debtor_country,
+      :is_archived,
+      :is_sent,
       :attention_handle,
       :your_reference_handle,
       :our_reference_handle,
@@ -37,9 +39,11 @@ module Economic
       :text_line2
 
     defaults(
-      :id => 0,
+      :id => nil,
       :number => 0,
       :date => Time.now,
+      :is_archived => false,
+      :is_sent => false,
       :term_of_payment_handle => nil,
       :due_date => nil,
       :currency_handle => nil,
@@ -153,7 +157,9 @@ module Economic
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],
         ["Margin", :margin, nil, :required],
-        ["MarginAsPercent", :margin_as_percent, nil, :required]
+        ["MarginAsPercent", :margin_as_percent, nil, :required],
+        ["IsArchived", :is_archived, nil, :required],
+        ["IsSent", :is_sent, nil, :required]
       ]
     end
   end
