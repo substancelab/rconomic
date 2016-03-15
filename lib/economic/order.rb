@@ -36,7 +36,8 @@ module Economic
       :margin_as_percent,
       :heading,
       :text_line1,
-      :text_line2
+      :text_line2,
+      :rounding_amount
 
     defaults(
       :id => nil,
@@ -58,6 +59,7 @@ module Economic
       :net_amount => 0,
       :vat_amount => 0,
       :gross_amount => 0,
+      :rounding_amount => 0,
       :margin => 0,
       :margin_as_percent => 0 # Why do I have to input both Margin and MarginAsPercent? Shouldn't powerful Windows machines running ASP.NET be able to compute this?
     )
@@ -159,7 +161,8 @@ module Economic
         ["Margin", :margin, nil, :required],
         ["MarginAsPercent", :margin_as_percent, nil, :required],
         ["IsArchived", :is_archived, nil, :required],
-        ["IsSent", :is_sent, nil, :required]
+        ["IsSent", :is_sent, nil, :required],
+        ["RoundingAmount", :rounding_amount, nil]
       ]
     end
   end
