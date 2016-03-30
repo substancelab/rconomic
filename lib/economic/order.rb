@@ -126,6 +126,17 @@ module Economic
       Base64.decode64(response)
     end
 
+    # Upgrades order to  current invoice.
+    # Return the resulting Economic::CurrentInvoice
+    def upgrade_to_invoice
+      response = request(:upgrade_to_invoice, {
+        "orderHandle" => handle.to_hash
+      })
+
+      # Find the upgraded current invoice
+      session.current_invoices.find(response[:id])
+    end
+
     protected
 
     def fields
