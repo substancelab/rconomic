@@ -133,8 +133,8 @@ module Economic
       to_hash = Proc.new { |handle| handle.to_hash }
       [
         ["Id", :id],
-        ["Number", :number, nil, :required],
         ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
+        ["Number", :number, nil, :required],
         ["DebtorName", :debtor_name, nil, :required],
         ["DebtorAddress", :debtor_address],
         ["DebtorPostalCode", :debtor_postal_code],
@@ -143,7 +143,6 @@ module Economic
         ["AttentionHandle", :attention_handle, to_hash],
         ["YourReferenceHandle", :your_reference_handle, to_hash],
         ["OurReferenceHandle", :our_reference_handle, to_hash],
-        ["OtherReference", :other_reference],
         ["Date", :date, date_formatter],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
@@ -155,13 +154,14 @@ module Economic
         ["Heading", :heading],
         ['TextLine1', :text_line1],
         ['TextLine2', :text_line2],
+        ["OtherReference", :other_reference],
+        ["IsArchived", :is_archived, nil, :required],
+        ["IsSent", :is_sent, nil, :required],
         ["NetAmount", :net_amount, nil, :required],
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],
         ["Margin", :margin, nil, :required],
         ["MarginAsPercent", :margin_as_percent, nil, :required],
-        ["IsArchived", :is_archived, nil, :required],
-        ["IsSent", :is_sent, nil, :required],
         ["RoundingAmount", :rounding_amount, nil]
       ]
     end
