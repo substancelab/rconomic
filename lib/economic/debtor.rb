@@ -106,9 +106,9 @@ module Economic
         ["CINumber", :ci_number],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["LayoutHandle", :layout_handle, to_hash],
-        ["AttentionHandle", :attention_handle],
-        ["YourReferenceHandle", :your_reference_handle],
-        ["OurReferenceHandle", :our_reference_handle],
+        ["AttentionHandle", :attention_handle, to_hash],
+        ["YourReferenceHandle", :your_reference_handle, to_hash],
+        ["OurReferenceHandle", :our_reference_handle, to_hash],
         ["Balance", :balance]
       ]
     end
