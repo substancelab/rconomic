@@ -53,7 +53,8 @@ module Economic
       :margin_as_percent,
       :heading,
       :text_line1,
-      :text_line2
+      :text_line2,
+      :rounding_amount
 
     defaults(
       :id => 0,
@@ -73,6 +74,7 @@ module Economic
       :net_amount => 0,
       :vat_amount => 0,
       :gross_amount => 0,
+      :rounding_amount => 0,
       :margin => 0,
       :margin_as_percent => 0
     )
@@ -173,8 +175,8 @@ module Economic
       }
       to_hash = proc { |handle| handle.to_hash }
       [
-        ["Id", :id, nil, :required],
-        ["DebtorHandle", :debtor, proc { |d| d.handle.to_hash }],
+        ["Id", :id],
+        ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
         ["DebtorName", :debtor_name, nil, :required],
         ["DebtorAddress", :debtor_address],
         ["DebtorPostalCode", :debtor_postal_code],
@@ -184,7 +186,6 @@ module Economic
         ["AttentionHandle", :attention_handle, to_hash],
         ["YourReferenceHandle", :your_reference_handle, to_hash],
         ["OurReferenceHandle", :our_reference_handle, to_hash],
-        ["OtherReference", :other_reference],
         ["Date", :date, date_formatter],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
@@ -194,13 +195,15 @@ module Economic
         ["LayoutHandle", :layout_handle, to_hash],
         ["DeliveryDate", :delivery_date, date_formatter, :required],
         ["Heading", :heading],
-        ["TextLine1", :text_line1],
-        ["TextLine2", :text_line2],
+        ['TextLine1', :text_line1],
+        ['TextLine2', :text_line2],
+        ["OtherReference", :other_reference],
         ["NetAmount", :net_amount, nil, :required],
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],
         ["Margin", :margin, nil, :required],
-        ["MarginAsPercent", :margin_as_percent, nil, :required]
+        ["MarginAsPercent", :margin_as_percent, nil, :required],
+        ["RoundingAmount", :rounding_amount, nil]
       ]
     end
   end
