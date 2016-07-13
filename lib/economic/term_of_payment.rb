@@ -15,6 +15,7 @@ module Economic
       :distribution_in_percent2
 
     defaults(
+      :id => 0,
       :type => 'Net',
       :distribution_in_percent => nil,
       :distribution_in_percent2 => nil
