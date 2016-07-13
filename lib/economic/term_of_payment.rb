@@ -22,7 +22,7 @@ module Economic
     )
 
     def handle
-      Handle.build(:id => @id)
+      Handle.build(:id => (@id.nil? ? 0 : @id))
     end
 
     protected
