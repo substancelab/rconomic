@@ -15,6 +15,7 @@ module Economic
       :distribution_in_percent2
 
     defaults(
+      :term_of_payment_type => 'Net',
       :distribution_in_percent => nil,
       :distribution_in_percent2 => nil
     )
@@ -31,7 +32,7 @@ module Economic
         ["Handle", :handle, to_hash, :required],
         ["Id", :id],
         ["Name", :name],
-        ["TermOfPaymentType", :term_of_payment_type, to_hash, :required],
+        ["TermOfPaymentType", :term_of_payment_type, nil, :required],
         ["Days", :days, nil, :required],
         ["Description", :description],
         ["ContraAccountHandle", :contra_account_handle, to_hash],
