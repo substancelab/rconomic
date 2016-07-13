@@ -26,8 +26,9 @@ module Economic
     protected
 
     def fields
+      to_hash = proc { |h| h.to_hash }
       [
-        ["Handle", :handle, proc { |handle| handle.to_hash }, :required],
+        ["Handle", :handle, to_hash, :required],
         ["Id", :id],
         ["Name", :name],
         ["TermOfPaymentType", :term_of_payment_type, to_hash, :required],
