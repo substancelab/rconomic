@@ -10,6 +10,13 @@ module Economic
       Handle.build(:id => (@id.nil? ? 0 : @id))
     end
 
+    def save
+      raise(
+        NoMethodError,
+        "SOAP client does not implement _CreateFromData for entity: 'TemplateCollection'"
+      )
+    end
+
     protected
 
     def fields
