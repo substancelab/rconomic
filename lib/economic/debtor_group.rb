@@ -9,7 +9,7 @@ module Economic
       :layout_handle
 
     def handle
-      Handle.build(:number => (@number.nil? ? 0 : @number))
+      Handle.build(:number => @number)
     end
 
     protected
