@@ -20,8 +20,8 @@ module Economic
         ["Handle", :handle, to_hash],
         ["Number", :number, nil, :required],
         ["Name", :name],
-        ["AccountHandle", :account_handle],
-        ["LayoutHandle", :layout_handle]
+        ["AccountHandle", :account_handle, to_hash, :required],
+        ["LayoutHandle", :layout_handle, to_hash]
       ]
     end
   end
