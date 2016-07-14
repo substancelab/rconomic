@@ -134,6 +134,14 @@ module Economic
       @term_of_payments ||= TermOfPaymentProxy.new(self)
     end
 
+    def template_collections
+      @template_collections ||= TemplateCollectionProxy.new(self)
+    end
+
+    def debtor_groups
+      @debtor_groups ||= DebtorGroupProxy.new(self)
+    end
+
     # Requests an action from the API endpoint
     def request(soap_action, data = nil)
       endpoint.call(soap_action, data, authentication_token)
