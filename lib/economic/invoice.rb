@@ -17,7 +17,8 @@ module Economic
       :debtor_ean,
       :attention_handle,
       :heading,
-      :other_reference
+      :other_reference,
+      :order_number
 
     def attention
       return nil if attention_handle.nil?
