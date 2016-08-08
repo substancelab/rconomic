@@ -46,7 +46,7 @@ module Economic
     def build_entities_from_handles(class_name, handles)
       return nil if handles.nil?
       camelized_name = class_name.to_s.split('_').map{|e| e.capitalize}.join
-      proxy = Economic.const_get("#{camelized_name}Proxy").new
+      proxy = Economic.const_get("#{camelized_name}Proxy").new(owner)
       proxy.get_data_array(handles).map! do |data|
         entity = proxy.build(data)
         entity.persisted = true
