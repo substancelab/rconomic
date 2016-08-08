@@ -26,42 +26,34 @@ module Economic
 
     def get_invoices(debtor_handle)
       response = fetch_response(:get_invoices, debtor_handle)
-      build_entities_from_response(
-        Economic::Invoice,
-        response[:invoice_handle]
-      )
+      build_entities_from_handles(:invoice, response[:invoice_handle])
     end
 
     def get_current_invoices(debtor_handle)
-      response = request :get_current_invoices, {
+      response = request(:get_current_invoices, {
         'debtorHandle' => { 'Number' => debtor_handle.number }
-      }
-      if response.empty?
-        nil
-      else
-        entities = []
-        [response[:current_invoice_handle]].flatten.each do |handle|
-          entity = Economic::CurrentInvoice.new(:session => session)
-          entity.partial = true
-          entity.persisted = true
-          entity.handle = handle
-          entities << entity
-        end
-        entities
-      end
+      })
+      build_entities_from_handles(:current_invoice, response[:current_invoice_handle])
     end
 
-
-    # Returns handle for orders for debtor.
     def get_orders(debtor_handle)
       response = fetch_response(:get_orders, debtor_handle)
-      build_entities_from_response(
-        Economic::Order,
-        response[:order_handle]
-      )
+      build_entities_from_handles(:order, response[:order_handle])
     end
 
     private
+
+    def build_entities_from_handles(class_name, handles)
+      return nil if handles.nil?
+      camelized_name = class_name.to_s.split('_').map{|e| e.capitalize}.join
+      proxy = Economic.const_get("#{camelized_name}Proxy")
+      proxy.get_data_array(handles).map! do |data|
+        entity = proxy.build(data)
+        entity.persisted = true
+        entity.partial = false
+        entity
+      end
+    end
 
     def build_entities_from_response(entity_class, handles)
       return nil if handles.nil?
