@@ -18,7 +18,12 @@ module Economic
       :attention_handle,
       :heading,
       :other_reference,
-      :order_number
+      :currency_handle,
+      :order_number,
+      :public_entry_number,
+      :is_vat_included,
+      :text_line_1,
+      :text_line_2
 
     def attention
       return nil if attention_handle.nil?
