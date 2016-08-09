@@ -17,28 +17,23 @@ module Economic
     end
 
     def get_debtor_contacts(debtor_handle)
-      response = fetch_response(:get_debtor_contacts, debtor_handle)
-      build_entities_from_response(
-        Economic::DebtorContact,
-        response[:debtor_contact_handle]
-      )
+      handles = fetch_handles(:get_debtor_contacts, debtor_handle)
+      build_entities_from_handles(:debtor_contact, handles)
     end
 
     def get_invoices(debtor_handle)
-      handles = fetch_response(:get_invoices, debtor_handle)
+      handles = fetch_handles(:get_invoices, debtor_handle)
       build_entities_from_handles(:invoice, handles)
     end
 
-    def get_current_invoices(debtor_handle)
-      response = request(:get_current_invoices, {
-        'debtorHandle' => { 'Number' => debtor_handle.number }
-      })
-      build_entities_from_handles(:current_invoice, response[:current_invoice_handle])
+    def get_orders(debtor_handle)
+      handles = fetch_handles(:get_orders, debtor_handle)
+      build_entities_from_handles(:order, handles)
     end
 
-    def get_orders(debtor_handle)
-      response = fetch_response(:get_orders, debtor_handle)
-      build_entities_from_handles(:order, response[:order_handle])
+    def get_current_invoices(debtor_handle)
+      handles = fetch_handles(:get_current_invoices, debtor_handle)
+      build_entities_from_handles(:current_invoice, handles)
     end
 
     private
@@ -55,19 +50,7 @@ module Economic
       end
     end
 
-    def build_entities_from_response(entity_class, handles)
-      return nil if handles.nil?
-      [handles].flatten.map do |handle|
-        entity = entity_class.new(:session => session)
-        entity.partial = true
-        entity.persisted = true
-        entity.handle = handle
-        entity.number = handle[:id].to_i
-        entity
-      end
-    end
-
-    def fetch_response(operation, debtor_handle)
+    def fetch_handles(operation, debtor_handle)
       response = request(
         operation,
         "debtorHandle" => {"Number" => debtor_handle.number}
