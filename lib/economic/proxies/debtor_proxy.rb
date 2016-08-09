@@ -25,8 +25,8 @@ module Economic
     end
 
     def get_invoices(debtor_handle)
-      response = fetch_response(:get_invoices, debtor_handle)
-      build_entities_from_handles(:invoice, response[:invoice_handle])
+      handles = fetch_response(:get_invoices, debtor_handle)
+      build_entities_from_handles(:invoice, handles)
     end
 
     def get_current_invoices(debtor_handle)
@@ -68,10 +68,11 @@ module Economic
     end
 
     def fetch_response(operation, debtor_handle)
-      request(
+      response = request(
         operation,
         "debtorHandle" => {"Number" => debtor_handle.number}
       )
+      response.values.flatten.collect! { |handle| Entity::Handle.build(handle) }
     end
   end
 end
