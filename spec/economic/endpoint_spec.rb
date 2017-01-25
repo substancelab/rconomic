@@ -93,5 +93,12 @@ describe Economic::Endpoint do
     it "can be instantiated with an app_identifier" do
       expect(Economic::Endpoint.new(app_id).client).to be_instance_of(::Savon::Client)
     end
+
+    it "sets the headers to the app identifier" do
+      globals = Economic::Endpoint.new(app_id).client.globals
+      expect(
+        globals[:headers]["X-EconomicAppIdentifier"]
+      ).to eq(app_id)
+    end
   end
 end

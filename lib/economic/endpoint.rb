@@ -43,12 +43,9 @@ class Economic::Endpoint
   # Cached on class-level to avoid loading the big WSDL file more than once (can
   # take several hundred megabytes of RAM after a while...)
   def client
-    @@client ||= Savon.client do
-      wsdl      File.expand_path(File.join(File.dirname(__FILE__), "economic.wsdl"))
-      log       false
-      log_level :info
-      headers("X-EconomicAppIdentifier" => @app_identifier) if @app_identifier
-    end
+    options = client_headers(client_options)
+
+    @@client ||= Savon.client(options)
   end
 
   # Returns the E-conomic API action name to call
@@ -64,6 +61,26 @@ class Economic::Endpoint
   def class_name_without_modules(entity_class)
     class_name = entity_class.to_s
     class_name.split("::").last
+  end
+
+  def client_headers(options)
+    return options unless @app_identifier
+
+    options.merge(
+      :headers => {
+        "X-EconomicAppIdentifier" => @app_identifier
+      }
+    )
+  end
+
+  def client_options
+    {
+      :wsdl => File.expand_path(
+        File.join(File.dirname(__FILE__), "economic.wsdl")
+      ),
+      :log => false,
+      :log_level => :info
+    }
   end
 
   def extract_result_from_response(response, soap_action)
