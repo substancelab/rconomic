@@ -13,6 +13,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Properties for "past due" status of invoices (@skelboe)
 * Support to get company data (@adriacidre)
 * Support X-EconomicAppIdentifier (@prognostikos)
+* Fixed an issue where X-EconomicAppIdentifier wasn't set properly (@olepalm)
 
 ### Changes
 
