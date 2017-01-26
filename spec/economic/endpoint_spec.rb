@@ -90,12 +90,13 @@ describe Economic::Endpoint do
   describe "app identifier configuration" do
     let(:app_id) { "my awesome app v.4.0.9-beta-rc1" }
 
-    it "can be instantiated with an app_identifier" do
-      expect(Economic::Endpoint.new(app_id).client).to be_instance_of(::Savon::Client)
-    end
+    subject {
+      described_class.new(app_id)
+    }
 
-    it "sets the headers to the app identifier" do
-      globals = Economic::Endpoint.new(app_id).client.globals
+    it "adds the app identifier HTTP headers" do
+      client = subject.client(:force_new_instance => true)
+      globals = client.globals
       expect(
         globals[:headers]["X-EconomicAppIdentifier"]
       ).to eq(app_id)

@@ -42,9 +42,15 @@ class Economic::Endpoint
   #
   # Cached on class-level to avoid loading the big WSDL file more than once (can
   # take several hundred megabytes of RAM after a while...)
-  def client
-    options = client_headers(client_options)
-
+  #
+  # If you need to refresh the cached client and return a newly built instance,
+  # set force_new_instance to true
+  def client(force_new_instance: false)
+    reset_client if force_new_instance
+    options = client_options
+    if @app_identifier
+      options[:headers] = {"X-EconomicAppIdentifier" => @app_identifier}
+    end
     @@client ||= Savon.client(options)
   end
 
@@ -61,16 +67,6 @@ class Economic::Endpoint
   def class_name_without_modules(entity_class)
     class_name = entity_class.to_s
     class_name.split("::").last
-  end
-
-  def client_headers(options)
-    return options unless @app_identifier
-
-    options.merge(
-      :headers => {
-        "X-EconomicAppIdentifier" => @app_identifier
-      }
-    )
   end
 
   def client_options
@@ -105,5 +101,9 @@ class Economic::Endpoint
       soap_action,
       locals
     )
+  end
+
+  def reset_client
+    @@client = nil
   end
 end
