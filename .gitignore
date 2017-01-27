@@ -2,3 +2,4 @@ spec/*.log
 .rvmrc
 Gemfile.lock
 /coverage/
+/gemfiles/*.lock
