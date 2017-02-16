@@ -1,42 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <CurrentInvoiceLine_CreateFromData xmlns="http://e-conomic.com">
-      <data>
-        <Handle>
-          <Id>int</Id>
-          <Number>int</Number>
-        </Handle>
-        <Id>int</Id>
-        <Number>int</Number>
-        <InvoiceHandle>
-          <Id>int</Id>
-        </InvoiceHandle>
-        <Description>string</Description>
-        <DeliveryDate>dateTime</DeliveryDate>
-        <UnitHandle>
-          <Number>int</Number>
-        </UnitHandle>
-        <ProductHandle>
-          <Number>string</Number>
-        </ProductHandle>
-        <Quantity>decimal</Quantity>
-        <UnitNetPrice>decimal</UnitNetPrice>
-        <DiscountAsPercent>decimal</DiscountAsPercent>
-        <UnitCostPrice>decimal</UnitCostPrice>
-        <TotalNetAmount>decimal</TotalNetAmount>
-        <TotalMargin>decimal</TotalMargin>
-        <MarginAsPercent>decimal</MarginAsPercent>
-        <DepartmentHandle>
-          <Number>int</Number>
-        </DepartmentHandle>
-        <DistributionKeyHandle>
-          <Number>int</Number>
-        </DistributionKeyHandle>
-        <InventoryLocationHandle>
-          <Number>int</Number>
-        </InventoryLocationHandle>
-      </data>
-    </CurrentInvoiceLine_CreateFromData>
+    <CurrentInvoiceLine_CreateFromDataResponse xmlns="http://e-conomic.com">
+      <CurrentInvoiceLine_CreateFromDataResult>
+        <Id>42</Id>
+        <Number>42</Number>
+      </CurrentInvoiceLine_CreateFromDataResult>
+    </CurrentInvoiceLine_CreateFromDataResponse>
   </soap:Body>
 </soap:Envelope>
