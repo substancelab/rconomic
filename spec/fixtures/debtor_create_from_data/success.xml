@@ -1,57 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
   <soap:Body>
-    <Debtor_CreateFromData xmlns="http://e-conomic.com">
-      <data>
-        <Handle>
-          <Number>string</Number>
-        </Handle>
-        <Number>string</Number>
-        <DebtorGroupHandle>
-          <Number>int</Number>
-        </DebtorGroupHandle>
-        <Name>string</Name>
-        <VatZone>HomeCountry or EU or Abroad</VatZone>
-        <ExtendedVatZone>
-          <Number>string</Number>
-        </ExtendedVatZone>
-        <CurrencyHandle>
-          <Code>string</Code>
-        </CurrencyHandle>
-        <PriceGroupHandle>
-          <Number>int</Number>
-        </PriceGroupHandle>
-        <IsAccessible>boolean</IsAccessible>
-        <Ean>string</Ean>
-        <PublicEntryNumber>string</PublicEntryNumber>
-        <Email>string</Email>
-        <TelephoneAndFaxNumber>string</TelephoneAndFaxNumber>
-        <Website>string</Website>
-        <Address>string</Address>
-        <PostalCode>string</PostalCode>
-        <City>string</City>
-        <Country>string</Country>
-        <CreditMaximum>decimal</CreditMaximum>
-        <VatNumber>string</VatNumber>
-        <County>string</County>
-        <CINumber>string</CINumber>
-        <TermOfPaymentHandle>
-          <Id>int</Id>
-        </TermOfPaymentHandle>
-        <LayoutHandle>
-          <Id>int</Id>
-        </LayoutHandle>
-        <AttentionHandle>
-          <Id>int</Id>
-        </AttentionHandle>
-        <YourReferenceHandle>
-          <Id>int</Id>
-        </YourReferenceHandle>
-        <OurReferenceHandle>
-          <Number>int</Number>
-        </OurReferenceHandle>
-        <Balance>decimal</Balance>
-      </data>
-    </Debtor_CreateFromData>
+    <Debtor_CreateFromDataResponse xmlns="http://e-conomic.com">
+      <Debtor_CreateFromDataResult>
+        <Number>42</Number>
+      </Debtor_CreateFromDataResult>
+    </Debtor_CreateFromDataResponse>
   </soap:Body>
 </soap:Envelope>
