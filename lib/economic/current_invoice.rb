@@ -33,7 +33,11 @@ module Economic
       :debtor_postal_code,
       :debtor_city,
       :debtor_country,
+      :debtor_ean,
       :attention_handle,
+      :your_reference_handle,
+      :our_reference_handle,
+      :other_reference,
       :date,
       :term_of_payment_handle,
       :due_date,
@@ -49,15 +53,28 @@ module Economic
       :margin_as_percent,
       :heading,
       :text_line1,
-      :text_line2
+      :text_line2,
+      :rounding_amount
 
     defaults(
       :id => 0,
       :date => Time.now,
       :exchange_rate => 100,
+      :term_of_payment_handle => nil,
+      :due_date => nil,
+      :currency_handle => nil,
+      :your_reference_handle => nil,
+      :our_reference_handle => nil,
+      :other_reference => nil,
+      :exchange_rate => 100, # Why am _I_ inputting this?
+      :is_vat_included => nil,
+      :layout_handle => nil,
+      :delivery_date => nil,
+      :heading => nil,
       :net_amount => 0,
       :vat_amount => 0,
       :gross_amount => 0,
+      :rounding_amount => 0,
       :margin => 0,
       :margin_as_percent => 0
     )
@@ -143,6 +160,13 @@ module Economic
       end
     end
 
+    def pdf
+      response = request(:get_pdf, {
+                           "currentInvoiceHandle" => handle.to_hash
+      })
+      Base64.decode64(response)
+    end
+
     protected
 
     def fields
@@ -151,14 +175,17 @@ module Economic
       }
       to_hash = proc { |handle| handle.to_hash }
       [
-        ["Id", :id, nil, :required],
-        ["DebtorHandle", :debtor, proc { |d| d.handle.to_hash }],
+        ["Id", :id],
+        ["DebtorHandle", :debtor, Proc.new { |d| d.handle.to_hash }],
         ["DebtorName", :debtor_name, nil, :required],
         ["DebtorAddress", :debtor_address],
         ["DebtorPostalCode", :debtor_postal_code],
         ["DebtorCity", :debtor_city],
         ["DebtorCountry", :debtor_country],
+        ["DebtorEan", :debtor_ean],
         ["AttentionHandle", :attention_handle, to_hash],
+        ["YourReferenceHandle", :your_reference_handle, to_hash],
+        ["OurReferenceHandle", :our_reference_handle, to_hash],
         ["Date", :date, date_formatter],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
@@ -168,13 +195,15 @@ module Economic
         ["LayoutHandle", :layout_handle, to_hash],
         ["DeliveryDate", :delivery_date, date_formatter, :required],
         ["Heading", :heading],
-        ["TextLine1", :text_line1],
-        ["TextLine2", :text_line2],
+        ['TextLine1', :text_line1],
+        ['TextLine2', :text_line2],
+        ["OtherReference", :other_reference],
         ["NetAmount", :net_amount, nil, :required],
         ["VatAmount", :vat_amount, nil, :required],
         ["GrossAmount", :gross_amount, nil, :required],
         ["Margin", :margin, nil, :required],
-        ["MarginAsPercent", :margin_as_percent, nil, :required]
+        ["MarginAsPercent", :margin_as_percent, nil, :required],
+        ["RoundingAmount", :rounding_amount, nil]
       ]
     end
   end

@@ -58,7 +58,8 @@ module Economic
     # Provides access to the current invoices for Debtor - ie invoices that
     # haven't yet been booked
     def current_invoices
-      @current_invoices ||= CurrentInvoiceProxy.new(self)
+      return [] if self.handle.empty?
+      @current_invoices ||= DebtorProxy.new(self).get_current_invoices(self.handle)
     end
 
     # Returns the Debtors contacts
@@ -105,9 +106,9 @@ module Economic
         ["CINumber", :ci_number],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["LayoutHandle", :layout_handle, to_hash],
-        ["AttentionHandle", :attention_handle],
-        ["YourReferenceHandle", :your_reference_handle],
-        ["OurReferenceHandle", :our_reference_handle],
+        ["AttentionHandle", :attention_handle, to_hash],
+        ["YourReferenceHandle", :your_reference_handle, to_hash],
+        ["OurReferenceHandle", :our_reference_handle, to_hash],
         ["Balance", :balance]
       ]
     end

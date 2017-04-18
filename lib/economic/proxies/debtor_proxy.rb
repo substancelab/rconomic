@@ -17,49 +17,45 @@ module Economic
     end
 
     def get_debtor_contacts(debtor_handle)
-      response = fetch_response(:get_debtor_contacts, debtor_handle)
-      build_entities_from_response(
-        Economic::DebtorContact,
-        response[:debtor_contact_handle]
-      )
+      handles = fetch_handles(:get_debtor_contacts, debtor_handle)
+      build_entities_from_handles(:debtor_contact, handles)
     end
 
     def get_invoices(debtor_handle)
-      response = fetch_response(:get_invoices, debtor_handle)
-      build_entities_from_response(
-        Economic::Invoice,
-        response[:invoice_handle]
-      )
+      handles = fetch_handles(:get_invoices, debtor_handle)
+      build_entities_from_handles(:invoice, handles)
     end
 
-    # Returns handle for orders for debtor.
     def get_orders(debtor_handle)
-      response = fetch_response(:get_orders, debtor_handle)
-      build_entities_from_response(
-        Economic::Order,
-        response[:order_handle]
-      )
+      handles = fetch_handles(:get_orders, debtor_handle)
+      build_entities_from_handles(:order, handles)
+    end
+
+    def get_current_invoices(debtor_handle)
+      handles = fetch_handles(:get_current_invoices, debtor_handle)
+      build_entities_from_handles(:current_invoice, handles)
     end
 
     private
 
-    def build_entities_from_response(entity_class, handles)
+    def build_entities_from_handles(class_name, handles)
       return nil if handles.nil?
-      [handles].flatten.map do |handle|
-        entity = entity_class.new(:session => session)
-        entity.partial = true
+      camelized_name = class_name.to_s.split('_').map{|e| e.capitalize}.join
+      proxy = Economic.const_get("#{camelized_name}Proxy").new(owner)
+      proxy.get_data_array(handles).map! do |data|
+        entity = proxy.build(data)
         entity.persisted = true
-        entity.handle = handle
-        entity.number = handle[:id].to_i
+        entity.partial = false
         entity
       end
     end
 
-    def fetch_response(operation, debtor_handle)
-      request(
+    def fetch_handles(operation, debtor_handle)
+      response = request(
         operation,
         "debtorHandle" => {"Number" => debtor_handle.number}
       )
+      response.values.flatten.collect! { |handle| Entity::Handle.build(handle) }
     end
   end
 end

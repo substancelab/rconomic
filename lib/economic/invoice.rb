@@ -16,7 +16,14 @@ module Economic
       :debtor_country,
       :debtor_ean,
       :attention_handle,
-      :heading
+      :heading,
+      :other_reference,
+      :currency_handle,
+      :order_number,
+      :public_entry_number,
+      :is_vat_included,
+      :text_line_1,
+      :text_line_2
 
     def attention
       return nil if attention_handle.nil?
