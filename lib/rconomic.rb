@@ -1,6 +1,7 @@
 # Dependencies
 require "time"
 require "savon"
+require "savon_ext/request"
 
 require "economic/support/string"
 require "economic/session"

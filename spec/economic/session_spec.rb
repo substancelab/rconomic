@@ -59,7 +59,7 @@ describe Economic::Session do
 
       subject.connect_with_credentials(*credentials)
 
-      expect(subject.authentication_token.collect { |cookie|
+      expect(subject.authentication_cookies.collect { |cookie|
         cookie.name_and_value.split("=").last
       }).to eq(["cookie value from e-conomic"])
     end
@@ -80,10 +80,10 @@ describe Economic::Session do
       other_session = Economic::Session.new
       other_session.connect_with_credentials(123_456, "api", "passw0rd")
 
-      expect(subject.authentication_token.collect { |cookie|
+      expect(subject.authentication_cookies.collect { |cookie|
         cookie.name_and_value.split("=").last
       }).to eq(["authentication token"])
-      expect(other_session.authentication_token.collect { |cookie|
+      expect(other_session.authentication_cookies.collect { |cookie|
         cookie.name_and_value.split("=").last
       }).to eq(["another token"])
     end
@@ -119,7 +119,7 @@ describe Economic::Session do
 
       subject.connect_with_token private_app_id, access_id
 
-      expect(subject.authentication_token.collect { |cookie|
+      expect(subject.authentication_cookies.collect { |cookie|
         cookie.name_and_value.split("=").last
       }).to eq(["cookie value from e-conomic"])
     end
@@ -140,10 +140,10 @@ describe Economic::Session do
       other_session = Economic::Session.new
       other_session.connect_with_credentials(123_456, "api", "passw0rd")
 
-      expect(subject.authentication_token.collect { |cookie|
+      expect(subject.authentication_cookies.collect { |cookie|
         cookie.name_and_value.split("=").last
       }).to eq(["authentication token"])
-      expect(other_session.authentication_token.collect { |cookie|
+      expect(other_session.authentication_cookies.collect { |cookie|
         cookie.name_and_value.split("=").last
       }).to eq(["another token"])
     end
