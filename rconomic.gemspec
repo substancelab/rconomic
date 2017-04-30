@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
                   EOS
   s.authors     = ["Jakob Skjerning"]
   s.email       = "jakob@mentalized.net"
-  s.homepage    = "https://github.com/lokalebasen/rconomic"
+  s.homepage    = "https://github.com/substancelab/rconomic"
   s.license     = "MIT"
   s.version     = Rconomic::VERSION
   s.platform    = Gem::Platform::RUBY
