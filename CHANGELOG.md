@@ -14,6 +14,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support to get company data (@adriacidre)
 * Support X-EconomicAppIdentifier (@prognostikos)
 * Fixed an issue where X-EconomicAppIdentifier wasn't set properly (@olepalm)
+* Fixed authentication when using legacy Connect (@koppen)
 
 ### Changes
 
