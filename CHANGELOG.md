@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## 0.6.0 [April 30, 2017]
 
 ### Added
 
@@ -14,13 +14,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 * Support to get company data (@adriacidre)
 * Support X-EconomicAppIdentifier (@prognostikos)
 * Fixed an issue where X-EconomicAppIdentifier wasn't set properly (@olepalm)
-* Fixed authentication when using legacy Connect (@koppen)
 
 ### Changes
 
 * The source code has a new home at https://github.com/substancelab/rconomic
 * Non-existing methods removed from the documentation (@koppen)
 * Handle Numbers can now be String as well as numbers (@traels)
+* Fixed authentication when using legacy Connect (@koppen)
 
 ### Removed
 
