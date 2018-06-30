@@ -8,13 +8,10 @@ module Economic
 
     def_delegators :endpoint, :logger=, :log_level=, :log=
 
-    attr_accessor :agreement_number, :user_name, :password, :app_identifier
+    attr_accessor :app_identifier
     attr_reader :authentication_cookies
 
-    def initialize(agreement_number = nil, user_name = nil, password = nil, app_identifier = nil)
-      self.agreement_number = agreement_number
-      self.user_name = user_name
-      self.password = password
+    def initialize(app_identifier = nil)
       self.app_identifier = app_identifier
       yield endpoint if block_given?
     end
@@ -36,34 +33,6 @@ module Economic
       ) do |response|
         store_authentication_cookies(response)
       end
-    end
-
-    # Connect/authenticate with credentials
-    #
-    # ==== Attributes
-    #
-    # * +agreement_number+ - your economic agreement number
-    # * +user_name+ - your username
-    # * +password+ - your passsword
-    # * +app_identifier+ - A string identifiying your application, as described in http://techtalk.e-conomic.com/e-conomic-soap-api-now-requires-you-to-specify-a-custom-x-economicappidentifier-header/
-    #
-    def connect_with_credentials(agreement_number, user_name, password, app_identifier = nil)
-      self.app_identifier = app_identifier if app_identifier
-
-      endpoint.call(
-        :connect,
-        :agreementNumber => agreement_number,
-        :userName => user_name,
-        :password => password
-      ) do |response|
-        store_authentication_cookies(response)
-      end
-    end
-
-    # Authenticates with E-conomic using credentials
-    # Assumes ::new was called with credentials as arguments.
-    def connect
-      connect_with_credentials(agreement_number, user_name, password, app_identifier)
     end
 
     # Provides access to the DebtorContacts

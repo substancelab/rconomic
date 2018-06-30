@@ -61,5 +61,5 @@ def make_debtor(properties = {})
 end
 
 def make_session
-  Economic::Session.new(123_456, "api", "passw0rd")
+  Economic::Session.new
 end

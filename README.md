@@ -13,11 +13,7 @@ Usage example
 
     economic = Economic::Session.new
 
-    # After 16 November 2015, you must supply an 'Application ID' with #connect_with_credentials
-    # As described here: http://techtalk.e-conomic.com/e-conomic-soap-api-now-requires-you-to-specify-a-custom-x-economicappidentifier-header/
-    economic.connect_with_credentials(123456, 'API', 'passw0rd', 'my awesome integration v1.0.0')
-
-    # Or connect using a Private app ID and an access ID provided by the "Grant Access"
+    # Connect using a Private app ID and an access ID provided by the "Grant Access"
     # As described here: http://www.e-conomic.com/developer/tutorials
     economic = Economic::Session.new
     economic.connect_with_token 'the_private_app_id', 'the_access_id_you_got_from_the_grant'
