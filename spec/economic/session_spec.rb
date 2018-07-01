@@ -6,13 +6,6 @@ describe Economic::Session do
   let(:endpoint) { subject.endpoint }
 
   describe "new" do
-    describe "legacy connect" do
-      it "stores an app_id" do
-        session = Economic::Session.new("app_id")
-        expect(session.app_identifier).to eq("app_id")
-      end
-    end
-
     it "yields the endpoint if a block is given" do
       endpoint_mock = double("Endpoint")
       allow(Economic::Endpoint).to receive(:new).and_return(endpoint_mock)

@@ -11,13 +11,7 @@ class Economic::Endpoint
   # Create a new Endpoint
   #
   # Economic::Session uses this internally
-  #
-  # ==== Attributes
-  #
-  # * +app_identifier+ - A string identifiying your application, as described in http://techtalk.e-conomic.com/e-conomic-soap-api-now-requires-you-to-specify-a-custom-x-economicappidentifier-header/
-  #
-  def initialize(app_identifier = nil)
-    @app_identifier = app_identifier
+  def initialize
   end
 
   # Invokes soap_action on the API endpoint with the given data.
@@ -48,9 +42,6 @@ class Economic::Endpoint
   def client(force_new_instance: false)
     reset_client if force_new_instance
     options = client_options
-    if @app_identifier
-      options[:headers] = {"X-EconomicAppIdentifier" => @app_identifier}
-    end
     @@client ||= Savon.client(options)
   end
 

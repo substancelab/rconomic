@@ -8,11 +8,9 @@ module Economic
 
     def_delegators :endpoint, :logger=, :log_level=, :log=
 
-    attr_accessor :app_identifier
     attr_reader :authentication_cookies
 
-    def initialize(app_identifier = nil)
-      self.app_identifier = app_identifier
+    def initialize
       yield endpoint if block_given?
     end
 
@@ -111,7 +109,7 @@ module Economic
 
     # Returns the SOAP endpoint to connect to
     def endpoint
-      @endpoint ||= Economic::Endpoint.new(app_identifier)
+      @endpoint ||= Economic::Endpoint.new
     end
 
     private

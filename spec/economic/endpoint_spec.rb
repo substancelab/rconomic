@@ -86,20 +86,4 @@ describe Economic::Endpoint do
       subject.logger = logger
     end
   end
-
-  describe "app identifier configuration" do
-    let(:app_id) { "my awesome app v.4.0.9-beta-rc1" }
-
-    subject {
-      described_class.new(app_id)
-    }
-
-    it "adds the app identifier HTTP headers" do
-      client = subject.client(:force_new_instance => true)
-      globals = client.globals
-      expect(
-        globals[:headers]["X-EconomicAppIdentifier"]
-      ).to eq(app_id)
-    end
-  end
 end
