@@ -14,8 +14,3 @@ notifications:
 addons:
   code_climate:
     repo_token: 6746eb72f5d9759f7d83ea90e8f49e3f01480d3b8f6334eea9e7cd9991c41ea4
-
-matrix:
-  include:
-    - rvm: 2.0.0
-      gemfile: gemfiles/Gemfile.ruby-2.0
