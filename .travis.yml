@@ -1,9 +1,8 @@
 # Specify which ruby versions you wish to run your tests on, each version will be used
 rvm:
-  - 2.1.8
-  - 2.2.6
-  - 2.3.3
-  - 2.4.0
+  - 2.3.7
+  - 2.4.4
+  - 2.5.1
   - jruby-9.1.17.0
   - jruby-9.2.0.0
 
