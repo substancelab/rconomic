@@ -92,10 +92,10 @@ Usage example
 How to enable e-conomic API access
 ----------------------------------
 
-You need to enable API access in e-conomic before you can, well, use the API. Otherwise you'll be getting access denied errors when connecting.
+You need a Developer account and setup an app in their web UI. E-conomic users can then grant that app access to their account.
 
-Just follow the instructions on [e-copedia](http://wiki.e-conomic.co.uk/add-on-modules/) to enable the API Add-on module.
-
+* Developer portal: https://www.e-conomic.com/developer
+* Instructions: https://www.e-conomic.com/developer/connect
 
 It doesn't do everything
 ------------------------
