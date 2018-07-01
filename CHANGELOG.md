@@ -3,19 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
-
-### Added
-
-*
+## 0.6.1 [July 1st, 2018]
 
 ### Changes
 
 * Tighten Savon dependency. Due to changes in Savons internal API we cannot work with versions 2.11.2 or later.
-
-### Removed
-
-*
 
 ## 0.6.0 [April 30, 2017]
 
