@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changes
 
-*
+* Tighten Savon dependency. Due to changes in Savons internal API we cannot work with versions 2.11.2 or later.
 
 ### Removed
 
