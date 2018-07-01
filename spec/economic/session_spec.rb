@@ -1,96 +1,17 @@
 require "./spec/spec_helper"
 
 describe Economic::Session do
-  let(:credentials) { [123_456, "api", "passw0rd"] }
   subject { Economic::Session.new }
 
   let(:endpoint) { subject.endpoint }
 
   describe "new" do
-    describe "legacy connect" do
-      subject { Economic::Session.new(*credentials) }
-      it "should store authentication details" do
-        expect(subject.agreement_number).to eq(123_456)
-        expect(subject.user_name).to eq("api")
-        expect(subject.password).to eq("passw0rd")
-      end
-
-      it "can also store an app_id" do
-        session = Economic::Session.new(*credentials, "app_id")
-        expect(session.app_identifier).to eq("app_id")
-      end
-    end
-
     it "yields the endpoint if a block is given" do
       endpoint_mock = double("Endpoint")
       allow(Economic::Endpoint).to receive(:new).and_return(endpoint_mock)
       expect {|b|
-        Economic::Session.new(123_456, "api", "passw0rd", &b)
+        Economic::Session.new(&b)
       }.to yield_with_args(endpoint_mock)
-    end
-  end
-
-  describe "connect" do
-    let(:authentication_details) {
-      {
-        :agreementNumber => 123_456,
-        :userName => "api",
-        :password => "passw0rd"
-      }
-    }
-
-    it "can connect old-style" do
-      mock_request(:connect, authentication_details, :success)
-      e = Economic::Session.new(*credentials)
-      e.connect
-    end
-
-    it "connects to e-conomic with authentication details" do
-      mock_request(:connect, authentication_details, :success)
-      subject.connect_with_credentials(*credentials)
-    end
-
-    it "stores the authentication token for later requests" do
-      response = {
-        :headers => {"Set-Cookie" => "cookie value from e-conomic"},
-        :body => fixture(:connect, :success)
-      }
-      stub_request("Connect", authentication_details, response)
-
-      subject.connect_with_credentials(*credentials)
-
-      expect(subject.authentication_cookies.collect { |cookie|
-        cookie.name_and_value.split("=").last
-      }).to eq(["cookie value from e-conomic"])
-    end
-
-    it "updates the authentication token for new sessions" do
-      stub_request(
-        "Connect",
-        nil,
-        :headers => {"Set-Cookie" => "authentication token"}
-      )
-      subject.connect_with_credentials(*credentials)
-
-      stub_request(
-        "Connect",
-        nil,
-        :headers => {"Set-Cookie" => "another token"}
-      )
-      other_session = Economic::Session.new
-      other_session.connect_with_credentials(123_456, "api", "passw0rd")
-
-      expect(subject.authentication_cookies.collect { |cookie|
-        cookie.name_and_value.split("=").last
-      }).to eq(["authentication token"])
-      expect(other_session.authentication_cookies.collect { |cookie|
-        cookie.name_and_value.split("=").last
-      }).to eq(["another token"])
-    end
-
-    it "doesn't use existing authentication details when connecting" do
-      expect(endpoint).to receive(:call).with(:connect, instance_of(Hash))
-      subject.connect_with_credentials(*credentials)
     end
   end
 
@@ -122,30 +43,6 @@ describe Economic::Session do
       expect(subject.authentication_cookies.collect { |cookie|
         cookie.name_and_value.split("=").last
       }).to eq(["cookie value from e-conomic"])
-    end
-
-    it "updates the authentication token for new sessions" do
-      stub_request(
-        "ConnectWithToken",
-        nil,
-        :headers => {"Set-Cookie" => "authentication token"}
-      )
-      subject.connect_with_token private_app_id, access_id
-
-      stub_request(
-        "Connect",
-        nil,
-        :headers => {"Set-Cookie" => "another token"}
-      )
-      other_session = Economic::Session.new
-      other_session.connect_with_credentials(123_456, "api", "passw0rd")
-
-      expect(subject.authentication_cookies.collect { |cookie|
-        cookie.name_and_value.split("=").last
-      }).to eq(["authentication token"])
-      expect(other_session.authentication_cookies.collect { |cookie|
-        cookie.name_and_value.split("=").last
-      }).to eq(["another token"])
     end
 
     it "doesn't use existing authentication details when connecting" do

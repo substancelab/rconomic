@@ -13,11 +13,7 @@ Usage example
 
     economic = Economic::Session.new
 
-    # After 16 November 2015, you must supply an 'Application ID' with #connect_with_credentials
-    # As described here: http://techtalk.e-conomic.com/e-conomic-soap-api-now-requires-you-to-specify-a-custom-x-economicappidentifier-header/
-    economic.connect_with_credentials(123456, 'API', 'passw0rd', 'my awesome integration v1.0.0')
-
-    # Or connect using a Private app ID and an access ID provided by the "Grant Access"
+    # Connect using a Private app ID and an access ID provided by the "Grant Access"
     # As described here: http://www.e-conomic.com/developer/tutorials
     economic = Economic::Session.new
     economic.connect_with_token 'the_private_app_id', 'the_access_id_you_got_from_the_grant'
@@ -96,10 +92,10 @@ Usage example
 How to enable e-conomic API access
 ----------------------------------
 
-You need to enable API access in e-conomic before you can, well, use the API. Otherwise you'll be getting access denied errors when connecting.
+You need a Developer account and setup an app in their web UI. E-conomic users can then grant that app access to their account.
 
-Just follow the instructions on [e-copedia](http://wiki.e-conomic.co.uk/add-on-modules/) to enable the API Add-on module.
-
+* Developer portal: https://www.e-conomic.com/developer
+* Instructions: https://www.e-conomic.com/developer/connect
 
 It doesn't do everything
 ------------------------
