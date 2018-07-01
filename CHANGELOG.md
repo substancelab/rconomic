@@ -15,7 +15,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
-*
+## 0.7.0 [July 1st, 2018]
+
+This release contains breaking changes as E-conomic has deprecated one of their connection methods. See https://www.e-conomic.com/developer#_ga=2.79896535.1117342868.1530474675-2146547048.1526554784 for details.
+
+### Removed
+
+* Ability to connect with agreement number, username and password. You need to use `Economic::Session#connect_with_token` going forward.
+* Ability to set an app identifier. This was tied to the now removed `Economic::Session#connect_with_credentials` method.
 
 ## 0.6.1 [July 1st, 2018]
 
