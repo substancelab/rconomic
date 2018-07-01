@@ -14,3 +14,15 @@ notifications:
 addons:
   code_climate:
     repo_token: 6746eb72f5d9759f7d83ea90e8f49e3f01480d3b8f6334eea9e7cd9991c41ea4
+
+env:
+  global:
+    - CC_TEST_REPORTER_ID=6746eb72f5d9759f7d83ea90e8f49e3f01480d3b8f6334eea9e7cd9991c41ea4
+
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
