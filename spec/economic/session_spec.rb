@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "./spec/spec_helper"
 
 describe Economic::Session do
@@ -9,7 +11,7 @@ describe Economic::Session do
     it "yields the endpoint if a block is given" do
       endpoint_mock = double("Endpoint")
       allow(Economic::Endpoint).to receive(:new).and_return(endpoint_mock)
-      expect {|b|
+      expect { |b|
         Economic::Session.new(&b)
       }.to yield_with_args(endpoint_mock)
     end

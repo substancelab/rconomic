@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Economic
   # Entity::Mapper provides a generic way of building SOAP data structures for
   # entities.

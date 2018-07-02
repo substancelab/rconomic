@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FindByNumber
   # Returns handle with a given number.
   def find_by_number(number)

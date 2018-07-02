@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "economic/proxies/entity_proxy"
 
 module Economic
@@ -14,8 +16,8 @@ module Economic
 
     def get_name(id)
       response = request("GetName", "cashBookHandle" => {
-                           "Number" => id
-                         })
+        "Number" => id
+      })
 
       cash_book = build
       cash_book.number = id
