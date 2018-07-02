@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "economic/proxies/entity_proxy"
 
 module Economic
@@ -58,8 +60,8 @@ module Economic
 
     def set_due_date(id, date)
       request("SetDueDate", "cashBookEntryHandle" => {
-                "Id1" => owner.handle[:number], "Id2" => id
-              },
+        "Id1" => owner.handle[:number], "Id2" => id
+      },
                             :value => date)
     end
 

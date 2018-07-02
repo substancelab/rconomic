@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "./spec/spec_helper"
 
 describe Economic::Debtor do
@@ -147,7 +149,7 @@ describe Economic::Debtor do
       subject.currency_handle = Economic::Entity::Handle.new(:code => "BTC")
       subject.price_group_handle = Economic::Entity::Handle.new(:number => 37)
       subject.term_of_payment_handle = Economic::Entity::Handle.new(:id => 314)
-      subject.layout_handle = Economic::Entity::Handle.new({:id => 21})
+      subject.layout_handle = Economic::Entity::Handle.new(:id => 21)
 
       subject.save
     end

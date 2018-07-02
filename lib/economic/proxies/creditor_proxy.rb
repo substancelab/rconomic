@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "economic/proxies/entity_proxy"
 require "economic/proxies/actions/find_by_ci_number"
 require "economic/proxies/actions/find_by_handle_with_number"

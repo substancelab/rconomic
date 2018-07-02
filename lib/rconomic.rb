@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Dependencies
 require "time"
 require "savon"

@@ -1,5 +1,6 @@
-# -*- encoding: utf-8 -*-
-$LOAD_PATH.push File.expand_path("../lib", __FILE__)
+# frozen_string_literal: true
+
+$LOAD_PATH.push File.expand_path("lib", __dir__)
 require "rconomic/version"
 
 Gem::Specification.new do |s|
@@ -9,7 +10,7 @@ Gem::Specification.new do |s|
                   Ruby wrapper for the e-conomic SOAP API, that aims at making working with the API bearable.
 
                   E-conomic is a web-based accounting system. For their marketing speak, see http://www.e-conomic.co.uk/about/. More details about their API at http://www.e-conomic.co.uk/integration/integration-partner/.
-                  EOS
+  EOS
   s.authors     = ["Jakob Skjerning"]
   s.email       = "jakob@mentalized.net"
   s.homepage    = "https://github.com/substancelab/rconomic"

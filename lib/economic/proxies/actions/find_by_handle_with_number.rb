@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use FindByHandleWithNumber when the SOAP action to find entity requires
 # `Number` to be passed rather than the default `Id`
 module FindByHandleWithNumber

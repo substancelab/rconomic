@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module FindByCiNumber
   # Returns Debtors that have the given ci_number. The Debtor objects will only
   # be partially loaded

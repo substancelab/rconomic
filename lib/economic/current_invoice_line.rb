@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "economic/entity"
 require "economic/current_invoice"
 

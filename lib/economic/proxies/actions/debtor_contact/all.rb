@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Economic
   module Proxies
     module Actions
@@ -50,7 +52,7 @@ module Economic
           end
 
           def response
-            request("get_debtor_contacts", {"debtorHandle" => {"Number" => owner.number}})
+            request("get_debtor_contacts", "debtorHandle" => {"Number" => owner.number})
           end
 
           def soap_action_name(entity_class, action)

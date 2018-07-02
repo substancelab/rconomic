@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Set up an expectation that a specific operation must be called with specific
 # data in the message body, returning a specific response.
 def mock_request(operation, data, response)

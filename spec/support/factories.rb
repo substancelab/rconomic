@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def make_creditor(properties = {})
   creditor = Economic::Creditor.new
 

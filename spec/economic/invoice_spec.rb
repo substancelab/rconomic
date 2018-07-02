@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "./spec/spec_helper"
 
 describe Economic::Invoice do
@@ -8,7 +10,7 @@ describe Economic::Invoice do
     expect(Economic::Invoice.ancestors).to include(Economic::Entity)
   end
 
-  describe '#remainder' do
+  describe "#remainder" do
     it "should get the remainder" do
       mock_request("Invoice_GetRemainder", {"invoiceHandle" => {"Number" => 512}}, :success)
       expect(subject.remainder).to eq(512.32)

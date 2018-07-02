@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Economic::Entity
   class Handle
     def self.build(options)
@@ -86,10 +88,12 @@ class Economic::Entity
     def verify_all_keys_are_known(hash)
       if hash.respond_to?(:keys)
         unknown_keys = hash.keys - id_properties.keys - id_properties.values
-        raise(
-          ArgumentError,
-          "Unknown keys in handle: #{unknown_keys.inspect}"
-        ) unless unknown_keys.empty?
+        unless unknown_keys.empty?
+          raise(
+            ArgumentError,
+            "Unknown keys in handle: #{unknown_keys.inspect}"
+          )
+        end
       end
     end
 

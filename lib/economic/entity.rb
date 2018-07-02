@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "economic/endpoint"
 require "economic/entity/handle"
 require "economic/entity/mapper"

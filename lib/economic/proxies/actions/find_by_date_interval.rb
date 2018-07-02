@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Economic
   module FindByDateInterval
     # Returns entity objects for a given interval of days.

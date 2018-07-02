@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Economic::Endpoint models the actual SOAP endpoint at E-conomic.
 #
 # This is where all knowledge of SOAP actions and requests exists.
@@ -11,8 +13,7 @@ class Economic::Endpoint
   # Create a new Endpoint
   #
   # Economic::Session uses this internally
-  def initialize
-  end
+  def initialize; end
 
   # Invokes soap_action on the API endpoint with the given data.
   #

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "economic/proxies/entity_proxy"
 
 module Economic
@@ -13,8 +15,8 @@ module Economic
 
     def find(serial_number)
       response = request("GetData", "entityHandle" => {
-                           "SerialNumber" => serial_number
-                         })
+        "SerialNumber" => serial_number
+      })
 
       build(response)
     end
