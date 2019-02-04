@@ -38,6 +38,18 @@ describe Economic::Order do
     end
   end
 
+  describe "#cancel_sent_status" do
+    it "updates the order" do
+      mock_request("Order_CancelSentStatus", {"orderHandle" => {"Id" => 512}}, :success)
+      subject.cancel_sent_status
+    end
+
+    it "decodes the base64Binary encoded data" do
+      stub_request("Order_CancelSentStatus", nil, :success)
+      expect(subject.cancel_sent_status).to eq({})
+    end
+  end
+
   describe "#attention" do
     let(:contact) {
       Economic::DebtorContact.new.tap do |c|

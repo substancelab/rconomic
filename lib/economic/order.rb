@@ -35,6 +35,10 @@ module Economic
       @attention_handle = handle
     end
 
+    def cancel_sent_status
+      request(:cancel_sent_status, "orderHandle" => {"Id" => number})
+    end
+
     def debtor
       return nil if debtor_handle.nil?
       @debtor ||= session.debtors.find(debtor_handle)
