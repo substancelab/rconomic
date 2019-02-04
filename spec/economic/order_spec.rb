@@ -40,7 +40,7 @@ describe Economic::Order do
 
   describe "#cancel_sent_status" do
     it "updates the order" do
-      mock_request("Order_CancelSentStatus", {"orderHandle" => {"Id" => 512}}, :success)
+      mock_request("Order_CancelSentStatus", {"orderHandle" => {"Number" => 512}}, :success)
       subject.cancel_sent_status
     end
 
@@ -73,7 +73,7 @@ describe Economic::Order do
 
   describe "#register_as_sent" do
     it "updates the order" do
-      mock_request("Order_RegisterAsSent", {"orderHandle" => {"Id" => 512}}, :success)
+      mock_request("Order_RegisterAsSent", {"orderHandle" => {"Number" => 512}}, :success)
       subject.register_as_sent
     end
 
