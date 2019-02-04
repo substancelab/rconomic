@@ -38,6 +38,29 @@ describe Economic::OrderProxy do
     end
   end
 
+  describe ".find_by_other_reference" do
+    it "returns matching order" do
+      stub_request("Order_FindByOtherReference", nil, :single)
+      mock_request("Order_GetDataArray", :any, :single)
+      results = subject.find_by_other_reference("some reference")
+      expect(results.size).to eq(1)
+      expect(results.first).to be_instance_of(Economic::Order)
+    end
+
+    it "returns matching orders" do
+      stub_request("Order_FindByOtherReference", nil, :multiple)
+      mock_request("Order_GetDataArray", :any, :multiple)
+      results = subject.find_by_other_reference("some reference")
+      expect(results.size).to eq(2)
+      expect(results.first).to be_instance_of(Economic::Order)
+    end
+
+    it "returns empty array when no matches" do
+      stub_request("Order_FindByOtherReference", nil, :none)
+      expect(subject.find_by_other_reference("some reference")).to eq([])
+    end
+  end
+
   describe ".find_by_date_interval" do
     let(:from) { Time.now - 60 }
     let(:unto) { Time.now }
