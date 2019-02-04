@@ -66,5 +66,9 @@ module Economic
 
       Base64.decode64(response)
     end
+
+    def register_as_sent
+      request(:register_as_sent, "orderHandle" => {"Id" => number})
+    end
   end
 end

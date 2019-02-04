@@ -71,6 +71,18 @@ describe Economic::Order do
     end
   end
 
+  describe "#register_as_sent" do
+    it "updates the order" do
+      mock_request("Order_RegisterAsSent", {"orderHandle" => {"Id" => 512}}, :success)
+      subject.register_as_sent
+    end
+
+    it "decodes the base64Binary encoded data" do
+      stub_request("Order_RegisterAsSent", nil, :success)
+      expect(subject.register_as_sent).to eq({})
+    end
+  end
+
   describe "#debtor" do
     let(:debtor) {
       Economic::Debtor.new.tap do |c|
