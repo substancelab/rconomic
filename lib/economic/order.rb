@@ -35,6 +35,10 @@ module Economic
       @attention_handle = handle
     end
 
+    def cancel_sent_status
+      request(:cancel_sent_status, "orderHandle" => {"Id" => number})
+    end
+
     def debtor
       return nil if debtor_handle.nil?
       @debtor ||= session.debtors.find(debtor_handle)
@@ -61,6 +65,10 @@ module Economic
       response = request(:get_pdf, "orderHandle" => handle.to_hash)
 
       Base64.decode64(response)
+    end
+
+    def register_as_sent
+      request(:register_as_sent, "orderHandle" => {"Id" => number})
     end
   end
 end
