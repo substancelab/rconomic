@@ -55,6 +55,10 @@ module Economic
       @debtor_handle = handle
     end
 
+    def order_lines
+      OrderLineProxy.new(self).find_by_order(handle.to_hash)
+    end
+
     # Returns the PDF version of Invoice as a String.
     #
     # To get it as a file you can do:
