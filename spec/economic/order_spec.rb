@@ -71,6 +71,16 @@ describe Economic::Order do
     end
   end
 
+  describe "#order_lines" do
+    let(:proxy) { instance_double(Economic::OrderLineProxy) }
+
+    it "calls the correct proxy" do
+      expect(Economic::OrderLineProxy).to receive(:new) { proxy }
+      expect(proxy).to receive(:find_by_order).with("Number" => 512) { [] }
+      subject.order_lines
+    end
+  end
+
   describe "#register_as_sent" do
     it "updates the order" do
       mock_request("Order_RegisterAsSent", {"orderHandle" => {"Number" => 512}}, :success)
