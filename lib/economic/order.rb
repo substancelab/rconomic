@@ -36,7 +36,7 @@ module Economic
     end
 
     def cancel_sent_status
-      request(:cancel_sent_status, "orderHandle" => {"Id" => number})
+      request(:cancel_sent_status, "orderHandle" => handle.to_hash)
     end
 
     def debtor
@@ -68,7 +68,7 @@ module Economic
     end
 
     def register_as_sent
-      request(:register_as_sent, "orderHandle" => {"Id" => number})
+      request(:register_as_sent, "orderHandle" => handle.to_hash)
     end
   end
 end
