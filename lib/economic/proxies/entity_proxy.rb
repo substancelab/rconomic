@@ -39,7 +39,7 @@ module Economic
 
       if handles.size == 1
         # Fetch data for single entity
-        find(handles.first)
+        find(handles.first.to_hash)
       elsif handles.size > 1
         # Fetch all data for all the entities
         entity_data = get_data_array(handles)

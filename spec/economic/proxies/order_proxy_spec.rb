@@ -61,6 +61,20 @@ describe Economic::OrderProxy do
     end
   end
 
+  describe ".all" do
+    it "gets order data from API" do
+      mock_request("Order_GetAll", nil, :success)
+      mock_request("Order_GetDataArray", :any, :single)
+      subject.all
+    end
+
+    it "returns Order object" do
+      stub_request("Order_GetAll", nil, :success)
+      mock_request("Order_GetDataArray", :any, :single)
+      expect(subject.all.first).to be_instance_of(Economic::Order)
+    end
+  end
+
   describe ".find_by_date_interval" do
     let(:from) { Time.now - 60 }
     let(:unto) { Time.now }
