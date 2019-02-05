@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">
+  <soap12:Body>
+    <OrderLine_GetDataResponse xmlns="http://e-conomic.com">
+      <OrderLine_GetDataResult>
+        <Handle>
+          <Id>int</Id>
+          <Number>int</Number>
+        </Handle>
+        <Id>int</Id>
+        <Number>int</Number>
+        <OrderHandle>
+          <Id>int</Id>
+        </OrderHandle>
+        <Description>string</Description>
+        <DeliveryDate>dateTime</DeliveryDate>
+        <UnitHandle>
+          <Number>int</Number>
+        </UnitHandle>
+        <ProductHandle>
+          <Number>string</Number>
+        </ProductHandle>
+        <Quantity>decimal</Quantity>
+        <UnitNetPrice>decimal</UnitNetPrice>
+        <DiscountAsPercent>decimal</DiscountAsPercent>
+        <UnitCostPrice>decimal</UnitCostPrice>
+        <TotalNetAmount>decimal</TotalNetAmount>
+        <TotalMargin>decimal</TotalMargin>
+        <MarginAsPercent>decimal</MarginAsPercent>
+        <DepartmentHandle>
+          <Number>int</Number>
+        </DepartmentHandle>
+        <DistributionKeyHandle>
+          <Number>int</Number>
+        </DistributionKeyHandle>
+        <InventoryLocationHandle>
+          <Number>int</Number>
+        </InventoryLocationHandle>
+      </OrderLine_GetDataResult>
+    </OrderLine_GetDataResponse>
+  </soap12:Body>
+</soap12:Envelope>
