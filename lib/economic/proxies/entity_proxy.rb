@@ -67,11 +67,7 @@ module Economic
     # Fetches Entity data from API and returns an Entity initialized with that
     # data added to Proxy
     def find(handle)
-      handle = if handle.respond_to?(:to_i)
-        Entity::Handle.new(:id => handle)
-      else
-        Entity::Handle.new(handle)
-      end
+      handle = build_handle(handle)
       entity_hash = get_data(handle)
       entity = build(entity_hash)
       entity.persisted = true
@@ -94,6 +90,22 @@ module Economic
     protected
 
     attr_reader :items
+
+    # Wraps an Entity::Handle around a potential id_or_hash object as received
+    # from the backend.
+    #
+    # If id_or_hash is a numeric value it'll be assumed to be an id and used as
+    # such in the returned Entity::Handle.
+    #
+    # If id_or_hash is a Hash, it's values will be used as the keys and values
+    # of the built Entity::Handle.
+    def build_handle(id_or_hash)
+      if id_or_hash.respond_to?(:to_i)
+        Entity::Handle.new(:id => id_or_hash)
+      else
+        Entity::Handle.new(id_or_hash)
+      end
+    end
 
     # Fetches all data for the given handles. Returns Array with hashes of
     # entity data
