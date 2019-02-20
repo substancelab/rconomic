@@ -13,22 +13,8 @@ module Economic
     def current
       response = request(:get_all_current)
       handles = response.values.flatten.collect { |handle| Entity::Handle.build(handle) }
-
       initialize_items
-
-      if handles.size == 1
-        # Fetch data for single entity
-        find(handles.first.to_hash)
-      elsif handles.size > 1
-        # Fetch all data for all the entities
-        entity_data = get_data_array(handles)
-
-        # Build Entity objects and add them to the proxy
-        entity_data.each do |data|
-          entity = build(data)
-          entity.persisted = true
-        end
-      end
+      get_data_for_handles(handles)
 
       self
     end

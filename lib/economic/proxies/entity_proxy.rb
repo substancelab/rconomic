@@ -36,20 +36,7 @@ module Economic
     def all
       response = request(:get_all)
       handles = response.values.flatten.collect { |handle| Entity::Handle.build(handle) }
-
-      if handles.size == 1
-        # Fetch data for single entity
-        find(handles.first.to_hash)
-      elsif handles.size > 1
-        # Fetch all data for all the entities
-        entity_data = get_data_array(handles)
-
-        # Build Entity objects and add them to the proxy
-        entity_data.each do |data|
-          entity = build(data)
-          entity.persisted = true
-        end
-      end
+      get_data_for_handles(handles)
 
       self
     end
@@ -80,11 +67,7 @@ module Economic
     # Fetches Entity data from API and returns an Entity initialized with that
     # data added to Proxy
     def find(handle)
-      handle = if handle.respond_to?(:to_i)
-        Entity::Handle.new(:id => handle)
-      else
-        Entity::Handle.new(handle)
-      end
+      handle = build_handle(handle)
       entity_hash = get_data(handle)
       entity = build(entity_hash)
       entity.persisted = true
@@ -108,6 +91,22 @@ module Economic
 
     attr_reader :items
 
+    # Wraps an Entity::Handle around a potential id_or_hash object as received
+    # from the backend.
+    #
+    # If id_or_hash is a numeric value it'll be assumed to be an id and used as
+    # such in the returned Entity::Handle.
+    #
+    # If id_or_hash is a Hash, it's values will be used as the keys and values
+    # of the built Entity::Handle.
+    def build_handle(id_or_hash)
+      if id_or_hash.respond_to?(:to_i)
+        Entity::Handle.new(:id => id_or_hash)
+      else
+        Entity::Handle.new(id_or_hash)
+      end
+    end
+
     # Fetches all data for the given handles. Returns Array with hashes of
     # entity data
     def get_data_array(handles)
@@ -116,6 +115,22 @@ module Economic
       entity_class_name_for_soap_request = entity_class.name.split("::").last
       response = request(:get_data_array, "entityHandles" => {"#{entity_class_name_for_soap_request}Handle" => handles.collect(&:to_hash)})
       [response["#{entity_class.key}_data".intern]].flatten
+    end
+
+    def get_data_for_handles(handles)
+      if handles.size == 1
+        # Fetch data for single entity
+        find(handles.first.to_hash)
+      elsif handles.size > 1
+        # Fetch all data for all the entities
+        entity_data = get_data_array(handles)
+
+        # Build Entity objects and add them to the proxy
+        entity_data.each do |data|
+          entity = build(data)
+          entity.persisted = true
+        end
+      end
     end
 
     # Removes all loaded items
