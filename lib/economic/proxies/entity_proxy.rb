@@ -25,7 +25,7 @@ module Economic
 
     def initialize(owner)
       @owner = owner
-      @items = []
+      initialize_items
     end
 
     def session
@@ -116,6 +116,11 @@ module Economic
       entity_class_name_for_soap_request = entity_class.name.split("::").last
       response = request(:get_data_array, "entityHandles" => {"#{entity_class_name_for_soap_request}Handle" => handles.collect(&:to_hash)})
       [response["#{entity_class.key}_data".intern]].flatten
+    end
+
+    # Removes all loaded items
+    def initialize_items
+      @items = []
     end
 
     # Initialize properties of entity with values from owner. Returns entity

@@ -75,6 +75,32 @@ describe Economic::OrderProxy do
     end
   end
 
+  describe ".current" do
+    it "gets current order data from API" do
+      mock_request("Order_GetAllCurrent", nil, :success)
+      mock_request("Order_GetData", :any, :success)
+      subject.current
+    end
+
+    it "returns Order objects" do
+      stub_request("Order_GetAllCurrent", nil, :success)
+      mock_request("Order_GetData", :any, :success)
+      expect(subject.current.first).to be_instance_of(Economic::Order)
+    end
+
+    it "replaces the already fetched orders" do
+      stub_request("Order_GetAll", nil, :success)
+      stub_request("Order_GetDataArray", :any, :multiple)
+      subject.all
+
+      stub_request("Order_GetAllCurrent", nil, :success)
+      mock_request("Order_GetData", :any, :success)
+      newly_fetched_objects = subject.current
+
+      expect(newly_fetched_objects.size).to eq(1)
+    end
+  end
+
   describe ".find_by_date_interval" do
     let(:from) { Time.now - 60 }
     let(:unto) { Time.now }
