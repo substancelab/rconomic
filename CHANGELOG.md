@@ -8,10 +8,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 * Operation to fetch only current orders from the backend.
+* Support for OrderLine objects (@olepalm)
+* Ability to get order lines for a specific order (@olepalm).
+* Orders can now be found by their other_reference field (@olepalm).
+* Ability to toggle Sent-status of orders (@olepalm).
 
 ### Changes
 
-*
+* The cached E-conomic WSDL has been updated with the most recent version.
 
 ### Removed
 
