@@ -5,9 +5,9 @@
       <Order_GetDataArrayResult>
         <OrderData>
           <Handle>
-            <Id>int</Id>
+            <Id>42</Id>
           </Handle>
-          <Id>int</Id>
+          <Id>42</Id>
           <DebtorHandle>
             <Number>string</Number>
           </DebtorHandle>
@@ -73,9 +73,9 @@
         </OrderData>
         <OrderData>
           <Handle>
-            <Id>int</Id>
+            <Id>37</Id>
           </Handle>
-          <Id>int</Id>
+          <Id>37</Id>
           <DebtorHandle>
             <Number>string</Number>
           </DebtorHandle>
