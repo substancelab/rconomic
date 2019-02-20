@@ -118,6 +118,8 @@ Not even remotely... For now, limited to a small subset of all the [available op
     DebtorEntry        | X      | X    | X      | X
     Entry              | X      | X    | X      | X
     Invoice            | X      | X    |        |
+    Order              |        | X    |        |
+    OrderLine          |        | X    | X      |
     Product            | X      | X    | X      | X
 
 Credits
