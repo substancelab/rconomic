@@ -7,6 +7,20 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+*
+
+### Changes
+
+*
+
+### Removed
+
+*
+
+## 0.7.1 [February 21st, 2018]
+
+### Added
+
 * Operation to fetch only current orders from the backend.
 * Support for OrderLine objects (@olepalm)
 * Ability to get order lines for a specific order (@olepalm).
