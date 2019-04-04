@@ -46,6 +46,15 @@ describe Economic::CashBookEntryProxy do
     end
   end
 
+  describe "#create_manual_debtor_invoice" do
+    it "should create a debtor invoice and then return the created cash book entry" do
+      stub_request("CashBookEntry_CreateManualDebtorInvoice", nil, :success)
+      stub_request("CashBookEntry_GetData", {"entityHandle" => {"Id1" => 13, "Id2" => 14}}, :success)
+      cash_book_entry = subject.create_manual_debtor_invoice(:debtor_handle => {:number => 2}, :contra_account_handle => {:number => 3})
+      expect(cash_book_entry).to be_instance_of(Economic::CashBookEntry)
+    end
+  end
+
   describe "#create_creditor_invoice" do
     it "should create a creditor invoice and then return the created cash book entry" do
       stub_request("CashBookEntry_CreateCreditorInvoice", nil, :success)
