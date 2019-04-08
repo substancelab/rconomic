@@ -58,6 +58,16 @@ module Economic
       create_cash_book_entry_for_handles(handles, "CreateCreditorInvoice")
     end
 
+    # Creates a manual debtor invoice and returns the cash book entry.
+    # Example:
+    #   cash_book.entries.create_manual_debtor_invoice(
+    #     :debtor_handle         => { :number => 1 },
+    #     :contra_account_handle => { :number => 1510 }
+    #   )
+    def create_manual_debtor_invoice(handles)
+      create_cash_book_entry_for_handles(handles, "CreateManualDebtorInvoice")
+    end
+
     def set_due_date(id, date)
       request("SetDueDate", "cashBookEntryHandle" => {
         "Id1" => owner.handle[:number], "Id2" => id
@@ -86,7 +96,8 @@ module Economic
         "CreateFinanceVoucher" => "accountHandle",
         "CreateDebtorPayment" => "debtorHandle",
         "CreateCreditorInvoice" => "creditorHandle",
-        "CreateCreditorPayment" => "creditorHandle"
+        "CreateCreditorPayment" => "creditorHandle",
+        "CreateManualDebtorInvoice" => "debtorHandle",
       }[action_name]
     end
   end
