@@ -18,6 +18,14 @@ module Economic
       request :get_next_available_number
     end
 
+    def get_current_invoices(debtor_handle)
+      response = fetch_response(:get_current_invoices, debtor_handle)
+      build_entities_from_response(
+        Economic::CurrentInvoice,
+        response[:current_invoice_handle]
+      )
+    end
+
     def get_debtor_contacts(debtor_handle)
       response = fetch_response(:get_debtor_contacts, debtor_handle)
       build_entities_from_response(
@@ -52,7 +60,8 @@ module Economic
         entity.partial = true
         entity.persisted = true
         entity.handle = handle
-        entity.number = handle[:id].to_i
+        entity.number = handle[:id].to_i if entity&.number
+        entity.id = handle[:id].to_i if entity&.id
         entity
       end
     end

@@ -44,17 +44,16 @@ describe Economic::Debtor do
   end
 
   describe ".current_invoices" do
-    it "returns an CurrentInvoiceProxy" do
-      expect(subject.current_invoices).to be_instance_of(Economic::CurrentInvoiceProxy)
+    it "return nothing if no handle" do
+      expect(subject.current_invoices).to be_empty
     end
 
-    it "memoizes the proxy" do
-      expect(subject.current_invoices).to equal(subject.current_invoices)
-    end
-
-    it "should store the session" do
-      expect(subject.session).to_not be_nil
-      expect(subject.current_invoices.session).to eq(subject.session)
+    it "returns current invoices if there is a handle" do
+      mock_request("Debtor_GetCurrentInvoices", {"debtorHandle" => {"Number" => "1"}}, :success)
+      subject.handle = Economic::Entity::Handle.new(:number => "1")
+      subject.current_invoices.each do |i|
+        expect(i).to be_instance_of(Economic::CurrentInvoice)
+      end
     end
   end
 

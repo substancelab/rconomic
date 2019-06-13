@@ -60,7 +60,8 @@ module Economic
     # Provides access to the current invoices for Debtor - ie invoices that
     # haven't yet been booked
     def current_invoices
-      @current_invoices ||= CurrentInvoiceProxy.new(self)
+      return [] if handle.empty?
+      @current_invoices ||= DebtorProxy.new(self).get_current_invoices(handle)
     end
 
     # Returns the Debtors contacts
