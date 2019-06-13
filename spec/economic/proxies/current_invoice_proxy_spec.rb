@@ -136,5 +136,16 @@ describe Economic::CurrentInvoiceProxy do
       expect(current_invoices.first).to be_instance_of(Economic::CurrentInvoice)
       expect(current_invoices.last).to be_instance_of(Economic::CurrentInvoice)
     end
+
+    context "owner is a debtor" do
+      let(:debtor) { make_debtor }
+      subject { Economic::CurrentInvoiceProxy.new(debtor) }
+
+      it "asks for the owners current invoices" do
+        expect(debtor).to receive(:get_current_invoices) { [] }
+
+        subject.all
+      end
+    end
   end
 end

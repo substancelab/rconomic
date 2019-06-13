@@ -7,6 +7,19 @@ module Economic
   class CurrentInvoiceProxy < EntityProxy
     include FindByDateInterval
 
+    # Fetches all entities from the API.
+    def all
+      if owner.is_a?(Economic::Debtor)
+        owner.get_current_invoices
+      else
+        response = request(:get_all)
+        handles = response.values.flatten.collect { |handle| Entity::Handle.build(handle) }
+        get_data_for_handles(handles)
+
+        self
+      end
+    end
+
     private
 
     # Initialize properties in invoice with values from owner

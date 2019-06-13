@@ -60,10 +60,19 @@ module Economic
         entity.partial = true
         entity.persisted = true
         entity.handle = handle
-        entity.number = handle[:id].to_i if entity&.number
-        entity.id = handle[:id].to_i if entity&.id
+        entity = add_id_to_entity(entity, handle[:id].to_i)
         entity
       end
+    end
+
+    def add_id_to_entity(entity, id)
+      if entity.respond_to?(:number=)
+        entity.number = id
+      else
+        entity.id = id
+      end
+
+      entity
     end
 
     def fetch_response(operation, debtor_handle)
