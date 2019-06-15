@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changes
 
-*
+* `Debtor#current_invoices` now only returns invoices for the debtor (@olepalm).
 
 ### Removed
 
