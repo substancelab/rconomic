@@ -58,6 +58,20 @@ describe Economic::Debtor do
     end
   end
 
+  describe ".get_current_invoices" do
+    it "return nothing if no handle" do
+      expect(subject.get_current_invoices).to be_empty
+    end
+
+    it "returns current invoices if there is a handle" do
+      mock_request("Debtor_GetCurrentInvoices", {"debtorHandle" => {"Number" => "1"}}, :success)
+      subject.handle = Economic::Entity::Handle.new(:number => "1")
+      subject.get_current_invoices.each do |i|
+        expect(i).to be_instance_of(Economic::CurrentInvoice)
+      end
+    end
+  end
+
   describe ".invoices" do
     it "return nothing if no handle" do
       expect(subject.invoices).to be_empty
