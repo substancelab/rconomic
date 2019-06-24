@@ -1,11 +1,11 @@
 # Specify which ruby versions you wish to run your tests on, each version will be used
 rvm:
-  - 2.3.7
-  - 2.4.4
-  - 2.5.1
-  - 2.6.1
+  - 2.3.8
+  - 2.4.6
+  - 2.5.5
+  - 2.6.3
   - jruby-9.1.17.0
-  - jruby-9.2.0.0
+  - jruby-9.2.7.0
 
 # Specify the recipients for email notification
 notifications:
