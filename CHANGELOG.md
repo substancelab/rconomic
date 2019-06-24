@@ -7,15 +7,25 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+*
+
+### Changes
+
+*
+
+### Removed
+
+*
+
+## 0.7.2 [June 24, 2019]
+
+### Added
+
 * Ability to create ManualDebtorInvoice cash book entries (@prognostikos).
 
 ### Changes
 
 * `Debtor#current_invoices` now only returns invoices for the debtor (@olepalm).
-
-### Removed
-
-*
 
 ## 0.7.1 [February 21st, 2018]
 
