@@ -6,6 +6,43 @@ describe Economic::CurrentInvoiceProxy do
   let(:session) { make_session }
   subject { Economic::CurrentInvoiceProxy.new(session) }
 
+  describe ".get_data_for_handles" do
+    context "single handle" do
+      let(:handle) { Economic::Entity::Handle.new(:id => 42) }
+
+      it "returns single" do
+        mock_request(
+          "CurrentInvoice_GetData",
+          {"entityHandle" => {"Id" => 42}},
+          :success
+        )
+
+        expect(subject.get_data_for_handles([handle])).to \
+          be_a(Economic::CurrentInvoice)
+      end
+    end
+
+    context "more handles" do
+      let(:handles) do
+        [
+          Economic::Entity::Handle.new(:id => 42),
+          Economic::Entity::Handle.new(:id => 44)
+        ]
+      end
+
+      it "returns multiple" do
+        mock_request(
+          "CurrentInvoice_GetDataArray",
+          :any,
+          :multiple
+        )
+
+        expect(subject.get_data_for_handles(handles)).to \
+          be_a(Array)
+      end
+    end
+  end
+
   describe ".new" do
     it "stores session" do
       expect(subject.session).to equal(session)

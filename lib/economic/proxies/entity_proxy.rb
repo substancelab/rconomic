@@ -74,6 +74,22 @@ module Economic
       entity
     end
 
+    def get_data_for_handles(handles)
+      if handles.size == 1
+        # Fetch data for single entity
+        find(handles.first.to_hash)
+      elsif handles.size > 1
+        # Fetch all data for all the entities
+        entity_data = get_data_array(handles)
+
+        # Build Entity objects and add them to the proxy
+        entity_data.each do |data|
+          entity = build(data)
+          entity.persisted = true
+        end
+      end
+    end
+
     # Gets data for Entity from the API. Returns Hash with the response data
     def get_data(handle)
       handle = Entity::Handle.new(handle)
@@ -115,22 +131,6 @@ module Economic
       entity_class_name_for_soap_request = entity_class.name.split("::").last
       response = request(:get_data_array, "entityHandles" => {"#{entity_class_name_for_soap_request}Handle" => handles.collect(&:to_hash)})
       [response["#{entity_class.key}_data".intern]].flatten
-    end
-
-    def get_data_for_handles(handles)
-      if handles.size == 1
-        # Fetch data for single entity
-        find(handles.first.to_hash)
-      elsif handles.size > 1
-        # Fetch all data for all the entities
-        entity_data = get_data_array(handles)
-
-        # Build Entity objects and add them to the proxy
-        entity_data.each do |data|
-          entity = build(data)
-          entity.persisted = true
-        end
-      end
     end
 
     # Removes all loaded items
