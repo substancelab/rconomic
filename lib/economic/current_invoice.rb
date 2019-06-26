@@ -132,6 +132,12 @@ module Economic
       @lines ||= CurrentInvoiceLineProxy.new(self)
     end
 
+    def pdf
+      response = request(:get_pdf, "currentInvoiceHandle" => handle.to_hash)
+
+      Base64.decode64(response)
+    end
+
     def save
       lines = self.lines
 
