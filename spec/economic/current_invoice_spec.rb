@@ -127,6 +127,18 @@ describe Economic::CurrentInvoice do
     end
   end
 
+  describe "#pdf" do
+    it "gets PDF data from API" do
+      mock_request("CurrentInvoice_GetPdf", {"currentInvoiceHandle" => {"Id" => 512}}, :success)
+      subject.pdf
+    end
+
+    it "decodes the base64Binary encoded data" do
+      stub_request("CurrentInvoice_GetPdf", nil, :success)
+      expect(subject.pdf).to eq("This is not really PDF data")
+    end
+  end
+
   describe "#book" do
     it "should book the current invoice and return the created invoice object" do
       stub_request("CurrentInvoice_Book", nil, :success)
