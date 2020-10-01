@@ -14,7 +14,7 @@ Usage example
     economic = Economic::Session.new
 
     # Connect using a Private app ID and an access ID provided by the "Grant Access"
-    # As described here: http://www.e-conomic.com/developer/tutorials
+    # As described here: https://www.e-conomic.com/developer/connect
     economic = Economic::Session.new
     economic.connect_with_token 'the_private_app_id', 'the_access_id_you_got_from_the_grant'
 
