@@ -19,7 +19,7 @@ Usage example
     economic.connect_with_token 'the_private_app_id', 'the_access_id_you_got_from_the_grant'
 
     # Find a debtor:
-    debtor = economic.debtors.find(:id => 101)
+    debtor = economic.debtors.find(:number => 101)
 
     # Creating a debtor:
     debtor = economic.debtors.build
