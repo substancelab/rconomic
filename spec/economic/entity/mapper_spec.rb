@@ -4,10 +4,10 @@ require "./spec/spec_helper"
 
 describe Economic::Entity::Mapper do
   let(:entity) {
-    double("Entity", :handle => Economic::Entity::Handle.new(:id => 42),
-                     :creditor_handle => Economic::Entity::Handle.new(:number => 37),
-                     :name => "David Brent",
-                     :is_to_receive_email_copy_of_order => true)
+    double("Entity", handle: Economic::Entity::Handle.new(id: 42),
+                     creditor_handle: Economic::Entity::Handle.new(number: 37),
+                     name: "David Brent",
+                     is_to_receive_email_copy_of_order: true)
   }
 
   let(:fields) {
@@ -34,11 +34,11 @@ describe Economic::Entity::Mapper do
 
   describe "when entity has no values" do
     let(:entity) {
-      double("Entity", :handle => Economic::Entity::Handle.new({}),
-                       :creditor_handle => nil,
-                       :name => nil,
-                       :number => nil,
-                       :is_to_receive_email_copy_of_order => nil)
+      double("Entity", handle: Economic::Entity::Handle.new({}),
+                       creditor_handle: nil,
+                       name: nil,
+                       number: nil,
+                       is_to_receive_email_copy_of_order: nil)
     }
 
     subject { Economic::Entity::Mapper.new(entity, fields) }

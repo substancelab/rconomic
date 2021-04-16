@@ -97,7 +97,7 @@ module Economic
         "CreateDebtorPayment" => "debtorHandle",
         "CreateCreditorInvoice" => "creditorHandle",
         "CreateCreditorPayment" => "creditorHandle",
-        "CreateManualDebtorInvoice" => "debtorHandle",
+        "CreateManualDebtorInvoice" => "debtorHandle"
       }[action_name]
     end
   end

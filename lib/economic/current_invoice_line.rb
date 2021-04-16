@@ -25,14 +25,14 @@ module Economic
       :margin_as_percent
 
     defaults(
-      :discount_as_percent => 0,
-      :unit_cost_price => 0,
-      :total_margin => 0,
-      :margin_as_percent => 0
+      discount_as_percent: 0,
+      unit_cost_price: 0,
+      total_margin: 0,
+      margin_as_percent: 0
     )
 
     def handle
-      @handle || Handle.build(:number => number)
+      @handle || Handle.build(number: number)
     end
 
     def invoice

@@ -13,7 +13,8 @@ class Economic::Endpoint
   # Create a new Endpoint
   #
   # Economic::Session uses this internally
-  def initialize; end
+  def initialize
+  end
 
   # Invokes soap_action on the API endpoint with the given data.
   #
@@ -63,11 +64,11 @@ class Economic::Endpoint
 
   def client_options
     {
-      :wsdl => File.expand_path(
+      wsdl: File.expand_path(
         File.join(File.dirname(__FILE__), "economic.wsdl")
       ),
-      :log => false,
-      :log_level => :info
+      log: false,
+      log_level: :info
     }
   end
 

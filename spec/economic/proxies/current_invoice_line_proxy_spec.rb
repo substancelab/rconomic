@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::CurrentInvoiceLineProxy do
   let(:session) { make_session }
-  let(:invoice) { make_current_invoice(:session => session) }
+  let(:invoice) { make_current_invoice(session: session) }
   subject { Economic::CurrentInvoiceLineProxy.new(invoice) }
 
   describe "new" do
@@ -40,7 +40,7 @@ describe Economic::CurrentInvoiceLineProxy do
     end
 
     it "adds the built line to proxy items" do
-      line = subject.build(:number => 5)
+      line = subject.build(number: 5)
       expect(subject.first).to eq(line)
     end
 
@@ -80,7 +80,7 @@ describe Economic::CurrentInvoiceLineProxy do
     end
 
     it "can be appended to" do
-      line = Economic::CurrentInvoiceLine.new(:number => 5)
+      line = Economic::CurrentInvoiceLine.new(number: 5)
       subject << line
       expect(subject.last).to eq(line)
     end

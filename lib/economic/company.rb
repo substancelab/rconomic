@@ -31,7 +31,7 @@ module Economic
       :vat_number,
       :sign_up_date
     def handle
-      @handle || Handle.build(:number => @number)
+      @handle || Handle.build(number: @number)
     end
 
     protected

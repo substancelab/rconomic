@@ -7,11 +7,11 @@ def mock_request(operation, data, response)
   response = if response.is_a?(Symbol)
     fixture(operation, response)
   elsif response.is_a?(Hash)
-    {:code => 200}.merge(response)
+    {code: 200}.merge(response)
   end
 
   mock = savon.expects(operation.intern)
-  mock.with(:message => data) if data
+  mock.with(message: data) if data
   mock.returns(response)
 end
 

@@ -55,14 +55,14 @@ module Economic
       :text_line2
 
     defaults(
-      :id => 0,
-      :date => Time.now,
-      :exchange_rate => 100,
-      :net_amount => 0,
-      :vat_amount => 0,
-      :gross_amount => 0,
-      :margin => 0,
-      :margin_as_percent => 0
+      id: 0,
+      date: Time.now,
+      exchange_rate: 100,
+      net_amount: 0,
+      vat_amount: 0,
+      gross_amount: 0,
+      margin: 0,
+      margin_as_percent: 0
     )
 
     def initialize(properties = {})
@@ -126,7 +126,7 @@ module Economic
     end
 
     def handle
-      @handle || Handle.new(:id => @id)
+      @handle || Handle.new(id: @id)
     end
 
     def lines

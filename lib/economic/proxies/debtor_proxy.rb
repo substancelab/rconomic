@@ -56,7 +56,7 @@ module Economic
     def build_entities_from_response(entity_class, handles)
       return nil if handles.nil?
       [handles].flatten.map do |handle|
-        entity = entity_class.new(:session => session)
+        entity = entity_class.new(session: session)
         entity.partial = true
         entity.persisted = true
         entity.handle = handle

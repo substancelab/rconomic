@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::CreditorContact do
   let(:session) { make_session }
-  subject { Economic::CreditorContact.new(:session => session) }
+  subject { Economic::CreditorContact.new(session: session) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::CreditorContact.ancestors).to include(Economic::Entity)
@@ -12,7 +12,7 @@ describe Economic::CreditorContact do
 
   context "when saving" do
     context "when creditor contact is new" do
-      subject { Economic::CreditorContact.new(:session => session) }
+      subject { Economic::CreditorContact.new(session: session) }
 
       context "when creditor_handle is nil" do
         before :each do
@@ -44,7 +44,7 @@ describe Economic::CreditorContact do
     end
 
     context "when creditor_handle is set" do
-      let(:handle) { Economic::CreditorContact::Handle.new(:number => 42) }
+      let(:handle) { Economic::CreditorContact::Handle.new(number: 42) }
 
       before :each do
         subject.creditor_handle = handle
@@ -86,7 +86,7 @@ describe Economic::CreditorContact do
 
       it "should clear cached creditor and fetch the new creditor from API" do
         stub_request("Creditor_GetData", nil, :success)
-        subject.creditor_handle = Economic::Creditor::Handle.new(:number => 1234)
+        subject.creditor_handle = Economic::Creditor::Handle.new(number: 1234)
         expect(subject.creditor).to be_instance_of(Economic::Creditor)
       end
     end

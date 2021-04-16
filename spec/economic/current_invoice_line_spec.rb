@@ -19,8 +19,8 @@ describe Economic::CurrentInvoiceLine do
     end
 
     it "should not be equal when numbers are different" do
-      line1 = Economic::CurrentInvoiceLine.new(:number => 1)
-      line2 = Economic::CurrentInvoiceLine.new(:number => 2)
+      line1 = Economic::CurrentInvoiceLine.new(number: 1)
+      line2 = Economic::CurrentInvoiceLine.new(number: 2)
 
       expect(line1).not_to eq(line2)
     end
@@ -28,7 +28,7 @@ describe Economic::CurrentInvoiceLine do
 
   describe "#invoice=" do
     it "changes the invoice_handle" do
-      invoice = Economic::CurrentInvoice.new(:id => 42)
+      invoice = Economic::CurrentInvoice.new(id: 42)
 
       subject.invoice = invoice
 

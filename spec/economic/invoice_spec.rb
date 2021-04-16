@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::Invoice do
   let(:session) { make_session }
-  subject { Economic::Invoice.new(:session => session, :number => 512) }
+  subject { Economic::Invoice.new(session: session, number: 512) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::Invoice.ancestors).to include(Economic::Entity)
@@ -59,7 +59,7 @@ describe Economic::Invoice do
     end
 
     it "updates the handle" do
-      handle = Economic::Entity::Handle.new(:number => 42)
+      handle = Economic::Entity::Handle.new(number: 42)
       contact.handle = handle
       subject.attention = contact
       expect(subject.attention_handle).to eq(handle)
@@ -80,7 +80,7 @@ describe Economic::Invoice do
     end
 
     it "updates the handle" do
-      handle = Economic::Entity::Handle.new(:number => 42)
+      handle = Economic::Entity::Handle.new(number: 42)
       debtor.handle = handle
       subject.debtor = debtor
       expect(subject.debtor_handle).to eq(handle)

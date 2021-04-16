@@ -26,7 +26,7 @@ describe Economic::CreditorContactProxy do
     end
 
     context "when owner is a Creditor" do
-      let(:creditor) { make_creditor(:session => session) }
+      let(:creditor) { make_creditor(session: session) }
       subject { creditor.contacts }
 
       it "should use the Creditors session" do
@@ -60,9 +60,9 @@ describe Economic::CreditorContactProxy do
 
   describe "#find_by_name" do
     it "uses the FindByName command" do
-      expect(Economic::Proxies::Actions::FindByName).to receive(:new).
-        with(subject, "Bob").
-        and_return(-> { "Result" })
+      expect(Economic::Proxies::Actions::FindByName).to receive(:new)
+        .with(subject, "Bob")
+        .and_return(-> { "Result" })
       expect(subject.find_by_name("Bob")).to eq("Result")
     end
   end

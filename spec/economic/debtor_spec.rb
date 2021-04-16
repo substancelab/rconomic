@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::Debtor do
   let(:session) { make_session }
-  subject { Economic::Debtor.new(:session => session) }
+  subject { Economic::Debtor.new(session: session) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::Debtor.ancestors).to include(Economic::Entity)
@@ -28,7 +28,7 @@ describe Economic::Debtor do
 
   context "when saving" do
     context "when debtor is new" do
-      subject { Economic::Debtor.new(:session => session) }
+      subject { Economic::Debtor.new(session: session) }
 
       context "when debtor_group_handle is nil" do
         before :each do
@@ -65,7 +65,7 @@ describe Economic::Debtor do
 
     it "returns current invoices if there is a handle" do
       mock_request("Debtor_GetCurrentInvoices", {"debtorHandle" => {"Number" => "1"}}, :success)
-      subject.handle = Economic::Entity::Handle.new(:number => "1")
+      subject.handle = Economic::Entity::Handle.new(number: "1")
       subject.get_current_invoices.each do |i|
         expect(i).to be_instance_of(Economic::CurrentInvoice)
       end
@@ -78,7 +78,7 @@ describe Economic::Debtor do
     end
     it "returns invoices if there is a handle" do
       mock_request("Debtor_GetInvoices", {"debtorHandle" => {"Number" => "1"}}, :success)
-      subject.handle = Economic::Entity::Handle.new(:number => "1")
+      subject.handle = Economic::Entity::Handle.new(number: "1")
       subject.invoices.each do |i|
         expect(i).to be_instance_of(Economic::Invoice)
       end
@@ -91,7 +91,7 @@ describe Economic::Debtor do
     end
     it "returns invoices if there is a handle" do
       mock_request("Debtor_GetOrders", {"debtorHandle" => {"Number" => "1"}}, :success)
-      subject.handle = Economic::Entity::Handle.new(:number => "1")
+      subject.handle = Economic::Entity::Handle.new(number: "1")
       subject.orders.each do |i|
         expect(i).to be_instance_of(Economic::Order)
       end
@@ -105,7 +105,7 @@ describe Economic::Debtor do
 
     it "returns debtor contacts if there is a handle" do
       mock_request("Debtor_GetDebtorContacts", {"debtorHandle" => {"Number" => "1"}}, :multiple)
-      subject.handle = Economic::Entity::Handle.new(:number => "1")
+      subject.handle = Economic::Entity::Handle.new(number: "1")
       subject.contacts.each do |contact|
         expect(contact).to be_instance_of(Economic::DebtorContact)
       end
@@ -125,7 +125,7 @@ describe Economic::Debtor do
   describe "equality" do
     context "when other handle is equal" do
       context "when other is a different class" do
-        let(:other) { Economic::Invoice.new(:session => session, :handle => subject.handle) }
+        let(:other) { Economic::Invoice.new(session: session, handle: subject.handle) }
 
         it "should return false" do
           expect(subject).not_to eq(other)
@@ -159,11 +159,11 @@ describe Economic::Debtor do
         :success
       )
 
-      subject.debtor_group_handle = Economic::Entity::Handle.new(:number => 42)
-      subject.currency_handle = Economic::Entity::Handle.new(:code => "BTC")
-      subject.price_group_handle = Economic::Entity::Handle.new(:number => 37)
-      subject.term_of_payment_handle = Economic::Entity::Handle.new(:id => 314)
-      subject.layout_handle = Economic::Entity::Handle.new(:id => 21)
+      subject.debtor_group_handle = Economic::Entity::Handle.new(number: 42)
+      subject.currency_handle = Economic::Entity::Handle.new(code: "BTC")
+      subject.price_group_handle = Economic::Entity::Handle.new(number: 37)
+      subject.term_of_payment_handle = Economic::Entity::Handle.new(id: 314)
+      subject.layout_handle = Economic::Entity::Handle.new(id: 21)
 
       subject.save
     end

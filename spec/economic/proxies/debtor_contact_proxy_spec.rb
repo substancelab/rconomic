@@ -26,7 +26,7 @@ describe Economic::DebtorContactProxy do
     end
 
     context "when owner is a Debtor" do
-      let(:debtor) { make_debtor(:session => session) }
+      let(:debtor) { make_debtor(session: session) }
       subject { Economic::DebtorContactProxy.new(debtor) }
 
       it "should use the Debtors session" do
@@ -58,9 +58,9 @@ describe Economic::DebtorContactProxy do
 
   describe "#find_by_name" do
     it "uses the FindByName command" do
-      expect(Economic::Proxies::Actions::FindByName).to receive(:new).
-        with(subject, "Bob").
-        and_return(-> { "Result" })
+      expect(Economic::Proxies::Actions::FindByName).to receive(:new)
+        .with(subject, "Bob")
+        .and_return(-> { "Result" })
       expect(subject.find_by_name("Bob")).to eq("Result")
     end
   end

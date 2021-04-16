@@ -39,17 +39,17 @@ module Economic
       :voucher_number
 
     defaults(
-      :amount => 0,
-      :amount_default_currency => 0,
-      :date => Time.now,
-      :start_date => Time.now,
-      :text => "",
-      :type => "",
-      :voucher_number => 0
+      amount: 0,
+      amount_default_currency: 0,
+      date: Time.now,
+      start_date: Time.now,
+      text: "",
+      type: "",
+      voucher_number: 0
     )
 
     def handle
-      @handle || Handle.new(:id1 => @id1, :id2 => @id2)
+      @handle || Handle.new(id1: @id1, id2: @id2)
     end
 
     protected

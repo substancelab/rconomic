@@ -93,7 +93,7 @@ module Economic
     end
 
     def handle
-      @handle || Handle.build(:number => @number, :id => @id)
+      @handle || Handle.build(number: @number, id: @id)
     end
 
     def handle=(handle)
@@ -148,7 +148,7 @@ module Economic
 
     def inspect
       props = self.class.properties.collect { |p| "#{p}=#{send(p).inspect}" }
-      "#<#{self.class}:#{object_id} partial=#{partial?}, persisted=#{persisted?}, #{props.join(', ')}>"
+      "#<#{self.class}:#{object_id} partial=#{partial?}, persisted=#{persisted?}, #{props.join(", ")}>"
     end
 
     # Persist the Entity to the API

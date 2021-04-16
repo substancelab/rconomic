@@ -26,7 +26,7 @@ module Economic
       if handle.is_a?(Hash)
         super handle
       else
-        super({:id => handle})
+        super({id: handle})
       end
     end
   end

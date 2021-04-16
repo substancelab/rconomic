@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::Product do
   let(:session) { make_session }
-  subject { Economic::Product.new(:session => session) }
+  subject { Economic::Product.new(session: session) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::Product.ancestors).to include(Economic::Entity)
@@ -63,10 +63,10 @@ describe Economic::Product do
         :success
       )
 
-      subject.product_group_handle = Economic::Entity::Handle.new(:number => 1)
-      subject.unit_handle = Economic::Entity::Handle.new(:number => 2)
-      subject.department_handle = Economic::Entity::Handle.new(:number => 1)
-      subject.distribution_key_handle = Economic::Entity::Handle.new(:number => 314)
+      subject.product_group_handle = Economic::Entity::Handle.new(number: 1)
+      subject.unit_handle = Economic::Entity::Handle.new(number: 2)
+      subject.department_handle = Economic::Entity::Handle.new(number: 1)
+      subject.distribution_key_handle = Economic::Entity::Handle.new(number: 314)
 
       subject.save
     end

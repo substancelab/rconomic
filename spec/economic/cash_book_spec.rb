@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::CashBook do
   let(:session) { make_session }
-  subject { (i = Economic::CashBook.new(:id => 512, :number => 32)).tap { i.session = session } }
+  subject { (i = Economic::CashBook.new(id: 512, number: 32)).tap { i.session = session } }
 
   it "inherits from Economic::Entity" do
     expect(Economic::CashBook.superclass).to eq(Economic::Entity)

@@ -28,8 +28,8 @@ module Economic
     def connect_with_token(private_app_id, access_id)
       endpoint.call(
         :connect_with_token,
-        :token => access_id,
-        :appToken => private_app_id
+        token: access_id,
+        appToken: private_app_id
       ) do |response|
         store_authentication_cookies(response)
       end

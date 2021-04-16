@@ -8,7 +8,7 @@ describe Economic::CurrentInvoiceProxy do
 
   describe ".get_data_for_handles" do
     context "single handle" do
-      let(:handle) { Economic::Entity::Handle.new(:id => 42) }
+      let(:handle) { Economic::Entity::Handle.new(id: 42) }
 
       it "returns single" do
         mock_request(
@@ -25,8 +25,8 @@ describe Economic::CurrentInvoiceProxy do
     context "more handles" do
       let(:handles) do
         [
-          Economic::Entity::Handle.new(:id => 42),
-          Economic::Entity::Handle.new(:id => 44)
+          Economic::Entity::Handle.new(id: 42),
+          Economic::Entity::Handle.new(id: 44)
         ]
       end
 
@@ -63,7 +63,7 @@ describe Economic::CurrentInvoiceProxy do
     end
 
     context "when owner is a Debtor" do
-      let(:debtor) { make_debtor(:session => session) }
+      let(:debtor) { make_debtor(session: session) }
       subject { debtor.current_invoices }
 
       it "should use the Debtors session" do

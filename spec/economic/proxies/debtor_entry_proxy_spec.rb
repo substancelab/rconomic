@@ -41,7 +41,7 @@ describe Economic::DebtorEntryProxy do
     it "should match two debtor entries by serial numbers" do
       stub_request(
         "DebtorEntry_MatchEntries",
-        {:entries => {
+        {entries: {
           "DebtorEntryHandle" => [
             {"SerialNumber" => 1},
             {"SerialNumber" => 2}

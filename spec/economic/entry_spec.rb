@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::Entry do
   let(:session) { make_session }
-  subject { Economic::Entry.new(:session => session) }
+  subject { Economic::Entry.new(session: session) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::Entry.ancestors).to include(Economic::Entity)

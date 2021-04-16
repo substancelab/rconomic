@@ -26,7 +26,7 @@ module Economic
     has_properties :number, :creditor_group_handle, :name, :vat_zone, :currency_handle, :term_of_payment_handle, :is_accessible, :ci_number, :email, :address, :postal_code, :city, :country, :bank_account, :attention_handle, :your_reference_handle, :our_reference_handle, :default_payment_type_handle, :default_payment_creditor_id, :county, :auto_contra_account_handle
 
     def handle
-      @handle || Handle.build(:number => @number)
+      @handle || Handle.build(number: @number)
     end
 
     # Returns the Creditors contacts

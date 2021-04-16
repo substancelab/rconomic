@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::OrderLine do
   let(:session) { make_session }
-  subject { Economic::OrderLine.new(:session => session, :number => 512) }
+  subject { Economic::OrderLine.new(session: session, number: 512) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::OrderLine.ancestors).to include(Economic::Entity)

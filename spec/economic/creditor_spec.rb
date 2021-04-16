@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::Creditor do
   let(:session) { make_session }
-  subject { Economic::Creditor.new(:session => session) }
+  subject { Economic::Creditor.new(session: session) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::Creditor.ancestors).to include(Economic::Entity)

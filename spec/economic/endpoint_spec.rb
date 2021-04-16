@@ -13,9 +13,9 @@ describe Economic::Endpoint do
     it "uses the SOAP client to invoke a SOAP action on the API" do
       expect(client).to receive(:call).with(
         :foo_bar,
-        :message => {:baz => "qux"}
+        message: {baz: "qux"}
       ).and_return({})
-      subject.call(:foo_bar, :baz => "qux")
+      subject.call(:foo_bar, baz: "qux")
     end
 
     it "sends an actual request" do
@@ -25,7 +25,7 @@ describe Economic::Endpoint do
 
     it "returns a hash with data" do
       stub_request("CurrentInvoice_GetAll", nil, :single)
-      expect(subject.call(:current_invoice_get_all)).to eq(:current_invoice_handle => {:id => "1"})
+      expect(subject.call(:current_invoice_get_all)).to eq(current_invoice_handle: {id: "1"})
     end
 
     it "returns an empty hash if no data returned" do
@@ -45,7 +45,7 @@ describe Economic::Endpoint do
     it "adds a cookie header" do
       expect(client).to receive(:call).with(
         :current_invoice_get_all,
-        :cookies => "omnomnom"
+        cookies: "omnomnom"
       ).and_return({})
       subject.call(:current_invoice_get_all, {}, "omnomnom")
     end

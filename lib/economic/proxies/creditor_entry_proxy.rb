@@ -22,7 +22,7 @@ module Economic
     end
 
     def match(*serial_numbers)
-      request("MatchEntries", :entries => {
+      request("MatchEntries", entries: {
         "CreditorEntryHandle" => serial_numbers.map { |serial_number|
           {"SerialNumber" => serial_number}
         }

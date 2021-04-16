@@ -43,7 +43,7 @@ module Economic
 
     # Returns a new, unpersisted Economic::Entity that has been added to Proxy
     def build(properties = {})
-      entity = self.class.entity_class.new(:session => session)
+      entity = self.class.entity_class.new(session: session)
 
       entity.update_properties(properties)
       entity.partial = false
@@ -93,15 +93,14 @@ module Economic
     # Gets data for Entity from the API. Returns Hash with the response data
     def get_data(handle)
       handle = Entity::Handle.new(handle)
-      entity_hash = request(:get_data, "entityHandle" => handle.to_hash)
-      entity_hash
+      request(:get_data, "entityHandle" => handle.to_hash)
     end
 
     # Adds item to proxy unless item already exists in the proxy
     def append(item)
       items << item unless items.include?(item)
     end
-    alias << append
+    alias_method :<<, :append
 
     protected
 
@@ -117,7 +116,7 @@ module Economic
     # of the built Entity::Handle.
     def build_handle(id_or_hash)
       if id_or_hash.respond_to?(:to_i)
-        Entity::Handle.new(:id => id_or_hash)
+        Entity::Handle.new(id: id_or_hash)
       else
         Entity::Handle.new(id_or_hash)
       end

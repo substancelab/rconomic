@@ -36,7 +36,7 @@ describe Economic::ProductProxy do
       expect(result.number).to eq("1")
       expect(result.partial).to be_truthy
       expect(result.persisted).to be_truthy
-      expect(result.handle).to eq(Economic::Entity::Handle.new(:number => "1"))
+      expect(result.handle).to eq(Economic::Entity::Handle.new(number: "1"))
     end
 
     it "returns nil when there is no product" do

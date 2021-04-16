@@ -43,7 +43,7 @@ module Economic
       :available
 
     def handle
-      @handle ||= Handle.new(:number => @number)
+      @handle ||= Handle.new(number: @number)
     end
 
     protected

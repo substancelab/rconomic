@@ -21,8 +21,8 @@ describe Economic::Session do
     # As per http://www.e-conomic.com/developer/tutorials
     let(:authentication_details) {
       {
-        :appToken => "the_private_app_id",
-        :token => "the_access_id_you_got_from_the_grant"
+        appToken: "the_private_app_id",
+        token: "the_access_id_you_got_from_the_grant"
       }
     }
     let(:private_app_id) { authentication_details[:appToken] }
@@ -35,8 +35,8 @@ describe Economic::Session do
 
     it "stores the authentication token for later requests" do
       response = {
-        :headers => {"Set-Cookie" => "cookie value from e-conomic"},
-        :body => fixture(:connect_with_token, :success)
+        headers: {"Set-Cookie" => "cookie value from e-conomic"},
+        body: fixture(:connect_with_token, :success)
       }
       stub_request("ConnectWithToken", authentication_details, response)
 
@@ -121,14 +121,14 @@ describe Economic::Session do
     end
 
     it "sends data if given" do
-      mock_request(:current_invoice_get_all, {:bar => :baz}, :none)
-      subject.request(:current_invoice_get_all, :bar => :baz)
+      mock_request(:current_invoice_get_all, {bar: :baz}, :none)
+      subject.request(:current_invoice_get_all, bar: :baz)
     end
 
     it "returns a hash with data" do
       stub_request(:current_invoice_get_all, nil, :single)
       expect(subject.request(:current_invoice_get_all)).to eq(
-        :current_invoice_handle => {:id => "1"}
+        current_invoice_handle: {id: "1"}
       )
     end
 

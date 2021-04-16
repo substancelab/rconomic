@@ -6,10 +6,11 @@ class Account < Economic::Entity
   has_properties :id, :foo, :baz, :bar_handle
 
   def build_soap_data
-    {:foo => "bar"}
+    {foo: "bar"}
   end
 
-  def existing_method; end
+  def existing_method
+  end
 
   def proxy
     Economic::AccountProxy.new(session)
@@ -40,7 +41,7 @@ describe Economic::Entity do
       end
 
       it "initializes the entity with values from the given hash" do
-        entity = Account.new(:foo => "bar", :baz => "qux")
+        entity = Account.new(foo: "bar", baz: "qux")
         expect(entity.foo).to eq("bar")
         expect(entity.baz).to eq("qux")
       end
@@ -69,13 +70,13 @@ describe Economic::Entity do
         subject { Account.new }
 
         it "accepts a Handle" do
-          subject.bar_handle = Economic::Entity::Handle.new(:id => 2)
+          subject.bar_handle = Economic::Entity::Handle.new(id: 2)
           expect(subject.bar_handle.id).to eq(2)
         end
 
         it "converts Hash input to Handle" do
-          subject.bar_handle = {:id => 1}
-          expect(subject.bar_handle).to eq(Economic::Entity::Handle.new(:id => 1))
+          subject.bar_handle = {id: 1}
+          expect(subject.bar_handle).to eq(Economic::Entity::Handle.new(id: 1))
         end
       end
 
@@ -110,7 +111,7 @@ describe Economic::Entity do
 
     it "updates the entity with the response" do
       stub_request(:account_get_data, nil, :success)
-      expect(subject).to receive(:update_properties).with(:foo => "bar", :baz => "qux")
+      expect(subject).to receive(:update_properties).with(foo: "bar", baz: "qux")
       subject.get_data
     end
 
@@ -157,7 +158,7 @@ describe Economic::Entity do
     subject { Account.new.tap { |e| e.persisted = false; e.session = session } }
 
     it "sends data to the API" do
-      mock_request(:account_create_from_data, {"data" => {:foo => "bar"}}, :success)
+      mock_request(:account_create_from_data, {"data" => {foo: "bar"}}, :success)
       subject.save
     end
 
@@ -180,7 +181,7 @@ describe Economic::Entity do
     subject { Account.new.tap { |e| e.persisted = true; e.session = session } }
 
     it "sends data to the API" do
-      mock_request(:account_update_from_data, {"data" => {:foo => "bar"}}, :success)
+      mock_request(:account_update_from_data, {"data" => {foo: "bar"}}, :success)
       subject.save
     end
   end
@@ -206,8 +207,8 @@ describe Economic::Entity do
     end
 
     it "should return the response" do
-      expect(session).to receive(:request).and_return(:response => true)
-      expect(subject.destroy).to eq(:response => true)
+      expect(session).to receive(:request).and_return(response: true)
+      expect(subject.destroy).to eq(response: true)
     end
   end
 
@@ -260,27 +261,27 @@ describe Economic::Entity do
     end
 
     context "when other handle is equal" do
-      let(:handle) { Economic::Entity::Handle.new(:id => 42) }
-      subject { Economic::Debtor.new(:handle => handle) }
+      let(:handle) { Economic::Entity::Handle.new(id: 42) }
+      subject { Economic::Debtor.new(handle: handle) }
 
       context "when other is another class" do
         it "should return false" do
-          other = Economic::CashBook.new(:handle => handle)
+          other = Economic::CashBook.new(handle: handle)
           expect(subject).not_to eq(other)
         end
       end
 
       context "when other is same class" do
         it "should return true" do
-          other = Economic::Debtor.new(:handle => handle)
+          other = Economic::Debtor.new(handle: handle)
           expect(subject).to eq(other)
         end
       end
 
       context "when other is child class" do
         it "should return true" do
-          one = Economic::Entity.new(:handle => handle)
-          other = Account.new(:handle => handle)
+          one = Economic::Entity.new(handle: handle)
+          other = Account.new(handle: handle)
           expect(one).to eq(other)
         end
       end

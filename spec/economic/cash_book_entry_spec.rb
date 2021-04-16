@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::CashBookEntry do
   let(:session) { make_session }
-  subject { Economic::CashBookEntry.new(:session => session) }
+  subject { Economic::CashBookEntry.new(session: session) }
 
   it "inherits from Economic::Entity" do
     expect(Economic::CashBookEntry.ancestors).to include(Economic::Entity)
@@ -29,7 +29,7 @@ describe Economic::CashBookEntry do
     it "builds and sends data to API" do
       time = Time.now
       subject.date = subject.start_date = time
-      subject.account_handle = Economic::Entity::Handle.new(:number => 12)
+      subject.account_handle = Economic::Entity::Handle.new(number: 12)
       mock_request(
         :cash_book_entry_create_from_data, {
           "data" => {
@@ -52,7 +52,7 @@ describe Economic::CashBookEntry do
     it "can build a CashBookEntry with a CreditorHandle" do
       time = Time.now
       subject.date = subject.start_date = time
-      subject.creditor_handle = Economic::Entity::Handle.new(:number => 12)
+      subject.creditor_handle = Economic::Entity::Handle.new(number: 12)
       mock_request(
         :cash_book_entry_create_from_data, {
           "data" => {

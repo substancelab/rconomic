@@ -27,14 +27,14 @@ module Economic
       if owner.is_a?(Debtor)
         invoice.debtor = owner
 
-        invoice.debtor_name         ||= owner.name
-        invoice.debtor_address      ||= owner.address
-        invoice.debtor_postal_code  ||= owner.postal_code
-        invoice.debtor_city         ||= owner.city
+        invoice.debtor_name ||= owner.name
+        invoice.debtor_address ||= owner.address
+        invoice.debtor_postal_code ||= owner.postal_code
+        invoice.debtor_city ||= owner.city
 
-        invoice.term_of_payment_handle  ||= owner.term_of_payment_handle
-        invoice.layout_handle           ||= owner.layout_handle
-        invoice.currency_handle         ||= owner.currency_handle
+        invoice.term_of_payment_handle ||= owner.term_of_payment_handle
+        invoice.layout_handle ||= owner.layout_handle
+        invoice.currency_handle ||= owner.currency_handle
       end
     end
   end

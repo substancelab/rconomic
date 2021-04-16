@@ -70,7 +70,7 @@ describe Economic::DebtorProxy do
       expect(result.partial).to be_truthy
       expect(result.persisted).to be_truthy
       expect(result.number).to eq("1")
-      expect(result.handle).to eq(Economic::Entity::Handle.new(:number => "1"))
+      expect(result.handle).to eq(Economic::Entity::Handle.new(number: "1"))
     end
 
     it "returns nil when there is no debtor" do
@@ -155,7 +155,7 @@ describe Economic::DebtorProxy do
   end
 
   describe ".get_debtor_contacts" do
-    let(:handle) { Economic::Entity::Handle.new(:number => 1) }
+    let(:handle) { Economic::Entity::Handle.new(number: 1) }
     it "gets debtor contact data from API" do
       mock_request(
         "Debtor_GetDebtorContacts",
@@ -174,7 +174,7 @@ describe Economic::DebtorProxy do
   end
 
   describe ".get_invoices" do
-    let(:handle) { Economic::Entity::Handle.new(:number => 1) }
+    let(:handle) { Economic::Entity::Handle.new(number: 1) }
     it "gets invoice data from API" do
       mock_request(
         "Debtor_GetInvoices",
@@ -193,7 +193,7 @@ describe Economic::DebtorProxy do
   end
 
   describe ".get_order" do
-    let(:handle) { Economic::Entity::Handle.new(:number => 1) }
+    let(:handle) { Economic::Entity::Handle.new(number: 1) }
     it "gets invoice data from API" do
       mock_request(
         "Debtor_GetOrders",

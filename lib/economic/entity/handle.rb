@@ -10,14 +10,14 @@ class Economic::Entity
 
     def self.id_properties
       {
-        :code => "Code",
-        :id => "Id",
-        :id1 => "Id1",
-        :id2 => "Id2",
-        :name => "Name",
-        :number => "Number",
-        :serial_number => "SerialNumber",
-        :vat_code => "VatCode"
+        code: "Code",
+        id: "Id",
+        id1: "Id1",
+        id2: "Id2",
+        name: "Name",
+        number: "Number",
+        serial_number: "SerialNumber",
+        vat_code: "VatCode"
       }
     end
 

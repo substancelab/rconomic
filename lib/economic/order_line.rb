@@ -22,7 +22,7 @@ module Economic
       :inventory_location_handle
 
     def handle
-      @handle || Handle.build(:number => @number)
+      @handle || Handle.build(number: @number)
     end
 
     protected

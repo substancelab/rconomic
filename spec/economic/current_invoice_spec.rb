@@ -4,7 +4,7 @@ require "./spec/spec_helper"
 
 describe Economic::CurrentInvoice do
   let(:session) { make_session }
-  subject { (i = Economic::CurrentInvoice.new(:id => 512)).tap { i.session = session } }
+  subject { (i = Economic::CurrentInvoice.new(id: 512)).tap { i.session = session } }
 
   it "inherits from Economic::Entity" do
     expect(Economic::CurrentInvoice.ancestors).to include(Economic::Entity)
@@ -38,10 +38,10 @@ describe Economic::CurrentInvoice do
       it "builds and sends data to API" do
         time = Time.now
         subject.date = time
-        subject.attention_handle = Economic::Entity::Handle.new(:id => 42)
-        subject.term_of_payment_handle = Economic::Entity::Handle.new(:id => 37)
-        subject.currency_handle = Economic::Entity::Handle.new(:code => "BTC")
-        subject.layout_handle = Economic::Entity::Handle.new(:id => 314)
+        subject.attention_handle = Economic::Entity::Handle.new(id: 42)
+        subject.term_of_payment_handle = Economic::Entity::Handle.new(id: 37)
+        subject.currency_handle = Economic::Entity::Handle.new(code: "BTC")
+        subject.layout_handle = Economic::Entity::Handle.new(id: 314)
 
         mock_request(
           "CurrentInvoice_CreateFromData", {
@@ -86,7 +86,7 @@ describe Economic::CurrentInvoice do
         expect(invoice.handle.id).to eq(0)
 
         invoice.save
-        expect(invoice.handle).to eq(Economic::Entity::Handle.new(:id => 42))
+        expect(invoice.handle).to eq(Economic::Entity::Handle.new(id: 42))
       end
 
       context "when invoice has lines" do
@@ -170,7 +170,7 @@ describe Economic::CurrentInvoice do
   describe "#attention" do
     let(:contact) {
       c = Economic::DebtorContact.new(
-        :handle => Economic::Entity::Handle.new(:id => 12, :number => 34)
+        handle: Economic::Entity::Handle.new(id: 12, number: 34)
       )
       c.session = session
       c
@@ -182,7 +182,7 @@ describe Economic::CurrentInvoice do
     end
 
     it "updates the handle" do
-      handle = Economic::Entity::Handle.new(:number => 42)
+      handle = Economic::Entity::Handle.new(number: 42)
       contact.handle = handle
       subject.attention = contact
       expect(subject.attention_handle).to eq(handle)
@@ -203,7 +203,7 @@ describe Economic::CurrentInvoice do
     end
 
     it "updates the handle" do
-      handle = Economic::Entity::Handle.new(:number => 42)
+      handle = Economic::Entity::Handle.new(number: 42)
       debtor.handle = handle
       subject.debtor = debtor
       expect(subject.debtor_handle).to eq(handle)
@@ -213,7 +213,7 @@ describe Economic::CurrentInvoice do
   describe "#your_reference" do
     let(:contact) {
       c = Economic::DebtorContact.new(
-        :handle => Economic::Entity::Handle.new(:id => 12, :number => 34)
+        handle: Economic::Entity::Handle.new(id: 12, number: 34)
       )
       c.session = session
       c
@@ -225,7 +225,7 @@ describe Economic::CurrentInvoice do
     end
 
     it "updates the handle" do
-      handle = Economic::Entity::Handle.new(:number => 42)
+      handle = Economic::Entity::Handle.new(number: 42)
       contact.handle = handle
       subject.your_reference = contact
       expect(subject.your_reference_handle).to eq(handle)
