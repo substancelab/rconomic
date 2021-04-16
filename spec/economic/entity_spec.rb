@@ -155,7 +155,12 @@ describe Economic::Entity do
   end
 
   describe "create" do
-    subject { Account.new.tap { |e| e.persisted = false; e.session = session } }
+    subject {
+      Account.new.tap { |e|
+        e.persisted = false
+        e.session = session
+      }
+    }
 
     it "sends data to the API" do
       mock_request(:account_create_from_data, {"data" => {foo: "bar"}}, :success)
@@ -178,7 +183,12 @@ describe Economic::Entity do
   end
 
   describe "update" do
-    subject { Account.new.tap { |e| e.persisted = true; e.session = session } }
+    subject {
+      Account.new.tap { |e|
+        e.persisted = true
+        e.session = session
+      }
+    }
 
     it "sends data to the API" do
       mock_request(:account_update_from_data, {"data" => {foo: "bar"}}, :success)
@@ -187,7 +197,14 @@ describe Economic::Entity do
   end
 
   describe "destroy" do
-    subject { Account.new.tap { |e| e.id = 42; e.persisted = true; e.partial = false; e.session = session } }
+    subject {
+      Account.new.tap { |e|
+        e.id = 42
+        e.persisted = true
+        e.partial = false
+        e.session = session
+      }
+    }
 
     it "sends data to the API" do
       mock_request(:account_delete, :any, :success)
