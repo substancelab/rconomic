@@ -125,7 +125,7 @@ module Economic
     # Fetches all data for the given handles. Returns Array with hashes of
     # entity data
     def get_data_array(handles)
-      return [] unless handles && handles.any?
+      return [] unless handles&.any?
 
       entity_class_name_for_soap_request = entity_class.name.split("::").last
       response = request(:get_data_array, "entityHandles" => {"#{entity_class_name_for_soap_request}Handle" => handles.collect(&:to_hash)})
