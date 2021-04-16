@@ -37,7 +37,9 @@ Usage example
     debtor.save
 
     # Create invoice for debtor:
-    current_invoice = economic.current_invoices.build
+    current_invoice = debtor.current_invoices.build
+    current_invoice.term_of_payment_handle = debtor.term_of_payment_handle
+
     current_invoice.date = Time.now
     current_invoice.due_date = Time.now + 15
     current_invoice.exchange_rate = 100
