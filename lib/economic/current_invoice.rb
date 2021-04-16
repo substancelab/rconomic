@@ -36,6 +36,7 @@ module Economic
       :debtor_city,
       :debtor_country,
       :attention_handle,
+      :your_reference_handle,
       :date,
       :term_of_payment_handle,
       :due_date,
@@ -151,6 +152,21 @@ module Economic
       end
     end
 
+    def your_reference
+      return nil if your_reference_handle.nil?
+      @your_reference ||= session.contacts.find(your_reference_handle)
+    end
+
+    def your_reference=(contact)
+      self.your_reference_handle = contact.handle
+      @your_reference = contact
+    end
+
+    def your_reference_handle=(handle)
+      @your_reference = nil unless handle == @your_reference_handle
+      @your_reference_handle = handle
+    end
+
     protected
 
     def fields
@@ -167,6 +183,7 @@ module Economic
         ["DebtorCity", :debtor_city],
         ["DebtorCountry", :debtor_country],
         ["AttentionHandle", :attention_handle, to_hash],
+        ["YourReferenceHandle", :your_reference_handle, to_hash],
         ["Date", :date, date_formatter],
         ["TermOfPaymentHandle", :term_of_payment_handle, to_hash],
         ["DueDate", :due_date, date_formatter, :required],
