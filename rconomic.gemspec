@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency "savon", "~> 2.2"
   s.add_development_dependency "rspec", "> 3.0"
+  s.add_development_dependency "standard"
 
   s.files         = `git ls-files`.split("\n").reject { |filename| [".gitignore"].include?(filename) }
   s.test_files    = `git ls-files -- {spec}/*`.split("\n")
