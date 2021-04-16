@@ -209,4 +209,33 @@ describe Economic::CurrentInvoice do
       expect(subject.debtor_handle).to eq(handle)
     end
   end
+
+  describe "#your_reference" do
+    let(:contact) {
+      c = Economic::DebtorContact.new(
+        :handle => Economic::Entity::Handle.new(:id => 12, :number => 34)
+      )
+      c.session = session
+      c
+    }
+
+    it "should be set- and gettable" do
+      subject.your_reference = contact
+      expect(subject.your_reference).to eq(contact)
+    end
+
+    it "updates the handle" do
+      handle = Economic::Entity::Handle.new(:number => 42)
+      contact.handle = handle
+      subject.your_reference = contact
+      expect(subject.your_reference_handle).to eq(handle)
+    end
+
+    it "is serialized in the API" do
+      subject.your_reference = contact
+      expect(subject.send(:build_soap_data)).to include(
+        "YourReferenceHandle" => {"Id" => 12, "Number" => 34}
+      )
+    end
+  end
 end

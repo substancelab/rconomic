@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 * `CurrentInvoice` can now fetch and return it's PDF representation, similar to `Invoice` (@olepalm).
 * Added `EntityProxy#get_data_for_handles` that makes it possible to fetch data for a whole list of entities at once (@olepalm).
+* It is now possible to add `DebtorContact`s to `CurrentInvoice#your_reference`.
 
 ### Changes
 
