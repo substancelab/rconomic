@@ -158,8 +158,8 @@ module Economic
 
     # Deletes entity permanently from E-conomic.
     def destroy
-      handleKey = "#{Support::String.camel_back(class_name)}Handle"
-      response = request(:delete, handleKey => handle.to_hash)
+      handle_key = "#{Support::String.camel_back(class_name)}Handle"
+      response = request(:delete, handle_key => handle.to_hash)
 
       @persisted = false
       @partial = true
